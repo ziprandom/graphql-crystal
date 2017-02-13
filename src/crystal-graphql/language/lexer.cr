@@ -4,15 +4,11 @@ module GraphQl
   module Language
     class Lexer < CLTK::Lexer
       # Skip whitespace.
-      rule(/\n/)
-      rule(/\s/)
-
       rule(/:/)	  { :COLON   }
 
-      rule(/[_A-Za-z][_0-9A-Za-z]*/) { :IDENTIFIER}
+      rule(/[\c\r\n]/)
+      rule(/[, \t]+/)
 
-      rule(/[\c\r\n]/)           { :NEWLINE }
-      rule(/[, \t]+/)            { :BLANK }
       rule(/# [^\n\r]*/)         { |t| {:COMMENT, t} }
       rule(/on/)                 { :ON }
       rule(/fragment/)           { :FRAGMENT }
@@ -52,9 +48,11 @@ module GraphQl
         if escaped  !~ VALID_STRING
           {:BAD_UNICODE_ESCAPE, escaped }
         else
-          {:QUOTED_STRING, escaped}
+          {:STRING, escaped}
         end
       end
+
+      rule(/[_A-Za-z][_0-9A-Za-z]*/) { :IDENTIFIER}
 
       ESCAPES = /\\["\\\/bfnrt]/
       ESCAPES_REPLACE = {
