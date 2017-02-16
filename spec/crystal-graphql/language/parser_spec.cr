@@ -100,8 +100,8 @@ describe GraphQl::Language::Parser do
       }
     ];
 
-    it "parses different graphql docs" do
-      query_strings.each do |query_string|
+    query_strings[0...1].each do |query_string|
+      it "parses different graphql docs: #{query_string}" do
         # pp query_tokens.map { |t| {name: t.value, type: t.type} }
         document = subject.parse GraphQl::Language::Lexer.lex(query_string)
       end

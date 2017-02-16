@@ -52,7 +52,10 @@ module GraphQl
         end
       end
 
-      rule(/[_A-Za-z][_0-9A-Za-z]*/) { :IDENTIFIER}
+      rule(/[_A-Za-z][_0-9A-Za-z]*/) do |t|
+        escaped = replace_escaped_characters_in_place(t)
+        { :IDENTIFIER, escaped }
+      end
 
       ESCAPES = /\\["\\\/bfnrt]/
       ESCAPES_REPLACE = {
