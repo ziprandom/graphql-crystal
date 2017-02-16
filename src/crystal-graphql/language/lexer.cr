@@ -1,6 +1,6 @@
 require "cltk/lexer"
 
-module GraphQl
+module GraphQL
   module Language
     class Lexer < CLTK::Lexer
       # Skip whitespace.

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 require "../../spec_helper"
-require "benchmark"
 
-describe GraphQl::Language::Parser do
-  subject = GraphQl::Language::Parser.new
+describe GraphQL::Language::Parser do
+  subject = GraphQL::Language::Parser.parser
 
   describe "anonymous fragment extension" do
 
@@ -100,10 +99,10 @@ describe GraphQl::Language::Parser do
       }
     ];
 
-    query_strings[0...1].each do |query_string|
+    query_strings.each do |query_string|
       it "parses different graphql docs: #{query_string}" do
-        # pp query_tokens.map { |t| {name: t.value, type: t.type} }
-        document = subject.parse GraphQl::Language::Lexer.lex(query_string)
+        document = subject.parse(query_string)
+        (document.definitions.size > 0).should eq true
       end
     end
 
@@ -111,27 +110,38 @@ describe GraphQl::Language::Parser do
       document = subject.parse g
     end
 
-    pending "creates an anonymous fragment definition" do
-      assert fragment.is_a?(GraphQL::Language::Nodes::FragmentDefinition)
-      assert_equal nil, fragment.name
-      assert_equal 1, fragment.selections.length
-      assert_equal "NestedType", fragment.type.name
-      assert_equal 1, fragment.directives.length
-      assert_equal [2, 7], fragment.position
+    it "creates an anonymous fragment definition" do
+
+      document = subject.parse query_strings[0]
+
+      fragment = document.definitions.first
+      fragment.is_a?(GraphQL::Language::FragmentDefinition).should eq true
+
+      if (fragment.is_a?(GraphQL::Language::FragmentDefinition))
+        fragment.name.should eq nil
+        fragment.selections.size.should eq 1
+        fragment.type.as(GraphQL::Language::TypeName).name.should eq "NestedType"
+        fragment.directives.size.should eq 1
+        # fragment.position.should eq [2, 7]
+      end
     end
   end
 
-  pending "parses empty arguments" do
+  it "parses empty arguments" do
     strings = [
       "{ field { inner } }",
       "{ field() { inner }}",
     ]
+
     strings.each do |query_str|
       doc = subject.parse(query_str)
-      field = doc.definitions.first.selections.first
-      assert_equal 0, field.arguments.length
-      assert_equal 1, field.selections.length
+      field = doc.definitions
+              .first.as(GraphQL::Language::OperationDefinition)
+              .selections.first.as(GraphQL::Language::Field)
+      field.arguments.size.should eq 0
+      field.selections.size.should eq 1
     end
+
   end
 
   pending "parses the test schema" do

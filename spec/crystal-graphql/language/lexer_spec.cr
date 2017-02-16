@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 require "../../spec_helper"
 
-describe GraphQl::Language::Lexer do
-  subject = GraphQl::Language::Lexer
+describe GraphQL::Language::Lexer do
+  subject = GraphQL::Language::Lexer
 
   describe ".lex" do
     query_string = " \

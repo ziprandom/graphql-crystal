@@ -1,8 +1,23 @@
 require "cltk/parser"
+require "./lexer"
 require "./nodes"
-module GraphQl
+
+module GraphQL
   module Language
     class Parser < CLTK::Parser
+
+      # open the Parser::Parser Class (CLTK::Parser is the
+      # whole generator while the CLTK::Parser::Parser is
+      # the generated Parser) to cast the result to an
+      # instance of GraphQL::Language::Document
+      class Parser < CLTK::Parser::Parser
+        def parse(tokens, opts = nil)
+          if tokens.is_a?(String)
+            tokens = GraphQL::Language::Lexer.lex(tokens)
+          end
+          super(tokens, opts).as( GraphQL::Language::Document )
+        end
+      end
 
       production(:target) do
         clause(:document) { |d| d }
@@ -28,7 +43,7 @@ module GraphQl
         clause("operation_type operation_name? variable_definitions? \
                   directives_list_opt selection_set") do |operation_type, name, variables, directives, selections|
           OperationDefinition.new(operation_type: operation_type,
-                                   name: name, variables: variables,
+                                   name: name, variables: variables || [] of VariableDefinition,
                                    directives: directives, selections: selections)
         end
 
@@ -38,9 +53,9 @@ module GraphQl
       end
 
       production(:operation_type) do
-        clause(:QUERY) { |t| t }
-        clause(:MUTATION) { |t| t }
-        clause(:SUBSCRIPTION) { |t| t }
+        clause(:QUERY) { |t| "query" }
+        clause(:MUTATION) { |t| "mutation" }
+        clause(:SUBSCRIPTION) { |t| "subscription" }
       end
 
       production(:operation_name) do
@@ -321,7 +336,7 @@ module GraphQl
           "TYPE name implements? directives_list_opt LCURLY field_definition_list RCURLY"
         ) do | _, name, interfaces, directives, _, fields|
           ObjectTypeDefinition.new(name: name,
-                                    interfaces: interfaces,
+                                    interfaces: interfaces || [] of String,
                                     directives: directives,
                                     fields: fields,
                                     description: "")
@@ -353,7 +368,7 @@ module GraphQl
         clause(
           "name arguments_definitions? COLON type directives_list_opt"
         ) do |name, arguments, _, type, directives|
-          FieldDefinition.new(name: name, arguments: arguments,
+          FieldDefinition.new(name: name, arguments: arguments || [] of Argument,
                                type: type, directives: directives, description: "")
         end
       end
