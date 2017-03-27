@@ -1,7 +1,7 @@
 # coding: utf-8
 # frozen_string_literal: true
 require "../../spec_helper"
-require "../src/crystal-graphql/language/lexer"
+require "../src/graphql-crystal/language/lexer"
 
 describe GraphQL::Language::Lexer do
   subject = GraphQL::Language::Lexer

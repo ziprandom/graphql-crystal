@@ -1,19 +1,23 @@
 # coding: utf-8
 # frozen_string_literal: true
-require "../src/crystal-graphql/language/generation"
-require "../src/crystal-graphql/language/parser"
-require "../src/crystal-graphql/language/nodes"
-#require "../src/crystal-graphql/language/lexer"
-require "../src/crystal-graphql/language/type"
-#require "cltk/parser/parser_concern"
-#require "cltk/macros"
+require "../src/graphql-crystal/language/generation"
+require "../src/graphql-crystal/language/nodes"
+require "../src/graphql-crystal/language/type"
 require "../../spec_helper"
 
-#insert_output_of() do
-#  require "cltk/parser/crystalize"
-#  require "../src/crystal-graphql/language/parser"
-#  GraphQL::Language::Parser.crystalize
-#end
+# require "../src/graphql-crystal/language/lexer"
+require "../src/graphql-crystal/language/parser"
+# require "cltk/parser/parser_concern"
+# require "cltk/macros"
+
+# use version of this parser that has
+# been finialized at compile time
+#
+# insert_output_of() do
+#   require "cltk/parser/crystalize"
+#   require "../src/graphql-crystal/language/parser"
+#   GraphQL::Language::Parser.crystalize
+# end
 
 class GraphQL::Language::Parser
   def self.parse(prog : String, options = NamedTuple.new )
@@ -62,11 +66,11 @@ describe GraphQL::Language::Generation do
     end
 
     it "inputs" do
-      query_string = %{
+      query_string = <<-query
         query {
           field(null_value: null, null_in_array: [1, null, 3], int: 3, float: 4.7e-24, bool: false, string: "☀︎🏆\\n escaped \\" unicode ¶ /", enum: ENUM_NAME, array: [7, 8, 9], object: {a: [1, 2, 3], b: {c: "4"}}, unicode_bom: "\xef\xbb\xbfquery")
         }
-      }
+      query
       document = GraphQL::Language::Parser.parse(query_string)
 
       it "generate" do

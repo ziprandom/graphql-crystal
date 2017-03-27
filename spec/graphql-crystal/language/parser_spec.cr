@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 #require "cltk/parser/parse"
 require "../../spec_helper"
-require "../src/crystal-graphql/language/nodes"
-require "../src/crystal-graphql/language/lexer"
-require "../src/crystal-graphql/language/type"
-require "../src/crystal-graphql/language/parser"
+require "../src/graphql-crystal/language/nodes"
+require "../src/graphql-crystal/language/lexer"
+require "../src/graphql-crystal/language/type"
+require "../src/graphql-crystal/language/parser"
 
 class GraphQL::Language::Parser
   def self.parse(prog : String, options = {lookahead: false})
