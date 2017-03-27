@@ -70,8 +70,7 @@ module GraphQL
       end
 
       production(:selection_set) do
-        clause("LCURLY RCURLY") { Array(Selection).new }
-        clause("LCURLY selection+ RCURLY") { |_, list, _| list }
+        clause("LCURLY selection* RCURLY") { |_, list, _| list }
       end
 
       production(:selection) do
