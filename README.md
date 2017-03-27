@@ -15,7 +15,7 @@ dependencies:
 ## Usage
 
 ```crystal
-require "./src/graphql-crystal"
+require "graphql-crystal"
 
 schema_string = <<-schema
   schema {
