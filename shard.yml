@@ -9,6 +9,6 @@ dependencies:
     github: ziprandom/cltk
     branch: master
 
-crystal: 0.20.5
+crystal: 0.21.1
 
 license: MIT
