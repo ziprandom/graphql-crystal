@@ -114,6 +114,14 @@ puts document.to_query_string
 # puts document.to_json
 ```
 
+## Development
+
+run tests with
+
+```
+crystal spec
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/ziprandom/graphql-crystal/fork )
