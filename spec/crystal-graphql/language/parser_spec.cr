@@ -1,8 +1,20 @@
 # frozen_string_literal: true
+#require "cltk/parser/parse"
 require "../../spec_helper"
+require "../src/crystal-graphql/language/nodes"
+require "../src/crystal-graphql/language/lexer"
+require "../src/crystal-graphql/language/type"
+require "../src/crystal-graphql/language/parser"
+
+class GraphQL::Language::Parser
+  def self.parse(prog : String, options = {lookahead: false})
+    parse(GraphQL::Language::Lexer.lex(prog), options).as(GraphQL::Language::Document)
+  end
+end
 
 describe GraphQL::Language::Parser do
-  subject = GraphQL::Language::Parser.parser
+
+  subject = GraphQL::Language::Parser
 
   describe "anonymous fragment extension" do
 
@@ -55,7 +67,7 @@ describe GraphQL::Language::Parser do
             ... on Droid {
               primaryFunction
             }
-                   ... on Human {
+            ... on Human {
               height
             }
           }

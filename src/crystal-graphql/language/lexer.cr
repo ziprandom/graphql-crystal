@@ -9,7 +9,7 @@ module GraphQL
       rule(/[\c\r\n]/)
       rule(/[, \t]+/)
 
-      rule(/# [^\n\r]*/)         { |t| {:COMMENT, t} }
+      rule(/# [^\n\r]*/)         #{ |t| {:COMMENT, t} }
       rule(/on/)                 { :ON }
       rule(/fragment/)           { :FRAGMENT }
       rule(/true/)               { :TRUE }
@@ -37,10 +37,11 @@ module GraphQL
       rule(/\$/)                 { :VAR_SIGN }
       rule(/\@/)                 { :DIR_SIGN }
       rule(/\.\.\./)             { :ELLIPSIS }
-      rule(/\=/)                 { :EQUALS }
+      rule(/=/)                  { :EQUALS }
       rule(/\!/)                 { :BANG }
       rule(/\|/)                 { :PIPE }
 
+      rule(/-?(0|[1-9][0-9]*)/)  { |i| {:INT, i} }
       rule(/\-?(0|[1-9][0-9]*)(\.[0-9]+)?((e|E)?(\+|\-)?[0-9]+)?/) { |t| {:FLOAT, t} }
 
       rule(/"(?:[^"\\]|\\.)*"/)  do |t|

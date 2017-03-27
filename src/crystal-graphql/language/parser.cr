@@ -1,3 +1,4 @@
+require "./type"
 require "cltk/parser"
 require "./lexer"
 require "./nodes"
@@ -5,23 +6,6 @@ require "./nodes"
 module GraphQL
   module Language
     class Parser < CLTK::Parser
-
-      # open the Parser::Parser Class (CLTK::Parser is the
-      # whole generator while the CLTK::Parser::Parser is
-      # the generated Parser) to cast the result to an
-      # instance of GraphQL::Language::Document
-      class Parser < CLTK::Parser::Parser
-        def parse(tokens, opts = nil)
-          if tokens.is_a?(String)
-            tokens = GraphQL::Language::Lexer.lex(tokens)
-          end
-          super(tokens, opts).as( GraphQL::Language::Document )
-        end
-      end
-
-      production(:target) do
-        clause(:document) { |d| d }
-      end
 
       production(:document) do
         clause(:definitions_list) { |definitions| Document.new(definitions: definitions) }
@@ -33,9 +17,9 @@ module GraphQL
       )
 
       production(:definition) do
-        clause(:operation_definition)   { |e| e }
-        clause(:fragment_definition)    { |e| e }
-        clause(:type_system_definition) { |e| e }
+        clause(:operation_definition)
+        clause(:fragment_definition)
+        clause(:type_system_definition)
       end
 
       production(:operation_definition) do
@@ -48,7 +32,11 @@ module GraphQL
         end
 
         clause("selection_set") do |selections|
-          OperationDefinition.new(name: "", variables: Array(Type).new(), directives: Array(Type).new(), operation_type: "query", selections: selections)
+          OperationDefinition.new(name: "",
+            variables: Array(Type).new(),
+            directives: Array(Type).new(),
+            operation_type: "query",
+            selections: selections)
         end
       end
 
@@ -59,30 +47,33 @@ module GraphQL
       end
 
       production(:operation_name) do
-        clause(:name) { |t| t }
+        clause(:name)
       end
 
       production(:variable_definitions) do
-        clause("LPAREN variable_definitions_list RPAREN") { |_, list, _| list }
+        clause("LPAREN variable_definition+ RPAREN") { |_, list, _| list }
       end
 
-      build_nonempty_list_production(
-        :variable_definitions_list,
-        :variable_definition
-      )
-
       production(:variable_definition) do
-        clause("VAR_SIGN name COLON type default_value?") do |t1, name, _, type, default_value| nil
+        clause("VAR_SIGN name COLON type") do |t1, name, _, type|
+          VariableDefinition.new(
+            name: name, type: type,
+            default_value: nil
+          )
+        end
+
+        clause("VAR_SIGN name COLON type default_value") do |t1, name, _, type, default_value|
           VariableDefinition.new(
             name: name, type: type,
             default_value: default_value
           )
         end
+
       end
 
       production(:type) do
         clause(:name) { |name| TypeName.new(name: name) }
-        clause("type BANG") { |type| NonNullType.new(of_type: type) }
+        clause("name BANG") { |name| NonNullType.new(of_type: TypeName.new(name: name)) }
         clause("LBRACKET type RBRACKET") { |_, type, _| ListType.new(of_type: type) }
       end
 
@@ -92,26 +83,25 @@ module GraphQL
 
       production(:selection_set) do
         clause("LCURLY RCURLY") { Array(Selection).new }
-        clause("LCURLY selection_list RCURLY") { |_, list, _| list }
+        clause("LCURLY selection+ RCURLY") { |_, list, _| list }
       end
 
-      build_list_production(:selection_list, :selection)
-
       production(:selection) do
-        clause(:field) { |e| e }
-        clause(:fragment_spread) { |e| e }
-        clause(:inline_fragment) { |e| e }
+        clause(:field)
+        clause(:fragment_spread)
+        clause(:inline_fragment)
       end
 
       production(:field) do
-        clause("name arguments? directives_list? selection_set?") do |name, arguments, directives, selections| nil
-          Field.new(
+        clause("name arguments? directives_list? selection_set?") do |name, arguments, directives, selections|
+          field = Field.new(
             name: name,
             alias: nil,
             arguments: arguments || [] of Argument,
             directives: directives || [] of Directive,
             selections: selections || [] of Selection
           )
+          field
         end
 
         clause(
@@ -128,37 +118,37 @@ module GraphQL
       end
 
       production(:schema_keyword) do
-        clause(:SCHEMA)      { |t| t }
-        clause(:SCALAR)      { |t| t }
-        clause(:TYPE)        { |t| t }
-        clause(:IMPLEMENTS)  { |t| t }
-        clause(:INTERFACE)   { |t| t }
-        clause(:UNION)       { |t| t }
-        clause(:ENUM)        { |t| t }
-        clause(:INPUT)       { |t| t }
-        clause(:DIRECTIVE)   { |t| t }
+        clause(:SCHEMA)     { "schema"     }
+        clause(:SCALAR)     { "scalar"     }
+        clause(:TYPE)       { "type"       }
+        clause(:IMPLEMENTS) { "implements" }
+        clause(:INTERFACE)  { "interface"  }
+        clause(:UNION)      { "union"      }
+        clause(:ENUM)       { "enum"       }
+        clause(:INPUT)      { "input"      }
+        clause(:DIRECTIVE)  { "directive"  }
       end
 
       production(:name) do
-        clause(:name_without_on) { |t| t }
-        clause(:ON) { |t| t }
+        clause(:name_without_on)
+        clause(:ON)
       end
 
       production(:name_without_on) do
-        clause(:IDENTIFIER) { |t| t }
-        clause(:FRAGMENT) { |t| t }
-        clause(:TRUE) { |t| t }
-        clause(:FALSE) { |t| t }
-        clause(:operation_type) { |t| t }
-        clause(:schema_keyword) { |t| t }
+        clause(:IDENTIFIER)
+        clause(:FRAGMENT)
+        clause(:TRUE)
+        clause(:FALSE)
+        clause(:operation_type)
+        clause(:schema_keyword)
       end
 
       production(:enum_name) do
-        clause(:IDENTIFIER) { |t| t }
-        clause(:FRAGMENT) { |t| t }
-        clause(:ON) { |t| t }
-        clause(:operation_type) { |t| t }
-        clause(:schema_keyword) { |t| t }
+        clause(:IDENTIFIER)
+        clause(:FRAGMENT)
+        clause(:ON)
+        clause(:operation_type)
+        clause(:schema_keyword)
       end
 
       build_nonempty_list_production(:name_list, :name)
@@ -185,24 +175,32 @@ module GraphQL
       )
 
       production(:argument) do
-        clause("name COLON input_value") { |name, _, value| Argument.new(name: name, value: value) }
+        clause("name COLON input_value") do |name, _, value|
+          cvalue = (
+            value.is_a?(Array) ? value.map{|v| v.as(ArgumentValue)} : value
+          ).as(ArgumentValue)
+          Argument.new(
+            name: name,
+            value: cvalue
+          )
+        end
       end
 
       production(:input_value) do
-        clause(:FLOAT)        { |t| t.as(Float64) }
-        clause(:INT)          { |t| t.as(Int32) }
-        clause(:STRING)       { |t| t.as(String) }
-        clause(:TRUE)         { |t| true }
-        clause(:FALSE)        { |t| false }
-        clause(:null_value)   { |t| t }
-        clause(:variable)     { |t| t }
-        clause(:list_value)   { |t| t }
-        clause(:object_value) { |t| t }
-        clause(:enum_value)   { |t| t }
+        clause(:FLOAT)        { |t| t.as(String).to_f64 }
+        clause(:INT)          { |t| t.as(String).to_i32 }
+        clause(:STRING)       { |t| t.as(String)        }
+        clause(:TRUE)         { |t| true                }
+        clause(:FALSE)        { |t| false               }
+        clause(:null_value)
+        clause(:variable)
+        clause(:list_value)
+        clause(:object_value)
+        clause(:enum_value)
       end
 
       production(:null_value) do
-        clause(:NULL) { |t| NullValue.new(name: t.as(CLTK::Token).value) }
+        clause(:NULL) { |t| NullValue.new(name: t || "") }
       end
 
       production(:variable) do
@@ -232,7 +230,12 @@ module GraphQL
       )
 
       production(:object_value_field) do
-        clause("name COLON input_value") { |name, _, value| Argument.new(name: name, value: value)}
+        clause("name COLON input_value") do |name, _, value|
+          cvalue = (
+            value.is_a?(Array) ? value.map{|v| v.as(ArgumentValue)} : value
+          ).as(ArgumentValue)
+          Argument.new(name: name, value: cvalue)
+        end
       end
 
       production(:enum_value) do
@@ -250,8 +253,8 @@ module GraphQL
       )
 
       production(:directive) do
-        clause("DIR_SIGN name arguments") do |_, name, arguments|
-          Directive.new(name: name, arguments: arguments)
+        clause("DIR_SIGN name arguments?") do |_, name, arguments|
+          Directive.new(name: name, arguments: arguments || Array(Argument).new )
         end
       end
 
@@ -281,9 +284,9 @@ module GraphQL
       end
 
       production(:type_system_definition) do
-        clause(:schema_definition) { |t| t }
-        clause(:type_definition) { |t| t }
-        clause(:directive_definition) { |t| t }
+        clause(:schema_definition)
+        clause(:type_definition)
+        clause(:directive_definition)
       end
 
       production(:schema_definition) do
@@ -292,9 +295,9 @@ module GraphQL
         ) do |_, _, definitions|
           definitions = definitions.as(Hash(String, CLTK::Type))
           SchemaDefinition.new(
-            query: definitions["query"],
-            mutation: definitions["mutation"],
-            subscription: definitions["subscription"]
+            query: definitions["query"]?,
+            mutation: definitions["mutation"]?,
+            subscription: definitions["subscription"]?
           )
         end
       end
@@ -317,12 +320,12 @@ module GraphQL
       end
 
       production(:type_definition) do
-        clause(:scalar_type_definition) { |t| t }
-        clause(:object_type_definition) { |t| t }
-        clause(:interface_type_definition) { |t| t }
-        clause(:union_type_definition) { |t| t }
-        clause(:enum_type_definition) { |t| t }
-        clause(:input_object_type_definition) { |t| t }
+        clause(:scalar_type_definition)
+        clause(:object_type_definition)
+        clause(:interface_type_definition)
+        clause(:union_type_definition)
+        clause(:enum_type_definition)
+        clause(:input_object_type_definition)
       end
 
       production(:scalar_type_definition) do
@@ -351,7 +354,12 @@ module GraphQL
         clause(
           "name COLON type default_value? directives_list_opt"
         ) do |name, _, type, default_value, directives |
-          InputValueDefinition.new(name: name, type: type, default_value: default_value, directives: directives)
+          InputValueDefinition.new(
+            name: name, type: type,
+            default_value: (default_value.is_a?(Array) ?
+                              default_value.map &.as(FValue) :
+                              default_value).as(FValue),
+            directives: directives)
         end
       end
 
@@ -386,20 +394,28 @@ module GraphQL
         end
       end
 
-      production(:union_members) do
-        clause(:name) {|name| [TypeName.new(name: name)] }
-        clause("union_members PIPE name") {|members, _, name| members.as(Array) << TypeName.new(name: name)}
-      end
+      build_nonempty_list_production(
+        :union_members,
+        :name,
+        :PIPE
+      )
+
+      #      production(:union_members) do
+#        clause(:name) {|name| [TypeName.new(name: name)] }
+#        clause("union_members PIPE name") {|members, _, name| members.as(Array(CLTK::Type)) << TypeName.new(name: name)}
+#      end
 
       production(:union_type_definition) do
-        clause("UNION name directives_list_opt EQUALS union_members") do |_, name, directives, _,members|
-          UnionTypeDefinition.new(name: name, types: members, directives: directives, description: "")
+        clause("UNION name directives_list_opt EQUALS union_members") do |_, name, directives, _, members|
+          UnionTypeDefinition.new(name: name,
+                                  types: members.as(Array).map { |name| TypeName.new(name: name) }.as(Array(TypeName)),
+                                  directives: directives, description: "")
         end
       end
 
       production(:enum_type_definition) do
         clause("ENUM name directives_list_opt LCURLY enum_value_definitions RCURLY") do |_, name, directives, _,values|
-          EnumTypeDefinition.new(name: name, fvalues: values, directives: directives, description: "")
+          EnumTypeDefinition.new(name: name, fvalues: values.as(Array), directives: directives, description: "")
         end
       end
 

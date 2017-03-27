@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe Crystal::Graphql do
+describe GraphQL do
   # TODO: Write tests
 
   it "works" do

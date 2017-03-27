@@ -1,6 +1,6 @@
 require "cltk/ast"
 require "cltk/token"
-
+require "./generation"
 
 module GraphQL
   module Language
@@ -34,6 +34,9 @@ module GraphQL
       values({definitions: Array(OperationDefinition|FragmentDefinition)})
       as_children([:definitions])
 
+      def to_query_string
+        GraphQL::Language::Generation.generate(self)
+      end
       #  def slice_definition(name)
       #    GraphQL::Language::DefinitionSlice.slice(self, name)
       #  end
@@ -41,7 +44,7 @@ module GraphQL
 
 
     class SchemaDefinition < AbstractNode
-      values({query: OperationDefinition, mutation: OperationDefinition?, subscription: OperationDefinition?})
+      values({query: String, mutation: String?, subscription: String?})
     end
 
     # A query, mutation or subscription.
@@ -60,14 +63,14 @@ module GraphQL
     end
 
     class DirectiveDefinition < AbstractNode
-      values({name: String, arguments: Array(Argument), locations: Array(NameOnlyNode)})
+      values({name: String, arguments: Array(InputValueDefinition), locations: Array(String), description: String})
     end
 
     class Directive < AbstractNode
       values({name: String, arguments: Array(Argument)})
     end
 
-    alias FValue = String | Int32 | Float32 | Bool |  Nil | AEnum | Array(FValue)
+    alias FValue = String | Int32 | Float64 | Bool |  Nil | AEnum | AbstractNode | Array(FValue) | Hash(String, FValue)
     alias Type = TypeName | NonNullType | ListType
     alias Selection = Field | FragmentSpread | InlineFragment
 
@@ -75,7 +78,7 @@ module GraphQL
       values({name: String, type: Type, default_value: FValue})
     end
 
-    alias ArgumentValue = String | Int32 | Float32 | Bool | InputObject | VariableIdentifier | Array(ArgumentValue)
+    alias ArgumentValue = String | Int32 | Float64 | Bool | InputObject | VariableIdentifier | Array(ArgumentValue)
 
     class Argument < AbstractNode
       values({name: String, value: ArgumentValue})
@@ -98,7 +101,7 @@ module GraphQL
     end
 
     class InputObjectTypeDefinition < AbstractNode
-      values({name: String, fields: Array(Field), directives: Array(Directive), description: String})
+      values({name: String, fields: Array(InputValueDefinition), directives: Array(Directive), description: String})
     end
 
     class InputValueDefinition < AbstractNode
@@ -112,7 +115,7 @@ module GraphQL
 
     # Base class for non-null type names and list type names
     class WrapperType < AbstractNode
-      values({ of_type: (TypeName|NonNullType|ListType) })
+      values({ of_type: (Type) })
     end
 
     # A type name, used for variable definitions
@@ -128,9 +131,16 @@ module GraphQL
 
       # @return [Hash<String, Any>] Recursively turn this input object into a Ruby Hash
       def to_h()
-        arguments.inject({} of String => FValue) do |memo, pair|
+        arguments.reduce({} of String => FValue) do |memo, pair|
           v = pair.value
-          memo[pair.name] = v.is_a?(InputObject) ? v.to_h : v
+          memo[pair.name] = case v
+                            when InputObject
+                              v.to_h
+                            when Array
+                              v.map { |v| v.as(FValue) }
+                            else
+                              v
+                            end.as(FValue)
           memo
         end
       end
@@ -175,13 +185,13 @@ module GraphQL
     end
 
     class InterfaceTypeDefinition < AbstractNode
-      values({name: String, fields: Array(Field), directives: Array(Directive), description: String})
+      values({name: String, fields: Array(FieldDefinition), directives: Array(Directive), description: String})
       as_children([:fields, :directives])
     end
 
 
     class UnionTypeDefinition < AbstractNode
-      values({name: String, types: Array(Type), directives: Array(Directive), description: String})
+      values({name: String, types: Array(TypeName), directives: Array(Directive), description: String})
       as_children([:types, :directives])
     end
 
