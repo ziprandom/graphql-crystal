@@ -4,6 +4,7 @@ require "./lexer"
 
 require "cltk/macros"
 require "cltk/parser/parser_concern"
+{% puts "creating a prefinalized parser, this takes a lot of time ...".id%}
 
 insert_output_of("graphql parser") do
   require "cltk/parser/crystalize"
