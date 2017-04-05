@@ -113,6 +113,27 @@ puts document.to_query_string
 # representation
 # puts document.to_json
 ```
+## Performance
+
+To compare the Performance of the Parser with [facebooks GraphQL parser](https://github.com/graphql/libgraphqlparser) you need to have the library installed on your machine. Then run
+
+```sh
+crystal build --release benchmark/compare_benchmarks.cr
+```
+
+### Recent Results:
+
+```sh
+c implementation from facebook:   43.52k ( 22.98µs) (± 1.68%)        fastest
+     cltk based implementation:  222.84  (  4.49ms) (± 4.56%) 195.27× slower
+```
+
+for the pre_finalized version of the parser (uncomment `require "graphql-crystal/language/parser_pre"` in `benchmark/compare_benchmarks.cr`):
+
+```sh
+c implementation from facebook:   40.53k ( 24.67µs) (±11.49%)        fastest
+     cltk based implementation:  220.02  (  4.55ms) (± 6.88%) 184.23× slower
+```
 
 ## Development
 

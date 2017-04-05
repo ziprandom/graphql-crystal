@@ -1,2 +1,3 @@
 #!/bin/sh
-crystal run --release benchmark/compare_benchmarks.cr
+crystal build --release benchmark/compare_benchmarks.cr
+./compare_benchmarks
