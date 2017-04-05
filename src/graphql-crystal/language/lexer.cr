@@ -3,46 +3,53 @@ require "cltk/lexer"
 module GraphQL
   module Language
     class Lexer < CLTK::Lexer
-      # Skip whitespace.
-      rule(/:/)	  { :COLON   }
 
-      rule(/[\c\r\n]/)
-      rule(/[, \t]+/)
+      # rule(/[\c\r\n]|[, \t]+/)
+      # rule(/# [^\n\r]*/)         #{ |t| {:COMMENT, t} }
 
-      rule(/# [^\n\r]*/)         #{ |t| {:COMMENT, t} }
-      rule(/on/)                 { :ON }
-      rule(/fragment/)           { :FRAGMENT }
-      rule(/true/)               { :TRUE }
-      rule(/false/)              { :FALSE }
-      rule(/null/)               { :NULL }
-      rule(/query/)              { :QUERY }
-      rule(/mutation/)           { :MUTATION }
-      rule(/subscription/)       { :SUBSCRIPTION }
-      rule(/schema/)             { :SCHEMA }
-      rule(/scalar/)             { :SCALAR }
-      rule(/type/)               { :TYPE }
-      rule(/implements/)         { :IMPLEMENTS }
-      rule(/interface/)          { :INTERFACE }
-      rule(/union/)              { :UNION }
-      rule(/enum/)               { :ENUM }
-      rule(/input/)              { :INPUT }
-      rule(/directive/)          { :DIRECTIVE }
-      rule(/\{/)                 { :LCURLY }
-      rule(/\}/)                 { :RCURLY }
-      rule(/\(/)                 { :LPAREN }
-      rule(/\)/)                 { :RPAREN }
-      rule(/\[/)                 { :LBRACKET }
-      rule(/\]/)                 { :RBRACKET }
-      rule(/:/)                  { :COLON }
-      rule(/\$/)                 { :VAR_SIGN }
-      rule(/\@/)                 { :DIR_SIGN }
-      rule(/\.\.\./)             { :ELLIPSIS }
-      rule(/=/)                  { :EQUALS }
-      rule(/\!/)                 { :BANG }
-      rule(/\|/)                 { :PIPE }
+      # unification of the two rules above
+      # ignores comments & whitespaces
+      rule(/[\c\r\n]|[, \t]+|# [^\n\r]*/)
 
-      rule(/-?(0|[1-9][0-9]*)/)  { |i| {:INT, i} }
-      rule(/\-?(0|[1-9][0-9]*)(\.[0-9]+)?((e|E)?(\+|\-)?[0-9]+)?/) { |t| {:FLOAT, t} }
+      rule(":")	                 { :COLON   }
+      rule("on")                 { :ON }
+      rule("fragment")           { :FRAGMENT }
+      rule("true")               { :TRUE }
+      rule("false")              { :FALSE }
+      rule("null")               { :NULL }
+      rule("query")              { :QUERY }
+      rule("mutation")           { :MUTATION }
+      rule("subscription")       { :SUBSCRIPTION }
+      rule("schema")             { :SCHEMA }
+      rule("scalar")             { :SCALAR }
+      rule("type")               { :TYPE }
+      rule("implements")         { :IMPLEMENTS }
+      rule("interface")          { :INTERFACE }
+      rule("union")              { :UNION }
+      rule("enum")               { :ENUM }
+      rule("input")              { :INPUT }
+      rule("directive")          { :DIRECTIVE }
+      rule("{")                  { :LCURLY }
+      rule("}")                  { :RCURLY }
+      rule("(")                  { :LPAREN }
+      rule(")")                  { :RPAREN }
+      rule("[")                  { :LBRACKET }
+      rule("]")                  { :RBRACKET }
+      rule(":")                  { :COLON }
+      rule("$")                  { :VAR_SIGN }
+      rule("@")                  { :DIR_SIGN }
+      rule("...")                { :ELLIPSIS }
+      rule("=")                  { :EQUALS }
+      rule("!")                  { :BANG }
+      rule("|")                  { :PIPE }
+
+      rule(/\-?(0|[1-9][0-9]*)(\.[0-9]+)?((e|E)?(\+|\-)?[0-9]+)?/) do |t|
+        if t.includes?(".") || t.includes?("e") || t.includes?("E")
+          {:FLOAT, t}
+        else
+          {:INT, t }
+        end
+      end
 
       rule(/"(?:[^"\\]|\\.)*"/)  do |t|
         escaped = replace_escaped_characters_in_place(t[1...-1]);
