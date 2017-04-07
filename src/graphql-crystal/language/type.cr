@@ -1,13 +1,9 @@
 require "./nodes"
-require "cltk/token"
  module CLTK
+   alias TokenValue = String | Float64 | Int32  | Nil
    alias Type = GraphQL::Language::AbstractNode       |
-                Token                                 |
+                TokenValue                            |
                 Bool                                  |
-                String                                |
-                Int32                                 |
-                Float64                               |
-                Nil                                   |
-                Hash(String, Type)                    |
+                Tuple(String, String)                 |
                 Array(Type)
  end

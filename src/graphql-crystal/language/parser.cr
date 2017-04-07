@@ -80,7 +80,9 @@ module GraphQL
       end
 
       production(:field) do
-        clause("name arguments? directive* selection_set?") do |name, arguments, directives, selections|
+        clause(
+          "name arguments? directive* selection_set?"
+        ) do |name, arguments, directives, selections|
           field = Field.new(
             name: name,
             alias: nil,
@@ -92,7 +94,8 @@ module GraphQL
         end
 
         clause(
-          "name COLON name arguments? directive*? selection_set?") do |_alias, _, name, arguments, directives, selections|
+          "name COLON name arguments? directive*? selection_set?"
+        ) do |_alias, _, name, arguments, directives, selections|
           Field.new(
             name: name,
             alias: _alias,
@@ -150,7 +153,7 @@ module GraphQL
       production(:argument) do
         clause("name COLON input_value") do |name, _, value|
           cvalue = (
-            value.is_a?(Array) ? value.map { |v| v.as(ArgumentValue) } : value
+            value.is_a?(Array) ? value.map( &.as(ArgumentValue) ) : value
           ).as(ArgumentValue)
           Argument.new(
             name: name,
@@ -241,7 +244,10 @@ module GraphQL
       production(:schema_definition) do
         clause(
           "SCHEMA LCURLY operation_type_definition_list RCURLY") do |_, _, definitions|
-          definitions = definitions.as(Hash(String, CLTK::Type))
+          definitions = definitions.as(Array).reduce(Hash(String, String).new) do |memo, pair|
+            pair.as(Tuple(String, String)).tap { |pair| memo[pair[0]] = pair[1] }
+            memo
+          end
           SchemaDefinition.new(
             query: definitions["query"]?,
             mutation: definitions["mutation"]?,
@@ -250,19 +256,11 @@ module GraphQL
         end
       end
 
-      production(:operation_type_definition_list) do
-        clause(:operation_type_definition) { |t| t }
-        clause(
-          "operation_type_definition_list operation_type_definition") do |list, definition|
-          list.as(Hash(String, CLTK::Type)).merge(
-            definition.as(Hash(String, CLTK::Type))
-          )
-        end
-      end
+      nonempty_list(:operation_type_definition_list, :operation_type_definition)
 
       production(:operation_type_definition) do
         clause("operation_type COLON name") do |type, _, name|
-          ({type.as(String) => name.as(CLTK::Type)}).as(CLTK::Type)
+          {type.as(String), name.as(String)}
         end
       end
 
@@ -283,7 +281,8 @@ module GraphQL
 
       production(:object_type_definition) do
         clause(
-          "TYPE name implements? directive* LCURLY field_definition* RCURLY") do |_, name, interfaces, directives, _, fields|
+          "TYPE name implements? directive* LCURLY field_definition* RCURLY"
+        ) do |_, name, interfaces, directives, _, fields|
           ObjectTypeDefinition.new(name: name,
             interfaces: interfaces || [] of String,
             directives: directives,
@@ -362,7 +361,7 @@ module GraphQL
 
       build_nonempty_list_production(:directive_locations, :name, :PIPE)
 
-      finalize({explain: false, precedence: false, lookahead: false})
+      finalize
     end
   end
 end

@@ -1,9 +1,9 @@
 require "./type"
 require "./nodes"
 require "./lexer"
+require "cltk/parser/parser_concern"
 
 require "cltk/macros"
-require "cltk/parser/parser_concern"
 {% puts "creating a prefinalized parser, this takes a lot of time ...".id%}
 
 insert_output_of("graphql parser") do

@@ -1,23 +1,6 @@
 # coding: utf-8
 # frozen_string_literal: true
-require "../src/graphql-crystal/language/generation"
-require "../src/graphql-crystal/language/nodes"
-require "../src/graphql-crystal/language/type"
 require "../../spec_helper"
-
-# require "../src/graphql-crystal/language/lexer"
-require "../src/graphql-crystal/language/parser"
-# require "cltk/parser/parser_concern"
-# require "cltk/macros"
-
-# use version of this parser that has
-# been finialized at compile time
-#
-# insert_output_of() do
-#   require "cltk/parser/crystalize"
-#   require "../src/graphql-crystal/language/parser"
-#   GraphQL::Language::Parser.crystalize
-# end
 
 class GraphQL::Language::Parser
   def self.parse(prog : String, options = NamedTuple.new )

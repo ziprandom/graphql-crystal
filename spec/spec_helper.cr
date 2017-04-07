@@ -1,1 +1,5 @@
 require "spec"
+require "../src/graphql-crystal/language/type"
+require "../src/graphql-crystal/language/nodes"
+require "../src/graphql-crystal/language/lexer"
+require "../src/graphql-crystal/language/parser"

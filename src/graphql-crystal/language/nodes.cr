@@ -1,5 +1,4 @@
 require "cltk/ast"
-require "cltk/token"
 require "./generation"
 
 module GraphQL
