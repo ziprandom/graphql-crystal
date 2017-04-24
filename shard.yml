@@ -2,12 +2,12 @@ name: graphql-crystal
 version: 0.1.0
 
 authors:
-  -  <>
+- ziprandom - <ziprandom@gmail.com>
 
 dependencies:
   cltk:
     github: ziprandom/cltk
-    branch: master
+    version: ~> 0.1.0
 
 crystal: 0.21.1
 

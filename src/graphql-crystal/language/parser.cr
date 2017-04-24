@@ -40,18 +40,18 @@ module GraphQL
       end
 
       production(:variable_definitions) do
-        clause("LPAREN variable_definition+ RPAREN") { |_, list, _| list }
+        clause("LPAREN .variable_definition+ RPAREN") { |list| list }
       end
 
       production(:variable_definition) do
-        clause("VAR_SIGN name COLON type") do |t1, name, _, type|
+        clause("VAR_SIGN .name COLON .type") do |name, type|
           VariableDefinition.new(
             name: name, type: type,
             default_value: nil
           )
         end
 
-        clause("VAR_SIGN name COLON type default_value") do |t1, name, _, type, default_value|
+        clause("VAR_SIGN .name COLON .type .default_value") do |name, type, default_value|
           VariableDefinition.new(
             name: name, type: type,
             default_value: default_value
@@ -66,11 +66,11 @@ module GraphQL
       end
 
       production(:default_value) do
-        clause("EQUALS input_value") { |_, val| val }
+        clause("EQUALS .input_value") { |val| val }
       end
 
       production(:selection_set) do
-        clause("LCURLY selection* RCURLY") { |_, list, _| list }
+        clause("LCURLY .selection* RCURLY") { |list| list }
       end
 
       production(:selection) do
@@ -94,8 +94,8 @@ module GraphQL
         end
 
         clause(
-          "name COLON name arguments? directive*? selection_set?"
-        ) do |_alias, _, name, arguments, directives, selections|
+          ".name COLON .name .arguments? .directive*? .selection_set?"
+        ) do |_alias, name, arguments, directives, selections|
           Field.new(
             name: name,
             alias: _alias,
@@ -147,11 +147,11 @@ module GraphQL
       end
 
       production(:arguments) do
-        clause("LPAREN argument* RPAREN") { |_, list, _| list }
+        clause("LPAREN .argument* RPAREN") { |list| list }
       end
 
       production(:argument) do
-        clause("name COLON input_value") do |name, _, value|
+        clause(".name COLON .input_value") do |name, value|
           cvalue = (
             value.is_a?(Array) ? value.map( &.as(ArgumentValue) ) : value
           ).as(ArgumentValue)
@@ -180,21 +180,21 @@ module GraphQL
       end
 
       production(:variable) do
-        clause("VAR_SIGN name") { |_, name| VariableIdentifier.new(name: name) }
+        clause("VAR_SIGN .name") { |name| VariableIdentifier.new(name: name) }
       end
 
       production(:list_value) do
-        clause("LBRACKET input_value* RBRACKET") { |_, list, _| list }
+        clause("LBRACKET .input_value* RBRACKET") { |list| list }
       end
 
       production(:object_value) do
-        clause("LCURLY object_value_field* RCURLY") do |_, list, _|
+        clause("LCURLY .object_value_field* RCURLY") do |list|
           InputObject.new(arguments: list)
         end
       end
 
       production(:object_value_field) do
-        clause("name COLON input_value") do |name, _, value|
+        clause(".name COLON .input_value") do |name, value|
           cvalue = (
             value.is_a?(Array) ? value.map { |v| v.as(ArgumentValue) } : value
           ).as(ArgumentValue)
@@ -207,30 +207,30 @@ module GraphQL
       end
 
       production(:directive) do
-        clause("DIR_SIGN name arguments?") do |_, name, arguments|
+        clause("DIR_SIGN .name .arguments?") do |name, arguments|
           Directive.new(name: name, arguments: arguments || Array(Argument).new)
         end
       end
 
       production(:fragment_spread) do
-        clause("ELLIPSIS name_without_on directive*") do |_, name, directives|
+        clause("ELLIPSIS .name_without_on .directive*") do |name, directives|
           FragmentSpread.new(name: name, directives: directives)
         end
       end
 
       production(:inline_fragment) do
         clause(
-          "ELLIPSIS ON type directive* selection_set") do |_, _, type, directives, selections|
+          "ELLIPSIS ON .type .directive* .selection_set") do |type, directives, selections|
           InlineFragment.new(type: type, directives: directives, selections: selections)
         end
-        clause("ELLIPSIS directive* selection_set") do |_, directives, selections|
+        clause("ELLIPSIS .directive* .selection_set") do |directives, selections|
           InlineFragment.new(type: nil, directives: directives, selections: selections)
         end
       end
 
       production(:fragment_definition) do
         clause(
-          "FRAGMENT name_without_on? ON type directive* selection_set") do |_, name, _, type, directives, selections|
+          "FRAGMENT .name_without_on? ON .type .directive* .selection_set") do |name, type, directives, selections|
           FragmentDefinition.new(name: name, type: type, directives: directives, selections: selections)
         end
       end
@@ -243,7 +243,7 @@ module GraphQL
 
       production(:schema_definition) do
         clause(
-          "SCHEMA LCURLY operation_type_definition_list RCURLY") do |_, _, definitions|
+          "SCHEMA LCURLY .operation_type_definition_list RCURLY") do |definitions|
           definitions = definitions.as(Array).reduce(Hash(String, String).new) do |memo, pair|
             pair.as(Tuple(String, String)).tap { |pair| memo[pair[0]] = pair[1] }
             memo
@@ -259,7 +259,7 @@ module GraphQL
       nonempty_list(:operation_type_definition_list, :operation_type_definition)
 
       production(:operation_type_definition) do
-        clause("operation_type COLON name") do |type, _, name|
+        clause(".operation_type COLON .name") do |type, name|
           {type.as(String), name.as(String)}
         end
       end
@@ -274,15 +274,15 @@ module GraphQL
       end
 
       production(:scalar_type_definition) do
-        clause("SCALAR name directive*") do |_, name, directives|
+        clause("SCALAR .name .directive*") do |name, directives|
           ScalarTypeDefinition.new(name: name, directives: directives, description: "")
         end
       end
 
       production(:object_type_definition) do
         clause(
-          "TYPE name implements? directive* LCURLY field_definition* RCURLY"
-        ) do |_, name, interfaces, directives, _, fields|
+          "TYPE .name .implements? .directive* LCURLY .field_definition* RCURLY"
+        ) do |name, interfaces, directives, fields|
           ObjectTypeDefinition.new(name: name,
             interfaces: interfaces || [] of String,
             directives: directives,
@@ -292,12 +292,12 @@ module GraphQL
       end
 
       production(:implements) do
-        clause("IMPLEMENTS name+") { |_, name| name }
+        clause("IMPLEMENTS .name+") { |name| name }
       end
 
       production(:input_value_definition) do
         clause(
-          "name COLON type default_value? directive*") do |name, _, type, default_value, directives|
+          ".name COLON .type .default_value? .directive*") do |name, type, default_value, directives|
           InputValueDefinition.new(
             name: name, type: type,
             default_value: (default_value.is_a?(Array) ? default_value.map &.as(FValue) : default_value).as(FValue),
@@ -306,12 +306,12 @@ module GraphQL
       end
 
       production(:arguments_definitions) do
-        clause("LPAREN input_value_definition+ RPAREN") { |_, list, _| list }
+        clause("LPAREN .input_value_definition+ RPAREN") { |list| list }
       end
 
       production(:field_definition) do
         clause(
-          "name arguments_definitions? COLON type directive*") do |name, arguments, _, type, directives|
+          ".name .arguments_definitions? COLON .type .directive*") do |name, arguments, type, directives|
           FieldDefinition.new(name: name, arguments: arguments || [] of Argument,
             type: type, directives: directives, description: "")
         end
@@ -319,7 +319,7 @@ module GraphQL
 
       production(:interface_type_definition) do
         clause(
-          "INTERFACE name directive* LCURLY field_definition* RCURLY") do |_, name, directives, _, fields|
+          "INTERFACE .name .directive* LCURLY .field_definition* RCURLY") do |name, directives, fields|
           InterfaceTypeDefinition.new(name: name, fields: fields, directives: directives, description: "")
         end
       end
@@ -331,7 +331,7 @@ module GraphQL
       )
 
       production(:union_type_definition) do
-        clause("UNION name directive* EQUALS union_members") do |_, name, directives, _, members|
+        clause("UNION .name .directive* EQUALS .union_members") do |name, directives, members|
           UnionTypeDefinition.new(name: name,
             types: members.as(Array).map { |name| TypeName.new(name: name) }.as(Array(TypeName)),
             directives: directives, description: "")
@@ -339,22 +339,22 @@ module GraphQL
       end
 
       production(:enum_type_definition) do
-        clause("ENUM name directive* LCURLY enum_value_definition+ RCURLY") do |_, name, directives, _, values|
+        clause("ENUM .name .directive* LCURLY .enum_value_definition+ RCURLY") do |name, directives, values|
           EnumTypeDefinition.new(name: name, fvalues: values.as(Array), directives: directives, description: "")
         end
       end
 
       production(:input_object_type_definition) do
         clause(
-          "INPUT name directive* LCURLY input_value_definition+ RCURLY") do |_, name, directives, _, values|
+          "INPUT .name .directive* LCURLY .input_value_definition+ RCURLY") do |name, directives, values|
           InputObjectTypeDefinition.new(name: name, fields: values, directives: directives, description: "")
         end
       end
 
       production(:directive_definition) do
         clause (
-          "DIRECTIVE DIR_SIGN name arguments_definitions? ON directive_locations"
-        ) do |_, _, name, arguments, _, locations|
+          "DIRECTIVE DIR_SIGN .name .arguments_definitions? ON .directive_locations"
+        ) do |name, arguments, locations|
           DirectiveDefinition.new(name: name, arguments: arguments, locations: locations, description: "")
         end
       end

@@ -1,62 +1,67 @@
-require "cltk/lexer"
+require "cltk/scanner"
 
 module GraphQL
   module Language
-    class Lexer < CLTK::Lexer
+    class Lexer < CLTK::Scanner
+      extend CLTK::Scanner::LexerCompatibility
 
-      # rule(/[\c\r\n]|[, \t]+/)
-      # rule(/# [^\n\r]*/)         #{ |t| {:COMMENT, t} }
+      # set a delimiter to split the string
+      # for faster lexing. defaults to "\n"
+      # self.pre_delimiter = "\n"
 
-      # unification of the two rules above
-      # ignores comments & whitespaces
-      rule(/[\c\r\n]|[, \t]+|# [^\n\r]*/)
+      # ignore newlines, commas and comments
+      rule(/[\n\r]|[, \t]+|# [^\n\r]*/)
 
-      rule(":")	                 { :COLON   }
-      rule("on")                 { :ON }
-      rule("fragment")           { :FRAGMENT }
-      rule("true")               { :TRUE }
-      rule("false")              { :FALSE }
-      rule("null")               { :NULL }
-      rule("query")              { :QUERY }
-      rule("mutation")           { :MUTATION }
-      rule("subscription")       { :SUBSCRIPTION }
-      rule("schema")             { :SCHEMA }
-      rule("scalar")             { :SCALAR }
-      rule("type")               { :TYPE }
-      rule("implements")         { :IMPLEMENTS }
-      rule("interface")          { :INTERFACE }
-      rule("union")              { :UNION }
-      rule("enum")               { :ENUM }
-      rule("input")              { :INPUT }
-      rule("directive")          { :DIRECTIVE }
-      rule("{")                  { :LCURLY }
-      rule("}")                  { :RCURLY }
-      rule("(")                  { :LPAREN }
-      rule(")")                  { :RPAREN }
-      rule("[")                  { :LBRACKET }
-      rule("]")                  { :RBRACKET }
-      rule(":")                  { :COLON }
-      rule("$")                  { :VAR_SIGN }
-      rule("@")                  { :DIR_SIGN }
-      rule("...")                { :ELLIPSIS }
-      rule("=")                  { :EQUALS }
-      rule("!")                  { :BANG }
-      rule("|")                  { :PIPE }
+      rule(":")                       { { :COLON   } }
+      rule("on")                      { { :ON } }
+      rule("fragment")                { { :FRAGMENT } }
+      rule("true")                    { { :TRUE } }
+      rule("false")                   { { :FALSE } }
+      rule("null")                    { { :NULL } }
+      rule("query")                   { { :QUERY } }
+      rule("mutation")                { { :MUTATION } }
+      rule("subscription")            { { :SUBSCRIPTION } }
+      rule("schema")                  { { :SCHEMA } }
+      rule("scalar")                  { { :SCALAR } }
+      rule("type")                    { { :TYPE } }
+      rule("implements")              { { :IMPLEMENTS } }
+      rule("interface")               { { :INTERFACE } }
+      rule("union")                   { { :UNION } }
+      rule("enum")                    { { :ENUM } }
+      rule("input")                   { { :INPUT } }
+      rule("directive")               { { :DIRECTIVE } }
+      rule("{")                       { { :LCURLY } }
+      rule("}")                       { { :RCURLY } }
+      rule("(")                       { { :LPAREN } }
+      rule(")")                       { { :RPAREN } }
+      rule("[")                       { { :LBRACKET } }
+      rule("]")                       { { :RBRACKET } }
+      rule(":")                       { { :COLON } }
+      rule("$")                       { { :VAR_SIGN } }
+      rule("@")                       { { :DIR_SIGN } }
+      rule("...")                     { { :ELLIPSIS } }
+      rule("=")                       { { :EQUALS } }
+      rule("!")                       { { :BANG } }
+      rule("|")                       { { :PIPE } }
 
-      rule(/\-?(0|[1-9][0-9]*)(\.[0-9]+)?((e|E)?(\+|\-)?[0-9]+)?/) do |t|
-        if t.includes?(".") || t.includes?("e") || t.includes?("E")
-          {:FLOAT, t}
-        else
-          {:INT, t }
-        end
-      end
+      rule("\"")                      { push_state :string  }
 
-      rule(/"(?:[^"\\]|\\.)*"/)  do |t|
-        escaped = replace_escaped_characters_in_place(t[1...-1]);
+      rule(/([^\"]|\\\")*/, :string)  do |t|
+        escaped = replace_escaped_characters_in_place(t);
         if escaped  !~ VALID_STRING
           {:BAD_UNICODE_ESCAPE, escaped }
         else
           {:STRING, escaped}
+        end
+      end
+
+      rule("\"", :string)             { pop_state }
+
+      rule(/-?(0|[1-9][0-9]*)(\.[0-9]+)?((e|E)?(\+|\-)?[0-9]+)?/) do |t|
+        if t.includes?(".") || t.includes?("e") || t.includes?("E")
+          {:FLOAT, t}
+        else
+          {:INT, t }
         end
       end
 

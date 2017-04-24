@@ -124,15 +124,15 @@ crystal build --release benchmark/compare_benchmarks.cr
 ### Recent Results:
 
 ```sh
-c implementation from facebook:   45.44k ( 22.01µs) (± 2.31%)        fastest
-     cltk based implementation:  420.18  (  2.38ms) (± 3.15%) 108.14× slower
+c implementation from facebook:   47.29k ( 21.15µs) (± 0.70%)       fastest
+     cltk based implementation:  904.46  (  1.11ms) (± 0.96%) 52.28× slower
 ```
 
 for the pre_finalized version of the parser (uncomment `require "graphql-crystal/language/parser_pre"` in `benchmark/compare_benchmarks.cr`):
 
 ```sh
-c implementation from facebook:   46.26k ( 21.62µs) (± 3.54%)        fastest
-     cltk based implementation:  456.07  (  2.19ms) (± 1.40%) 101.43× slower
+c implementation from facebook:   47.22k ( 21.18µs) (± 2.58%)       fastest
+     cltk based implementation:  976.25  (  1.02ms) (± 5.10%) 48.37× slower
 ```
 
 ## Development
