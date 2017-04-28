@@ -16,7 +16,7 @@ Users[1].friends = [Users[2], Users[0]]
 Users[0].friends = [Users[2], Users[1]]
 
 class Address
-  include GraphQL::ObjectType
+  extend GraphQL::ObjectType
   getter :street, :number, :city, :postal_code
   def initialize(@street : String, @number : Int32, @city : String, @postal_code : Int32); end
   field :street, StringType
@@ -26,7 +26,7 @@ class Address
 end
 
 class User
-  include GraphQL::ObjectType
+  extend GraphQL::ObjectType
   getter :id, :name, :address
   property :friends
   def initialize(@id : Int32, @name : String, @address : Address, @friends = Array(User).new); end
@@ -45,14 +45,14 @@ class User
 end
 
 class Query
-  extend GraphQL::ObjectType
-  field :user, User, { id: IDType } { Users.find(&.id.==(args["id"] ))}
+  include GraphQL::ObjectType
+  field :user, User, { id: IDType } { Users.find(&.id.==(args["id"])) }
 end
 
 # just to make sure it keeps
 # working with inheritance
 class SpecialQuery < Query; end
-
+pp SpecialQuery.fields
 module TestSchema
   extend GraphQL::Schema
   query SpecialQuery

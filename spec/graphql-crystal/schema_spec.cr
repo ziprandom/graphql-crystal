@@ -41,6 +41,16 @@ describe GraphQL::Schema do
                   })
     end
 
+    it "answers a request for a field with a custom resolve callback" do
+      TestSchema.execute(
+        "{ user(id: 0) { full_address } }"
+      ).should eq({
+                    "user" => {
+                      "full_address" => "otto neverthere\n---------------\n11 Downing Street\n3231 London"
+                    }
+                  })
+    end
+
     it "raises an error if we request a field that hast not been defined" do
       bad_query_string = %{
         {

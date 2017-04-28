@@ -2,7 +2,7 @@ module GraphQL
   # A module to turn a class into a graphql ObjectType
   module ObjectType
 
-    macro included
+    macro extended
       # the macro pushes the supplied values onto the FIELDS constant
       # and defines a standardised accessor method <fieldname>_field
       # to access the value, using the callback as method body, if provided
@@ -18,20 +18,17 @@ module GraphQL
 
           def self.\\{{args[0].id}}_field(args)
             args ||= Hash(String, String).new
-            \\{% if body.is_a? Nop %}\
+            \\{% if body.is_a? Nop %}
+            \\{% else %}
+\\{% end %}
               nil
-            \\{% else %}\
-              with_self do
-                \\{{body.body}}
-              end
-            \\{% end %}
           end
 
           def \\{{args[0].id}}_field(args)
             args ||= Hash(String, String).new
-            \\{% if body.is_a? Nop %}\
-              \\{{args[0].id}}\
-            \\{% else %}\
+            \\{% if body.is_a? Nop %}
+              \\{{args[0].id}}
+            \\{% else %}
               with_self do
                 \\{{body.body}}
               end
@@ -42,7 +39,6 @@ module GraphQL
 
       # enter the matrix
       define_field_macro
-
     end
   end
 end

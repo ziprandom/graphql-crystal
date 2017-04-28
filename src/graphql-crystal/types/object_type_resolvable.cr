@@ -21,6 +21,7 @@ module GraphQL
                        field.name,
                        arguments_array_to_hash(field.arguments)
                      )
+
         # this nicely works with extended modules,
         # thereby making them real interfaces in
         # crystals type system

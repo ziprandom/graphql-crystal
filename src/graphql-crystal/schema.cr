@@ -1,11 +1,10 @@
 require "./types/object_type"
-require "./types/object_type_included"
 require "./types/scalar_types"
 module GraphQL
   module Schema
 
     macro extended
-      extend GraphQL::ObjectType
+      include GraphQL::ObjectType
 
       def self.execute(document : GraphQL::Language::Document)
         queries, mutations, fragments = split_document(document)
