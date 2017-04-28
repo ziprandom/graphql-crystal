@@ -16,7 +16,7 @@ Users[1].friends = [Users[2], Users[0]]
 Users[0].friends = [Users[2], Users[1]]
 
 class Address
-  extend GraphQL::ObjectType
+  include GraphQL::ObjectType
   getter :street, :number, :city, :postal_code
   def initialize(@street : String, @number : Int32, @city : String, @postal_code : Int32); end
   field :street, StringType
@@ -26,7 +26,7 @@ class Address
 end
 
 class User
-  extend GraphQL::ObjectType
+  include GraphQL::ObjectType
   getter :id, :name, :address
   property :friends
   def initialize(@id : Int32, @name : String, @address : Address, @friends = Array(User).new); end
@@ -34,13 +34,14 @@ class User
   field :name, StringType
   field :address, Address
   field :friends, ListType(User)
-#  field :full_address, StringType do
-#    <<-address
-#    #{name}
-#    #{name.size.times.to_a.map {"-"}.join}
-#    #{address}
-#    address
-#  end
+  field :full_address, StringType do
+    <<-address
+    #{name}
+    #{name.size.times.to_a.map {"-"}.join}
+    #{address.number} #{address.street}
+    #{address.postal_code} #{address.city}
+    address
+  end
 end
 
 class Query

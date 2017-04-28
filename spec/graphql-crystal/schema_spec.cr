@@ -3,6 +3,44 @@ require "../spec_helper"
 describe GraphQL::Schema do
 
   describe "resolve" do
+
+    it "answers a simple field request" do
+      TestSchema.execute("{ user(id: 0) { name } }").should eq({ "user" => { "name" => "otto neverthere" }})
+    end
+
+    it "answers a simple field request for several fields" do
+      TestSchema.execute(
+        "{ user(id: 0) { id, name } }"
+      ).should eq({ "user" => { "id" => 0, "name" => "otto neverthere" }})
+    end
+
+    it "answers a simple field request for a nested resource" do
+      TestSchema.execute(
+        "{ user(id: 0) { id, address { city } } }"
+      ).should eq({
+                    "user" => {
+                      "id" => 0,
+                      "address" => {
+                        "city" => "London"
+                      }
+                    }
+                  })
+    end
+
+    it "answers a more deep request for a list resource" do
+      TestSchema.execute(
+        "{ user(id: 0) { id, friends { id, name } } }"
+      ).should eq({
+                    "user" => {
+                      "id" => 0,
+                      "friends" => [
+                        { "id" => 2, "name" => "wilma nunca" },
+                        { "id" => 1, "name" => "jennifer nonone" }
+                      ]
+                    }
+                  })
+    end
+
     it "raises an error if we request a field that hast not been defined" do
       bad_query_string = %{
         {
