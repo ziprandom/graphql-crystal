@@ -1,4 +1,5 @@
 require "cltk/scanner"
+require "./type"
 
 module GraphQL
   module Language

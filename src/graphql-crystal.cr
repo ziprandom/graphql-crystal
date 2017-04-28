@@ -1,3 +1,4 @@
+require "./core_ext/*"
 require "./graphql-crystal/*"
 
 module GraphQL
