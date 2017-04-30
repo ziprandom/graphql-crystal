@@ -1,15 +1,13 @@
 # coding: utf-8
 require "../src/graphql-crystal/schema"
 
-Adresses = [
+Addresses = [
   {"Downing Street", 11, "London", 3231},
   {"Sunset Boulevard", 114, "Miami", 123439},
   {"Avenida Santa Fé", 3042, "Ciudad Autónoma de Buenos Aires", 12398}
-]
-
+].map { |vars| Address.new(*vars)}
 Users = ["otto neverthere", "jennifer nonone", "wilma nunca"].map_with_index do |name, idx|
-  address = Adresses[idx]
-  User.new(idx, name, Address.new(*address))
+  User.new(idx, name, Addresses[idx])
 end
 Users[2].friends = [Users[1], Users[0]]
 Users[1].friends = [Users[2], Users[0]]
@@ -33,7 +31,7 @@ class User
   field :id, IDType
   field :name, StringType
   field :address, Address
-  field :friends, ListType(User)
+  field :friends, ListType(User).new
   field :full_address, StringType do
     <<-address
     #{name}
@@ -46,13 +44,22 @@ end
 
 class Query
   include GraphQL::ObjectType
-  field :user, User, { id: IDType } { Users.find(&.id.==(args["id"])) }
+  field :user, User, { id: IDType } do
+    Users.find(&.id.==(args["id"]))
+  end
 end
 
 # just to make sure it keeps
 # working with inheritance
-class SpecialQuery < Query; end
-pp SpecialQuery.fields
+class SpecialQuery < Query
+  field :addresses, ListType(Address).new, { city: ListType(StringType).new } do
+    (cities = args["city"]?) ?
+      Addresses.select{ |address| cities.as(Array).includes? address.city } :
+      Addresses
+  end
+end
+
+# pp SpecialQuery.fields
 module TestSchema
   extend GraphQL::Schema
   query SpecialQuery

@@ -10,8 +10,7 @@ module GraphQL
         queries, mutations, fragments = split_document(document)
         query = queries.first
         selections = query.selections.compact_map { |f| f if f.is_a?(GraphQL::Language::Field) }
-        result = QUERY.resolve(selections)
-        result
+        { "data" => QUERY.resolve(selections) }
       end
 
       def self.execute(query_string)

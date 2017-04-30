@@ -24,12 +24,24 @@ class IDType < Type
 end
 
 class ListType(T) < Type
-  def self.of_type
+
+  def accepts?(values )
+    return false unless values.is_a?(Array)
+    values.each do |v|
+      unless T.accepts?(v)
+        return false
+      end
+    end
+    true
+  end
+
+  def of_type
     {{@type.type_vars.first}}
   end
-  def self.resolve(selections, obj : Array)
-    obj.map do |e|
-      {{@type.type_vars.first}}.resolve(selections, e)
+
+  def resolve(selections, obj)
+    obj.as(Array).map do |e|
+      T.resolve(selections, e).as(GraphQL::ObjectType::Resolvable::ReturnType)
     end.reject do |e|
       !e.is_a?(GraphQL::ObjectType::Resolvable::ReturnType)
     end

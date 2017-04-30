@@ -27,13 +27,11 @@ module GraphQL
         # crystals type system
         field_type = self.fields[field.name][:type]
         selections = field.selections.compact_map { |f| f if f.is_a?(GraphQL::Language::Field) }
-#        selections = field.selections.select(&.is_a?(GraphQL::Language::Field)).map(&.as(GraphQL::Language::Field))
-        result = if field_type.responds_to? :resolve
-                   field_type.resolve(selections, entity)
-                 else
-                   entity
-                 end.as(ReturnType)
-        result
+        result = if field_type.responds_to? :resolve || field_type.is_a?(ListType)
+          field_type.resolve(selections, entity)
+        else
+          entity
+        end.as(ReturnType)
       end
 
       private def arguments_array_to_hash(arguments)

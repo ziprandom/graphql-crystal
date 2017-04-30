@@ -1,3 +1,4 @@
+# coding: utf-8
 require "../spec_helper"
 
 describe GraphQL::Schema do
@@ -5,23 +6,71 @@ describe GraphQL::Schema do
   describe "resolve" do
 
     it "answers a simple field request" do
-      TestSchema.execute("{ user(id: 0) { name } }").should eq({ "user" => { "name" => "otto neverthere" }})
+      TestSchema.execute("{ user(id: 0) { name } }").should eq({ "data" => { "user" => { "name" => "otto neverthere" }}})
     end
 
+    it "answers a simple field request for a field defined later in the inheritance chain (SpecialQuery)" do
+      expected = {
+        "data" => {
+          "addresses" => [
+            {"city" => "London"},
+            {"city" => "Miami"},
+            {"city" => "Ciudad Autónoma de Buenos Aires"}
+          ]
+        }
+      }
+      TestSchema.execute("{ addresses { city } }").should eq expected
+    end
+
+    it "answers a simple field request for a field defined later in the inheritance chain (SpecialQuery)" do
+      expected = {
+        "data" => {
+          "addresses" => [
+            {"city" => "London", "street" => "Downing Street", "number" => 11},
+            {"city" => "Miami", "street" => "Sunset Boulevard", "number" => 114}
+          ]
+        }
+      }
+      TestSchema.execute(%{
+                           { addresses(city: ["London", "Miami"]) { city street number } }
+                         }).should eq expected
+    end
+
+    it "answers a simple field request for a field defined later in the inheritance chain (SpecialQuery)" do
+      expected = {
+        "data" => {
+          "addresses" => [] of Nil
+        }
+      }
+      TestSchema.execute(%{
+                           { addresses(city: ["Istanbul"]) { city street number } }
+                         }).should eq expected
+    end
+
+
     it "answers a simple field request for several fields" do
+      expected = {
+        "data" => {
+          "user" => {
+            "id" => 0, "name" => "otto neverthere"
+          }
+        }
+      }
       TestSchema.execute(
         "{ user(id: 0) { id, name } }"
-      ).should eq({ "user" => { "id" => 0, "name" => "otto neverthere" }})
+      ).should eq(expected)
     end
 
     it "answers a simple field request for a nested resource" do
       TestSchema.execute(
         "{ user(id: 0) { id, address { city } } }"
       ).should eq({
-                    "user" => {
-                      "id" => 0,
-                      "address" => {
-                        "city" => "London"
+                    "data" => {
+                      "user" => {
+                        "id" => 0,
+                        "address" => {
+                          "city" => "London"
+                        }
                       }
                     }
                   })
@@ -31,12 +80,14 @@ describe GraphQL::Schema do
       TestSchema.execute(
         "{ user(id: 0) { id, friends { id, name } } }"
       ).should eq({
-                    "user" => {
-                      "id" => 0,
-                      "friends" => [
-                        { "id" => 2, "name" => "wilma nunca" },
-                        { "id" => 1, "name" => "jennifer nonone" }
-                      ]
+                    "data" => {
+                      "user" => {
+                        "id" => 0,
+                        "friends" => [
+                          { "id" => 2, "name" => "wilma nunca" },
+                          { "id" => 1, "name" => "jennifer nonone" }
+                        ]
+                      }
                     }
                   })
     end
@@ -44,9 +95,10 @@ describe GraphQL::Schema do
     it "answers a request for a field with a custom resolve callback" do
       TestSchema.execute(
         "{ user(id: 0) { full_address } }"
-      ).should eq({
-                    "user" => {
-                      "full_address" => "otto neverthere\n---------------\n11 Downing Street\n3231 London"
+      ).should eq({ "data" => {
+                      "user" => {
+                        "full_address" => "otto neverthere\n---------------\n11 Downing Street\n3231 London"
+                      }
                     }
                   })
     end
