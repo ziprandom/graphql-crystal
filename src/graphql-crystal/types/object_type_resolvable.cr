@@ -8,7 +8,8 @@ module GraphQL
         validate_fields_and_arguments(fields)
 
         fields.reduce(nil) do |hash, field|
-          pair = { field.name => resolve(field, obj).as(ReturnType) }
+          field_name = field.alias || field.name
+          pair = { field_name => resolve(field, obj).as(ReturnType) }
           hash ? hash.merge(pair) : pair
         end.as(ReturnType)
       end

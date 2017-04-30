@@ -81,7 +81,7 @@ module GraphQL
 
       production(:field) do
         clause(
-          "name arguments? directive* selection_set?"
+          "name_without_on arguments? directive* selection_set?"
         ) do |name, arguments, directives, selections|
           field = Field.new(
             name: name,
@@ -94,7 +94,7 @@ module GraphQL
         end
 
         clause(
-          ".name COLON .name .arguments? .directive*? .selection_set?"
+          ".name_without_on COLON .name .arguments? .directive*? .selection_set?"
         ) do |_alias, name, arguments, directives, selections|
           Field.new(
             name: name,

@@ -76,7 +76,7 @@ describe GraphQL::Language::Parser do
             ... on Droid {
               primaryFunction
             }
-                   ... on Human {
+            ... on Human {
               height
             }
           }

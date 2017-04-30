@@ -4,7 +4,7 @@ require "../src/graphql-crystal/schema"
 Addresses = [
   {"Downing Street", 11, "London", 3231},
   {"Sunset Boulevard", 114, "Miami", 123439},
-  {"Avenida Santa Fé", 3042, "Ciudad Autónoma de Buenos Aires", 12398}
+  {"Avenida Santa Fé", 3042, "CABA", 12398}
 ].map { |vars| Address.new(*vars)}
 Users = ["otto neverthere", "jennifer nonone", "wilma nunca"].map_with_index do |name, idx|
   User.new(idx, name, Addresses[idx])
@@ -49,10 +49,17 @@ class Query
   end
 end
 
+enum CityEnum
+  London
+  Miami
+  CABA
+  Istanbul
+end
+
 # just to make sure it keeps
 # working with inheritance
 class SpecialQuery < Query
-  field :addresses, ListType(Address).new, { city: ListType(StringType).new } do
+  field :addresses, ListType(Address).new, { city: ListType(EnumType(CityEnum)).new } do
     (cities = args["city"]?) ?
       Addresses.select{ |address| cities.as(Array).includes? address.city } :
       Addresses

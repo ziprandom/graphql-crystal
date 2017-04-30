@@ -12,20 +12,34 @@ class StringType < Type
     true
   end
 end
+
 class IntegerType < Type
   def self.accepts?(value : Number)
     true
   end
 end
+
 class IDType < Type
   def self.accepts?(value : Int)
     true
   end
 end
 
+class EnumType(T) < Type
+  def self.accepts?(value)
+    T.values.map(&.to_s).includes? value
+  end
+  def self.resolve(value)
+    value.to_s
+  end
+end
+
+# we cant use this type without
+# instantiating it due to
+# https://github.com/crystal-lang/crystal/issues/4353
 class ListType(T) < Type
 
-  def accepts?(values )
+  def accepts?(values)
     return false unless values.is_a?(Array)
     values.each do |v|
       unless T.accepts?(v)
@@ -46,4 +60,5 @@ class ListType(T) < Type
       !e.is_a?(GraphQL::ObjectType::Resolvable::ReturnType)
     end
   end
+
 end

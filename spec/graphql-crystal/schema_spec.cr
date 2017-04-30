@@ -15,7 +15,7 @@ describe GraphQL::Schema do
           "addresses" => [
             {"city" => "London"},
             {"city" => "Miami"},
-            {"city" => "Ciudad Autónoma de Buenos Aires"}
+            {"city" => "CABA"}
           ]
         }
       }
@@ -101,6 +101,81 @@ describe GraphQL::Schema do
                       }
                     }
                   })
+    end
+
+    it "answers a request for aliased fields" do
+      expected = {
+        "data" => {
+          "firstUser" => {
+            "name" => "otto neverthere"
+          },
+          "secondUser" => {
+            "name" => "jennifer nonone",
+            "aliased_name" => "jennifer nonone"
+          }
+        }
+      }
+
+      TestSchema.execute(%{
+                           {
+                             firstUser: user(id: 0) {
+                               name
+                             }
+                             secondUser: user(id: 1) {
+                               name,
+                               aliased_name: name
+                             }
+                           }
+                         }).should eq(expected)
+
+    end
+
+    it "answers a request for aliased resolving a fragment definition fields" do
+      expected = {
+        "data" => {
+          "firstUser" => {
+            "id" => 0,
+            "name" => "otto neverthere"
+          },
+          "secondUser" => {
+            "id" => 1,
+            "name" => "jennifer nonone"
+          }
+        }
+      }
+
+      TestSchema.execute(%{
+                           {
+                             firstUser: user(id: 0) {
+                               ... userFields
+                             },
+                             secondUser: user(id: 1) {
+                               ... userFields
+                             }
+                           }
+                           fragment userFields on User {
+                             id, name
+                           }
+                         }).should eq(expected)
+
+    end
+
+    it "raises an error when I try to use an undefined fragment" do
+      expect_raises(Exception, "fragment \"userFieldsNonExistent\" is undefined") do
+      TestSchema.execute(%{
+                           {
+                             firstUser: user(id: 0) {
+                               ... userFieldsNonExistent
+                               ... on User {
+                                 primaryFunction
+                               }
+                             }
+                           }
+                           fragment userFields on User {
+                             id, name
+                           }
+                         })
+      end
     end
 
     it "raises an error if we request a field that hast not been defined" do
