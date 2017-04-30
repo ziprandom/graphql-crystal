@@ -160,15 +160,50 @@ describe GraphQL::Schema do
 
     end
 
+    it "answers a request for aliased field resolving an inline fragment definition" do
+      expected = {
+        "data" => {
+          "firstUser" => {
+            "id" => 0,
+            "name" => "otto neverthere"
+          }
+        }
+      }
+
+      TestSchema.execute(%{
+                           {
+                             firstUser: user(id: 0) {
+                               ... on User {
+                                 id, name
+                               }
+                             }
+                           }
+                         }).should eq(expected)
+
+    end
+
+    it "raises if no inline fragment was defined for the type actually returned" do
+      expect_raises(Exception, "no selections found for this field!\
+                         maybe you forgot to define an inline fragment for this type in a union?") do
+
+        TestSchema.execute(%{
+                             {
+                               firstUser: user(id: 0) {
+                                 ... on Droid {
+                                   id, name
+                                 }
+                               }
+                             }
+                           })
+      end
+    end
+
     it "raises an error when I try to use an undefined fragment" do
       expect_raises(Exception, "fragment \"userFieldsNonExistent\" is undefined") do
       TestSchema.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... userFieldsNonExistent
-                               ... on User {
-                                 primaryFunction
-                               }
                              }
                            }
                            fragment userFields on User {
