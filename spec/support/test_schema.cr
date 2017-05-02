@@ -55,7 +55,7 @@ end
 
 class Query
   include GraphQL::ObjectType
-  field :user, User, { id: IDType } do
+  field :user, User, "A user in the system.", { id: IDType } do
     Users.find &.id.==( args["id"] )
   end
 end
@@ -73,15 +73,13 @@ alias CityType = EnumType( CityEnum )
 # working with inheritance
 class SpecialQuery < Query
 
-  field :addresses, ListType( Address ).new,
+  field :addresses, ListType( Address ).new, "an address in the system",
         { city: ListType( CityType ).new } do
     (cities = args["city"]?) ?
       Addresses.select do |address|
         cities.as( Array ).includes? address.city
       end : Addresses
   end
-
-
 end
 
 module TestSchema

@@ -16,7 +16,7 @@ macro define_graphql_fields(on_instance?)
 
   # a constant to hold the fields defined for
   # classes extending the module
-  FIELDS = [] of Tuple(Symbol, Type.class, Hash(String, Type.class)?)
+  FIELDS = [] of Tuple(Symbol, Type.class, Hash(String, Type.class)?, String)
 
   # ensure inherited classes
   # behave the way you'd expect
@@ -32,10 +32,11 @@ end
 macro define_field_macro(on_instance?)
   macro field(*args, &body)
     \{% name = args[0]
-         type = args[1]
-         arguments = args[2]
+        type = args[1]
+        description = args[2] || ""
+        arguments = args[3]
       %}
-    \{% FIELDS << {name, type, arguments} %}
+    \{% FIELDS << {name, type, arguments, description} %}
     def self.\{{args[0].id}}_field(args)
       {% if on_instance? %}\
       nil
@@ -110,7 +111,7 @@ macro define_object_type_macros(on_instance?)
   # a NamedTuple representing its values
   def self.fields
     \{{ @type.constant("FIELDS") ?
-      ("NamedTuple.new(" + @type.constant("FIELDS").map { |f| "#{f[0].id}: NamedTuple.new(type: #{f[1]}, args: #{f[2]})" }.join(", ") + ")").id : nil
+      ("NamedTuple.new(" + @type.constant("FIELDS").map { |f| "#{f[0].id}: NamedTuple.new(type: #{f[1]}, args: #{f[2]}, description: #{f[3]})" }.join(", ") + ")").id : nil
     }}
   end
 
@@ -125,7 +126,7 @@ macro define_object_type_macros(on_instance?)
       # own FIELDS constant hodling only the fields they
       # define themselfes
       \\\{% if !@type.constant("FIELDS") %}
-           FIELDS = [] of Tuple(Symbol, Type.class, Hash(String, Type.class)?)
+           FIELDS = [] of Tuple(Symbol, Type.class, Hash(String, Type.class)?, String)
       \\\{% end %}
 
       # classes that inherit from the class that
@@ -139,7 +140,7 @@ macro define_object_type_macros(on_instance?)
           \\\{{
             (
               "NamedTuple.new(" + FIELDS.map do |f|
-               "#{f[0].id}: NamedTuple.new(type: #{f[1]}, args: #{f[2]})"
+               "#{f[0].id}: NamedTuple.new(type: #{f[1]}, args: #{f[2]}, description: #{f[3]})"
               end.join(", ") + ")"
             ).id
           }}
