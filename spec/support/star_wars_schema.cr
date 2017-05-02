@@ -39,6 +39,15 @@ module QueryType
     end
   end
 
+  field :humans, [Human], "", {
+    ids: {
+      description: "a list of ids",
+      type: [GraphQL::StringType]
+    }
+  } do
+    args["ids"].as(Array).map { |i| Characters.find( &.id.==(i) ) }
+  end
+
   field :human, Human, "", {
           id: {
             description: "id of the human",
@@ -94,3 +103,24 @@ query_string = %{
 }
 
 puts StarWarsSchema.execute(query_string).to_pretty_json
+puts StarWarsSchema.execute(%{{ hero(episode: "JEDI") { name friends { name home_planet} } }}).to_pretty_json
+query_string = %{
+  {
+    humans(ids: []) {
+      name friends {
+        ... on Human { name home_planet friends {
+                         ... on Human { name home_planet }
+                         ... on Droid { name primary_function }
+                       }
+        }
+        ... on Droid { name primary_function friends {
+                         ... on Human { name home_planet }
+                         ... on Droid { name primary_function }
+                       }
+        }
+      }
+    }
+  }
+}
+puts StarWarsSchema.execute(query_string).to_pretty_json
+puts StarWarsSchema.execute(%{ { humans(ids: ["1003", "1000", "1001", "1002"]) { name } } }).to_pretty_json

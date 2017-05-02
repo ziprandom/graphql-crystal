@@ -30,7 +30,7 @@ end
 # and resorting to the instance variable of the same name of no block
 # was given (@<field_name>)
 macro define_field_macro(on_instance?)
-  FIELDS = [] of Tuple(Symbol, GraphQL::Type.class, Hash(String, GraphQL::Type.class)?, String)
+  FIELDS = [] of Tuple(Symbol, Object.class, Hash(String, GraphQL::Type.class)?, String)
   macro field(*args, &body)
     \{% name = args[0]
         type = args[1]

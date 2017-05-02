@@ -1,5 +1,7 @@
 require "../language/nodes"
+require "../schema/field_resolver"
 module GraphQL
+
   module ObjectType
     module Resolvable
       alias ArgumentsType = Array(GraphQL::Language::Field|GraphQL::Language::InlineFragment)
@@ -46,15 +48,9 @@ module GraphQL
         selections = field.selections.compact_map do |f|
           f if f.is_a?(GraphQL::Language::Field|GraphQL::Language::InlineFragment)
         end
-        result = if field_type.responds_to? :resolve
-                   GraphQL.cast_to_return field_type.resolve(selections, entity)
-                 elsif field_type.is_a?(Array)
-                   entity.as( Array ).map do |e|
-                     GraphQL.cast_to_return field_type.first.resolve(selections, e).as(ReturnType)
-                   end
-                 else
-                   entity
-                 end.as(ReturnType)
+        GraphQL::Schema::FieldResolver.resolve_selections_for_field(
+          field_type, entity, selections
+        )
       end
 
       private def arguments_array_to_hash(arguments)
@@ -74,6 +70,9 @@ module GraphQL
         if (non_existent = requested_field_names - allowed_field_names).any?
           raise "unknown fields: #{non_existent.join(", ")}"
         end
+        #
+        # TODO: check fields against .nilable?
+        # and report obligaroty fields that are missing
         fields.each do |field|
           # we wan't to ignore inline fragments here
           next unless field.is_a? GraphQL::Language::Field

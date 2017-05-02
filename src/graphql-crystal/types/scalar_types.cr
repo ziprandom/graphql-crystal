@@ -1,3 +1,4 @@
+require "../schema/field_resolver"
 module GraphQL
   class Type
     getter :name, :description
@@ -55,7 +56,11 @@ module GraphQL
   # https://github.com/crystal-lang/crystal/issues/4353
   class ListType(T) < Type
 
-    def accepts?(values)
+    def accepts?(value)
+      self.accepts? value
+    end
+
+    def self.accepts?(values)
       return false unless values.is_a?(Array)
       values.each do |v|
         unless T.accepts?(v)
@@ -65,15 +70,14 @@ module GraphQL
       true
     end
 
-    def resolve(selections, obj)
+    def self.resolve(selections, obj)
       GraphQL.cast_to_return(
         obj.as(Array).map do |e|
-          T.resolve(selections, e)
-        end.reject do |e|
-          !e.is_a?(GraphQL::ObjectType::Resolvable::ReturnType)
+          GraphQL::Schema::FieldResolver.resolve_selections_for_field(
+            T, e, selections
+          ).as(GraphQL::ObjectType::Resolvable::ReturnType)
         end
       )
     end
-
   end
 end
