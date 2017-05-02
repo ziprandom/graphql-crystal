@@ -249,7 +249,7 @@ describe GraphQL::Schema do
       }
       expect_raises(
         Exception,
-        %{argument "id" is expected to be of Type: "IDType", "henry" has been rejected}
+        %{argument "id" is expected to be of Type: "GraphQL::IDType", "henry" has been rejected}
       ) do
         TestSchema.execute(bad_query_string)
       end

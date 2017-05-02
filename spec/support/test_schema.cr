@@ -24,10 +24,10 @@ class Address
         @street : String, @number : Int32,
         @city : String, @postal_code : Int32)
   end
-  field :street, StringType
-  field :number, IntegerType
-  field :city, StringType
-  field :postal_code, IntegerType
+  field :street, GraphQL::StringType
+  field :number, GraphQL::IntegerType
+  field :city, GraphQL::StringType
+  field :postal_code, GraphQL::IntegerType
 end
 
 class User
@@ -39,11 +39,11 @@ class User
         @address : Address,
         @friends = Array(User).new)
   end
-  field :id, IDType
-  field :name, StringType
+  field :id, GraphQL::IDType
+  field :name, GraphQL::StringType
   field :address, Address
-  field :friends, ListType(User).new
-  field :full_address, StringType do
+  field :friends, [User]
+  field :full_address, GraphQL::StringType do
     <<-address
     #{name}
     #{name.size.times.to_a.map {"-"}.join}
@@ -55,7 +55,9 @@ end
 
 class Query
   include GraphQL::ObjectType
-  field :user, User, "A user in the system.", { id: IDType } do
+  field :user, User, "A user in the system.", {
+          id: { type: GraphQL::IDType, description: "the user id to query for", default: nil }
+        } do
     Users.find &.id.==( args["id"] )
   end
 end
@@ -67,14 +69,20 @@ enum CityEnum
   Istanbul
 end
 
-alias CityType = EnumType( CityEnum )
+alias CityType = GraphQL::EnumType( CityEnum )
 
 # just to make sure it keeps
 # working with inheritance
 class SpecialQuery < Query
 
-  field :addresses, ListType( Address ).new, "an address in the system",
-        { city: ListType( CityType ).new } do
+  field :addresses, [Address], "an address in the system",
+        {
+          city: {
+            type: [CityType],
+            description: "the city for which addresses should be returned",
+            default: nil
+          }
+        } do
     (cities = args["city"]?) ?
       Addresses.select do |address|
         cities.as( Array ).includes? address.city

@@ -16,7 +16,7 @@ macro define_graphql_fields(on_instance?)
 
   # a constant to hold the fields defined for
   # classes extending the module
-  FIELDS = [] of Tuple(Symbol, Type.class, Hash(String, Type.class)?, String)
+  # FIELDS = [] of Tuple(Symbol, Object.class, Hash(String, GraphQL::Type.class)?, String)
 
   # ensure inherited classes
   # behave the way you'd expect
@@ -30,6 +30,7 @@ end
 # and resorting to the instance variable of the same name of no block
 # was given (@<field_name>)
 macro define_field_macro(on_instance?)
+  FIELDS = [] of Tuple(Symbol, GraphQL::Type.class, Hash(String, GraphQL::Type.class)?, String)
   macro field(*args, &body)
     \{% name = args[0]
         type = args[1]
@@ -66,52 +67,55 @@ macro define_field_macro(on_instance?)
 end
 
 macro define_resolve_field_methods
+  macro finished
   # resolve a field to an object using
   # its name and arguments calling the
   # parent class if the field name can't
   # be found
   def self.resolve_field(name : String, arguments)
-     \{% if !@type.constant("FIELDS").empty? %}
+    \{% if !@type.constant("FIELDS").empty? %}
       case name
       \{% for field in @type.constant("FIELDS") %}
-      when "\{{ field[0].id }}"
+      when "\{{ field[0].id }}" #\{{@type}}
         \{{field[0].id}}_field(arguments)
       \{% end %}
       else
-        raise "couldn't resolve field \"#{name}\" for #{{self.name}}"
+        fields = %{\{{@type.constant("FIELDS")}}}
+        raise "couldn't resolve field \"#{name}\" for #{self.name} (#{fields})"
       end
     \{% else %}
-      raise "couldn't resolve field \"#{name}\" for #{{self.name}}"
+      raise "couldn't resolve field \"#{name}\" for #{self.name} (which has no fields at all)"
     \{% end %}
   end
 
   def resolve_field(name : String, arguments)
-      \{% if !@type.constant("FIELDS").empty? %}
+    \{% if !@type.constant("FIELDS").empty? %}
       case name
       \{% for field in @type.constant("FIELDS") %}
-      when "\{{ field[0].id }}" #\\\{{@type}}
+      when "\{{ field[0].id }}" #\\\\{{@type}}
         \{{field[0].id}}_field(arguments)
       \{% end %}
       else
-        raise "couldn't resolve field \"#{name}\" for \\\{{@type}}"
+        raise "couldn't resolve field \"#{name}\" for \{{@type}}"
       end
     \{% else %}
-      raise "couldn't resolve field \"#{name}\" for \\\{{@type}}"
+      raise "couldn't resolve field \"#{name}\" for \{{@type}} (which itself has no fields defined)"
     \{% end %}
+    end
   end
 end
 
 # a macro to redefine this macro wherever
 # it is needed.
 macro define_object_type_macros(on_instance?)
-
   define_field_macro({{on_instance?}})
   define_resolve_field_methods
   # Using the values collected in the FIELDS constant construct
   # a NamedTuple representing its values
+  #
   def self.fields
-    \{{ @type.constant("FIELDS") ?
-      ("NamedTuple.new(" + @type.constant("FIELDS").map { |f| "#{f[0].id}: NamedTuple.new(type: #{f[1]}, args: #{f[2]}, description: #{f[3]})" }.join(", ") + ")").id : nil
+    \{{
+      ("NamedTuple.new(" + FIELDS.map { |f| "#{f[0].id}: NamedTuple.new(type: #{f[1]}, args: #{f[2]}, description: #{f[3]})" }.join(", ") + ")").id
     }}
   end
 
@@ -121,14 +125,6 @@ macro define_object_type_macros(on_instance?)
   # originally extended the module
   macro make_inherited
     macro inherited
-      # classes that inherit from the class that
-      # originally extended the module will have their
-      # own FIELDS constant hodling only the fields they
-      # define themselfes
-      \\\{% if !@type.constant("FIELDS") %}
-           FIELDS = [] of Tuple(Symbol, Type.class, Hash(String, Type.class)?, String)
-      \\\{% end %}
-
       # classes that inherit from the class that
       # originally extended the module will return
       # their FIELDS constant converted to a NamedTuple
@@ -155,7 +151,7 @@ macro define_object_type_macros(on_instance?)
         \\\{% if !FIELDS.empty? %}
         case name
         \\\{% for field in FIELDS %}
-           when "\\\{{field[0].id}}"
+           when "\\\{{field[0].id}}" #\\\{{@type}}
              self.\\\{{field[0].id}}_field(arguments)
         \\\{% end %}
         else
@@ -173,14 +169,14 @@ macro define_object_type_macros(on_instance?)
         \\\{% if !FIELDS.empty? %}
         case name
         \\\{% for field in FIELDS %}
-           when "\\\{{field[0].id}}"
+           when "\\\{{field[0].id}}" #\\\{{@type}}
              self.\\\{{field[0].id}}_field(arguments)
         \\\{% end %}
         else
-          previous_def(name, arguments)
+          super(name, arguments)
         end
         \\\{% else %}
-          previous_def(name, arguments)
+          super(name, arguments)
         \\\{% end %}
       end
 

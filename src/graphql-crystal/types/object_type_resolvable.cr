@@ -1,3 +1,4 @@
+require "../language/nodes"
 module GraphQL
   module ObjectType
     module Resolvable
@@ -45,11 +46,15 @@ module GraphQL
         selections = field.selections.compact_map do |f|
           f if f.is_a?(GraphQL::Language::Field|GraphQL::Language::InlineFragment)
         end
-        result = if field_type.responds_to? :resolve || field_type.is_a?(ListType)
-          field_type.resolve(selections, entity)
-        else
-          entity
-        end.as(ReturnType)
+        result = if field_type.responds_to? :resolve
+                   GraphQL.cast_to_return field_type.resolve(selections, entity)
+                 elsif field_type.is_a?(Array)
+                   entity.as( Array ).map do |e|
+                     GraphQL.cast_to_return field_type.first.resolve(selections, e).as(ReturnType)
+                   end
+                 else
+                   entity
+                 end.as(ReturnType)
       end
 
       private def arguments_array_to_hash(arguments)
@@ -70,18 +75,32 @@ module GraphQL
           raise "unknown fields: #{non_existent.join(", ")}"
         end
         fields.each do |field|
+          # we wan't to ignore inline fragments here
           next unless field.is_a? GraphQL::Language::Field
           allowed_arguments = self.fields[field.name][:args] || NamedTuple.new
           field.arguments.each do |arg|
-            if !(defined_type_for_field = allowed_arguments[arg.name]?)
+            if !(argument_definition = allowed_arguments[arg.name]?)
               raise "#{arg.name} isn't allowed for queries on the #{field.name} field"
-            elsif !defined_type_for_field.not_nil!.accepts?(arg.value)
-              raise %{argument "#{arg.name}" is expected to be of Type: "#{defined_type_for_field}", \
+            end
+            field_type = argument_definition.try(&.[:type])
+            if !type_accepts_value?(field_type, arg.value)
+              raise %{argument "#{arg.name}" is expected to be of Type: "#{field_type}", \
                                                                   "#{arg.value}" has been rejected}
             end
           end
         end
       end
+
+      private def type_accepts_value?(type, value)
+        if type.is_a?(Array)
+          return false unless value.is_a?(Array)
+          inner_type = type.first
+          !value.any? { |v| !type_accepts_value?(inner_type, v) }
+        else
+          !!type.try &.accepts? value
+        end
+      end
+
     end
   end
 end
