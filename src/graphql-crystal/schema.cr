@@ -17,7 +17,7 @@ module GraphQL
         { "data" => QUERY.resolve( selections ) }
       end
 
-      def self.execute(query_string)
+      def self.execute(query_string, params = nil)
         self.execute(GraphQL::Language.parse(query_string))
       end
 

@@ -8,18 +8,18 @@ class Character
                                                                 if the have none." do
     Characters.select { |c| self.friends.includes? c.id }
   end
-  field :appears_in, [GraphQL::StringType], "Which movies they appear in."
-  field :secret_backstory, GraphQL::StringType, "All secrets about their past." do
+  field :appearsIn, [GraphQL::StringType], "Which movies they appear in." { self.appears_in }
+  field :secretBackstory, GraphQL::StringType, "All secrets about their past." do
     raise "the secret backstory is secret ..."
   end
 end
 
 class Human
-  field :home_planet, GraphQL::StringType, "the home planet of the human, or null if unknown."
+  field :homePlanet, GraphQL::StringType, "the home planet of the human, or null if unknown." { self.home_planet }
 end
 
 class Droid
-  field :primary_function, GraphQL::StringType, "The primary function of the droid."
+  field :primaryFunction, GraphQL::StringType, "The primary function of the droid." { self.primary_function }
 end
 
 module QueryType
@@ -29,7 +29,7 @@ module QueryType
           episode: {
             description: "If omitted, returns the hero of the whole saga. If \
                           provided, returns the hero of that particular episode.",
-            type: GraphQL::StringType
+            type: GraphQL::EnumType(EpisodeEnum)
           }
         } do
     if (args["episode"]? == 5)
@@ -72,55 +72,3 @@ module StarWarsSchema
   extend GraphQL::Schema
   query QueryType
 end
-
-# StarWarsSchema.execute("{ human(id: \"1001\") { id, name }}")
-# StarWarsSchema.execute("{ droid(id: \"2001\") { id, name }}")
-# StarWarsSchema.execute("{ hero(episode: \"NEWHOPE\") { id, name, appears_in, friends { name } } }")
-
-query_string = %{
-
-  {
-    c3po: droid(id: "2000") {
-      ...droidFragment
-    }
-
-    luke: human(id: "1000") {
-      ...humanFragment
-    }
-  }
-
-  fragment humanFragment on Human {
-    name
-    appears_in
-    home_planet
-  }
-
-  fragment droidFragment on Droid {
-    name
-    appears_in
-    primary_function
-  }
-}
-
-puts StarWarsSchema.execute(query_string).to_pretty_json
-puts StarWarsSchema.execute(%{{ hero(episode: "JEDI") { name friends { name home_planet} } }}).to_pretty_json
-query_string = %{
-  {
-    humans(ids: []) {
-      name friends {
-        ... on Human { name home_planet friends {
-                         ... on Human { name home_planet }
-                         ... on Droid { name primary_function }
-                       }
-        }
-        ... on Droid { name primary_function friends {
-                         ... on Human { name home_planet }
-                         ... on Droid { name primary_function }
-                       }
-        }
-      }
-    }
-  }
-}
-puts StarWarsSchema.execute(query_string).to_pretty_json
-puts StarWarsSchema.execute(%{ { humans(ids: ["1003", "1000", "1001", "1002"]) { name } } }).to_pretty_json

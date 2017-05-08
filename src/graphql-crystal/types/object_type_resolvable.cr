@@ -11,7 +11,11 @@ module GraphQL
         validate_fields_and_arguments(fields)
         flatten_inline_fragments(fields).reduce(nil) do |hash, field|
           field_name = field.alias || field.name
-          pair = { field_name => resolve(field, obj).as(ReturnType) }
+          if field_name == "__typename"
+            pair = { "__typename" => self.to_s.as(ReturnType) }
+          else
+            pair = { field_name => resolve(field, obj).as(ReturnType) }
+          end
           hash ? hash.merge(pair) : pair
         end.as(ReturnType)
       end
@@ -65,8 +69,9 @@ module GraphQL
       # TODO: don't raise on the first error but collect them
       #
       def validate_fields_and_arguments(fields)
+        fields = fields.compact_map { |f| f.is_a?(GraphQL::Language::Field) ? f : nil}.reject( &.try(&.name).==("__typename") )
         allowed_field_names = self.fields.keys.map(&.to_s).to_a
-        requested_field_names = fields.compact_map{ |f| f.is_a?(GraphQL::Language::Field) ? f : nil}.map(&.name)
+        requested_field_names = fields.map(&.name)
         if (non_existent = requested_field_names - allowed_field_names).any?
           raise "unknown fields: #{non_existent.join(", ")}"
         end
