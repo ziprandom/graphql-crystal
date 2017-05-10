@@ -7,27 +7,49 @@ module GraphQL
       alias ArgumentsType = Array(GraphQL::Language::Field|GraphQL::Language::InlineFragment)
       alias ReturnType = String | Int32 | Float64 | Nil | Bool | Array(ReturnType) | Hash(String, ReturnType)
 
+      alias Error = {message: String, path: Array(String|Int32) }
+
       def resolve(fields : ArgumentsType, obj = nil)
-        validate_fields_and_arguments(fields)
+        errors = validate_fields_and_arguments(fields)
 
         # we don't resolve field selections for
         # an ObjectType if the Object didn't resolve
         # this doesn't work -->here v <-- due to a bug:
         # return nil if self.is_a?(ObjectType) && obj == nil
         # workaround:
-        return nil if self.responds_to? :im_an_object_type! && obj == nil
+        return {nil, [] of Error} if self.responds_to? :im_an_object_type! && obj == nil
 
-        flatten_inline_fragments(fields).reduce(nil) do |hash, field|
-          resolve_enums_to_values(field)
+        result = flatten_inline_fragments(fields).reduce( Hash(String, ReturnType).new ) do |hash, field|
           field_name = field.alias || field.name
-          if field_name == "__typename"
-            pair = { "__typename" => self.to_s.as(ReturnType) }
-          else
-            pair = { field_name => resolve(field, obj).as(ReturnType) }
-          end
-          hash ? hash.merge(pair) : pair
-        end.as(ReturnType)
 
+          if errors.any?( &.[:path].try(&.first).== field.name )
+            pair = { field_name => nil.as(ReturnType) }
+          else
+            resolve_enums_to_values(field)
+            if field_name == "__typename"
+              pair = { "__typename" => self.to_s.as(ReturnType) }
+            else
+              begin
+                res, errs = resolve( field.as(GraphQL::Language::Field) , obj)
+              rescue e: Exception
+                res = nil
+                errors << Error.new(
+                  message: e.message || "internal server error",
+                  path: [field_name] + Array(String|Int32).new
+                )
+              end
+              if errs
+                errors += errs.map { |e| Error.new(
+                  message: e[:message],
+                  path: ([field_name] + e[:path]).as(Array(String|Int32)) )
+                }
+              end
+              pair = { field_name => res.as(ReturnType) }
+            end
+          end
+          hash.merge( pair.as(Hash(String, ReturnType)) )
+        end.as(ReturnType)
+        {result, errors}
       end
 
       def resolve(field : GraphQL::Language::Field, obj = nil)
@@ -64,7 +86,7 @@ module GraphQL
           end
         end.flatten.map &.as(GraphQL::Language::Field)
         unless fields.any?
-          raise "no selections found for this field!\
+          raise "no selections found for this field! \
                  maybe you forgot to define an inline fragment for this type in a union?"
         end
         fields
@@ -83,11 +105,21 @@ module GraphQL
       # TODO: don't raise on the first error but collect them
       #
       private def validate_fields_and_arguments(fields)
+        errors = Array(Error).new
+
+        # casting the hard way
         fields = fields.compact_map { |f| f.is_a?(GraphQL::Language::Field) ? f : nil}.reject( &.try(&.name).==("__typename") )
+
         allowed_field_names = self.fields.keys.map(&.to_s).to_a
         requested_field_names = fields.map(&.name)
+
         if (non_existent = requested_field_names - allowed_field_names).any?
-          raise "unknown fields: #{non_existent.join(", ")}"
+          errors = errors + non_existent.map do |name|
+            Error.new(
+              message: "field not defined.",
+              path: [name] + Array(String|Int32).new
+            )
+          end
         end
         #
         # TODO: check fields against .nilable?
@@ -95,15 +127,22 @@ module GraphQL
         fields.each do |field|
           # we wan't to ignore inline fragments here
           next unless field.is_a? GraphQL::Language::Field
+          next if errors.any?( &.[:path].first.== field.name )
           allowed_arguments = self.fields[field.name][:args] || NamedTuple.new
           field.arguments.each do |arg|
             if !(argument_definition = allowed_arguments[arg.name]?)
-              raise "#{arg.name} isn't allowed for queries on the #{field.name} field"
+              errors << Error.new(
+                message: "Unknown argument \"#{arg.name}\"",
+                path: [field.name] + Array(String|Int32).new
+              )
+              next
             end
             field_type = argument_definition.try(&.[:type])
             if !type_accepts_argument?(field_type, arg.as(GraphQL::Language::Argument))
-              raise %{argument "#{arg.name}" is expected to be of Type: "#{field_type}", \
-                                                                  "#{arg.value}" has been rejected}
+              errors << Error.new(
+                message: %{argument "#{arg.name}" is expected to be of Type: "#{field_type}"},
+                path: [field.name] + Array(String|Int32).new
+              )
             end
 
             if field_type.responds_to? :enum_type
@@ -111,6 +150,7 @@ module GraphQL
             end
           end
         end
+        return errors
       end
 
       private def type_accepts_argument?(type, argument)

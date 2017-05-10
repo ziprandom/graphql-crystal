@@ -183,23 +183,41 @@ describe GraphQL::Schema do
     end
 
     it "raises if no inline fragment was defined for the type actually returned" do
-      expect_raises(Exception, "no selections found for this field!\
-                         maybe you forgot to define an inline fragment for this type in a union?") do
+      expected = {
+        "data" => {
+          "firstUser" => nil
+        },
+        "errors" => [
+          {
+            "message" => "no selections found for this field! \
+                          maybe you forgot to define an inline fragment for this type in a union?",
+            "path" => ["firstUser"]
+          }
+        ]
+      }
 
-        TestSchema.execute(%{
-                             {
-                               firstUser: user(id: 0) {
-                                 ... on Droid {
-                                   id, name
-                                 }
+      TestSchema.execute(%{
+                           {
+                             firstUser: user(id: 0) {
+                               ... on Droid {
+                                 id, name
                                }
                              }
-                           })
-      end
+                           }
+                         }).should eq expected
     end
 
     it "raises an error when I try to use an undefined fragment" do
-      expect_raises(Exception, "fragment \"userFieldsNonExistent\" is undefined") do
+      expected = {
+        "data" => nil,
+        "errors" => [
+          {
+            "message" => "fragment \"userFieldsNonExistent\" is undefined",
+            "path" => [] of String
+          }
+        ]
+      }
+
       TestSchema.execute(%{
                            {
                              firstUser: user(id: 0) {
@@ -209,8 +227,7 @@ describe GraphQL::Schema do
                            fragment userFields on User {
                              id, name
                            }
-                         })
-      end
+                         }).should eq expected
     end
 
     it "raises an error if we request a field that hast not been defined" do
@@ -221,9 +238,20 @@ describe GraphQL::Schema do
           }
         }
       }
-      expect_raises(Exception, "unknown fields: car") do
-        TestSchema.execute(bad_query_string)
-      end
+
+      expected = {
+        "data" => {
+          "car" => nil
+        },
+        "errors" => [
+          {
+            "message" => "field not defined.",
+            "path" => ["car"]
+          }
+        ]
+      }
+
+      TestSchema.execute(bad_query_string).should eq expected
     end
 
     it "raises an error if we request a field with an argument that hasn't been defined" do
@@ -234,9 +262,20 @@ describe GraphQL::Schema do
           }
         }
       }
-      expect_raises(Exception, "name isn't allowed for queries on the user field") do
-        TestSchema.execute(bad_query_string)
-      end
+
+      expected = {
+        "data" => {
+          "user" => nil
+        },
+        "errors" => [
+          {
+            "message" => "Unknown argument \"name\"",
+            "path" => ["user"]
+          }
+        ]
+      }
+
+      TestSchema.execute(bad_query_string).should eq expected
     end
 
     it "raises an error if we request a field with defined argument using a wrong type" do
@@ -247,12 +286,20 @@ describe GraphQL::Schema do
           }
         }
       }
-      expect_raises(
-        Exception,
-        %{argument "id" is expected to be of Type: "GraphQL::IDType", "henry" has been rejected}
-      ) do
-        TestSchema.execute(bad_query_string)
-      end
+
+      expected = {
+        "data" => {
+          "user" => nil
+        },
+        "errors" => [
+          {
+            "message" => %{argument "id" is expected to be of Type: "GraphQL::IDType"},
+            "path" => ["user"]
+          }
+        ]
+      }
+
+      TestSchema.execute(bad_query_string).should eq expected
     end
 
   end

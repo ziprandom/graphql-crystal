@@ -12,7 +12,7 @@ class Character
   end
   field :appearsIn, [EpisodeEnumType], "Which movies they appear in." { self.appears_in }
   field :secretBackstory, GraphQL::StringType, "All secrets about their past." do
-    raise "the secret backstory is secret ..."
+    raise "secretBackstory is secret."
   end
 end
 

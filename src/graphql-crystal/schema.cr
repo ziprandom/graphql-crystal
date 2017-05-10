@@ -21,12 +21,30 @@ module GraphQL
         query = queries.first
         query = substitute_argument_variables(query, params)
 
-        selections = GraphQL::Schema::FragmentResolver.resolve(
-          query.selections.map(&.as(GraphQL::Language::Field)),
-          fragments
-        )
+        begin
+          selections = GraphQL::Schema::FragmentResolver.resolve(
+            query.selections.map(&.as(GraphQL::Language::Field)),
+            fragments
+          )
+        rescue e : Exception
+          # we hit an error while resolving fragments
+          # no path info atm
+          return { "data" => nil, "errors" => [{ "message" => e.message, "path" => [] of String}]}
+        end
+        result, errors = QUERY.resolve( selections )
+        res = { "data" =>  result}
+        if ( errors.any? )
+          error_hash = errors.map do |e|
+            ["message", "path"].reduce(nil) do |m, k|
+              pair = {k => e[k]}
+              m ? m.merge(pair) : pair
+            end
+          end
+          res.merge({ "errors" => error_hash })
+        else
+          res
+        end
 
-        { "data" => QUERY.resolve( selections ) }
       end
 
       def self.execute(query_string, params = nil)
