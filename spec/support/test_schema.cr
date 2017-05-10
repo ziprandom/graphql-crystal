@@ -1,10 +1,22 @@
 # coding: utf-8
 require "../src/graphql-crystal/schema"
 
+enum CityEnum
+  London
+  Miami
+  CABA
+  Istanbul
+end
+
+# see https://github.com/crystal-lang/crystal/issues/4353
+# for an explanation for why we don't just say:
+# alias CityEnumType = GraphQL::EnumType(CityEnum)
+class CityEnumType < GraphQL::EnumType(CityEnum); end
+
 Addresses = [
-  {"Downing Street", 11, "London", 3231},
-  {"Sunset Boulevard", 114, "Miami", 123439},
-  {"Avenida Santa Fé", 3042, "CABA", 12398}
+  {"Downing Street", 11, CityEnum::London, 3231},
+  {"Sunset Boulevard", 114, CityEnum::Miami, 123439},
+  {"Avenida Santa Fé", 3042, CityEnum::CABA, 12398}
 ].map { |vars| Address.new *vars }
 
 Users = [
@@ -22,11 +34,11 @@ class Address
   getter :street, :number, :city, :postal_code
   def initialize(
         @street : String, @number : Int32,
-        @city : String, @postal_code : Int32)
+        @city : CityEnum, @postal_code : Int32)
   end
   field :street, GraphQL::StringType
   field :number, GraphQL::IntegerType
-  field :city, GraphQL::StringType
+  field :city, CityEnumType
   field :postal_code, GraphQL::IntegerType
 end
 
@@ -62,15 +74,6 @@ class Query
   end
 end
 
-enum CityEnum
-  London
-  Miami
-  CABA
-  Istanbul
-end
-
-alias CityType = GraphQL::EnumType( CityEnum )
-
 # just to make sure it keeps
 # working with inheritance
 class SpecialQuery < Query
@@ -78,14 +81,14 @@ class SpecialQuery < Query
   field :addresses, [Address], "an address in the system",
         {
           city: {
-            type: [CityType],
+            type: [CityEnumType],
             description: "the city for which addresses should be returned",
             default: nil
           }
         } do
     (cities = args["city"]?) ?
       Addresses.select do |address|
-        cities.as( Array ).includes? address.city
+        cities.as( Array ).includes? address.city.to_i
       end : Addresses
   end
 end
@@ -93,5 +96,4 @@ end
 module TestSchema
   extend GraphQL::Schema
   query SpecialQuery
-
 end

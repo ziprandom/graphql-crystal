@@ -1,6 +1,8 @@
 require "../../src/graphql-crystal"
 require "./star_wars_data"
 
+class EpisodeEnumType < GraphQL::EnumType(EpisodeEnum); end
+
 class Character
   field :id, GraphQL::StringType, "The id of the character."
   field :name, GraphQL::StringType, "The name of the character."
@@ -8,7 +10,7 @@ class Character
                                                                 if the have none." do
     Characters.select { |c| self.friends.includes? c.id }
   end
-  field :appearsIn, [GraphQL::StringType], "Which movies they appear in." { self.appears_in }
+  field :appearsIn, [EpisodeEnumType], "Which movies they appear in." { self.appears_in }
   field :secretBackstory, GraphQL::StringType, "All secrets about their past." do
     raise "the secret backstory is secret ..."
   end
@@ -29,7 +31,7 @@ module QueryType
           episode: {
             description: "If omitted, returns the hero of the whole saga. If \
                           provided, returns the hero of that particular episode.",
-            type: GraphQL::EnumType(EpisodeEnum)
+            type: EpisodeEnumType
           }
         } do
     if (args["episode"]? == 5)

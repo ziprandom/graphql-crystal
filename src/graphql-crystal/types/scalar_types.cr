@@ -1,15 +1,18 @@
 require "../schema/field_resolver"
 module GraphQL
   class Type
-    getter :name, :description
-    def initialize(@name : String = "", @description : String = ""); end
+    def accepts?(value)
+      false
+    end
+
     def self.accepts?(value)
       false
     end
+
     def self.resolve(args, obj)
       obj
     end
-    def resolve(args, obj); self.resolve(args, obj); end
+
   end
 
   class StringType < Type
@@ -31,24 +34,30 @@ module GraphQL
   end
 
   class EnumType(T) < Type
-    def accepts?(value); self.accepts?(value); end
-    def resolve(value); self.resolve(value); end
 
-    def self.accepts?(value : String)
-      T.values.map(&.to_s).includes? value
+    # we convert to string when returning
+    def self.resolve(selections, value)
+      value.to_s
     end
 
-    def self.accepts?(value : Number)
-      T.values.includes? value
+    # we converto to Int when
+    # when parsing
+    def self.prepare(value)
+      T.parse?(value.name).try(&.to_i)
     end
 
-    def self.resolve(value  : Number)
-      value
+    def self.accepts?(value : GraphQL::Language::AEnum)
+      !!T.parse? value.name
     end
+
   end
 
   def self.cast_to_return(value)
-    (value.is_a?(Array) ? value.map{ |v| cast_to_return(v).as(GraphQL::ObjectType::Resolvable::ReturnType) } : value).as(GraphQL::ObjectType::Resolvable::ReturnType)
+    (
+      value.is_a?(Array) ?
+        value.map{ |v| cast_to_return(v).as(GraphQL::ObjectType::Resolvable::ReturnType) } :
+        value
+    ).as(GraphQL::ObjectType::Resolvable::ReturnType)
   end
 
   # we cant use this type without

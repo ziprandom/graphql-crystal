@@ -1,24 +1,36 @@
 require "./types/object_type"
 require "./types/scalar_types"
 require "./schema/fragment_resolver"
+require "./schema/variable_resolver.cr"
+require "./schema/validation.cr"
 
 module GraphQL
   module Schema
+
     macro extended
       include GraphQL::ObjectType
 
-      def self.execute(document : GraphQL::Language::Document)
+      def self.substitute_argument_variables(query : GraphQL::Language::OperationDefinition, params)
+        full_params, errors = GraphQL::Schema::Validation.validate_params_against_query_definition(query, params);
+        raise "provided params had errors #{errors}" if errors.any?
+        GraphQL::Schema::VariableResolver.visit(query, full_params)
+      end
+
+      def self.execute(document : GraphQL::Language::Document, params)
         queries, mutations, fragments = split_document(document)
         query = queries.first
+        query = substitute_argument_variables(query, params)
+
         selections = GraphQL::Schema::FragmentResolver.resolve(
           query.selections.map(&.as(GraphQL::Language::Field)),
           fragments
         )
+
         { "data" => QUERY.resolve( selections ) }
       end
 
       def self.execute(query_string, params = nil)
-        self.execute(GraphQL::Language.parse(query_string))
+        self.execute( GraphQL::Language.parse(query_string, nil), params)
       end
 
       macro query(query)

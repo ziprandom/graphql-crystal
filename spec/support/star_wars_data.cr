@@ -8,19 +8,19 @@ class Character
   extend GraphQL::ObjectType
   getter :id, :name, :friends, :appears_in
   def initialize(@id : String, @name : String, @friends : Array(String),
-                 @appears_in : Array(String)); end
+                 @appears_in : Array(EpisodeEnum)); end
 end
 
 class Human < Character
   getter :home_planet
   def initialize(@id : String, @name : String, @friends : Array(String),
-                 @appears_in : Array(String), @home_planet : String?); end
+                 @appears_in : Array(EpisodeEnum), @home_planet : String?); end
 end
 
 class Droid < Character
   getter :primary_function
   def initialize(@id : String, @name : String, @friends : Array(String),
-                 @appears_in : Array(String), @primary_function : String?); end
+                 @appears_in : Array(EpisodeEnum), @primary_function : String?); end
 end
 
 Characters = begin
@@ -90,7 +90,7 @@ Characters = begin
                    data.values[1],
                    data.values[2],
                    data.values[3],
-                   data.values[4].map { |e| EpisodeEnum.new(e).to_s },
+                   data.values[4].map { |e| EpisodeEnum.from_value(e) },
                    data.values[5]?
                  }
                  if data[:type] == "Human"

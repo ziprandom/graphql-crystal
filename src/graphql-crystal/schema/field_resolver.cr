@@ -11,7 +11,8 @@ module GraphQL
         if eklass && eklass.responds_to? :resolve
           GraphQL.cast_to_return eklass.resolve(selections, entity)
         elsif field_type.responds_to? :resolve
-          GraphQL.cast_to_return field_type.resolve(selections, entity)
+          resolved = field_type.resolve(selections, entity)
+          resolved
         elsif field_type.is_a?(Array)
           entity.as( Array ).map do |e|
             GraphQL.cast_to_return(

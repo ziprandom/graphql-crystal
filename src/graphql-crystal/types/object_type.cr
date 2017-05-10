@@ -125,6 +125,16 @@ macro define_object_type_macros(on_instance?)
   # originally extended the module
   macro make_inherited
     macro inherited
+      # unfortunately class.is_a?(ObjectType)
+      # returns false for object_type classes
+      # when it is called in the resolve method
+      # of ./object_type_resolvable.cr, this is
+      # a workaround
+      {% if on_instance? %}
+      def self.im_an_object_type!
+        true
+      end
+      {% end %}
       # classes that inherit from the class that
       # originally extended the module will return
       # their FIELDS constant converted to a NamedTuple

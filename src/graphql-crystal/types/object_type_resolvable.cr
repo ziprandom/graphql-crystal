@@ -9,7 +9,16 @@ module GraphQL
 
       def resolve(fields : ArgumentsType, obj = nil)
         validate_fields_and_arguments(fields)
+
+        # we don't resolve field selections for
+        # an ObjectType if the Object didn't resolve
+        # this doesn't work -->here v <-- due to a bug:
+        # return nil if self.is_a?(ObjectType) && obj == nil
+        # workaround:
+        return nil if self.responds_to? :im_an_object_type! && obj == nil
+
         flatten_inline_fragments(fields).reduce(nil) do |hash, field|
+          resolve_enums_to_values(field)
           field_name = field.alias || field.name
           if field_name == "__typename"
             pair = { "__typename" => self.to_s.as(ReturnType) }
@@ -18,9 +27,34 @@ module GraphQL
           end
           hash ? hash.merge(pair) : pair
         end.as(ReturnType)
+
       end
 
-      def flatten_inline_fragments(fields : ArgumentsType)
+      def resolve(field : GraphQL::Language::Field, obj = nil)
+        entity = if obj && obj.responds_to?(:resolve_field)
+                   obj.resolve_field(
+                     field.name,
+                     arguments_array_to_hash(field.arguments)
+                   )
+                 else
+                   resolve_field(
+                     field.name,
+                     arguments_array_to_hash(field.arguments)
+                   )
+                 end
+        # this nicely works with extended modules,
+        # thereby making them real interfaces in
+        # crystals type system
+        field_type = self.fields[field.name][:type]
+        selections = field.selections.compact_map do |f|
+          f if f.is_a?(GraphQL::Language::Field|GraphQL::Language::InlineFragment)
+        end
+        GraphQL::Schema::FieldResolver.resolve_selections_for_field(
+          field_type, entity, selections
+        )
+      end
+
+      private def flatten_inline_fragments(fields : ArgumentsType)
         fields = fields.compact_map do |field|
           if field.is_a? GraphQL::Language::InlineFragment
             field.type.as(GraphQL::Language::TypeName).name == self.name ?
@@ -36,39 +70,19 @@ module GraphQL
         fields
       end
 
-      def resolve(field : GraphQL::Language::Field, obj = nil)
-        entity = obj && obj.responds_to?(:resolve_field) ? obj.resolve_field(
-                   field.name,
-                   arguments_array_to_hash(field.arguments)
-                 ) : resolve_field(
-                       field.name,
-                       arguments_array_to_hash(field.arguments)
-                     )
-
-        # this nicely works with extended modules,
-        # thereby making them real interfaces in
-        # crystals type system
-        field_type = self.fields[field.name][:type]
-        selections = field.selections.compact_map do |f|
-          f if f.is_a?(GraphQL::Language::Field|GraphQL::Language::InlineFragment)
-        end
-        GraphQL::Schema::FieldResolver.resolve_selections_for_field(
-          field_type, entity, selections
-        )
-      end
-
       private def arguments_array_to_hash(arguments)
         arguments.reduce(nil) do |memo, arg|
           field_pair = {arg.name => arg.value}
           memo ? memo.merge(field_pair) : field_pair
         end
       end
+
       #
       # Validate the fields and arguments of this QueryField
       # against the definition.
       # TODO: don't raise on the first error but collect them
       #
-      def validate_fields_and_arguments(fields)
+      private def validate_fields_and_arguments(fields)
         fields = fields.compact_map { |f| f.is_a?(GraphQL::Language::Field) ? f : nil}.reject( &.try(&.name).==("__typename") )
         allowed_field_names = self.fields.keys.map(&.to_s).to_a
         requested_field_names = fields.map(&.name)
@@ -87,21 +101,49 @@ module GraphQL
               raise "#{arg.name} isn't allowed for queries on the #{field.name} field"
             end
             field_type = argument_definition.try(&.[:type])
-            if !type_accepts_value?(field_type, arg.value)
+            if !type_accepts_argument?(field_type, arg.as(GraphQL::Language::Argument))
               raise %{argument "#{arg.name}" is expected to be of Type: "#{field_type}", \
                                                                   "#{arg.value}" has been rejected}
+            end
+
+            if field_type.responds_to? :enum_type
+              arg.value = field_type.enum_type.parse( arg.value.as(GraphQL::Language::AEnum).name )
             end
           end
         end
       end
 
-      private def type_accepts_value?(type, value)
+      private def type_accepts_argument?(type, argument)
+        value = argument.responds_to? :value ? argument.value : argument
         if type.is_a?(Array)
           return false unless value.is_a?(Array)
           inner_type = type.first
-          !value.any? { |v| !type_accepts_value?(inner_type, v) }
+          !value.any? { |v| !type_accepts_argument?(inner_type, v) }
         else
           !!type.try &.accepts? value
+        end
+      end
+
+      private def resolve_enums_to_values(field : GraphQL::Language::Field)
+        field.arguments.each do |arg|
+          value = arg.value
+          if value.is_a? Array
+            arg.value = arg.value.as(Array).map do |v|
+              type = self.fields[field.name][:args].try &.[arg.name][:type]
+              if type.is_a? Array
+                inner_type = type.first
+              end
+              if v.is_a?(GraphQL::Language::AEnum) && inner_type && inner_type.responds_to?(:prepare)
+                  inner_type.prepare(v).as(GraphQL::Language::ArgumentValue)
+              else
+                v
+              end.as(GraphQL::Language::ArgumentValue)
+            end.as(GraphQL::Language::ArgumentValue)
+          elsif value.is_a?(GraphQL::Language::AEnum) &&
+                (type = self.fields[field.name][:args].try &.[arg.name][:type]) &&
+                type.responds_to? :prepare
+            arg.value = type.prepare(value).as(Int32)
+          end
         end
       end
 

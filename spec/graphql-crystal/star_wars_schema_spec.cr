@@ -153,7 +153,7 @@ describe StarWarsSchema do
                         })
     end
 
-    pending "Allows us to create a generic query, then use it to fetch Luke Skywalker using his ID" do
+    it "Allows us to create a generic query, then use it to fetch Luke Skywalker using his ID" do
       query_string = %{
         query FetchSomeIDQuery($someId: String!) {
           human(id: $someId) {
@@ -172,7 +172,7 @@ describe StarWarsSchema do
                         })
     end
 
-    pending "Allows us to create a generic query, then use it to fetch Luke Skywalker using his ID" do
+    it "Allows us to create a generic query, then use it to fetch Luke Skywalker using his ID" do
       query_string = %{
         query FetchSomeIDQuery($someId: String!) {
           human(id: $someId) {
@@ -180,7 +180,7 @@ describe StarWarsSchema do
           }
         }
       }
-      params = { someId => "1002" }
+      params = { "someId" => "1002" }
       result = StarWarsSchema.execute(query_string, params)
       result.should eq ({
                           "data" => {
@@ -191,7 +191,7 @@ describe StarWarsSchema do
                         })
     end
 
-    pending "Allows us to create a generic query, then pass an invalid ID to get null back" do
+    it "Allows us to create a generic query, then pass an invalid ID to get null back" do
       query_string = %{
         query humanQuery($id: String!) {
           human(id: $id) {
@@ -209,7 +209,7 @@ describe StarWarsSchema do
     end
   end
 
-  describe "Using aliases to change the key in the response" do
+  it "Using aliases to change the key in the response" do
     it "Allows us to query for Luke, changing his key with an alias" do
       query_string = %{
         query FetchLukeAliased {
@@ -333,7 +333,7 @@ describe StarWarsSchema do
                         })
     end
 
-    pending "Allows us to verify that Luke is a human" do
+    it "Allows us to verify that Luke is a human" do
       query_string = %{
         query CheckTypeOfLuke {
           hero(episode: EMPIRE) {

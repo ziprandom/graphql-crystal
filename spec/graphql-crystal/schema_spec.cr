@@ -32,7 +32,7 @@ describe GraphQL::Schema do
         }
       }
       TestSchema.execute(%{
-                           { addresses(city: ["London", "Miami"]) { city street number } }
+                           { addresses(city: [London, Miami]) { city street number } }
                          }).should eq expected
     end
 
@@ -43,7 +43,7 @@ describe GraphQL::Schema do
         }
       }
       TestSchema.execute(%{
-                           { addresses(city: ["Istanbul"]) { city street number } }
+                           { addresses(city: [Istanbul]) { city street number } }
                          }).should eq expected
     end
 
