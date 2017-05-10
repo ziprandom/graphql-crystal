@@ -1,4 +1,4 @@
-# graphql-crystal
+# graphql-crystal [![Build Status](https://api.travis-ci.org/ziprandom/graphql-crystal.svg)](https://travis-ci.org/ziprandom/graphql-crystal)
 
 a graphql parser for the crystal programming language ported from [graphql-ruby](https://github.com/rmosolgo/graphql-ruby) and implemented using the [crystal language toolkit](https://github.com/ziprandom/cltk).
 
