@@ -141,8 +141,8 @@ module GraphQL
       end
 
       production(:enum_value_definition) do
-        clause("enum_name directive*") do |name, directives|
-          EnumValueDefinition.new(name: name, directives: directives, selection: nil)
+        clause("comments? enum_name directive*") do |comment, name, directives|
+          EnumValueDefinition.new(name: name, directives: directives, selection: nil, description: comment || "")
         end
       end
 
@@ -239,6 +239,13 @@ module GraphQL
         clause(:schema_definition)
         clause(:type_definition)
         clause(:directive_definition)
+        clause("comments type_system_definition") do |comment, definition|
+          if definition.responds_to?(:"description=")
+            definition.description = comment.as(String)
+          end
+          definition
+        end
+
       end
 
       production(:schema_definition) do
@@ -301,7 +308,7 @@ module GraphQL
           InputValueDefinition.new(
             name: name, type: type,
             default_value: (default_value.is_a?(Array) ? default_value.map &.as(FValue) : default_value).as(FValue),
-            directives: directives)
+            directives: directives, description: "")
         end
       end
 
@@ -311,9 +318,9 @@ module GraphQL
 
       production(:field_definition) do
         clause(
-          ".name .arguments_definitions? COLON .type .directive*") do |name, arguments, type, directives|
+          ".comments? .name .arguments_definitions? COLON .type .directive*") do |comment, name, arguments, type, directives|
           FieldDefinition.new(name: name, arguments: arguments || [] of Argument,
-            type: type, directives: directives, description: "")
+            type: type, directives: directives, description: comment || "")
         end
       end
 
@@ -356,6 +363,16 @@ module GraphQL
           "DIRECTIVE DIR_SIGN .name .arguments_definitions? ON .directive_locations"
         ) do |name, arguments, locations|
           DirectiveDefinition.new(name: name, arguments: arguments, locations: locations, description: "")
+        end
+      end
+
+      production(:comments) do
+        clause(:COMMENT)
+        clause("comments COMMENT") do |comments, comment|
+          [
+            comments.as(String),
+            comment.as(String)
+          ].join("\n")
         end
       end
 

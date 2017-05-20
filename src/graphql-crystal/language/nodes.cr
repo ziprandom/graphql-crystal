@@ -104,7 +104,7 @@ module GraphQL
     end
 
     class InputValueDefinition < AbstractNode
-      values({name: String, type: Type, default_value: FValue, directives: Array(Directive)})
+      values({name: String, type: Type, default_value: FValue, directives: Array(Directive), description: String})
     end
 
     # Base class for nodes whose only value is a name (no child nodes or other scalars)
@@ -212,7 +212,7 @@ module GraphQL
     end
 
     class EnumValueDefinition < AbstractNode
-      values({name: String, directives: Array(Directive), selection: Array(Selection)? })
+      values({name: String, directives: Array(Directive), selection: Array(Selection)?, description: String })
       #as_children([:directives])
     end
   end

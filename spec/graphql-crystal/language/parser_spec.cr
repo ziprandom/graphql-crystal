@@ -104,6 +104,18 @@ describe GraphQL::Language::Parser do
           name: String!
           length(unit: LengthUnit = METER): Float
         }
+      },
+      %{
+        # a spaceship
+        # that flies through
+        # space
+        type Starship {
+          id: ID!
+          # the name
+          # of that starship
+          name: String!
+          length(unit: LengthUnit = METER): Float
+        }
       }
     ];
 

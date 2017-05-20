@@ -11,8 +11,8 @@ module GraphQL
       # self.pre_delimiter = "\n"
 
       # ignore newlines, commas and comments
-      rule(/[\n\r]|[, \t]+|# [^\n\r]*/)
-
+      rule(/[\n\r]|[, \t]+/)
+      rule(/#[^\n\r]*/)              { |comment| {:COMMENT, comment[1..-1].lstrip}}
       rule(":")                       { { :COLON   } }
       rule("on")                      { { :ON } }
       rule("fragment")                { { :FRAGMENT } }
