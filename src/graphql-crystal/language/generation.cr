@@ -39,7 +39,7 @@ module GraphQL
 
       def self.generate(node : GraphQL::Language::Field, indent : String = "")
         out = ""
-        out += "#{node.alias}: " if node.alias
+        out += "#{node._alias}: " if node._alias
         out += "#{node.name}"
         out += "(#{node.arguments.map { |a| generate(a).as(String) }.join(", ")})" if node.arguments.any?
         out += generate_directives(node.directives)

@@ -20,7 +20,7 @@ module GraphQL
         return {nil, [] of Error} if self.responds_to? :im_an_object_type! && obj == nil
 
         result = flatten_inline_fragments(fields).reduce( Hash(String, ReturnType).new ) do |hash, field|
-          field_name = field.alias || field.name
+          field_name = field._alias || field.name
 
           if errors.any?( &.[:path].try(&.first).== field.name )
             pair = { field_name => nil.as(ReturnType) }

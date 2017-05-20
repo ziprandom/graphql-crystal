@@ -31,7 +31,7 @@ module GraphQL
     #
     class Document < AbstractNode
       values({definitions: Array(OperationDefinition|FragmentDefinition)})
-      as_children([:definitions])
+      #as_children([:definitions])
 
       def to_query_string
         GraphQL::Language::Generation.generate(self)
@@ -58,7 +58,7 @@ module GraphQL
           directives: Array(Directive),
           selections: Array(Selection)}
       )
-      as_children([:variables, :directives, :selections])
+      #as_children([:variables, :directives, :selections])
     end
 
     class DirectiveDefinition < AbstractNode
@@ -85,7 +85,7 @@ module GraphQL
 
     class ScalarTypeDefinition < AbstractNode
       values({name: String, directives: Array(Directive), description: String})
-      as_children([:directives])
+      #as_children([:directives])
     end
 
     class ObjectTypeDefinition < AbstractNode
@@ -96,7 +96,7 @@ module GraphQL
          directives: Array(Directive),
          description: String}
       )
-      as_children([:interfaces, :fields, :directives])
+      #as_children([:interfaces, :fields, :directives])
     end
 
     class InputObjectTypeDefinition < AbstractNode
@@ -126,7 +126,7 @@ module GraphQL
 
     class InputObject < AbstractNode
       values({arguments: Array(Argument)})
-      as_children([:arguments])
+      #as_children([:arguments])
 
       # @return [Hash<String, Any>] Recursively turn this input object into a Ruby Hash
       def to_h()
@@ -160,12 +160,12 @@ module GraphQL
     class Field < AbstractNode
       values({
                name: String,
-               alias: String?,
+               _alias: String?,
                arguments: Array(Argument),
                directives: Array(Directive),
                selections: Array(Selection)
              })
-      as_children([:arguments, :directives, :selections])
+      #as_children([:arguments, :directives, :selections])
     end
 
     class FragmentDefinition < AbstractNode
@@ -180,40 +180,40 @@ module GraphQL
 
     class FieldDefinition < AbstractNode
       values({name: String, arguments: Array(InputValueDefinition), type: Type, directives: Array(Directive), description: String})
-      as_children([:arguments, :directives])
+      #as_children([:arguments, :directives])
     end
 
     class InterfaceTypeDefinition < AbstractNode
       values({name: String, fields: Array(FieldDefinition), directives: Array(Directive), description: String})
-      as_children([:fields, :directives])
+      #as_children([:fields, :directives])
     end
 
 
     class UnionTypeDefinition < AbstractNode
       values({name: String, types: Array(TypeName), directives: Array(Directive), description: String})
-      as_children([:types, :directives])
+      #as_children([:types, :directives])
     end
 
     class EnumTypeDefinition < AbstractNode
       values({name: String, fvalues: Array(FValue), directives: Array(Directive), description: String})
-      as_children([:values, :directives])
+      #as_children([:values, :directives])
     end
 
     # Application of a named fragment in a selection
     class FragmentSpread < AbstractNode
       values({ name: String, directives: Array(Directive) })
-      as_children([:directives])
+      #as_children([:directives])
     end
 
     # An unnamed fragment, defined directly in the query with `... {  }`
     class InlineFragment < AbstractNode
       values({ type: Type?, directives: Array(Directive), selections: Array(Selection) })
-      as_children([:directives, :selections])
+      #as_children([:directives, :selections])
     end
 
     class EnumValueDefinition < AbstractNode
       values({name: String, directives: Array(Directive), selection: Array(Selection)? })
-      as_children([:directives])
+      #as_children([:directives])
     end
   end
 end

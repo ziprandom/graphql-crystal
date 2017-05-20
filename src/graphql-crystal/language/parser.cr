@@ -85,7 +85,7 @@ module GraphQL
         ) do |name, arguments, directives, selections|
           field = Field.new(
             name: name,
-            alias: nil,
+            _alias: nil,
             arguments: arguments || [] of Argument,
             directives: directives || [] of Directive,
             selections: selections || [] of Selection
@@ -98,7 +98,7 @@ module GraphQL
         ) do |_alias, name, arguments, directives, selections|
           Field.new(
             name: name,
-            alias: _alias,
+            _alias: _alias,
             arguments: arguments || [] of Argument,
             directives: directives || [] of Directive,
             selections: selections || [] of Selection
@@ -361,7 +361,7 @@ module GraphQL
 
       build_nonempty_list_production(:directive_locations, :name, :PIPE)
 
-      finalize
+      finalize(use: "./parser.bin")
     end
   end
 end

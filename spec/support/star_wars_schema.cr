@@ -56,7 +56,7 @@ module QueryType
             type: GraphQL::StringType
           }
         } do
-    Characters.select(&.is_a?(Human)).find( &.id.==(args["id"]))
+    Characters.select( &.is_a?(Human) ).find( &.id.==(args["id"]) )
   end
 
   field :droid, Droid, "", {
