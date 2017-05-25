@@ -55,9 +55,9 @@ module GraphQL
   def self.cast_to_return(value)
     (
       value.is_a?(Array) ?
-        value.map{ |v| cast_to_return(v).as(GraphQL::ObjectType::Resolvable::ReturnType) } :
+        value.map{ |v| cast_to_return(v).as(GraphQL::Schema::ReturnType) } :
         value
-    ).as(GraphQL::ObjectType::Resolvable::ReturnType)
+    ).as(GraphQL::Schema::ReturnType)
   end
 
   # we cant use this type without
@@ -84,7 +84,7 @@ module GraphQL
         obj.as(Array).map do |e|
           GraphQL::Schema::FieldResolver.resolve_selections_for_field(
             T, e, selections
-          ).as(GraphQL::ObjectType::Resolvable::ReturnType)
+          ).as(GraphQL::Schema::ReturnType)
         end
       )
     end

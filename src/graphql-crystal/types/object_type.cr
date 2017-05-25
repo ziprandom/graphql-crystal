@@ -14,6 +14,14 @@ macro define_graphql_fields(on_instance?)
   extend GraphQL::ObjectType::Resolvable
   define_object_type_macros({{on_instance?}})
 
+  def with_self
+    with self yield
+  end
+
+  def self.with_self
+    with self yield
+  end
+
   # a constant to hold the fields defined for
   # classes extending the module
   # FIELDS = [] of Tuple(Symbol, Object.class, Hash(String, GraphQL::Type.class)?, String)
@@ -46,7 +54,7 @@ macro define_field_macro(on_instance?)
         \{% if body.is_a? Nop %}\
           nil
         \{% else %}\
-          with_self do
+          self.with_self do
             \{{body.body}}
           end
         \{% end %}
@@ -58,7 +66,7 @@ macro define_field_macro(on_instance?)
       \{% if body.is_a? Nop %}
         \{{args[0].id}}
       \{% else %}
-        with_self do
+        self.with_self do
           \{{body.body}}
         end
       \{% end %}

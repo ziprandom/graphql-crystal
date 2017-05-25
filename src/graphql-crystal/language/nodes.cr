@@ -31,8 +31,7 @@ module GraphQL
     #
     class Document < AbstractNode
       values({definitions: Array(OperationDefinition|FragmentDefinition)})
-      #as_children([:definitions])
-
+      traverse :children, :definitions
       def to_query_string
         GraphQL::Language::Generation.generate(self)
       end
@@ -56,55 +55,67 @@ module GraphQL
           name: String?,
           variables: Array(VariableDefinition),
           directives: Array(Directive),
-          selections: Array(Selection)}
+         selections: Array(Selection)}
       )
-      #as_children([:variables, :directives, :selections])
+      traverse :children, :variables, :directives, :selections
     end
 
     class DirectiveDefinition < AbstractNode
       values({name: String, arguments: Array(InputValueDefinition), locations: Array(String), description: String})
+      traverse :children, :arguments
     end
 
     class Directive < AbstractNode
       values({name: String, arguments: Array(Argument)})
+      traverse :children, :arguments
     end
 
     alias FValue = String | Int32 | Float64 | Bool |  Nil | AEnum | AbstractNode | Array(FValue) | Hash(String, FValue)
+
     alias Type = TypeName | NonNullType | ListType
     alias Selection = Field | FragmentSpread | InlineFragment
 
     class VariableDefinition < AbstractNode
       values({name: String, type: Type, default_value: FValue})
+      traverse :children, :type
     end
 
     alias ArgumentValue = String | Int32 | Float64 | Bool | InputObject | VariableIdentifier | Array(ArgumentValue)
 
     class Argument < AbstractNode
       values({name: String, value: ArgumentValue})
+      def to_value
+        value
+      end
     end
 
-    class ScalarTypeDefinition < AbstractNode
-      values({name: String, directives: Array(Directive), description: String})
-      #as_children([:directives])
+    class TypeDefinition < AbstractNode
+      values({name: String})
     end
 
-    class ObjectTypeDefinition < AbstractNode
+    class ScalarTypeDefinition < TypeDefinition
+      values({directives: Array(Directive), description: String})
+      traverse :children, :directives
+    end
+
+    class ObjectTypeDefinition < TypeDefinition
       values(
-        {name: String,
-         interfaces: Array(String),
+        {interfaces: Array(String),
          fields: Array(FieldDefinition),
          directives: Array(Directive),
          description: String}
       )
-      #as_children([:interfaces, :fields, :directives])
+      traverse :children, :fields, :directives
     end
 
-    class InputObjectTypeDefinition < AbstractNode
-      values({name: String, fields: Array(InputValueDefinition), directives: Array(Directive), description: String})
+    class InputObjectTypeDefinition < TypeDefinition
+      values({fields: Array(InputValueDefinition), directives: Array(Directive), description: String})
+      traverse :children, :fields, :directives
     end
 
     class InputValueDefinition < AbstractNode
       values({name: String, type: Type, default_value: FValue, directives: Array(Directive), description: String})
+      traverse :children, :directives
     end
 
     # Base class for nodes whose only value is a name (no child nodes or other scalars)
@@ -115,6 +126,7 @@ module GraphQL
     # Base class for non-null type names and list type names
     class WrapperType < AbstractNode
       values({ of_type: (Type) })
+      traverse :children, :of_type
     end
 
     # A type name, used for variable definitions
@@ -126,7 +138,7 @@ module GraphQL
 
     class InputObject < AbstractNode
       values({arguments: Array(Argument)})
-      #as_children([:arguments])
+      traverse :children, :arguments
 
       # @return [Hash<String, Any>] Recursively turn this input object into a Ruby Hash
       def to_h()
@@ -143,12 +155,21 @@ module GraphQL
           memo
         end
       end
+
+      def to_value
+        to_h
+      end
+
     end
     # A non-null type definition, denoted with `...!` (used for variable type definitions)
     class NonNullType < WrapperType; end
 
     # An enum value. The string is available as {#name}.
-    class AEnum < NameOnlyNode; end
+    class AEnum < NameOnlyNode
+      def to_value
+        name
+      end
+    end
 
     # A null value literal.
     class NullValue < NameOnlyNode; end
@@ -165,7 +186,7 @@ module GraphQL
                directives: Array(Directive),
                selections: Array(Selection)
              })
-      #as_children([:arguments, :directives, :selections])
+      traverse :children, :arguments, :directives, :selections
     end
 
     class FragmentDefinition < AbstractNode
@@ -175,45 +196,46 @@ module GraphQL
                directives: Array(Directive),
                selections: Array(Selection)
              })
+      traverse :children, :type, :directives, :selections
     end
 
 
     class FieldDefinition < AbstractNode
       values({name: String, arguments: Array(InputValueDefinition), type: Type, directives: Array(Directive), description: String})
-      #as_children([:arguments, :directives])
+      traverse :children, :type, :arguments
     end
 
-    class InterfaceTypeDefinition < AbstractNode
-      values({name: String, fields: Array(FieldDefinition), directives: Array(Directive), description: String})
-      #as_children([:fields, :directives])
+    class InterfaceTypeDefinition < TypeDefinition
+      values({fields: Array(FieldDefinition), directives: Array(Directive), description: String})
+      traverse :children, :fields, :directives
     end
 
 
-    class UnionTypeDefinition < AbstractNode
-      values({name: String, types: Array(TypeName), directives: Array(Directive), description: String})
-      #as_children([:types, :directives])
+    class UnionTypeDefinition < TypeDefinition
+      values({types: Array(TypeName), directives: Array(Directive), description: String})
+      traverse :children, :types, :directives
     end
 
-    class EnumTypeDefinition < AbstractNode
-      values({name: String, fvalues: Array(FValue), directives: Array(Directive), description: String})
-      #as_children([:values, :directives])
+    class EnumTypeDefinition < TypeDefinition
+      values({fvalues: Array(FValue), directives: Array(Directive), description: String})
+      traverse :children, :directives
     end
 
     # Application of a named fragment in a selection
     class FragmentSpread < AbstractNode
       values({ name: String, directives: Array(Directive) })
-      #as_children([:directives])
+      traverse :children, :directives
     end
 
     # An unnamed fragment, defined directly in the query with `... {  }`
     class InlineFragment < AbstractNode
       values({ type: Type?, directives: Array(Directive), selections: Array(Selection) })
-      #as_children([:directives, :selections])
+      traverse :children, :type, :directives, :selections
     end
 
     class EnumValueDefinition < AbstractNode
       values({name: String, directives: Array(Directive), selection: Array(Selection)?, description: String })
-      #as_children([:directives])
+      traverse :children, :directives
     end
   end
 end

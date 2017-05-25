@@ -19,7 +19,7 @@ module GraphQL
             errors = Array(GraphQL::ObjectType::Resolvable::Error).new
           end
         elsif field_type.is_a?(Array)
-          result = Array(GraphQL::ObjectType::Resolvable::ReturnType).new
+          result = Array(GraphQL::Schema::ReturnType).new
           errors = Array(GraphQL::ObjectType::Resolvable::Error).new
           entity.as( Array ).each_with_index do |e, index|
             res, errs = resolve_selections_for_field(

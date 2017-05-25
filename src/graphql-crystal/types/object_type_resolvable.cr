@@ -5,7 +5,6 @@ module GraphQL
   module ObjectType
     module Resolvable
       alias ArgumentsType = Array(GraphQL::Language::Field|GraphQL::Language::InlineFragment)
-      alias ReturnType = String | Int32 | Float64 | Nil | Bool | Array(ReturnType) | Hash(String, ReturnType)
 
       alias Error = {message: String, path: Array(String|Int32) }
 
@@ -19,15 +18,15 @@ module GraphQL
         # workaround:
         return {nil, [] of Error} if self.responds_to? :im_an_object_type! && obj == nil
 
-        result = flatten_inline_fragments(fields).reduce( Hash(String, ReturnType).new ) do |hash, field|
+        result = flatten_inline_fragments(fields).reduce( Hash(String, GraphQL::Schema::ReturnType).new ) do |hash, field|
           field_name = field._alias || field.name
 
           if errors.any?( &.[:path].try(&.first).== field.name )
-            pair = { field_name => nil.as(ReturnType) }
+            pair = { field_name => nil.as(GraphQL::Schema::ReturnType) }
           else
             resolve_enums_to_values(field)
             if field_name == "__typename"
-              pair = { "__typename" => self.to_s.as(ReturnType) }
+              pair = { "__typename" => self.to_s.as(GraphQL::Schema::ReturnType) }
             else
               begin
                 res, errs = resolve( field.as(GraphQL::Language::Field) , obj)
@@ -44,11 +43,14 @@ module GraphQL
                   path: ([field_name] + e[:path]).as(Array(String|Int32)) )
                 }
               end
-              pair = { field_name => res.as(ReturnType) }
+              pair = Hash(String, GraphQL::Schema::ReturnType).new
+              pair[field_name] = res
+              #              pair = { field_name => .as(GraphQL::Schema::ReturnType) }.as()
+              pair
             end
           end
-          hash.merge( pair.as(Hash(String, ReturnType)) )
-        end.as(ReturnType)
+          hash.merge( pair.as(Hash(String, GraphQL::Schema::ReturnType)) )
+        end.as(GraphQL::Schema::ReturnType)
         {result, errors}
       end
 
