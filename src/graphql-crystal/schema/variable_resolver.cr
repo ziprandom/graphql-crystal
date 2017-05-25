@@ -5,26 +5,26 @@ module GraphQL
     # with the variables provided in params
     class VariableResolver
 
-      def self.visit(query : GraphQL::Language::OperationDefinition, params)
-        query.tap &.selections = visit(query.selections, params).map &.as(GraphQL::Language::AbstractNode)
+      def self.visit(query : Language::OperationDefinition, params)
+        query.tap &.selections = visit(query.selections, params).map &.as(Language::AbstractNode)
       end
 
-      def self.visit(fields : Array(GraphQL::Language::AbstractNode), params)
+      def self.visit(fields : Array(Language::AbstractNode), params)
         fields.map { |field| visit field, params }
       end
 
-      def self.visit(field : GraphQL::Language::Field, params)
+      def self.visit(field : Language::Field, params)
         field.tap do |field|
-          field.selections = visit(field.selections, params).map &.as(GraphQL::Language::Selection)
-          field.arguments = visit(field.arguments, params).map &.as(GraphQL::Language::Argument)
+          field.selections = visit(field.selections, params).map &.as(Language::Selection)
+          field.arguments = visit(field.arguments, params).map &.as(Language::Argument)
         end
       end
 
-      def self.visit(argument : GraphQL::Language::Argument, params)
-        argument.tap &.value = visit(argument.value, params).as(GraphQL::Language::ArgumentValue)
+      def self.visit(argument : Language::Argument, params)
+        argument.tap &.value = visit(argument.value, params).as(Language::ArgumentValue)
       end
 
-      def self.visit(variable : GraphQL::Language::VariableIdentifier, params)
+      def self.visit(variable : Language::VariableIdentifier, params)
         params[variable.name]
       end
 

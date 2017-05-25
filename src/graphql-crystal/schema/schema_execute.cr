@@ -4,15 +4,15 @@ module GraphQL
 
     class Schema
 
-      TYPE_NAME_FIELD = GraphQL::Language::FieldDefinition.new(
-        name: "__typename", type: GraphQL::Language::TypeName.new(name: "String"),
-        arguments: Array(GraphQL::Language::InputValueDefinition).new,
-        directives: Array(GraphQL::Language::Directive).new,
+      TYPE_NAME_FIELD = Language::FieldDefinition.new(
+        name: "__typename", type: Language::TypeName.new(name: "String"),
+        arguments: Array(Language::InputValueDefinition).new,
+        directives: Array(Language::Directive).new,
         description: "the name of this GraphQL type"
       )
 
       def execute(document : String, params = nil)
-        execute(GraphQL::Language.parse(document), params)
+        execute(Language.parse(document), params)
       end
 
       def substitute_variables_from_params(query, params : Hash)
@@ -23,14 +23,14 @@ module GraphQL
         errors = [] of Error
         full_params = Hash(String, ReturnType).new
         query.variables
-          .as(Array(GraphQL::Language::VariableDefinition))
+          .as(Array(Language::VariableDefinition))
           .each do |variable_definition|
           default_value = variable_definition.default_value
           default_value = default_value.responds_to? :to_value ? default_value.to_value : default_value
           if !(param = params[variable_definition.name]? || default_value)
             errors << Error.new(message: "missing variable #{variable_definition.name}", path: [] of (String|Int32))
           elsif !@type_validation.accepts?(variable_definition.type, param)
-            expected_type_string = GraphQL::Language::Generation.generate(variable_definition.type)
+            expected_type_string = Language::Generation.generate(variable_definition.type)
             errors << Error.new(
               message: "variable $#{variable_definition.name} is expected to be of type #{expected_type_string}",
               path: [] of (String|Int32)
@@ -46,26 +46,26 @@ module GraphQL
         # substitute
         query.map_children do |node|
           case node
-          when GraphQL::Language::Argument
+          when Language::Argument
             value = node.value
-            if value.is_a?(GraphQL::Language::VariableIdentifier)
-              node.value = full_params[value.name].as(GraphQL::Language::ArgumentValue)
+            if value.is_a?(Language::VariableIdentifier)
+              node.value = full_params[value.name].as(Language::ArgumentValue)
             end
           end
           node
         end
       end
 
-      def execute(document : GraphQL::Language::Document, params)
+      def execute(document : Language::Document, params)
         queries, mutations, fragments = extract_request_parts(document)
 
         query = (queries + mutations).first
         begin
           substitute_variables_from_params(query, params) if params
           query.selections = GraphQL::Schema::FragmentResolver.resolve(
-            query.selections.map(&.as(GraphQL::Language::Field)),
+            query.selections.map(&.as(Language::Field)),
             fragments
-          ).map &.as(GraphQL::Language::AbstractNode)
+          ).map &.as(Language::AbstractNode)
         rescue e : Exception
           # we hit an error while resolving fragments
           # no path info atm
@@ -77,7 +77,7 @@ module GraphQL
                        ->self.resolve_query(String, Hash(String, ReturnType)) :
                        ->self.resolve_mutation(String, Hash(String, ReturnType))
         result, errors = _execute_query_against_definition(
-                  query.selections.map(&.as(GraphQL::Language::Field)),
+                  query.selections.map(&.as(Language::Field)),
                   field_definition.not_nil!,
                   resolve_cb
                 )
@@ -97,7 +97,7 @@ module GraphQL
 
       def _execute_query_against_definition(
           selections : Array,
-          definition : GraphQL::Language::ObjectTypeDefinition,
+          definition : Language::ObjectTypeDefinition,
           cb : String, Hash(String, ReturnType) -> ResolveCBReturnType
         )
 
@@ -123,16 +123,16 @@ module GraphQL
         # construct all available fields
         available_fields = definition.fields +
                            definition.interfaces.map do |iface_name|
-          @types[iface_name].as(GraphQL::Language::InterfaceTypeDefinition).fields
+          @types[iface_name].as(Language::InterfaceTypeDefinition).fields
         end.flatten + [TYPE_NAME_FIELD]
 
         # Iterate selections fields, validate & resolve
-        prepared_selections.map( &.as(GraphQL::Language::Field) ).each do |selection|
+        prepared_selections.map( &.as(Language::Field) ).each do |selection|
           # field name to use
           field_name = selection._alias || selection.name
           # get field_definition from definition
           unless field_definition = available_fields.find(
-                   &.as(GraphQL::Language::FieldDefinition).name.==(selection.name))
+                   &.as(Language::FieldDefinition).name.==(selection.name))
 
             errors << Error.new(
               message: "field not defined.",
@@ -168,8 +168,8 @@ module GraphQL
           field_type = field_definition.type
 
           resolved_type = case field_type
-                          when GraphQL::Language::TypeName
-                            @types[field_type.as(GraphQL::Language::TypeName).name]
+                          when Language::TypeName
+                            @types[field_type.as(Language::TypeName).name]
                           else
                             field_type
                           end
@@ -191,20 +191,20 @@ module GraphQL
 
 
       def resolve_selections_for(
-            field_type : GraphQL::Language::TypeName, selections, resolved
+            field_type : Language::TypeName, selections, resolved
           ) : Tuple(ReturnType, Array(Error))
         type_definition = @types[field_type.name]
         case type_definition
         # we can directly apply the selections
-        when GraphQL::Language::ObjectTypeDefinition
+        when Language::ObjectTypeDefinition
           resolve_selections_for(type_definition, selections, resolved)
         # we need to derive the type from the actual object
-        when GraphQL::Language::UnionTypeDefinition, GraphQL::Language::InterfaceTypeDefinition
+        when Language::UnionTypeDefinition, Language::InterfaceTypeDefinition
           # FixMe: this needs to be more flexible of course
-          concrete_definition = @types[resolved.as(GraphQL::ObjectType).__typename_field(nil)]
+          concrete_definition = @types[resolved.as(ObjectType).__typename_field(nil)]
           resolve_selections_for(concrete_definition, selections, resolved)
         # we already hold the results in our hands :)
-        when GraphQL::Language::ScalarTypeDefinition, GraphQL::Language::EnumTypeDefinition
+        when Language::ScalarTypeDefinition, Language::EnumTypeDefinition
           if resolved.is_a?(ReturnType)
             { resolved.as(ReturnType), [] of Error }
           else
@@ -215,7 +215,7 @@ module GraphQL
         end.as(Tuple(ReturnType, Array(Error)))
       end
 
-      def resolve_selections_for(field_type : GraphQL::Language::ListType, selections, resolved : Array) : Tuple(ReturnType, Array(Error))
+      def resolve_selections_for(field_type : Language::ListType, selections, resolved : Array) : Tuple(ReturnType, Array(Error))
         errors = Array(Error).new
         inner_type = field_type.of_type
 
@@ -229,8 +229,8 @@ module GraphQL
       end
 
       def resolve_selections_for(
-            field_type : GraphQL::Language::ObjectTypeDefinition,
-            selections, resolved : GraphQL::ObjectType
+            field_type : Language::ObjectTypeDefinition,
+            selections, resolved : ObjectType
           ) : Tuple( ReturnType, Array(Error) )
 
         unless resolved.responds_to? :resolve_field
@@ -253,7 +253,7 @@ module GraphQL
       end
 
       def resolve_selections_for(
-            field_type : GraphQL::Language::NonNullType, selections, resolved
+            field_type : Language::NonNullType, selections, resolved
           ) : Tuple(ReturnType, Array(Error))
         unless resolved
           pp "didn't resolve to a NonNull compatible Object"
@@ -279,7 +279,7 @@ module GraphQL
             ## TODO: Custom Exceptions here please
 
             raise %{argument "#{definition.name}" is expected to be of type: \
-                    "#{GraphQL::Language::Generation.generate(definition.type)}"}
+                    "#{Language::Generation.generate(definition.type)}"}
           end
 
           value = if provided.responds_to?(:to_value)
@@ -293,14 +293,14 @@ module GraphQL
       end
 
       def inline_inline_fragment_selections(type, selections)
-        type = type.as(GraphQL::Language::ObjectTypeDefinition)
-        selections.reduce([] of GraphQL::Language::Field) do |selections, selection|
+        type = type.as(Language::ObjectTypeDefinition)
+        selections.reduce([] of Language::Field) do |selections, selection|
           case selection
-          when GraphQL::Language::Field
+          when Language::Field
             selections << selection
-          when GraphQL::Language::InlineFragment
-            if selection.type.as(GraphQL::Language::TypeName).name == type.name
-              selections += selection.selections.map(&.as(GraphQL::Language::Field))
+          when Language::InlineFragment
+            if selection.type.as(Language::TypeName).name == type.name
+              selections += selection.selections.map(&.as(Language::Field))
             end
           end
           selections
@@ -309,16 +309,16 @@ module GraphQL
 
       def extract_request_parts(document)
         Tuple.new(
-          Array(GraphQL::Language::OperationDefinition).new,
-          Array(GraphQL::Language::OperationDefinition).new,
-          Array(GraphQL::Language::FragmentDefinition).new
+          Array(Language::OperationDefinition).new,
+          Array(Language::OperationDefinition).new,
+          Array(Language::FragmentDefinition).new
         ).tap do |result|
           document.map_children do |node|
             case node
-            when GraphQL::Language::OperationDefinition
+            when Language::OperationDefinition
               collection = node.operation_type == "query" ? result[0] : result[1]
               collection << node
-            when GraphQL::Language::FragmentDefinition
+            when Language::FragmentDefinition
               result[2] << node
             end
             node

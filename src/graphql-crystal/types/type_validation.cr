@@ -2,35 +2,35 @@ module GraphQL
   class TypeValidation
     @enum_values_cache = Hash(String, Array(String)?).new { |hash, key| hash[key] = nil }
 
-    def initialize(@types : Hash(String, GraphQL::Language::TypeDefinition)); end
+    def initialize(@types : Hash(String, Language::TypeDefinition)); end
 
     def accepts?(type_definition, value)
 
       # Nillable by default ..
-      if value == nil && !type_definition.is_a?(GraphQL::Language::NonNullType)
+      if value == nil && !type_definition.is_a?(Language::NonNullType)
         return true
       end
 
       case type_definition
-      when GraphQL::Language::EnumTypeDefinition
-        if value.is_a?(GraphQL::Language::AEnum)
+      when Language::EnumTypeDefinition
+        if value.is_a?(Language::AEnum)
           @enum_values_cache[type_definition.name] ||= type_definition.fvalues.map(
-            &.as(GraphQL::Language::EnumValueDefinition).name )
+            &.as(Language::EnumValueDefinition).name )
           @enum_values_cache[type_definition.name].not_nil!.includes? value.name
         else
           false
         end
-      when GraphQL::Language::UnionTypeDefinition
+      when Language::UnionTypeDefinition
         true
-      when GraphQL::Language::NonNullType
+      when Language::NonNullType
         value ? accepts?(type_definition.of_type, value) : false
-      when GraphQL::Language::ListType
+      when Language::ListType
         if value.is_a?(Array)
           value.map{ |v| accepts?(type_definition.of_type, v).as(Bool) }.all? { |r| !!r }
         else
           false
         end
-      when GraphQL::Language::ScalarTypeDefinition
+      when Language::ScalarTypeDefinition
         case type_definition.name
         when "ID", "Int"
           value.is_a?(Int32)
@@ -43,13 +43,13 @@ module GraphQL
         else
           false
         end
-      when GraphQL::Language::ObjectTypeDefinition
+      when Language::ObjectTypeDefinition
         true
-      when GraphQL::Language::InputObjectTypeDefinition
+      when Language::InputObjectTypeDefinition
         true
-      when GraphQL::Language::InputValueDefinition
+      when Language::InputValueDefinition
         true
-      when GraphQL::Language::TypeName
+      when Language::TypeName
         accepts?(@types[type_definition.name], value)
       else
         true

@@ -7,17 +7,17 @@ module GraphQL
       @queries= Hash(String, Proc(Hash(String, ReturnType), QueryReturnType)).new
       @mutations = Hash(String, Proc(Hash(String, ReturnType), QueryReturnType)).new
 
-      @query : GraphQL::Language::ObjectTypeDefinition?
-      @mutation : GraphQL::Language::ObjectTypeDefinition?
-      @types : Hash(String, GraphQL::Language::TypeDefinition)
+      @query : Language::ObjectTypeDefinition?
+      @mutation : Language::ObjectTypeDefinition?
+      @types : Hash(String, Language::TypeDefinition)
       @type_validation : GraphQL::TypeValidation
 
-      def initialize(@document : GraphQL::Language::Document)
+      def initialize(@document : Language::Document)
         result = extract_elements
         # substitute TypeNames with type definition
         @types = result[:types]
-        @query = result[:types][result[:schema].query]?.as(GraphQL::Language::ObjectTypeDefinition?)
-        @mutation = result[:types][result[:schema].mutation]?.as(GraphQL::Language::ObjectTypeDefinition?)
+        @query = result[:types][result[:schema].query]?.as(Language::ObjectTypeDefinition?)
+        @mutation = result[:types][result[:schema].mutation]?.as(Language::ObjectTypeDefinition?)
         @type_validation = GraphQL::TypeValidation.new(@types)
       end
 
@@ -30,21 +30,21 @@ module GraphQL
       }
 
       def extract_elements(node = @document)
-        types = Hash(String, GraphQL::Language::TypeDefinition).new
-        schema = uninitialized GraphQL::Language::SchemaDefinition
+        types = Hash(String, Language::TypeDefinition).new
+        schema = uninitialized Language::SchemaDefinition
 
         ScalarTypes.each do |(type_name, description)|
-          types[type_name] = GraphQL::Language::ScalarTypeDefinition.new(
+          types[type_name] = Language::ScalarTypeDefinition.new(
             name: type_name, description: description,
-            directives: [] of GraphQL::Language::Directive
+            directives: [] of Language::Directive
           )
         end
 
         @document.map_children do |node|
             case node
-            when GraphQL::Language::SchemaDefinition
+            when Language::SchemaDefinition
               schema = node
-            when GraphQL::Language::TypeDefinition
+            when Language::TypeDefinition
               types[node.name] = node
             end
             node

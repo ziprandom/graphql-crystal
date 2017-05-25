@@ -8,36 +8,36 @@ module GraphQL
       #
       # @example Turning a document into a query
       #    document = GraphQL.parse(query_string)
-      #    GraphQL::Language::Generation.generate(document)
+      #    Generation.generate(document)
       #    # => "{ ... }"
       #
-      # @param node [GraphQL::Language::AbstractNode] an AST node to recursively stringify
+      # @param node [AbstractNode] an AST node to recursively stringify
       # @param indent [String] Whitespace to add to each printed node
       # @return [String] Valid GraphQL for `node`
 
-      def self.generate(node : GraphQL::Language::Document, indent : String = "")
+      def self.generate(node : Document, indent : String = "")
         node.definitions.map { |d| generate(d) }.join("\n\n")
       end
 
-      def self.generate(node : GraphQL::Language::Argument, indent : String = "")
+      def self.generate(node : Argument, indent : String = "")
         "#{node.name}: #{generate(node.value)}"
       end
 
-      def self.generate(node : GraphQL::Language::Directive, indent : String = "")
+      def self.generate(node : Directive, indent : String = "")
         out = "@#{node.name}"
         out += "(#{node.arguments.map { |a| generate(a).as(String)}.join(", ")})" if node.arguments.any?
         out
       end
 
-      def self.generate(node : GraphQL::Language::AEnum, indent : String = "")
+      def self.generate(node : AEnum, indent : String = "")
         "#{node.name}"
       end
 
-      def self.generate(node : GraphQL::Language::NullValue, indent : String = "")
+      def self.generate(node : NullValue, indent : String = "")
         "null"
       end
 
-      def self.generate(node : GraphQL::Language::Field, indent : String = "")
+      def self.generate(node : Field, indent : String = "")
         out = ""
         out += "#{node._alias}: " if node._alias
         out += "#{node.name}"
@@ -47,7 +47,7 @@ module GraphQL
         out
       end
 
-      def self.generate(node : GraphQL::Language::FragmentDefinition, indent : String = "")
+      def self.generate(node : FragmentDefinition, indent : String = "")
         out = "#{indent}fragment #{node.name}"
         if node.type
           out += " on #{generate(node.type)}"
@@ -57,14 +57,14 @@ module GraphQL
         out
       end
 
-      def self.generate(node : GraphQL::Language::FragmentSpread, indent : String = "")
+      def self.generate(node : FragmentSpread, indent : String = "")
         out = "#{indent}...#{node.name}"
         if node.directives.any?
           out += " " + node.directives.map { |d| generate(d).as(String)}.join(" ")
         end
       end
 
-      def self.generate(node : GraphQL::Language::InlineFragment, indent : String = "")
+      def self.generate(node : InlineFragment, indent : String = "")
         out = "#{indent}..."
         if node.type
           out += " on #{generate(node.type)}"
@@ -74,19 +74,19 @@ module GraphQL
         out
       end
 
-      def self.generate(node : GraphQL::Language::InputObject, indent : String = "")
+      def self.generate(node : InputObject, indent : String = "")
         generate(node.to_h)
       end
 
-      def self.generate(node : GraphQL::Language::ListType, indent : String = "")
+      def self.generate(node : ListType, indent : String = "")
         "[#{generate(node.of_type)}]"
       end
 
-      def self.generate(node : GraphQL::Language::NonNullType, indent : String = "")
+      def self.generate(node : NonNullType, indent : String = "")
         "#{generate(node.of_type)}!"
       end
 
-      def self.generate(node : GraphQL::Language::OperationDefinition, indent : String = "")
+      def self.generate(node : OperationDefinition, indent : String = "")
         out = "#{indent}#{node.operation_type}"
         if node.name
           out += " #{node.name}"
@@ -97,11 +97,11 @@ module GraphQL
         out
       end
 
-      def self.generate(node : GraphQL::Language::TypeName, indent : String = "")
+      def self.generate(node : TypeName, indent : String = "")
         "#{node.name}"
       end
 
-      def self.generate(node : GraphQL::Language::VariableDefinition)
+      def self.generate(node : VariableDefinition)
         out = "$#{node.name}: #{generate(node.type)}"
         unless node.default_value.nil?
           out += " = #{generate(node.default_value)}"
@@ -109,11 +109,11 @@ module GraphQL
         out
       end
 
-      def self.generate(node : GraphQL::Language::VariableIdentifier, indent : String = "")
+      def self.generate(node : VariableIdentifier, indent : String = "")
         "$#{node.name}"
       end
 
-      def self.generate(node : GraphQL::Language::SchemaDefinition, indent : String = "")
+      def self.generate(node : SchemaDefinition, indent : String = "")
         if (node.query.nil? || node.query == "Query") &&
            (node.mutation.nil? || node.mutation == "Mutation") &&
            (node.subscription.nil? || node.subscription == "Subscription")
@@ -126,13 +126,13 @@ module GraphQL
         out += "}"
       end
 
-      def self.generate(node : GraphQL::Language::ScalarTypeDefinition, indent : String = "")
+      def self.generate(node : ScalarTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "scalar #{node.name}"
         out += generate_directives(node.directives)
       end
 
-      def self.generate(node : GraphQL::Language::ObjectTypeDefinition, indent : String = "")
+      def self.generate(node : ObjectTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "type #{node.name}"
         out += generate_directives(node.directives)
@@ -140,13 +140,13 @@ module GraphQL
         out += generate_field_definitions(node.fields)
       end
 
-      def self.generate(node : GraphQL::Language::InputValueDefinition, indent : String = "")
+      def self.generate(node : InputValueDefinition, indent : String = "")
         out = "#{node.name}: #{generate(node.type)}"
         out += " = #{generate(node.default_value)}" unless node.default_value.nil?
         out += generate_directives(node.directives)
       end
 
-      def self.generate(node : GraphQL::Language::FieldDefinition, indent : String = "")
+      def self.generate(node : FieldDefinition, indent : String = "")
         out = node.name.dup
         unless node.arguments.empty?
           out += "(" + node.arguments.map{ |arg| generate(arg).as(String) }.join(", ") + ")"
@@ -155,21 +155,21 @@ module GraphQL
         out += generate_directives(node.directives)
       end
 
-      def self.generate(node : GraphQL::Language::InterfaceTypeDefinition, indent : String = "")
+      def self.generate(node : InterfaceTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "interface #{node.name}"
         out += generate_directives(node.directives)
         out += generate_field_definitions(node.fields)
       end
 
-      def self.generate(node : GraphQL::Language::UnionTypeDefinition, indent : String = "")
+      def self.generate(node : UnionTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "union #{node.name}"
         out += generate_directives(node.directives)
         out += " = " + node.types.map{ |t| t.as(NameOnlyNode).name }.join(" | ")
       end
 
-      def self.generate(node : GraphQL::Language::EnumTypeDefinition, indent : String = "")
+      def self.generate(node : EnumTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "enum #{node.name}#{generate_directives(node.directives)} {\n"
         node.fvalues.each_with_index do |value, i|
@@ -179,13 +179,13 @@ module GraphQL
         out += "}"
       end
 
-      def self.generate(node : GraphQL::Language::EnumValueDefinition, indent : String = "")
+      def self.generate(node : EnumValueDefinition, indent : String = "")
         out = "  #{node.name}"
         out += generate_directives(node.directives)
         out += "\n"
       end
 
-      def self.generate(node : GraphQL::Language::InputObjectTypeDefinition, indent : String = "")
+      def self.generate(node : InputObjectTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "input #{node.name}"
         out += generate_directives(node.directives)
@@ -197,14 +197,14 @@ module GraphQL
         out += "}"
       end
 
-      def self.generate(node : GraphQL::Language::DirectiveDefinition, indent : String = "")
+      def self.generate(node : DirectiveDefinition, indent : String = "")
         out = generate_description(node)
         out += "directive @#{node.name}"
         out += "(#{node.arguments.map { |a| generate(a).as(String) }.join(", ")})" if node.arguments.any?
         out += " on #{node.locations.join(" | ")}"
       end
 
-#      def self.generate(node : GraphQL::Language::AbstractNode, indent : String = "")
+#      def self.generate(node : AbstractNode, indent : String = "")
 #        node.to_query_string()
 #      end
 
@@ -255,7 +255,7 @@ module GraphQL
         #return "" unless node.description
 
         #description = indent != "" && !first_in_block ? "\n" : ""
-        #description += GraphQL::Language::Comments.commentize(node.description, indent: indent)
+        #description += Comments.commentize(node.description, indent: indent)
       end
 
       def self.generate_field_definitions(fields, indent : String = "")
