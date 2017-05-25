@@ -5,7 +5,7 @@ enum EpisodeEnum
 end
 
 class Character
-  extend GraphQL::ObjectType
+  include GraphQL::ObjectType
   getter :id, :name, :friends, :appears_in
   def initialize(@id : String, @name : String, @friends : Array(String),
                  @appears_in : Array(EpisodeEnum)); end

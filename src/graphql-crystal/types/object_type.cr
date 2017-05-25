@@ -1,6 +1,5 @@
-require "./object_type_resolvable.cr"
-
 module GraphQL::ObjectType
+
   macro included
     define_graphql_fields(false)
   end
@@ -8,19 +7,12 @@ module GraphQL::ObjectType
   macro extended
     define_graphql_fields(true)
   end
+
 end
 
 macro define_graphql_fields(on_instance?)
-  extend GraphQL::ObjectType::Resolvable
+
   define_object_type_macros({{on_instance?}})
-
-  def with_self
-    with self yield
-  end
-
-  def self.with_self
-    with self yield
-  end
 
   # a constant to hold the fields defined for
   # classes extending the module
@@ -30,6 +22,7 @@ macro define_graphql_fields(on_instance?)
   # behave the way you'd expect
   # them to
   make_inherited
+
 end
 
 # the macro pushes the supplied values onto the FIELDS constant
@@ -71,11 +64,27 @@ macro define_field_macro(on_instance?)
         end
       \{% end %}
     end
+
   end
 end
 
 macro define_resolve_field_methods
+
   macro finished
+    field :__typename, GraphQL::StringType, "the name of this GraphQL type" { self.class.to_s }
+
+    def with_self
+      with self yield
+    end
+
+    def self.with_self
+      with self yield
+    end
+
+  end
+
+  macro finished
+
   # resolve a field to an object using
   # its name and arguments calling the
   # parent class if the field name can't

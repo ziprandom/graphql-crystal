@@ -293,7 +293,7 @@ describe GraphQL::Schema do
         },
         "errors" => [
           {
-            "message" => %{argument "id" is expected to be of Type: "GraphQL::IDType"},
+            "message" => %{argument "id" is expected to be of type: "ID!"},
             "path" => ["user"]
           }
         ]

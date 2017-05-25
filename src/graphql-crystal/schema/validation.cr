@@ -2,12 +2,6 @@ module GraphQL
   module Schema
     module Validation
 
-      # Implement Field Validation here
-      def self.field_definition_rejects_value?(field_definition : GraphQL::Language::Type, value)
-        # return ["this is so wrong!"] #  errors
-        return nil # => no errors
-      end
-
       def self.validate_params_against_query_definition(query : GraphQL::Language::OperationDefinition, params = nil)
         # validate all the obligatory variables have been defined
         params ||= Hash(String, Nil).new

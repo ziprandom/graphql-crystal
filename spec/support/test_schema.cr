@@ -1,17 +1,15 @@
 # coding: utf-8
 require "../src/graphql-crystal/schema"
 
+#
+# Model Logic
+#
 enum CityEnum
   London
   Miami
   CABA
   Istanbul
 end
-
-# see https://github.com/crystal-lang/crystal/issues/4353
-# for an explanation for why we don't just say:
-# alias CityEnumType = GraphQL::EnumType(CityEnum)
-class CityEnumType < GraphQL::EnumType(CityEnum); end
 
 Addresses = [
   {"Downing Street", 11, CityEnum::London, 3231},
@@ -30,20 +28,20 @@ Users[1].friends = [Users[2], Users[0]]
 Users[0].friends = [Users[2], Users[1]]
 
 class Address
-  extend GraphQL::ObjectType
+  include GraphQL::ObjectType
   getter :street, :number, :city, :postal_code
   def initialize(
         @street : String, @number : Int32,
         @city : CityEnum, @postal_code : Int32)
   end
   field :street, GraphQL::StringType
-  field :number, GraphQL::IntegerType
+  field :number, GraphQL::IntType
   field :city, CityEnumType
-  field :postal_code, GraphQL::IntegerType
+  field :postal_code, GraphQL::IntType
 end
 
 class User
-  extend GraphQL::ObjectType
+  include GraphQL::ObjectType
   getter :id, :name, :address
   property :friends
   def initialize(
@@ -51,6 +49,7 @@ class User
         @address : Address,
         @friends = Array(User).new)
   end
+
   field :id, GraphQL::IDType
   field :name, GraphQL::StringType
   field :address, Address
@@ -65,35 +64,58 @@ class User
   end
 end
 
-class Query
-  include GraphQL::ObjectType
-  field :user, User, "A user in the system.", {
-          id: { type: GraphQL::IDType, description: "the user id to query for", default: nil }
-        } do
+#
+# Schema Definition
+#
+SCHEMA_DEFINITION = <<-graphql_schema
+  schema {
+    query: QueryType,
+    mutation: MutationType
+  }
+
+  type QueryType {
+    # A user in the system.
+    user(id: ID!): User
+    addresses(city: [City]): [Address]
+  }
+
+  enum City {
+    London
+    Miami
+    CABA
+    Istanbul
+  }
+
+  type User {
+    id: ID!
+    name: String
+    address: Address
+    friends: [User]
+    full_address: String
+  }
+
+  type Address {
+    street: String
+    number: Int
+    city: City
+    postal_code: Int
+  }
+graphql_schema
+
+#
+# define the root queries & mutation
+#
+TestSchema = GraphQL::Schema.from_schema(SCHEMA_DEFINITION).resolve do
+
+  query :user do |args|
     Users.find &.id.==( args["id"] )
   end
-end
 
-# just to make sure it keeps
-# working with inheritance
-class SpecialQuery < Query
-
-  field :addresses, [Address], "an address in the system",
-        {
-          city: {
-            type: [CityEnumType],
-            description: "the city for which addresses should be returned",
-            default: nil
-          }
-        } do
+  query :addresses do |args|
     (cities = args["city"]?) ?
       Addresses.select do |address|
-        cities.as( Array ).includes? address.city.to_i
+        cities.as( Array ).includes? address.city.to_s
       end : Addresses
   end
-end
 
-module TestSchema
-  extend GraphQL::Schema
-  query SpecialQuery
 end

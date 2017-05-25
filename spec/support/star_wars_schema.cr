@@ -1,8 +1,6 @@
 require "../../src/graphql-crystal"
 require "./star_wars_data"
 
-class EpisodeEnumType < GraphQL::EnumType(EpisodeEnum); end
-
 class Character
   field :id, GraphQL::StringType, "The id of the character."
   field :name, GraphQL::StringType, "The name of the character."
@@ -10,6 +8,7 @@ class Character
                                                                 if the have none." do
     Characters.select { |c| self.friends.includes? c.id }
   end
+
   field :appearsIn, [EpisodeEnumType], "Which movies they appear in." { self.appears_in }
   field :secretBackstory, GraphQL::StringType, "All secrets about their past." do
     raise "secretBackstory is secret."
@@ -24,53 +23,63 @@ class Droid
   field :primaryFunction, GraphQL::StringType, "The primary function of the droid." { self.primary_function }
 end
 
-module QueryType
-  include GraphQL::ObjectType
 
-  field :hero, Character, "", {
-          episode: {
-            description: "If omitted, returns the hero of the whole saga. If \
-                          provided, returns the hero of that particular episode.",
-            type: EpisodeEnumType
-          }
-        } do
-    if (args["episode"]? == 5)
+STARWARS_SCHEMA_DEFINITION = <<-schema_string
+  schema {
+    query: QueryType
+  }
+
+  enum Episode {
+    NEWHOPE
+    EMPIRE
+    JEDI
+  }
+
+  type QueryType {
+    hero(episode: Episode): Character
+    humans(ids: [String]): [Human]
+    human(id: String!): Human
+    droid(id: String!): Droid
+  }
+
+  interface Character {
+    id: String
+    name: String
+    friends: [Character]
+    appearsIn: [Episode]
+    secretBackstory: String
+  }
+
+  type Human implements Character {
+    homePlanet: String
+  }
+
+  type Droid implements Character {
+    primaryFunction: String
+  }
+
+schema_string
+
+StarWarsSchema = GraphQL::Schema.from_schema(STARWARS_SCHEMA_DEFINITION).resolve do
+
+  query :hero do |args|
+    if (args["episode"]? == "EMPIRE")
       Characters.find(&.id.==("1000"))
     else
       Characters.find(&.id.==("2001"))
     end
   end
 
-  field :humans, [Human], "", {
-    ids: {
-      description: "a list of ids",
-      type: [GraphQL::StringType]
-    }
-  } do
+  query :humans do |args|
     args["ids"].as(Array).map { |i| Characters.find( &.id.==(i) ) }
   end
 
-  field :human, Human, "", {
-          id: {
-            description: "id of the human",
-            type: GraphQL::StringType
-          }
-        } do
+  query :human do |args|
     Characters.select( &.is_a?(Human) ).find( &.id.==(args["id"]) )
   end
 
-  field :droid, Droid, "", {
-          id: {
-            description: "id of the droid",
-            type: GraphQL::StringType
-          }
-        } do
+  query :droid do |args|
     Characters.select(&.is_a?(Droid)).find( &.id.==(args["id"]))
   end
 
-end
-
-module StarWarsSchema
-  extend GraphQL::Schema
-  query QueryType
 end
