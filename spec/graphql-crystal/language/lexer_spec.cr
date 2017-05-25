@@ -18,15 +18,11 @@ describe GraphQL::Language::Lexer do
 
     tokens = subject.lex(query_string)
 
-    pending "makes utf-8 comments" do
+    it "makes utf-8 comments" do
       tokens = subject.lex("# 不要!\n{")
-      comment_token = tokens.first#.prev_token
-      comment_token.value.should eq "# 不要!"
+      comment_token = tokens.first
+      comment_token.value.should eq "不要!"
     end
-
-#    pending "keeps track of previous_token" do
-#      tokens[1].prev_token.should eq tokens[0]
-#    end
 
     it "unescapes escaped characters" do
       subject.lex(
@@ -41,11 +37,5 @@ describe GraphQL::Language::Lexer do
     it "rejects bad unicode, even when there's good unicode in the string" do
       subject.lex(%{"\\u0XXF \\u0009"}).first.type.should eq :BAD_UNICODE_ESCAPE
     end
-
-#    pending "clears the previous_token between runs" do
-#      tok_1 = subject.lex(query_string)
-#      tok_2 = subject.lex(query_string)
-#      tok_2[0].prev_token.should eq nil
-#    end
   end
 end

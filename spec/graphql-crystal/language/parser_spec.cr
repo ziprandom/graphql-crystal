@@ -114,7 +114,10 @@ describe GraphQL::Language::Parser do
           # the name
           # of that starship
           name: String!
-          length(unit: LengthUnit = METER): Float
+          length(
+            # the desired unit
+            unit: LengthUnit = METER
+          ): Float
         }
       }
     ];

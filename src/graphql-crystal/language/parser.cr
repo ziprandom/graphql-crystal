@@ -304,11 +304,11 @@ module GraphQL
 
       production(:input_value_definition) do
         clause(
-          ".name COLON .type .default_value? .directive*") do |name, type, default_value, directives|
+          ".comments? .name COLON .type .default_value? .directive*") do |comment, name, type, default_value, directives|
           InputValueDefinition.new(
             name: name, type: type,
             default_value: (default_value.is_a?(Array) ? default_value.map &.as(FValue) : default_value).as(FValue),
-            directives: directives, description: "")
+            directives: directives, description: comment || "")
         end
       end
 
@@ -372,7 +372,7 @@ module GraphQL
           [
             comments.as(String),
             comment.as(String)
-          ].join("\n")
+          ].join(" ")
         end
       end
 
