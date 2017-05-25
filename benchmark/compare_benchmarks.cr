@@ -1,5 +1,4 @@
 # use compile time finalized  version
-#require "../src/graphql-crystal/language/parser_pre"
 require "../src/graphql-crystal/language/parser"
 require "../src/graphql-crystal/language/lexer"
 require "./lib/libragphqlparserC"
