@@ -1,7 +1,8 @@
+require "./schema_introspection"
 module GraphQL
   module Schema
     class Schema
-
+      include GraphQL::Schema::Introspection
       alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | Nil )
 
       @queries= Hash(String, Proc(Hash(String, ReturnType), QueryReturnType)).new
@@ -40,7 +41,7 @@ module GraphQL
           )
         end
 
-        @document.map_children do |node|
+        node.map_children do |node|
             case node
             when Language::SchemaDefinition
               schema = node

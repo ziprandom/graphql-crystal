@@ -34,10 +34,10 @@ class Address
         @street : String, @number : Int32,
         @city : CityEnum, @postal_code : Int32)
   end
-  field :street, GraphQL::StringType
-  field :number, GraphQL::IntType
-  field :city, CityEnumType
-  field :postal_code, GraphQL::IntType
+  field :street
+  field :number
+  field :city
+  field :postal_code
 end
 
 class User
@@ -50,11 +50,11 @@ class User
         @friends = Array(User).new)
   end
 
-  field :id, GraphQL::IDType
-  field :name, GraphQL::StringType
-  field :address, Address
-  field :friends, [User]
-  field :full_address, GraphQL::StringType do
+  field :id
+  field :name
+  field :address
+  field :friends
+  field :full_address do
     <<-address
     #{name}
     #{name.size.times.to_a.map {"-"}.join}

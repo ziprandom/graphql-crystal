@@ -201,7 +201,7 @@ module GraphQL
         # we need to derive the type from the actual object
         when Language::UnionTypeDefinition, Language::InterfaceTypeDefinition
           # FixMe: this needs to be more flexible of course
-          concrete_definition = @types[resolved.as(ObjectType).__typename_field(nil)]
+          concrete_definition = @types[resolved.as(ObjectType).graphql_type]
           resolve_selections_for(concrete_definition, selections, resolved)
         # we already hold the results in our hands :)
         when Language::ScalarTypeDefinition, Language::EnumTypeDefinition

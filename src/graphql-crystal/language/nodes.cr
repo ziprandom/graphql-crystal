@@ -1,14 +1,19 @@
 require "cltk/ast"
 require "./generation"
-
+require "../types/object_type"
 module GraphQL
   module Language
 
     class AbstractNode < CLTK::ASTNode
+      # this works only if the module
+      # gets included in the class exactly
+      # at this file
+      include GraphQL::ObjectType
+
  #     getter :line, :col
  #     @col : Int32
  #     @line : Int32
-#
+ #
  #     def initialize(**options)
  #       position_source = options.fetch(:position_source, nil)
  #       if position_source
@@ -90,11 +95,11 @@ module GraphQL
     end
 
     class TypeDefinition < AbstractNode
-      values({name: String})
+      values({name: String, description: String})
     end
 
     class ScalarTypeDefinition < TypeDefinition
-      values({directives: Array(Directive), description: String})
+      values({directives: Array(Directive)})
       traverse :children, :directives
     end
 
@@ -102,14 +107,13 @@ module GraphQL
       values(
         {interfaces: Array(String),
          fields: Array(FieldDefinition),
-         directives: Array(Directive),
-         description: String}
+         directives: Array(Directive)}
       )
       traverse :children, :fields, :directives
     end
 
     class InputObjectTypeDefinition < TypeDefinition
-      values({fields: Array(InputValueDefinition), directives: Array(Directive), description: String})
+      values({fields: Array(InputValueDefinition), directives: Array(Directive)})
       traverse :children, :fields, :directives
     end
 
@@ -205,18 +209,18 @@ module GraphQL
     end
 
     class InterfaceTypeDefinition < TypeDefinition
-      values({fields: Array(FieldDefinition), directives: Array(Directive), description: String})
+      values({fields: Array(FieldDefinition), directives: Array(Directive)})
       traverse :children, :fields, :directives
     end
 
 
     class UnionTypeDefinition < TypeDefinition
-      values({types: Array(TypeName), directives: Array(Directive), description: String})
+      values({types: Array(TypeName), directives: Array(Directive)})
       traverse :children, :types, :directives
     end
 
     class EnumTypeDefinition < TypeDefinition
-      values({fvalues: Array(EnumValueDefinition), directives: Array(Directive), description: String})
+      values({fvalues: Array(EnumValueDefinition), directives: Array(Directive)})
       traverse :children, :directives
     end
 
