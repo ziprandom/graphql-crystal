@@ -6,6 +6,7 @@ require "./nodes"
 module GraphQL
   module Language
     class Parser < CLTK::Parser
+
       production(:document) do
         clause("definition+") { |definitions| Document.new(definitions: definitions) }
       end
@@ -61,8 +62,8 @@ module GraphQL
 
       production(:type) do
         clause(:name) { |name| TypeName.new(name: name) }
-        clause("name BANG") { |name| NonNullType.new(of_type: TypeName.new(name: name)) }
-        clause("LBRACKET type RBRACKET") { |_, type, _| ListType.new(of_type: type) }
+        clause(".type BANG") { |type| NonNullType.new(of_type: type) }
+        clause("LBRACKET .type RBRACKET") { |type| ListType.new(of_type: type) }
       end
 
       production(:default_value) do
