@@ -67,7 +67,14 @@ module GraphQL
       end
 
       production(:default_value) do
-        clause("EQUALS .input_value") { |val| val }
+        clause("EQUALS .input_value") do |val|
+          case val
+          when Nil
+            val.as(Nil).to_json
+          else
+            val
+          end
+        end
       end
 
       production(:selection_set) do
@@ -143,7 +150,7 @@ module GraphQL
 
       production(:enum_value_definition) do
         clause("comments? enum_name directive*") do |comment, name, directives|
-          EnumValueDefinition.new(name: name, directives: directives, selection: nil, description: comment || "")
+          EnumValueDefinition.new(name: name, directives: directives, selection: nil, description: comment)
         end
       end
 
@@ -151,14 +158,20 @@ module GraphQL
         clause("LPAREN .argument* RPAREN") { |list| list }
       end
 
+      def self.argument_value_prepare(value)
+        case value
+        when Array
+          value.map { |v| argument_value_prepare(v).as(ArgumentValue) }
+        else
+          value
+        end.as(ArgumentValue)
+      end
+
       production(:argument) do
         clause(".name COLON .input_value") do |name, value|
-          cvalue = (
-            value.is_a?(Array) ? value.map( &.as(ArgumentValue) ) : value
-          ).as(ArgumentValue)
           Argument.new(
             name: name,
-            value: cvalue
+            value: argument_value_prepare(value)
           )
         end
       end
@@ -283,7 +296,7 @@ module GraphQL
 
       production(:scalar_type_definition) do
         clause("SCALAR .name .directive*") do |name, directives|
-          ScalarTypeDefinition.new(name: name, directives: directives, description: "")
+          ScalarTypeDefinition.new(name: name, directives: directives, description: nil)
         end
       end
 
@@ -295,7 +308,7 @@ module GraphQL
             interfaces: interfaces || [] of String,
             directives: directives,
             fields: fields,
-            description: "")
+            description: nil)
         end
       end
 
@@ -309,7 +322,7 @@ module GraphQL
           InputValueDefinition.new(
             name: name, type: type,
             default_value: (default_value.is_a?(Array) ? default_value.map &.as(FValue) : default_value).as(FValue),
-            directives: directives, description: comment || "")
+            directives: directives, description: comment)
         end
       end
 
@@ -321,14 +334,14 @@ module GraphQL
         clause(
           ".comments? .name .arguments_definitions? COLON .type .directive*") do |comment, name, arguments, type, directives|
           FieldDefinition.new(name: name, arguments: arguments || [] of Argument,
-            type: type, directives: directives, description: comment || "")
+            type: type, directives: directives, description: comment)
         end
       end
 
       production(:interface_type_definition) do
         clause(
           "INTERFACE .name .directive* LCURLY .field_definition* RCURLY") do |name, directives, fields|
-          InterfaceTypeDefinition.new(name: name, fields: fields, directives: directives, description: "")
+          InterfaceTypeDefinition.new(name: name, fields: fields, directives: directives, description: nil)
         end
       end
 
@@ -342,20 +355,20 @@ module GraphQL
         clause("UNION .name .directive* EQUALS .union_members") do |name, directives, members|
           UnionTypeDefinition.new(name: name,
             types: members.as(Array).map { |name| TypeName.new(name: name) }.as(Array(TypeName)),
-            directives: directives, description: "")
+            directives: directives, description: nil)
         end
       end
 
       production(:enum_type_definition) do
         clause("ENUM .name .directive* LCURLY .enum_value_definition+ RCURLY") do |name, directives, values|
-          EnumTypeDefinition.new(name: name, fvalues: values.as(Array), directives: directives, description: "")
+          EnumTypeDefinition.new(name: name, fvalues: values.as(Array), directives: directives, description: nil)
         end
       end
 
       production(:input_object_type_definition) do
         clause(
           "INPUT .name .directive* LCURLY .input_value_definition+ RCURLY") do |name, directives, values|
-          InputObjectTypeDefinition.new(name: name, fields: values, directives: directives, description: "")
+          InputObjectTypeDefinition.new(name: name, fields: values, directives: directives, description: nil)
         end
       end
 
@@ -363,7 +376,7 @@ module GraphQL
         clause (
           "DIRECTIVE DIR_SIGN .name .arguments_definitions? ON .directive_locations"
         ) do |name, arguments, locations|
-          DirectiveDefinition.new(name: name, arguments: arguments, locations: locations, description: "")
+          DirectiveDefinition.new(name: name, arguments: arguments, locations: locations, description: nil)
         end
       end
 

@@ -2,10 +2,11 @@ require "./language"
 require "./types/type_validation"
 require "./types/object_type"
 require "./schema/schema"
-require "./schema/schema_execute"
-require "./schema/validation"
-require "./schema/variable_resolver.cr"
-require "./schema/fragment_resolver"
+require "./schema/*"
+# require "./schema/schema_execute"
+# require "./schema/validation"
+# require "./schema/variable_resolver.cr"
+# require "./schema/fragment_resolver"
 module GraphQL
 
   alias Error = {message: String, path: Array(String|Int32) }

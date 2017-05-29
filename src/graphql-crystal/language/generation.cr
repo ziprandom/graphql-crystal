@@ -208,7 +208,7 @@ module GraphQL
 #        node.to_query_string()
 #      end
 
-      def self.generate(node : Float | Int | Nil | String | Bool, indent : String = "")
+      def self.generate(node : Float | Int | String | Nil | Bool, indent : String = "")
         node.to_json
       end
 

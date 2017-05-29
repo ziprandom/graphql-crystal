@@ -10,5 +10,7 @@ module GraphQL::Language
         query_string
       ), options
     ).as(GraphQL::Language::Document)
+  rescue e : CLTK::Parser::Exceptions::NotInLanguage
+    raise e
   end
 end

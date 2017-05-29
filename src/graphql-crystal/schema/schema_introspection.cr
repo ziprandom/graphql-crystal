@@ -6,6 +6,7 @@ module GraphQL
         include ObjectType
 
         field :types { @types.values }
+        field :directives { @types.values.select &.is_a?(Language::DirectiveDefinition) }
 
         macro finished
           def initialize(document : Language::Document)
@@ -26,12 +27,24 @@ module GraphQL
                 Language::TypeName.new(name: "__Schema"), Array(Language::Directive).new,
                 "the introspection query"
               )
+              root_query.fields << Language::FieldDefinition.new(
+                "__type", [
+                  Language::InputValueDefinition.new(
+                  name: "name", type: Language::TypeName.new(name: "String"), default_value: nil,
+                  directives: [] of Language::Directive, description: ""
+                )
+                ], Language::TypeName.new(name: "__Type"), Array(Language::Directive).new,
+                "the introspection query"
+              )
             end
             # add the callback for
             # the schema field of
             # the root query
             query(:__schema) do
               self
+            end
+            query(:__type) do |args|
+              @types[args["name"]]
             end
           end
         end
@@ -192,10 +205,10 @@ module GraphQL
   module Language
 
     class GraphQL::Language::TypeDefinition
-      field :kind { "OBJECT" }
+      field :kind { nil }
       field :name
       field :description
-      field :inputFields {"inputFields"}
+      field :inputFields { nil }
       field :fields { nil }
       field :interfaces { nil }
       field :possibleTypes { nil }
@@ -263,11 +276,29 @@ module GraphQL
       field :deprecationReason { "" }
     end
 
+    class GraphQL::Language::InputObjectTypeDefinition
+      field :inputFields { fields }
+      field :kind { "INPUT_OBJECT" }
+      field :directives
+    end
+
     class GraphQL::Language::InputValueDefinition
       field :name
       field :description
       field :type { schema.type_resolve(type) }
-      field :defaultValue { default_value }
+      field :defaultValue do
+        val = (
+          default_value.is_a?(Language::AbstractNode) ?
+            GraphQL::Language::Generation.generate(default_value) :
+            (
+              default_value.is_a?(String) ?
+                # quote the string value
+                %{"#{default_value}"} :
+                default_value
+            )
+        )
+        val == nil ? nil : val.to_s
+      end
     end
 
     class GraphQL::Language::EnumValueDefinition

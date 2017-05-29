@@ -1,3 +1,4 @@
+# coding: utf-8
 require "cltk/ast"
 require "./generation"
 require "../types/object_type"
@@ -66,7 +67,7 @@ module GraphQL
     end
 
     class DirectiveDefinition < AbstractNode
-      values({name: String, arguments: Array(InputValueDefinition), locations: Array(String), description: String})
+      values({name: String, arguments: Array(InputValueDefinition), locations: Array(String), description: String?})
       traverse :children, :arguments
     end
 
@@ -75,7 +76,7 @@ module GraphQL
       traverse :children, :arguments
     end
 
-    alias FValue = String | Int32 | Float64 | Bool |  Nil | AEnum | AbstractNode | Array(FValue) | Hash(String, FValue)
+    alias FValue = String | Int32 | Float64 | Bool |  Nil | AEnum | InputObject | Array(FValue) | Hash(String, FValue)
 
     alias Type = TypeName | NonNullType | ListType
     alias Selection = Field | FragmentSpread | InlineFragment
@@ -95,7 +96,7 @@ module GraphQL
     end
 
     class TypeDefinition < AbstractNode
-      values({name: String, description: String})
+      values({name: String, description: String?})
     end
 
     class ScalarTypeDefinition < TypeDefinition
@@ -118,7 +119,7 @@ module GraphQL
     end
 
     class InputValueDefinition < AbstractNode
-      values({name: String, type: Type, default_value: FValue, directives: Array(Directive), description: String})
+      values({name: String, type: Type, default_value: FValue, directives: Array(Directive), description: String?})
       traverse :children, :type, :directives
     end
 
@@ -204,7 +205,7 @@ module GraphQL
     end
 
     class FieldDefinition < AbstractNode
-      values({name: String, arguments: Array(InputValueDefinition), type: Type, directives: Array(Directive), description: String})
+      values({name: String, arguments: Array(InputValueDefinition), type: Type, directives: Array(Directive), description: String?})
       traverse :children, :type, :arguments, :directives
     end
 
@@ -237,7 +238,7 @@ module GraphQL
     end
 
     class EnumValueDefinition < AbstractNode
-      values({name: String, directives: Array(Directive), selection: Array(Selection)?, description: String })
+      values({name: String, directives: Array(Directive), selection: Array(Selection)?, description: String? })
       traverse :children, :directives
     end
   end
