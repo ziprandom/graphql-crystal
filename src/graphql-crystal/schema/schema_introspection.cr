@@ -106,6 +106,15 @@ module GraphQL
           deprecationReason: String
         }
 
+        type __Directive {
+          name: String!
+          description: String
+          args: [__InputValue!]!
+          onOperation: Boolean!
+          onFragment: Boolean!
+          onField: Boolean!
+        }
+
         enum __TypeKind {
           SCALAR
           OBJECT
@@ -117,13 +126,64 @@ module GraphQL
           NON_NULL
         }
 
-        type __Directive {
-          name: String!
-          description: String
-          args: [__InputValue!]!
-          onOperation: Boolean!
-          onFragment: Boolean!
-          onField: Boolean!
+        # A Directive can be adjacent to many parts
+        # of the GraphQL language, a __DirectiveLocation
+        # describes one such possible adjacencies.
+        enum __DirectiveLocation {
+          # Location adjacent
+          # to a query operation
+          QUERY
+          # Location adjacent to
+          # a mutation operation
+          MUTATION
+          # Location adjacent to
+          # a subscription operation
+          SUBSCRIPTION
+          # Location adjacent to
+          # a field
+          FIELD
+          # Location adjacent to
+          # a fragment definition
+          FRAGMENT_DEFINITION
+          # Location adjacent to
+          # a fragment spread
+          FRAGMENT_SPREAD
+          # Location adjacent to
+          # an inline fragment
+          INLINE_FRAGMENT
+          # Location adjacent to
+          # a schema definition
+          SCHEMA
+          # Location adjacent to
+          # a scalar definition
+          SCALAR
+          # Location adjacent to
+          # an object type definition
+          OBJECT
+          # Location adjacent to
+          # a field definition
+          FIELD_DEFINITION
+          # Location adjacent to
+          # an argument definition
+          ARGUMENT_DEFINITION
+          # Location adjacent to
+          # an interface definition
+          INTERFACE
+          # Location adjacent to
+          # a union definition
+          UNION
+          # Location adjacent to
+          # an enum definition
+          ENUM
+          # Location adjacent to
+          # an enum value definition
+          ENUM_VALUE
+          # Location adjacent to
+          # an input object type definition
+          INPUT_OBJECT
+          # Location adjacent to
+          # an input object field definition
+          INPUT_FIELD_DEFINITION
         }
       schema
     end
@@ -132,46 +192,91 @@ module GraphQL
   module Language
 
     class GraphQL::Language::TypeDefinition
-      graphql_type "Type"
-      field :kind { self.graphql_type.upcase }
+      field :kind { "OBJECT" }
       field :name
       field :description
       field :inputFields {"inputFields"}
+      field :fields { nil }
+      field :interfaces { nil }
+      field :possibleTypes { nil }
+      field :enumValues { nil } #(includeDeprecated: Boolean = false)
+      field :ofType { nil }
+      field :isDeprecated { false }
+      field :deprecationReason { nil }
     end
 
     class GraphQL::Language::ObjectTypeDefinition
-      graphql_type "Object"
-      field :fields
-      field :interfaces
-      field :possibleTypes { ["dummy"] }
+      field :fields do
+        fields + resolved_interfaces(schema).flat_map &.fields
+      end
+      field :interfaces { resolved_interfaces(schema) }
+
+      def resolved_interfaces(schema)
+        interfaces.map do |iface_name|
+          schema.type_resolve(iface_name).as(InterfaceTypeDefinition)
+        end
+      end
     end
 
     class GraphQL::Language::UnionTypeDefinition
-      graphql_type "Union"
-      field :possibleTypes { types }
+      field :possibleTypes { types.map{|t| schema.type_resolve(t)} }
     end
 
     class GraphQL::Language::InterfaceTypeDefinition
-      graphql_type "Interface"
+      field :kind { "INTERFACE" }
+      field :possibleTypes do
+        schema.types.values.select do |t|
+          t.is_a?(ObjectTypeDefinition) && t.interfaces.includes?(self.name)
+        end
+      end
       field :fields
     end
 
     class GraphQL::Language::EnumTypeDefinition
-      graphql_type "Enum"
-      field :enumValues { values }#(includeDeprecated: Boolean = false)
+      field :kind { "ENUM" }
+      field :enumValues { self.fvalues }#(includeDeprecated: Boolean = false)
     end
 
     class GraphQL::Language::WrapperType
-      field :kind { "typeKind" }
-      field :ofType { of_type }
+      field :name { nil }
+      field :ofType { schema.type_resolve(of_type) }
     end
 
-    class EnumValueDefinition
+    class GraphQL::Language::ListType
+      field :kind { "LIST" }
+    end
+
+    class GraphQL::Language::NonNullType
+      field :kind { "NON_NULL" }
+    end
+
+    class GraphQL::Language::ScalarTypeDefinition
+      field :kind { "SCALAR" }
+    end
+
+    class GraphQL::Language::FieldDefinition
+      field :name
+      field :description
+      field :args { self.arguments }
+      field :type { schema.type_resolve(type) }
+      field :isDeprecated { nil }
+      field :deprecationReason { "" }
+    end
+
+    class GraphQL::Language::InputValueDefinition
+      field :name
+      field :description
+      field :type { schema.type_resolve(type) }
+      field :defaultValue { default_value }
+    end
+
+    class GraphQL::Language::EnumValueDefinition
       field :name
       field :description
       field :isDeprecated { false }
-      field :deprecationReason { "" }
+      field :deprecationReason { "none of your business" }
     end
+
   end
 
 end

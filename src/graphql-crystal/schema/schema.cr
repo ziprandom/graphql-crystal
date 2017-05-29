@@ -1,12 +1,22 @@
 require "./schema_introspection"
 module GraphQL
   module Schema
+
+    class Context
+      getter :schema
+      def initialize(@schema : GraphQL::Schema::Schema); end
+
+      def with_self(args)
+        with self yield(args)
+      end
+    end
+
     class Schema
       include GraphQL::Schema::Introspection
       alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | Nil )
-
-      @queries= Hash(String, Proc(Hash(String, ReturnType), QueryReturnType)).new
-      @mutations = Hash(String, Proc(Hash(String, ReturnType), QueryReturnType)).new
+      getter :types
+      @queries= Hash(String, Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType)).new
+      @mutations = Hash(String, Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType)).new
 
       @query : Language::ObjectTypeDefinition?
       @mutation : Language::ObjectTypeDefinition?
@@ -29,6 +39,18 @@ module GraphQL
         { "Float", "A Floating Point Number" },
         { "ID", "An ID" }
       }
+
+      def type_resolve(type_name : String)
+        @types[type_name]
+      end
+
+      def type_resolve(type : Language::TypeName)
+        @types[type.name]
+      end
+
+      def type_resolve(type)
+        type
+      end
 
       def extract_elements(node = @document)
         types = Hash(String, Language::TypeDefinition).new
@@ -56,12 +78,12 @@ module GraphQL
         }
       end
 
-      def resolve_query(name : String, args : Hash(String, ReturnType))
-        @queries[name].call(args)
+      def resolve_query(name : String, args : Hash(String, ReturnType), context)
+        @queries[name].call(args, context)
       end
 
-      def resolve_mutation(name : String, args : ReturnType)
-        @mutations[name].call(args)
+      def resolve_mutation(name : String, args : ReturnType, context)
+        @mutations[name].call(args, context)
       end
 
       def resolve
@@ -69,9 +91,9 @@ module GraphQL
         self
       end
 
-      def cast_wrap_block(block)
-        Proc(Hash(String, ReturnType), QueryReturnType).new do |args|
-          res = block.call(args)
+      def cast_wrap_block(&block : Hash(String, ReturnType) -> _)
+        Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType).new do |args, context|
+          res = context.with_self args, &block
           (
             res.is_a?(Array) ? res.map(&.as(GraphQL::ObjectType?)) : res
           ).as( QueryReturnType )
@@ -79,11 +101,11 @@ module GraphQL
       end
 
       def query(name, &block : Hash(String, ReturnType) -> _ )
-        @queries[name.to_s] = cast_wrap_block(block)
+        @queries[name.to_s] = cast_wrap_block(&block)
       end
 
       def mutation(name, &block : Hash(String, ReturnType) -> _ )
-        @mutations[name.to_s] = cast_wrap_block(block)
+        @mutations[name.to_s] = cast_wrap_block(&block)
       end
     end
 

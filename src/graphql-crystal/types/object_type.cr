@@ -33,12 +33,14 @@ module GraphQL
 
           macro field(name, description, args, typename, &block)
             \\{% FIELDS << {name, description, args, typename} %}
-            def \\{{name.id}}_field(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}})
+            def \\{{name.id}}_field(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}, \\{{((block.is_a?(Block) && block.args.size > 1) ? block.args[1].id : "context").id}})
               \\{% if block.is_a?(Block) %}
-                  \\{{block.body}}
-                  \\{% else %}
-                  \\{{name.id}}
-                  \\{% end %}
+                  context.with_self(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}) do
+                    \\{{block.body}}
+                  end
+              \\{% else %}
+                \\{{name.id}}
+              \\{% end %}
             end
           end
         end
@@ -49,38 +51,28 @@ module GraphQL
 
         on_all_child_classes do
           macro finished
-            def resolve_field(name : String, arguments)
+            def resolve_field(name : String, arguments, context)
               \\{% if !FIELDS.empty? %}
                   case name
                       \\{% for field in @type.constant("FIELDS") %}
                         when "\\{{ field[0].id }}" #\\\\\{{@type}}
-                          \\{{field[0].id}}_field(arguments)
+                          \\{{field[0].id}}_field(arguments, context)
                           \\{% end %}
                   else
-                    super(name, arguments)
+                    super(name, arguments, context)
                   end
                   \\{% else %}
-                super(name, arguments)
+                super(name, arguments, context)
                   \\{% end %}
             end
           end
         end
-        on_all_child_classes do
-          def fields
-            super + FIELDS
-          end
-        end
 
-        on_all_child_classes do
-        end
       end
     end
 
-    def fields
-      [] of Tuple(Symbol, String, Hash(String, String)?, String)
-    end
-
-    def resolve_field(name, arguments)
+    def resolve_field(name, arguments, context)
+      pp "field not defined", name, self.class
       raise "field #{name} is not defined for #{self.class.name}"
     end
 

@@ -205,7 +205,7 @@ module GraphQL
 
     class FieldDefinition < AbstractNode
       values({name: String, arguments: Array(InputValueDefinition), type: Type, directives: Array(Directive), description: String})
-      traverse :children, :type, :arguments
+      traverse :children, :type, :arguments, :directives
     end
 
     class InterfaceTypeDefinition < TypeDefinition

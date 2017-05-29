@@ -12,7 +12,7 @@ module GraphQL
       )
 
       def execute(document : String, params = nil)
-        execute(Language.parse(document), params)
+        execute(Language.parse(document), params, Context.new(self))
       end
 
       def substitute_variables_from_params(query, params : Hash)
@@ -56,7 +56,7 @@ module GraphQL
         end
       end
 
-      def execute(document : Language::Document, params)
+      def execute(document : Language::Document, params, context)
         queries, mutations, fragments = extract_request_parts(document)
 
         query = (queries + mutations).first
@@ -74,12 +74,12 @@ module GraphQL
 
         field_definition = query.operation_type == "query" ? @query : @mutation
         resolve_cb = query.operation_type == "query" ?
-                       ->self.resolve_query(String, Hash(String, ReturnType)) :
-                       ->self.resolve_mutation(String, Hash(String, ReturnType))
+                       ->self.resolve_query(String, Hash(String, ReturnType), GraphQL::Schema::Context) :
+                       ->self.resolve_mutation(String, Hash(String, ReturnType), GraphQL::Schema::Context)
         result, errors = _execute_query_against_definition(
                   query.selections.map(&.as(Language::Field)),
                   field_definition.not_nil!,
-                  resolve_cb
+                  resolve_cb, context
                 )
         res = { "data" => result }
         if ( errors.any? )
@@ -98,7 +98,8 @@ module GraphQL
       def _execute_query_against_definition(
           selections : Array,
           definition : Language::ObjectTypeDefinition,
-          cb : String, Hash(String, ReturnType) -> ResolveCBReturnType
+          cb : String, Hash(String, ReturnType), GraphQL::Schema::Context -> ResolveCBReturnType,
+          context
         )
 
         # Initialize result sets
@@ -155,7 +156,7 @@ module GraphQL
           end
 
           resolved = begin
-                       cb.call(selection.name, final_args)
+                       cb.call(selection.name, final_args, context)
                      rescue e: Exception
                        errors << Error.new(
                          message: e.message || "internal server error",
@@ -174,12 +175,12 @@ module GraphQL
                             field_type
                           end
 
-          unless resolved
+          if resolved == nil
             result[field_name] = nil
             next
           end
 
-          res, errs = resolve_selections_for(field_type, selection.selections, resolved)
+          res, errs = resolve_selections_for(field_type, selection.selections, resolved, context)
 
           if errs
             errs.map {|e| errors <<  Error.new(message: e[:message], path: [field_name] + e[:path] )}
@@ -191,18 +192,18 @@ module GraphQL
 
 
       def resolve_selections_for(
-            field_type : Language::TypeName, selections, resolved
+            field_type : Language::TypeName, selections, resolved, context
           ) : Tuple(ReturnType, Array(Error))
         type_definition = @types[field_type.name]
         case type_definition
         # we can directly apply the selections
         when Language::ObjectTypeDefinition
-          resolve_selections_for(type_definition, selections, resolved)
+          resolve_selections_for(type_definition, selections, resolved, context)
         # we need to derive the type from the actual object
         when Language::UnionTypeDefinition, Language::InterfaceTypeDefinition
           # FixMe: this needs to be more flexible of course
           concrete_definition = @types[resolved.as(ObjectType).graphql_type]
-          resolve_selections_for(concrete_definition, selections, resolved)
+          resolve_selections_for(concrete_definition, selections, resolved, context)
         # we already hold the results in our hands :)
         when Language::ScalarTypeDefinition, Language::EnumTypeDefinition
           if resolved.is_a?(ReturnType)
@@ -215,12 +216,13 @@ module GraphQL
         end.as(Tuple(ReturnType, Array(Error)))
       end
 
-      def resolve_selections_for(field_type : Language::ListType, selections, resolved : Array) : Tuple(ReturnType, Array(Error))
+      def resolve_selections_for(field_type : Language::ListType, selections,
+                                 resolved : Array, context) : Tuple(ReturnType, Array(Error))
         errors = Array(Error).new
         inner_type = field_type.of_type
 
         result = resolved.as(Array).map_with_index do |resolved_element, index|
-          res, errs = resolve_selections_for(inner_type, selections, resolved_element)
+          res, errs = resolve_selections_for(inner_type, selections, resolved_element, context)
           errors += errs.map { |e| Error.new(message: e[:message], path: [index] + e[:path]) }
           res.as(ReturnType)
         end.as(ReturnType)
@@ -230,7 +232,7 @@ module GraphQL
 
       def resolve_selections_for(
             field_type : Language::ObjectTypeDefinition,
-            selections, resolved : ObjectType
+            selections, resolved : ObjectType, context
           ) : Tuple( ReturnType, Array(Error) )
 
         unless resolved.responds_to? :resolve_field
@@ -242,27 +244,28 @@ module GraphQL
 
         return _execute_query_against_definition(
           selections, field_type,
-          wrap_cb(resolved)
+          wrap_cb(resolved), context
         )
       end
 
       def wrap_cb(resolved : ObjectType )
-        ->(name : String, args : Hash(String, ReturnType)) {
-          cast_to_resolvecbreturntype resolved.resolve_field(name, args)
+        ->(name : String, args : Hash(String, ReturnType), context : GraphQL::Schema::Context) {
+          cast_to_resolvecbreturntype resolved.resolve_field(name, args, context)
         }
       end
 
       def resolve_selections_for(
-            field_type : Language::NonNullType, selections, resolved
+            field_type : Language::NonNullType, selections, resolved, context
           ) : Tuple(ReturnType, Array(Error))
-        unless resolved
+        if resolved == nil
           pp "didn't resolve to a NonNull compatible Object"
           return {nil, [Error.new(message: "internal server error", path: [] of (String|Int32))]}
         end
-        resolve_selections_for(field_type.of_type, selections, resolved)
+        resolve_selections_for(field_type.of_type, selections, resolved, context)
       end
 
-      def resolve_selections_for(field_type, selections, resolved) : Tuple(ReturnType, Array(Error))
+      def resolve_selections_for(field_type, selections, resolved, context) : Tuple(ReturnType, Array(Error))
+        pp field_type, selections, resolved
         raise "I should have never come here"
       end
 
