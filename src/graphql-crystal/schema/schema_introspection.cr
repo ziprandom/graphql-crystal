@@ -5,19 +5,33 @@ module GraphQL
       macro included
         include ObjectType
 
-        field :types { @types.values }
-        field :directives { @types.values.select &.is_a?(Language::DirectiveDefinition) }
+        field :types { @original_types.not_nil! }
+        field :directives { @directives.values }
+        field :queryType { @original_query }
+        field :mutationType { @mutation ? types[@mutation.not_nil!.name] : nil }
 
         macro finished
+          # a clone of @query with the
+          # meta fields removed
+          @original_query : Language::ObjectTypeDefinition?
+          @original_types : Array(Language::TypeDefinition)?
+
           def initialize(document : Language::Document)
             previous_def(document)
+            @original_query = types[@query.not_nil!.name].clone.as(Language::ObjectTypeDefinition)
+
             # add introspection types to
             # schemas types index
             @types.merge!(
               extract_elements(
                 GraphQL::Language.parse(INTROSPECTION_TYPES)
-              )[:types].reject("schema")
+              )[1].reject("schema")
             )
+
+            # keep the original query within the
+            # array used for introspection
+            @original_types = types.values.
+                              compact_map { |t| t.name == @query ? @original_query : t }
 
             # add the schema field to the root query of
             # the schema
@@ -25,7 +39,7 @@ module GraphQL
               root_query.fields << Language::FieldDefinition.new(
                 "__schema", Array(Language::InputValueDefinition).new,
                 Language::TypeName.new(name: "__Schema"), Array(Language::Directive).new,
-                "the introspection query"
+                "query the schema served at this endpoint"
               )
               root_query.fields << Language::FieldDefinition.new(
                 "__type", [
@@ -34,7 +48,7 @@ module GraphQL
                   directives: [] of Language::Directive, description: ""
                 )
                 ], Language::TypeName.new(name: "__Type"), Array(Language::Directive).new,
-                "the introspection query"
+                "query a specific type in the schema by name"
               )
             end
             # add the callback for
@@ -70,6 +84,10 @@ module GraphQL
 
         # An ID
         scalar ID
+
+        directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+        directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+        directive @deprecated(reason: String) on FIELD_DEFINITION | ENUM_VALUE
 
         type __Schema {
           types: [__Type!]!
@@ -123,6 +141,7 @@ module GraphQL
           name: String!
           description: String
           args: [__InputValue!]!
+          locations: [__DirectiveLocation!]!
           onOperation: Boolean!
           onFragment: Boolean!
           onField: Boolean!
@@ -299,6 +318,16 @@ module GraphQL
         )
         val == nil ? nil : val.to_s
       end
+    end
+
+    class GraphQL::Language::DirectiveDefinition
+      field :name
+      field :description
+      field :args { arguments }
+      field :locations
+      field :onOperation { locations.includes? "OPERATION" }
+      field :onFragment  { locations.any? &.=~ /FRAGMENT/  }
+      field :onField     { locations.includes? "FIELD"     }
     end
 
     class GraphQL::Language::EnumValueDefinition

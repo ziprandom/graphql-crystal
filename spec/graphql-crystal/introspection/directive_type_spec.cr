@@ -1,6 +1,5 @@
 require "../../spec_helper"
 
-
 describe "GraphQL::Introspection::DirectiveType" do
   query_string = <<-query_string
     query getDirectives {
@@ -18,7 +17,7 @@ describe "GraphQL::Introspection::DirectiveType" do
   query_string
   result = Dummy::Schema.execute(query_string)
 
-  pending "shows directive info " do
+  it "shows directive info " do
     expected = { "data" => {
                    "__schema" => {
                      "directives" => [

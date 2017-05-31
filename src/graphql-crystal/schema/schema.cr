@@ -21,14 +21,15 @@ module GraphQL
       @query : Language::ObjectTypeDefinition?
       @mutation : Language::ObjectTypeDefinition?
       @types : Hash(String, Language::TypeDefinition)
+      @directives = Hash(String, Language::DirectiveDefinition).new
+
       @type_validation : GraphQL::TypeValidation
 
       def initialize(@document : Language::Document)
-        result = extract_elements
+        schema, @types = extract_elements
         # substitute TypeNames with type definition
-        @types = result[:types]
-        @query = result[:types][result[:schema].query]?.as(Language::ObjectTypeDefinition?)
-        @mutation = result[:types][result[:schema].mutation]?.as(Language::ObjectTypeDefinition?)
+        @query = @types[schema.query]?.as(Language::ObjectTypeDefinition?)
+        @mutation = @types[schema.mutation]?.as(Language::ObjectTypeDefinition?)
         @type_validation = GraphQL::TypeValidation.new(@types)
       end
 
@@ -69,13 +70,12 @@ module GraphQL
               schema = node
             when Language::TypeDefinition
               types[node.name] = node
+            when Language::DirectiveDefinition
+              @directives[node.name] = node
             end
             node
         end
-        {
-          schema: schema,
-          types: types,
-        }
+        { schema, types }
       end
 
       def resolve_query(name : String, args : Hash(String, ReturnType), context)

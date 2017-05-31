@@ -141,25 +141,26 @@ module Dummy
 
     # Query root of the system
     type DairyAppQuery {
-        root: String
-        cheese: Cheese
-        milk: Milk
-        dairy: Dairy
-        # fromSource: &SourceFieldDefn
-        # my favourite food
-        favoriteEdible: Edible
-        cow: Cow
-        # Find dairy products matching a description
-        searchDair(product: [DairyProductInput] = [{source: "SHEEP" }]): DairyProductUnion!
         allDairy(executionErrorAtIndex: Int): [DairyProductUnion]
         allEdible: [EdibleInterface]!
+        cheese: Cheese
+        cow: Cow
+        dairy: Dairy
+        # To test possibly-null fields
+        deepNonNull: DeepNonNull!
         # Raise an error
         error: String
         executionError: String
-        valueWithExecutionError: Int!
-        # To test possibly-null fields
+        # my favourite food
+        favoriteEdible: Edible
+        # Cheese from Source
+        fromSource(source: dairyAnimal = COW): [Cheese]
         maybeNull:, MaybeNull
-        deepNonNull: DeepNonNull!
+        milk: Milk
+        root: String
+        # Find dairy products matching a description
+        searchDairy(product: [DairyProductInput] = [{source: "SHEEP" }]): DairyProductUnion!
+        valueWithExecutionError: Int!
     }
 
     # The root for mutations in this schema
