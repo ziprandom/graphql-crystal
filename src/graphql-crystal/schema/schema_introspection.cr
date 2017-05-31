@@ -85,9 +85,12 @@ module GraphQL
         # An ID
         scalar ID
 
+        # Optionally includes selection from the result set
         directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+        # Optionally excludes selection from the result set
         directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
-        directive @deprecated(reason: String) on FIELD_DEFINITION | ENUM_VALUE
+        # Marks an element of a GraphQL schema as no longer supported.
+        directive @deprecated(reason: String = "No longer supported") on FIELD_DEFINITION | ENUM_VALUE
 
         type __Schema {
           types: [__Type!]!
@@ -238,8 +241,9 @@ module GraphQL
     end
 
     class GraphQL::Language::ObjectTypeDefinition
+      field :kind { "OBJECT" }
       field :fields do
-        fields + resolved_interfaces(schema).flat_map &.fields
+        (fields + resolved_interfaces(schema).flat_map &.fields).sort_by &.name
       end
       field :interfaces { resolved_interfaces(schema) }
 

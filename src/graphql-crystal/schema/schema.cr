@@ -11,15 +11,18 @@ module GraphQL
       end
     end
 
+    alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | Nil )
+
     class Schema
       include GraphQL::Schema::Introspection
-      alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | Nil )
-      getter :types
-      @queries= Hash(String, Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType)).new
-      @mutations = Hash(String, Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType)).new
+      getter :types, :query_resolver, :mutation_resolver
 
       @query : Language::ObjectTypeDefinition?
       @mutation : Language::ObjectTypeDefinition?
+
+      @query_resolver = ResolverObject.new
+      @mutation_resolver = ResolverObject.new
+
       @types : Hash(String, Language::TypeDefinition)
       @directives = Hash(String, Language::DirectiveDefinition).new
 
@@ -28,8 +31,15 @@ module GraphQL
       def initialize(@document : Language::Document)
         schema, @types = extract_elements
         # substitute TypeNames with type definition
+
         @query = @types[schema.query]?.as(Language::ObjectTypeDefinition?)
-        @mutation = @types[schema.mutation]?.as(Language::ObjectTypeDefinition?)
+        @query_resolver.name = schema.query
+
+        if schema.mutation
+          @mutation = @types[schema.mutation]?.as(Language::ObjectTypeDefinition?)
+          @mutation_resolver.name = schema.mutation.not_nil!
+        end
+
         @type_validation = GraphQL::TypeValidation.new(@types)
       end
 
@@ -78,17 +88,12 @@ module GraphQL
         { schema, types }
       end
 
-      def resolve_query(name : String, args : Hash(String, ReturnType), context)
-        @queries[name].call(args, context)
+      def query(name, &block : Hash(String, ReturnType) -> _ )
+        @query_resolver.cb_hash[name.to_s] = cast_wrap_block(&block)
       end
 
-      def resolve_mutation(name : String, args : ReturnType, context)
-        @mutations[name].call(args, context)
-      end
-
-      def resolve
-        with self yield
-        self
+      def mutation(name, &block : Hash(String, ReturnType) -> _ )
+        @mutation_resolver.cb_hash[name.to_s] = cast_wrap_block(&block)
       end
 
       def cast_wrap_block(&block : Hash(String, ReturnType) -> _)
@@ -100,13 +105,28 @@ module GraphQL
         end
       end
 
-      def query(name, &block : Hash(String, ReturnType) -> _ )
-        @queries[name.to_s] = cast_wrap_block(&block)
+      def resolve
+        with self yield
+        self
+      end
+    end
+
+    #
+    # A wrapper for the
+    # resolve callbacks of the schema
+    class ResolverObject
+      include GraphQL::ObjectType
+      property :cb_hash, :name
+      @name = ""
+      @cb_hash = Hash(String, Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType)).new
+
+      graphql_type { @name }
+
+      def resolve_field(name, args, context)
+        cb = (@cb_hash[name]?)
+        cb ? cb.call(args, context) : super(name, args, context)
       end
 
-      def mutation(name, &block : Hash(String, ReturnType) -> _ )
-        @mutations[name.to_s] = cast_wrap_block(&block)
-      end
     end
 
   end

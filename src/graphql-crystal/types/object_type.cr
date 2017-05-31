@@ -52,6 +52,7 @@ module GraphQL
         on_all_child_classes do
           macro finished
             def resolve_field(name : String, arguments, context)
+              \\{% prev_def = @type.methods.find(&.name.==("resolve_field")) %}
               \\{% if !FIELDS.empty? %}
                   case name
                       \\{% for field in @type.constant("FIELDS") %}
@@ -59,11 +60,21 @@ module GraphQL
                           \\{{field[0].id}}_field(arguments, context)
                           \\{% end %}
                   else
-                    super(name, arguments, context)
+                    \\{% if prev_def.is_a?(Def) %}
+                        \\{{prev_def.args.map(&.name).splat}} = name, arguments, context
+                        \\{{prev_def.body}}
+                    \\{% else %}
+                      super(name, arguments, context)
+                    \\{% end %}
                   end
-                  \\{% else %}
-                super(name, arguments, context)
-                  \\{% end %}
+              \\{% else %}
+                 \\{% if prev_def.is_a?(Def) %}
+                     \\{{prev_def.args.map(&.name).splat}} = name, arguments, context
+                     \\{{prev_def.body}}
+                 \\{% else %}
+                   super(name, arguments, context)
+                 \\{% end %}
+              \\{% end %}
             end
           end
         end

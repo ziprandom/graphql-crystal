@@ -59,7 +59,7 @@ module Dummy
       # Cheeses like this one
       nullableCheese: Cheese
       # Cheeses like this one"
-      deeplyNullableCheese: Cheese
+      deeplyNullableCheese: Cheese @deprecated(reason: "no longer supported")
       # Percentage which is milkfat
       fatContent: Float!
     }
