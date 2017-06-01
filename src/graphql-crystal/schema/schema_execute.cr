@@ -55,27 +55,48 @@ module GraphQL
         end
       end
 
-      def run_directives(location, field_definition, selections : Array, resolved : ResolveCBReturnType, context, block)
-        directives = location.directives.map do |directive|
-          {self.directive_definitions[directive.name], self.directive_middlewares.find(&.name.==(directive.name))}
-        end
+      alias Args = Tuple(Language::AbstractNode, Array(Language::AbstractNode), ResolveCBReturnType, Context)
 
-        if directives.empty?
-          block.call(field_definition, selections, resolved.as(ResolveCBReturnType), context)
-        else
-          directives.each_with_index do |(definition, directive), index|
-            if index == directives.size - 1
-              directive.not_nil!.next = block
-            else
-              directive.not_nil!.next = directives[index+1][1]
+      def run_directives(location, *args, &block : *Args -> {ReturnType, Array(Error)})
+        if location.responds_to? :directives
+          # Find Directive Middlewares for directives invoked on location
+          # prepare arguments hash and set it on the direction
+          directives = location.directives.compact_map do |directive|
+            definition = self.directive_definitions[directive.name].as(Language::DirectiveDefinition)
+            directive.arguments.as(Array(Language::Argument))
+            self.directive_middlewares.find(&.name.==(directive.name)).tap do |_directive|
+              _directive.not_nil!.args = prepare_args(definition.arguments, directive.arguments)
             end
           end
-          directives.first[1].not_nil!.call(field_definition, selections, resolved.as(ResolveCBReturnType), context)
+
+          if directives.empty?
+            block.call(*args.as(Args))
+          else
+            directives.each_cons(2) do |(directive, _next)|
+              directive.next = _next
+            end
+            directives.last.next = block
+            directives.first.call(*args.as(Args))
+          end
+        else
+          block.call(*args.as(Args))
         end
       end
 
       def resolve_selections_for(field_definition, selections, resolved, context)
-        _resolve_selections_for(field_definition, selections, resolved, context)
+#         if selections.is_a?(Array) &&
+#            selections[0]?.try &.as(Language::Field).try &.directives.any?
+#           run_directives(
+#             selections.first,
+#             field_definition.not_nil!,
+#             selections.map(&.as(Language::AbstractNode)),
+#             resolved.as(ResolveCBReturnType), context
+#           ) do |_field_definition, _selections, _resolved, _context|
+#             _resolve_selections_for(_field_definition, _selections, _resolved, _context)
+#           end
+#         else
+          _resolve_selections_for(field_definition, selections, resolved, context)
+#         end
       end
 
       #
@@ -83,7 +104,7 @@ module GraphQL
       #
       def _resolve_selections_for(
             object_type : Language::ObjectTypeDefinition,
-            selections, resolved : ObjectType, context
+            selections : Array(Language::Selection), resolved : ObjectType, context
           ) : Tuple( ReturnType, Array(Error) )
 
         errors = [] of Error
@@ -136,17 +157,23 @@ module GraphQL
             next
           end
 
-          _result, _errors = resolve_selections_for(
-                     field_definition, selection,
-                     resolved, context
-                   )
+          run_directives(
+            selection,
+            field_definition.not_nil!,
+            selections.map(&.as(Language::AbstractNode)),
+            resolved, context
+          ) do |_field_definition, _selections, _resolved, _context|
+            _result, _errors = resolve_selections_for(
+                       field_definition, [selection],
+                       resolved, context
+                     )
+            errors += _errors.map do |e|
+              Error.new( message: e[:message], path: [field_name] + e[:path] )
+            end
 
-
-          errors += _errors.map do |e|
-            Error.new( message: e[:message], path: [field_name] + e[:path] )
+            result[field_name] = _result.as(ReturnType)
+            {nil, [] of Error}
           end
-
-          result[field_name] = _result.as(ReturnType)
         end
 
         {result.as(ReturnType), errors}
@@ -154,14 +181,19 @@ module GraphQL
 
       def _resolve_selections_for(
             field_definition : Language::FieldDefinition,
-            selection : Language::Selection, resolved, context
+            selections : Array, resolved : ObjectType, context
           )
         errors = [] of Error
         # validate arguments and substitute with
         # default values if necessary
+        selection = selections.first.as(Language::Field)
         begin
-          final_args =
-            prepare_args(field_definition.arguments, selection.arguments)
+          if selection.responds_to? :arguments
+            final_args =
+              prepare_args(field_definition.arguments, selection.arguments.as(Array(Language::Argument)))
+          else
+            raise "this sould not have happened"
+          end
         rescue e: Exception
           errors << Error.new(
             message: e.message || "argument error",
@@ -199,7 +231,7 @@ module GraphQL
       # Resolve a TypeName
       #
       def _resolve_selections_for(
-            field_type : Language::TypeName, selections, resolved, context
+            field_type : Language::TypeName, selections : Array(Language::Selection), resolved, context
           ) : Tuple(ReturnType, Array(Error))
         type_definition = @types[field_type.name]
         case type_definition
@@ -228,7 +260,7 @@ module GraphQL
       #
       # Resolve a ListType
       #
-      def _resolve_selections_for(field_type : Language::ListType, selections,
+      def _resolve_selections_for(field_type : Language::ListType, selections : Array(Language::Selection),
                                  resolved : Array, context) : Tuple(ReturnType, Array(Error))
         errors = Array(Error).new
         inner_type = field_type.of_type
@@ -252,7 +284,7 @@ module GraphQL
       # Resolve A NonNullType
       #
       def _resolve_selections_for(
-            field_type : Language::NonNullType, selections, resolved, context
+            field_type : Language::NonNullType, selections : Array(Language::Selection), resolved, context
           ) : Tuple(ReturnType, Array(Error))
         if resolved == nil
           pp "didn't resolve to a NonNull compatible Object"
@@ -312,7 +344,7 @@ module GraphQL
         end
       end
 
-      def prepare_args(defined, given)
+      def prepare_args(defined : Array(Language::InputValueDefinition), given )
         if (superfluous = given.reject { |g| defined.any?(&.name.==(g.name)) }) &&
            superfluous.any?
           ## TODO: Custom Exceptions here please
@@ -346,7 +378,10 @@ module GraphQL
             selections << selection
           when Language::InlineFragment
             if selection.type.as(Language::TypeName).name == type.name
-              selections += selection.selections.map(&.as(Language::Field))
+              selections += selection.selections.map(
+                # assign the fragments directive to the field
+                # for later evaluation.
+                &.as(Language::Field).tap{ |f| f.directives = selection.directives })
             end
           end
           selections

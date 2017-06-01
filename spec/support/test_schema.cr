@@ -36,7 +36,7 @@ class Address
   end
   field :street
   field :number
-  field :city
+  field :city #{ city.to_s }
   field :postal_code
 end
 

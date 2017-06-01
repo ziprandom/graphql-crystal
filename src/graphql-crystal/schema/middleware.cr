@@ -5,23 +5,22 @@ module GraphQL
 
       abstract def call(
                      node : GraphQL::Language::TypeDefinition|GraphQL::Language::FieldDefinition,
-                     selection : Language::Selection | Array(Language::Selection),
+                     selection : Array(Language::Selection),
                      object : ResolveCBReturnType, context : Context)
 
-        def call_next(node : GraphQL::Language::AbstractNode,
-                      selection : Language::Selection | Array(Language::Selection),
-                      object : ResolveCBReturnType, context : Context)
+        def call_next(*args)
 
-          if next_handler = @next.not_nil!
-            next_handler.call(node, selection, object.as(ResolveCBReturnType), context)
+          next_handler = @next
+          if next_handler
+            next_handler.call(args[0], args[1], args[2].as(ResolveCBReturnType), args[3])
           else
             raise "incomplete middleware chain"
           end
         end
 
-        alias Proc = GraphQL::Language::TypeDefinition|GraphQL::Language::FieldDefinition,
-              Language::Selection | Array(Language::Selection),
-              ResolveCBReturnType, Context -> {ReturnType, Array(Error)}
+        alias Proc = Language::AbstractNode,
+              Array(Language::AbstractNode),
+              ResolveCBReturnType, Context -> {GraphQL::Schema::ReturnType, Array(GraphQL::Error)}
       end
 
   end

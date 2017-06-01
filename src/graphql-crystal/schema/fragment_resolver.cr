@@ -26,7 +26,12 @@ module GraphQL
       def self.visit(value : Language::FragmentSpread, fragments)
         fragment_definition = fragments.find(&.name.==(value.name))
         raise "fragment \"#{value.name}\" is undefined" unless fragment_definition
-        fragment_definition.selections
+        fragment_definition.selections.map do |sel|
+          if sel.responds_to? :directives
+            sel.directives = value.directives
+          end
+          sel
+        end
       end
 
       # Inline fragments will be resolved inline as they carry all the
