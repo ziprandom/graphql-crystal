@@ -15,7 +15,7 @@ module GraphQL
 
     class Schema
       include GraphQL::Schema::Introspection
-      getter :types, :query_resolver, :mutation_resolver
+      getter :types, :directive_middlewares, :directive_definitions, :query_resolver, :mutation_resolver
 
       @query : Language::ObjectTypeDefinition?
       @mutation : Language::ObjectTypeDefinition?
@@ -24,14 +24,17 @@ module GraphQL
       @mutation_resolver = ResolverObject.new
 
       @types : Hash(String, Language::TypeDefinition)
-      @directives = Hash(String, Language::DirectiveDefinition).new
-
+      @directive_definitions = Hash(String, Language::DirectiveDefinition).new
+      @directive_middlewares = [
+        GraphQL::Directives::IncludeDirective.new,
+        GraphQL::Directives::SkipDirective.new
+      ]
       @type_validation : GraphQL::TypeValidation
 
       def initialize(@document : Language::Document)
-        schema, @types = extract_elements
-        # substitute TypeNames with type definition
+        schema, @types, @directive_definitions = extract_elements
 
+        # substitute TypeNames with type definition
         @query = @types[schema.query]?.as(Language::ObjectTypeDefinition?)
         @query_resolver.name = schema.query
 
@@ -65,6 +68,8 @@ module GraphQL
 
       def extract_elements(node = @document)
         types = Hash(String, Language::TypeDefinition).new
+        directives = Hash(String, Language::DirectiveDefinition).new
+
         schema = uninitialized Language::SchemaDefinition
 
         ScalarTypes.each do |(type_name, description)|
@@ -81,11 +86,11 @@ module GraphQL
             when Language::TypeDefinition
               types[node.name] = node
             when Language::DirectiveDefinition
-              @directives[node.name] = node
+              directives[node.name] = node
             end
             node
         end
-        { schema, types }
+        return {schema, types, directives}
       end
 
       def query(name, &block : Hash(String, ReturnType) -> _ )

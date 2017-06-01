@@ -20,7 +20,7 @@ module GraphQL
 
         query = (queries + mutations).first
         begin
-          substitute_variables_from_params(query, params) if params
+          substitute_variables_from_params(query, params || {} of String => ReturnType)
           query.selections = GraphQL::Schema::FragmentResolver.resolve(
             query.selections.map(&.as(Language::Field)),
             fragments
@@ -55,10 +55,33 @@ module GraphQL
         end
       end
 
+      def run_directives(location, field_definition, selections : Array, resolved : ResolveCBReturnType, context, block)
+        directives = location.directives.map do |directive|
+          {self.directive_definitions[directive.name], self.directive_middlewares.find(&.name.==(directive.name))}
+        end
+
+        if directives.empty?
+          block.call(field_definition, selections, resolved.as(ResolveCBReturnType), context)
+        else
+          directives.each_with_index do |(definition, directive), index|
+            if index == directives.size - 1
+              directive.not_nil!.next = block
+            else
+              directive.not_nil!.next = directives[index+1][1]
+            end
+          end
+          directives.first[1].not_nil!.call(field_definition, selections, resolved.as(ResolveCBReturnType), context)
+        end
+      end
+
+      def resolve_selections_for(field_definition, selections, resolved, context)
+        _resolve_selections_for(field_definition, selections, resolved, context)
+      end
+
       #
       # Resolve an ObjectTypeDefinition
       #
-      def resolve_selections_for(
+      def _resolve_selections_for(
             object_type : Language::ObjectTypeDefinition,
             selections, resolved : ObjectType, context
           ) : Tuple( ReturnType, Array(Error) )
@@ -96,28 +119,28 @@ module GraphQL
         # Iterate selections fields, validate & resolve
         #
         prepared_selections.map( &.as(Language::Field) ).each do |selection|
-
-          # get field_definition from definition
-          # and resolve
-          if field_definition = available_fields.find(
-               &.as(Language::FieldDefinition).name.==(selection.name))
-            _result, _errors = resolve_selections_for(
-                       field_definition, selection,
-                       wrap_cb(resolved), context
-                     )
-
-          # Add Error if no definition found
-          else
-            _result = nil
-            _errors = [Error.new(
-                        message: "field not defined.",
-                        path:  Array(String|Int32).new
-                      )]
-          end
-
-
           # field name to use
           field_name = selection._alias || selection.name
+
+          # get field_definition from definition
+          # set result to nil and add error if
+          # not present
+          if !( field_definition = available_fields.find(
+                  &.as(Language::FieldDefinition).name.==(selection.name)) )
+            result[field_name] = nil
+
+            errors << Error.new(
+              message: "field not defined.",
+              path:  Array(String|Int32).new.unshift field_name
+            )
+            next
+          end
+
+          _result, _errors = resolve_selections_for(
+                     field_definition, selection,
+                     resolved, context
+                   )
+
 
           errors += _errors.map do |e|
             Error.new( message: e[:message], path: [field_name] + e[:path] )
@@ -129,12 +152,11 @@ module GraphQL
         {result.as(ReturnType), errors}
       end
 
-      def resolve_selections_for(
+      def _resolve_selections_for(
             field_definition : Language::FieldDefinition,
-            selection : Language::Selection , cb, context
+            selection : Language::Selection, resolved, context
           )
         errors = [] of Error
-
         # validate arguments and substitute with
         # default values if necessary
         begin
@@ -149,7 +171,7 @@ module GraphQL
         end
 
         resolved = begin
-                     cb.call(selection.name, final_args, context)
+                     resolved.resolve_field(selection.name, final_args, context)
                    rescue e: Exception
                      errors << Error.new(
                        message: e.message || "internal server error",
@@ -176,7 +198,7 @@ module GraphQL
       #
       # Resolve a TypeName
       #
-      def resolve_selections_for(
+      def _resolve_selections_for(
             field_type : Language::TypeName, selections, resolved, context
           ) : Tuple(ReturnType, Array(Error))
         type_definition = @types[field_type.name]
@@ -190,7 +212,9 @@ module GraphQL
           concrete_definition = @types[resolved.as(ObjectType).graphql_type]
           resolve_selections_for(concrete_definition, selections, resolved, context)
         # we already hold the results in our hands :)
-        when Language::ScalarTypeDefinition, Language::EnumTypeDefinition
+        when Language::EnumTypeDefinition
+            { resolved.to_s, [] of Error }
+        when Language::ScalarTypeDefinition
           if resolved.is_a?(ReturnType)
             { resolved.as(ReturnType), [] of Error }
           else
@@ -204,7 +228,7 @@ module GraphQL
       #
       # Resolve a ListType
       #
-      def resolve_selections_for(field_type : Language::ListType, selections,
+      def _resolve_selections_for(field_type : Language::ListType, selections,
                                  resolved : Array, context) : Tuple(ReturnType, Array(Error))
         errors = Array(Error).new
         inner_type = field_type.of_type
@@ -227,7 +251,7 @@ module GraphQL
       #
       # Resolve A NonNullType
       #
-      def resolve_selections_for(
+      def _resolve_selections_for(
             field_type : Language::NonNullType, selections, resolved, context
           ) : Tuple(ReturnType, Array(Error))
         if resolved == nil
@@ -237,7 +261,7 @@ module GraphQL
         resolve_selections_for(field_type.of_type, selections, resolved, context)
       end
 
-      def resolve_selections_for(field_type, selections, resolved, context) : Tuple(ReturnType, Array(Error))
+      def _resolve_selections_for(field_type, selections, resolved, context) : Tuple(ReturnType, Array(Error))
         pp field_type, selections, resolved
         raise "I should have never come here"
       end
@@ -253,11 +277,15 @@ module GraphQL
         query.variables
           .as(Array(Language::VariableDefinition))
           .each do |variable_definition|
+          if !(params.has_key?(variable_definition.name) || variable_definition.default_value)
+            errors << Error.new(message: "missing variable #{variable_definition.name}", path: [] of (String|Int32))
+            next
+          end
+
           default_value = variable_definition.default_value
           default_value = default_value.responds_to? :to_value ? default_value.to_value : default_value
-          if !(param = params[variable_definition.name]? || default_value)
-            errors << Error.new(message: "missing variable #{variable_definition.name}", path: [] of (String|Int32))
-          elsif !@type_validation.accepts?(variable_definition.type, param)
+          param = params.fetch(variable_definition.name, default_value)
+          if !@type_validation.accepts?(variable_definition.type, param)
             expected_type_string = Language::Generation.generate(variable_definition.type)
             errors << Error.new(
               message: "variable $#{variable_definition.name} is expected to be of type #{expected_type_string}",

@@ -6,7 +6,7 @@ module GraphQL
         include ObjectType
 
         field :types { @original_types.not_nil! }
-        field :directives { @directives.values }
+        field :directives { @directive_definitions.values }
         field :queryType { @original_query }
         field :mutationType { @mutation ? types[@mutation.not_nil!.name] : nil }
 
@@ -22,11 +22,11 @@ module GraphQL
 
             # add introspection types to
             # schemas types index
-            @types.merge!(
-              extract_elements(
-                GraphQL::Language.parse(INTROSPECTION_TYPES)
-              )[1].reject("schema")
-            )
+            _schema, _types, _directives = extract_elements(
+                               GraphQL::Language.parse(INTROSPECTION_TYPES)
+                             )
+            @types.merge!( _types.reject("schema") )
+            @directive_definitions.merge! _directives
 
             # keep the original query within the
             # array used for introspection

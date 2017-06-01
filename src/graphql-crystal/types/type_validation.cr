@@ -23,7 +23,7 @@ module GraphQL
       when Language::UnionTypeDefinition
         true
       when Language::NonNullType
-        value ? accepts?(type_definition.of_type, value) : false
+        value != nil ? accepts?(type_definition.of_type, value) : false
       when Language::ListType
         if value.is_a?(Array)
           value.map{ |v| accepts?(type_definition.of_type, v).as(Bool) }.all? { |r| !!r }
