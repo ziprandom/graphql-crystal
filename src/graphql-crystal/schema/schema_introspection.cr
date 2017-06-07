@@ -66,9 +66,6 @@ module GraphQL
       end
 
       INTROSPECTION_TYPES = <<-schema
-        schema {
-          query: __Schema
-        }
 
         # A String Value
         scalar String

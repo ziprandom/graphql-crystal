@@ -1,18 +1,17 @@
 module GraphQL
   module Directives
-    class IncludeDirective
+    class SkipDirective
       include GraphQL::Directive
       getter :name
-      @name = "include"
+      @name = "skip"
 
       def call(_field_definition, _selections, _resolved, _context)
         if args.try &.["if"]
-          call_next(_field_definition, _selections, _resolved, _context)
-        else
           {nil, [] of Error}
+        else
+          call_next(_field_definition, _selections, _resolved, _context)
         end
       end
-
     end
   end
 end
