@@ -2,6 +2,102 @@
 require "../spec_helper"
 
 describe GraphQL::Directive do
+  describe GraphQL::Directives::IsDeprecated do
+    describe "on FieldDefinition" do
+      query_string = %{
+        {
+          __type(name: "User") {
+            fields {
+              name
+              isDeprecated
+              deprecationReason
+            }
+          }
+        }
+      }
+
+      it "indicates the defined deprecation" do
+        TestSchema
+          .execute(query_string)
+          .should eq({
+                       "data" => {
+                         "__type" => {
+                           "fields" => [
+                             {
+                               "name" => "address",
+                               "isDeprecated" => false,
+                               "deprecationReason" => nil
+                             }, {
+                               "name" => "friends",
+                               "isDeprecated" => false,
+                               "deprecationReason" => nil
+                             }, {
+                               "name" => "full_address",
+                               "isDeprecated" => false,
+                               "deprecationReason" => nil
+                             }, {
+                               "name" => "id",
+                               "isDeprecated" => false,
+                               "deprecationReason" => nil
+                             }, {
+                               "name" => "name",
+                               "isDeprecated" => true,
+                               "deprecationReason" => "for no apparent Reason"
+                             }
+                           ]
+                         }
+                       }
+                     })
+      end
+    end
+
+    describe "on EnumValue" do
+      query_string = %{
+        {
+          __type(name: "City") {
+            name
+            enumValues {
+              name
+              isDeprecated
+              deprecationReason
+            }
+          }
+        }
+      }
+
+      it "indicates the defined deprecation" do
+        TestSchema
+          .execute(query_string)
+          .should eq({
+                       "data" => {
+                         "__type" => {
+                           "name" => "City",
+                           "enumValues" => [
+                             {
+                               "name" => "London", "isDeprecated" => false,
+                               "deprecationReason" => nil
+                             }, {
+                               "name" => "Miami",
+                               "isDeprecated" => true,
+                               "deprecationReason" => "is not a capital"
+                             }, {
+                               "name" => "CABA",
+                               "isDeprecated" => false,
+                               "deprecationReason" => nil
+                             }, {
+                               "name" => "Istanbul",
+                               "isDeprecated" => false,
+                               "deprecationReason" => nil
+                             }
+                           ]
+                         }
+                       }
+                     })
+      end
+    end
+
+  end
+
   describe GraphQL::Directives::IncludeDirective do
     describe "on Field" do
       query_string = %{

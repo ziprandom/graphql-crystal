@@ -81,14 +81,14 @@ SCHEMA_DEFINITION = <<-graphql_schema
 
   enum City {
     London
-    Miami
+    Miami @deprecated(reason: "is not a capital")
     CABA
     Istanbul
   }
 
   type User {
     id: ID!
-    name: String
+    name: String @deprecated(reason: "for no apparent Reason")
     address: Address
     friends: [User]
     full_address: String

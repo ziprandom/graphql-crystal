@@ -288,12 +288,11 @@ module GraphQL
     end
 
     class GraphQL::Language::FieldDefinition
+      include GraphQL::Directives::IsDeprecated
       field :name
       field :description
       field :args { self.arguments }
       field :type { schema.type_resolve(type) }
-      field :isDeprecated { nil }
-      field :deprecationReason { "" }
     end
 
     class GraphQL::Language::InputObjectTypeDefinition
@@ -332,10 +331,9 @@ module GraphQL
     end
 
     class GraphQL::Language::EnumValueDefinition
+      include GraphQL::Directives::IsDeprecated
       field :name
       field :description
-      field :isDeprecated { false }
-      field :deprecationReason { "none of your business" }
     end
 
   end
