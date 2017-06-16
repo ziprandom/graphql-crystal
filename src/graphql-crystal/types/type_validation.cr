@@ -32,7 +32,9 @@ module GraphQL
         end
       when Language::ScalarTypeDefinition
         case type_definition.name
-        when "ID", "Int"
+        when "ID"
+          value.is_a?(Int32) || value.is_a?(String)
+        when "Int"
           value.is_a?(Int32)
         when "Float"
           value.is_a?(Float64)

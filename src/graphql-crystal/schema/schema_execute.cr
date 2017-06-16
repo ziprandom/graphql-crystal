@@ -324,7 +324,7 @@ module GraphQL
               path: [] of (String|Int32)
             )
           else
-            full_params[variable_definition.name] = param.as(ReturnType)
+            full_params[variable_definition.name] = GraphQL::Schema.cast_to_return(param)
           end
         end
 

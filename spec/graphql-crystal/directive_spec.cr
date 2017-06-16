@@ -7,7 +7,7 @@ describe GraphQL::Directive do
       query_string = %{
         {
           __type(name: "User") {
-            fields {
+            fields(includeDeprecated: true) {
               name
               isDeprecated
               deprecationReason

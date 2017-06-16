@@ -281,7 +281,7 @@ describe GraphQL::Schema do
     it "raises an error if we request a field with defined argument using a wrong type" do
       bad_query_string = %{
         {
-          user(id: "henry") {
+          user(id: ["henry"]) {
             id, name
           }
         }

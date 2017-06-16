@@ -239,8 +239,17 @@ module GraphQL
 
     class GraphQL::Language::ObjectTypeDefinition
       field :kind { "OBJECT" }
-      field :fields do
-        (fields + resolved_interfaces(schema).flat_map &.fields).sort_by &.name
+      field :fields do |args|
+        _fields = (resolved_interfaces(schema).flat_map(&.fields) + fields)
+          .reduce(Hash(String, FieldDefinition).new) do |dict, field|
+          dict[field.name] = field
+          dict
+        end.values.sort_by &.name
+        if args["includeDeprecated"]
+          _fields
+        else
+          _fields.reject( &.directives.any?( &.name.==("deprecated") ) )
+        end
       end
       field :interfaces { resolved_interfaces(schema) }
 
@@ -252,6 +261,7 @@ module GraphQL
     end
 
     class GraphQL::Language::UnionTypeDefinition
+      field :kind { "UNION" }
       field :possibleTypes { types.map{|t| schema.type_resolve(t)} }
     end
 
