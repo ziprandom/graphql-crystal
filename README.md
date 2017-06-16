@@ -19,15 +19,15 @@ dependencies:
 
 ## Usage
 
-In order to create a GraphQL Schema and execute queries and mutations against it three steps have to be performed.
+In order to create a GraphQL Schema and execute queries and mutations against it three steps have to be performed:
 
 1. define a GraphQL Schema in the [graphql schema definition language](http://graphql.org/learn/schema/)
-2. convert existing domain models to act as graphql object types by including the ```GraphQL::ObjectType``` and defining accessable fields.
+2. reopen existing domain models to act as graphql object types by including the ```GraphQL::ObjectType``` and defining accessable fields.
 3. define the resolve callbacks for the root queries and mutations.
 
 ### Example
 
-All the following code can be found in [exp_lang_repl](example/simple_blog_example.cr).
+All the following code can be found in [example/simple_blog_example.cr](example/simple_blog_example.cr).
 
 We will assume a very simple domain model for a web application that gives us some users with different user roles, posts and comments:
 
@@ -55,7 +55,6 @@ class User
 end
 
 abstract class Content
-  #
   # due to https://github.com/crystal-lang/crystal/issues/4580
   # we have to include the ObjectType module at the first definition of Content
   # in order for the field macro to work on child classes. Once this is fixed the
@@ -234,18 +233,20 @@ graphql_schema_definition = <<-graphql_schema
 graphql_schema
 ```
 
-and instantiate the ```GraphQL::Schema``` class with it using the ```.from_schema``` class method:
+and instantiate a ```GraphQL::Schema``` with it using the ```.from_schema``` class method:
 
 ```crystal
 schema = GraphQL::Schema.from_schema(graphql_schema_definition)
 ```
 
-next we reopen our domain model classes and enable them to act as GraphQL Objects.:
+next we reopen our domain model classes and enhance them to act as GraphQL Objects:
 
 ```crystal
 abstract class Content
-  # this doesn't work here due to https://github.com/crystal-lang/crystal/issues/4580
-  # so we included the module at the first declaration of the Content class above
+  # this doesn't work here atm. due to
+  # https://github.com/crystal-lang/crystal/issues/4580
+  # so we had to include the module at the first
+  # declaration of the Content class above
   # include GraphQL::ObjectType
   field :id
   field :body
@@ -377,7 +378,7 @@ puts schema.execute("{ __type(name: \"Post\") { fields { name description type {
 And request all the posts:
 
 ```crystal
-puts schema.execute("{ posts {id title body author {fullName}} }").to_pretty_json
+puts schema.execute(" { posts { id title body author { fullName } } } ").to_pretty_json
 ```
 
 ```json
