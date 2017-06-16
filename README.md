@@ -1,6 +1,11 @@
 # graphql-crystal [![Build Status](https://api.travis-ci.org/ziprandom/graphql-crystal.svg)](https://travis-ci.org/ziprandom/graphql-crystal)
 
-a graphql parser for the crystal programming language ported from [graphql-ruby](https://github.com/rmosolgo/graphql-ruby) and implemented using the [crystal language toolkit](https://github.com/ziprandom/cltk).
+
+A implementation of [GraphQL](http://graphql.org/learn/) for the crystal programming language inspired by [graphql-ruby](https://github.com/rmosolgo/graphql-ruby) & [go-graphql](https://github.com/playlyfe/go-graphql).
+
+## WIP
+
+Although the feature set is pretty complete there still remain very rough edges with this library. Several missing validations render it unusable in production at the moment. pull-requests, suggestions & criticism are very welcome!
 
 ## Installation
 
@@ -14,108 +19,446 @@ dependencies:
 
 ## Usage
 
+In order to create a GraphQL Schema and execute queries and mutations against it three steps have to be performed.
+
+1. define a GraphQL Schema in the [graphql schema definition language](http://graphql.org/learn/schema/)
+2. convert existing domain models to act as graphql object types by including the ```GraphQL::ObjectType``` and defining accessable fields.
+3. define the resolve callbacks for the root queries and mutations.
+
+### Example
+
+All the following code can be found in [exp_lang_repl](example/simple_blog_example.cr).
+
+We will assume a very simple domain model for a web application that gives us some users with different user roles, posts and comments:
+
 ```crystal
 require "graphql-crystal"
+require "secure_random"
 
-schema_string = <<-schema
+enum UserRole
+  Author
+  Reader
+  Admin
+end
+
+#
+# Lets create a simple Blog Scenario where there exist Users, Posts and Comments
+#
+# First we define 4 classes to represent our Model: User, Content, Post < Content & Comment < Content
+#
+
+class User
+  getter :id, :first_name, :last_name, :role
+  def initialize(
+    @id : String, @first_name : String,
+    @last_name : String, @role : UserRole); end
+end
+
+abstract class Content
+  #
+  # due to https://github.com/crystal-lang/crystal/issues/4580
+  # we have to include the ObjectType module at the first definition of Content
+  # in order for the field macro to work on child classes. Once this is fixed the
+  # arbitrary classes can declared as GraphQL Object types easily via monkey Patching
+  include GraphQL::ObjectType
+  @id: String
+  @body: String
+  @author: User
+  def initialize(@id, @body, @author); end
+end
+
+class Post < Content
+  getter :id, :author, :title, :body
+  def initialize(@id : String, @author : User,
+    @title : String, @body : String); end
+end
+
+class Comment < Content
+  getter :id, :author, :post, :body
+  def initialize(@id : String, @author : User,
+    @post : Post, @body : String); end
+end
+
+#
+# and create some fixtures to work with
+#
+USERS = [
+  {
+   id: SecureRandom.uuid, first_name: "Bob",
+   last_name: "Bobson", role: UserRole::Author
+  },{
+   id: SecureRandom.uuid, first_name: "Alice",
+   last_name: "Alicen", role: UserRole::Admin
+  },{
+    id: SecureRandom.uuid, first_name: "Grace",
+    last_name: "Graham", role: UserRole::Reader
+  }
+].map { |args| User.new **args }
+
+POSTS = [
+  {
+    id: SecureRandom.uuid, author: USERS[0],
+    title: "GraphQL for Dummies", body: "GraphQL is pretty simple."
+  },{
+    id: SecureRandom.uuid, author: USERS[0],
+    title: "REST vs. GraphQL", body: "GraphQL has certain advantages over REST."
+  },{
+    id: SecureRandom.uuid, author: USERS[1], title: "The Crystal Programming Language ",
+    body: "The nicest syntax on the planet now comes with typesafety, performance and parallelisation support(ójala!)"
+  }
+].map { |args| Post.new **args }
+
+COMMENTS = [
+  {
+    id: SecureRandom.uuid, author: USERS[2],
+    post: POSTS[1], body: "I like rest more!"
+  },{
+    id: SecureRandom.uuid, author: USERS[2],
+    post: POSTS[1], body: "But think of all the possibilities with GraphQL!"
+  },{
+    id: SecureRandom.uuid, author: USERS[1],
+    post: POSTS[2], body: "When will I finally have static compilation support?"
+  }
+].map { |args| Comment.new **args }
+```
+
+Based on this data we define a graphql schema using the schema definition language:
+
+```crystal
+graphql_schema_definition = <<-graphql_schema
   schema {
-    query: QueryType
+    query: QueryType,
     mutation: MutationType
   }
 
-  # Union description
-  union AnnotatedUnion @onUnion = A | B
-
-  type Foo implements Bar {
-    one: Type
-    two(argument: InputType!): Type
-    three(argument: InputType, other: String): Int
-    four(argument: String = "string"): String
-    five(argument: [String] = ["string", "string"]): String
-    six(argument: InputType = {key: "value"}): Type
-    seven(argument: String = null): Type
+  type QueryType {
+    # retrieve a user by id
+    user(id: ID!): User
+    # retrieve a post by id
+    post(id: ID!): Post
+    # get all posts
+    posts: [Post!]
   }
 
-  # Scalar description
-  scalar CustomScalar
-
-  type AnnotatedObject @onObject(arg: "value") {
-    annotatedField(arg: Type = "default" @onArg): Type @onField
+  type MutationType {
+    # create a new post
+    post(payload: PostInput!): Post
+    # create a new comment
+    comment(payload: CommentInput!): Comment
   }
 
-  interface Bar {
-    one: Type
-    four(argument: String = "string"): String
+  # Input format for
+  # new Posts
+  input PostInput {
+    # title for the new post
+    title: String!
+    # body for the new post
+    body: String!
+    # id of the posts author
+    authorId: ID!
   }
 
-  # Enum description
-  enum Site {
-    # Enum value description
-    DESKTOP
-    MOBILE
+  # Input format for
+  # new Comments
+  input CommentInput {
+    # id of the post on
+    # which is being commented
+    postId: ID!
+    # id of the comments author
+    authorId: ID!
+    # the comments text
+    body: String!
   }
 
-  interface AnnotatedInterface @onInterface {
-    annotatedField(arg: Type @onArg): Type @onField
+  # Possible roles
+  # for users in the system
+  enum UserRole {
+    # A user with
+    # readonly access to
+    # the Content of the system
+    Reader
+    # A user with read
+    # & write access
+    Author
+    # A administrator
+    # of the system
+    Admin
   }
 
-  union Feed = Story | Article | Advert
-
-  # Input description
-  input InputType {
-    key: String!
-    answer: Int = 42
+  # Types identified by a
+  # unique ID
+  interface UniqueId {
+    # the unique idenfifier
+    # for this entity
+    id: ID!
   }
 
-  union AnnotatedUnion @onUnion = A | B
-
-  scalar CustomScalar
-
-  # Directive description
-  directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
-
-  scalar AnnotatedScalar @onScalar
-
-  enum Site {
-    DESKTOP
-    MOBILE
+  # A User
+  type User implements UniqueId {
+    # users first name
+    firstName: String!
+    # users last name
+    lastName: String!
+    # full name string for the user
+    fullName: String!
+    # users role
+    role: UserRole!
+    # posts published
+    # by this user
+    posts: [Post!]
+    # total number of posts
+    # published by this user
+    postsCount: Int!
   }
 
-  enum AnnotatedEnum @onEnum {
-    ANNOTATED_VALUE @onEnumValue
-    OTHER_VALUE
+  # Text content
+  interface Content {
+    # text body of this entity
+    body: String!
+    # author of this entity
+    author: User!
   }
 
-  input InputType {
-    key: String!
-    answer: Int = 42
+  # A post in the system
+  type Post implements UniqueId, Content {
+    # title of this post
+    title: String!
   }
 
-  input AnnotatedInput @onInputObjectType {
-    annotatedField: Type @onField
+  # A comment on a post
+  type Comment implements UniqueId, Content {
+    # post on which this
+    # comment was made
+    post: Post!
   }
-
-  directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
-
-  directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
-schema
-
-# Parse the Schema to a Document ASTNode
-document = GraphQL::Language::Parser.parse(
-  GraphQL::Language::Lexer.lex(schema_string), {lookahead: false}
-).as(GraphQL::Language::Document)
-
-# convert the document back
-# to a graphql query string
-puts document.to_query_string
-
-# .. or print it's json
-# representation
-# puts document.to_json
+graphql_schema
 ```
-## Performance
 
-To compare the Performance of the Parser with [facebooks GraphQL parser](https://github.com/graphql/libgraphqlparser) you need to have the library installed on your machine. Then run
+and instantiate the ```GraphQL::Schema``` class with it using the ```.from_schema``` class method:
+
+```crystal
+schema = GraphQL::Schema.from_schema(graphql_schema_definition)
+```
+
+next we reopen our domain model classes and enable them to act as GraphQL Objects.:
+
+```crystal
+abstract class Content
+  # this doesn't work here due to https://github.com/crystal-lang/crystal/issues/4580
+  # so we included the module at the first declaration of the Content class above
+  # include GraphQL::ObjectType
+  field :id
+  field :body
+  field :author
+end
+
+# you see it works nicely with inheritance
+class Post
+  field :title
+end
+
+class Comment
+  field :post
+end
+
+#
+# Here we make use of custom callbacks
+# to convert snake_case to camelCase
+# and add virtual accessors
+#
+class User
+  include GraphQL::ObjectType
+  field :firstName { first_name }
+  field :lastName { last_name }
+  field :fullName { "#{@first_name} #{@last_name}" }
+  field :posts { POSTS.select &.author.==(self)}
+  field :postsCount { POSTS.select( &.author.==(self) ).size }
+  field :role
+end
+```
+
+in the last step we define the entrypoints of the schema by providing the logic for the RootQuery and RootMutation Fields:
+
+```crystal
+schema.resolve do
+
+  query "posts" { POSTS }
+
+  query "user" do |args|
+    USERS.find( &.id.==(args["id"]) )
+  end
+
+  query "post" do |args|
+    POSTS.find( &.id.==(args["id"]) )
+  end
+
+  mutation "post" do |args|
+    payload = args["payload"].as(Hash)
+
+    author = USERS.find( &.id.==(payload["authorId"]) )
+    raise "authorId doesn't exist!" unless author
+
+    post = Post.new(
+      id: SecureRandom.uuid, author: author,
+      title: payload["title"].as(String), body: payload["body"].as(String)
+    )
+
+    POSTS << post
+    post
+  end
+
+  mutation "comment" do |args|
+    payload = args["payload"].as(Hash)
+
+    author = USERS.find( &.id.==(payload["authorId"]) )
+    raise "authorId doesn't exist!" unless author
+
+    post = POSTS.find( &.id.==(payload["postId"]) )
+    raise "postId doesn't exist!" unless post
+
+    comment = Comment.new(
+      id: SecureRandom.uuid, author: author,
+      post: post, body: payload["body"].as(String)
+    )
+    COMMENTS << comment
+    comment
+  end
+
+end
+```
+
+This is all we need to define a GraphQL Schema and serve our Application Data.
+
+Lets run an simple introspection query:
+
+```crystal
+puts schema.execute("{ __type(name: \"Post\") { fields { name description type { kind } } } }").to_pretty_json
+```
+
+```json
+{
+  "data": {
+    "__type": {
+      "fields": [
+        {
+          "name": "author",
+          "description": "author of this entity",
+          "type": {
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "body",
+          "description": "text body of this entity",
+          "type": {
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "id",
+          "description": "the unique idenfifier for this entity",
+          "type": {
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "title",
+          "description": "title of this post",
+          "type": {
+            "kind": "NON_NULL"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+And request all the posts:
+
+```crystal
+puts schema.execute("{ posts {id title body author {fullName}} }").to_pretty_json
+```
+
+```json
+{
+  "data": {
+    "posts": [
+      {
+        "id": "a9b55bc6-5bcc-4828-8527-542015af830e",
+        "title": "GraphQL for Dummies",
+        "body": "GraphQL is pretty simple.",
+        "author": {
+          "fullName": "Bob Bobson"
+        }
+      },
+      {
+        "id": "3f8d01af-41ff-417d-998b-f832ac5d31ee",
+        "title": "REST vs. GraphQL",
+        "body": "GraphQL has certain advantages over REST.",
+        "author": {
+          "fullName": "Bob Bobson"
+        }
+      },
+      {
+        "id": "b13cdefd-859a-4b13-ae34-cf7b3c60205e",
+        "title": "The Crystal Programming Language ",
+        "body": "The nicest syntax on the planet now comes with typesafety, performance and parallelisation support(ójala!)",
+        "author": {
+          "fullName": "Alice Alicen"
+        }
+      }
+    ]
+  }
+}
+```
+
+Next let's create a mutation to push a Post:
+
+```crystal
+mutation_string = %{
+  mutation CreatePost($payload: PostInput) {
+    post(payload: $payload) {
+      id
+      title
+      body
+      author {
+        postsCount
+      }
+    }
+  }
+}
+
+mutation_args = {
+  "payload" => {
+    "title" => "Using Crystal 1.0 in Production",
+    "body" => "would be the most wonderful thing",
+    "authorId" => USERS.first.id
+  }
+}
+puts schema.execute(mutation_string, mutation_args).to_pretty_json
+```
+
+```json
+{
+  "data": {
+    "post": {
+      "id": "a8ad1fea-2a07-4aef-a6f3-a9051cce15e8",
+      "title": "Using Crystal 1.0 in Production",
+      "body": "would be the most wonderful thing",
+      "author": {
+        "postsCount": 3
+      }
+    }
+  }
+}
+```
+
+## Parser Performance
+
+The parser has been implemented using my [crystal language toolkit](https://github.com/ziprandom/cltk) and does not have optimal performance atm.
+
+To compare the performance of the Parser with [facebooks GraphQL parser](https://github.com/graphql/libgraphqlparser) you need to have the library installed on your machine. Then run
 
 ```sh
 crystal build --release benchmark/compare_benchmarks.cr
