@@ -21,7 +21,7 @@ module GraphQL
           false
         end
       when Language::UnionTypeDefinition
-        true
+        type_definition.types.any? { |_type| accepts?(_type, value)}
       when Language::NonNullType
         value != nil ? accepts?(type_definition.of_type, value) : false
       when Language::ListType
@@ -37,7 +37,7 @@ module GraphQL
         when "Int"
           value.is_a?(Int32)
         when "Float"
-          value.is_a?(Float64)
+          value.is_a?(Number)
         when "String"
           value.is_a?(String)
         when "Boolean"
@@ -45,16 +45,21 @@ module GraphQL
         else
           false
         end
-      when Language::ObjectTypeDefinition
-        true
       when Language::InputObjectTypeDefinition
-        true
-      when Language::InputValueDefinition
-        true
+        return false unless value.is_a? Hash
+        (type_definition.fields.map(&.name) + value.keys).uniq.each do |key|
+          return false unless field = type_definition.fields.find( &.name.==(key) )
+          if value.has_key?(field.name)
+            return false unless accepts?(field.type, value[field.name])
+          elsif field.default_value
+            return false unless accepts?(field.type, field.default_value)
+          else
+            return false
+          end
+        end
+        return true
       when Language::TypeName
         accepts?(@types[type_definition.name], value)
-      else
-        true
       end
     end
   end

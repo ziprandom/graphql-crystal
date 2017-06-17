@@ -1,4 +1,5 @@
 require "./spec_helper"
+require "./graphql-crystal/**"
 
 describe GraphQL do
   # TODO: Write tests
