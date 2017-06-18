@@ -3,8 +3,13 @@ module GraphQL
   module Schema
 
     class Context
+
       getter :schema
-      def initialize(@schema : GraphQL::Schema::Schema); end
+      @max_depth : Int32?
+      @depth = 0
+      property :max_depth, :depth
+
+      def initialize(@schema : GraphQL::Schema::Schema, @max_depth = nil); end
 
       def with_self(args)
         with self yield(args)
@@ -15,8 +20,10 @@ module GraphQL
 
     class Schema
       include GraphQL::Schema::Introspection
-      getter :types, :directive_middlewares, :directive_definitions, :query_resolver, :mutation_resolver
+      getter :types, :directive_middlewares, :directive_definitions,
+             :query_resolver, :mutation_resolver, :max_depth
 
+      @max_depth : Int32? = nil
       @query : Language::ObjectTypeDefinition?
       @mutation : Language::ObjectTypeDefinition?
 
@@ -92,6 +99,8 @@ module GraphQL
         end
         return {schema, types, directives}
       end
+
+      def max_depth(@max_depth); end
 
       def query(name, &block : Hash(String, ReturnType) -> _ )
         @query_resolver.cb_hash[name.to_s] = cast_wrap_block(&block)

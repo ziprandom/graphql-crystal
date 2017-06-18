@@ -12,7 +12,7 @@ module GraphQL
       )
 
       def execute(document : String, params = nil)
-        execute(Language.parse(document), params, Context.new(self))
+        execute(Language.parse(document), params, Context.new(self, max_depth))
       end
 
       def execute(document : Language::Document, params, context)
@@ -106,6 +106,16 @@ module GraphQL
             object_type : Language::ObjectTypeDefinition,
             selections : Array(Language::Selection), resolved : ObjectType, context
           ) : Tuple( ReturnType, Array(Error) )
+
+        context = context.dup
+        context.depth += 1
+
+        if context.max_depth && context.depth > context.max_depth.not_nil!
+          return ({
+            nil,
+            [Error.new(message: "max execution depth reached", path: [] of String|Int32)]
+          })
+        end
 
         errors = [] of Error
         result = Hash(String, ReturnType).new
