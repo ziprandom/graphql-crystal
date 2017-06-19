@@ -250,9 +250,11 @@ module GraphQL
           resolve_selections_for(type_definition, selections, resolved, context)
         # we need to derive the type from the actual object
         when Language::UnionTypeDefinition, Language::InterfaceTypeDefinition
-          # FixMe: this needs to be more flexible of course
-          concrete_definition = @types[resolved.as(ObjectType).graphql_type]
-          resolve_selections_for(concrete_definition, selections, resolved, context)
+          if resolved.is_a? ObjectType
+            # FixMe: this needs to be more flexible of course
+            concrete_definition = @types[resolved.as(ObjectType).graphql_type]
+            resolve_selections_for(concrete_definition, selections, resolved, context)
+          end
         # we already hold the results in our hands :)
         when Language::EnumTypeDefinition
             { resolved.to_s, [] of Error }

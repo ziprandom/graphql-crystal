@@ -16,7 +16,7 @@ module GraphQL
       end
     end
 
-    alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | Nil )
+    alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | ReturnType | Nil )
 
     class Schema
       include GraphQL::Schema::Introspection
