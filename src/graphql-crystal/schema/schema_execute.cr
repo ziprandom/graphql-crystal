@@ -17,14 +17,10 @@ module GraphQL
 
       def execute(document : Language::Document, params, context)
         queries, mutations, fragments = extract_request_parts(document)
-
+        context.fragments = fragments
         query = (queries + mutations).first
         begin
           substitute_variables_from_params(query, params || {} of String => ReturnType)
-          query.selections = GraphQL::Schema::FragmentResolver.resolve(
-            query.selections,
-            fragments
-          ).map &.as(Language::AbstractNode)
         rescue e : Exception
           # we hit an error while resolving fragments
           # no path info atm
@@ -84,19 +80,15 @@ module GraphQL
       end
 
       def resolve_selections_for(field_definition, selections, resolved, context)
-#         if selections.is_a?(Array) &&
-#            selections[0]?.try &.as(Language::Field).try &.directives.any?
-#           run_directives(
-#             selections.first,
-#             field_definition.not_nil!,
-#             selections.map(&.as(Language::AbstractNode)),
-#             resolved.as(ResolveCBReturnType), context
-#           ) do |_field_definition, _selections, _resolved, _context|
-#             _resolve_selections_for(_field_definition, _selections, _resolved, _context)
-#           end
-#         else
-          _resolve_selections_for(field_definition, selections, resolved, context)
-#         end
+        begin
+          _selections = GraphQL::Schema::FragmentResolver.resolve(
+            selections,
+            context.fragments
+          )
+          _resolve_selections_for(field_definition, _selections, resolved, context)
+        rescue e
+          {nil, [Error.new(message: e.message.as(String), path: [] of Int32|String)]}
+        end
       end
 
       #

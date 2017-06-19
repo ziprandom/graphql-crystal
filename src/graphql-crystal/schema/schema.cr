@@ -7,7 +7,8 @@ module GraphQL
       getter :schema
       @max_depth : Int32?
       @depth = 0
-      property :max_depth, :depth
+      @fragments : Array(Language::FragmentDefinition) = [] of Language::FragmentDefinition
+      property :max_depth, :depth , :fragments
 
       def initialize(@schema : GraphQL::Schema::Schema, @max_depth = nil); end
 
