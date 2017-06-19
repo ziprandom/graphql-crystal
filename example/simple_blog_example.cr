@@ -1,6 +1,7 @@
 # coding: utf-8
 require "../src/graphql-crystal"
 require "secure_random"
+require "benchmark"
 
 enum UserRole
   Author
@@ -42,6 +43,9 @@ class Comment < Content
   def initialize(@id : String, @author : User, @post : Post, @body : String); end
 end
 
+#
+# and create some fixtures to work with
+#
 #
 # and create some fixtures to work with
 #
@@ -179,6 +183,12 @@ graphql_schema
 # load it
 schema = GraphQL::Schema.from_schema(graphql_schema_definition)
 
+module UniqueId
+  macro included
+    field :id
+  end
+end
+
 # Here we reopen the classes
 # of our application model and
 # enhance them to act as GraphQL Object Types via the GraphQL::ObjectType
@@ -188,7 +198,7 @@ abstract class Content
   # this doesn't work here due to https://github.com/crystal-lang/crystal/issues/4580
   # so we included the module at the first declaration of the Content class above
   # include GraphQL::ObjectType
-  field :id
+  include UniqueId
   field :body
   field :author
 end
@@ -209,6 +219,7 @@ end
 #
 class User
   include GraphQL::ObjectType
+  include UniqueId
   field :firstName { first_name }
   field :lastName { last_name }
   field :fullName { "#{@first_name} #{@last_name}" }
@@ -328,3 +339,12 @@ mutation_args = {
 }
 
 puts schema.execute(mutation_string, mutation_args).to_pretty_json
+
+
+# lets create lots of Comments
+
+Benchmark.ips do |x|
+  x.report("commenting on that post") do
+    schema.execute(mutation_string, mutation_args).to_json
+  end
+end
