@@ -22,13 +22,14 @@ module GraphQL
       include GraphQL::Schema::Introspection
       getter :types, :directive_middlewares, :directive_definitions,
              :query_resolver, :mutation_resolver, :max_depth
+      property :query_resolver, :mutation_resolver
 
       @max_depth : Int32? = nil
       @query : Language::ObjectTypeDefinition?
       @mutation : Language::ObjectTypeDefinition?
 
-      @query_resolver = ResolverObject.new
-      @mutation_resolver = ResolverObject.new
+      @query_resolver : GraphQL::ObjectType = ResolverObject.new
+      @mutation_resolver : GraphQL::ObjectType = ResolverObject.new
 
       @types : Hash(String, Language::TypeDefinition)
       @directive_definitions = Hash(String, Language::DirectiveDefinition).new
@@ -43,11 +44,11 @@ module GraphQL
 
         # substitute TypeNames with type definition
         @query = @types[schema.query]?.as(Language::ObjectTypeDefinition?)
-        @query_resolver.name = schema.query
+        @query_resolver.is_a?(ResolverObject) && @query_resolver.as(ResolverObject).name = schema.query
 
         if schema.mutation
           @mutation = @types[schema.mutation]?.as(Language::ObjectTypeDefinition?)
-          @mutation_resolver.name = schema.mutation.not_nil!
+          @mutation_resolver.is_a?(ResolverObject) && @mutation_resolver.as(ResolverObject).name = schema.mutation.not_nil!
         end
 
         @type_validation = GraphQL::TypeValidation.new(@types)
@@ -103,11 +104,17 @@ module GraphQL
       def max_depth(@max_depth); end
 
       def query(name, &block : Hash(String, ReturnType) -> _ )
-        @query_resolver.cb_hash[name.to_s] = cast_wrap_block(&block)
+        qrslv = @query_resolver
+        if qrslv.is_a? ResolverObject
+          qrslv.cb_hash[name.to_s] = cast_wrap_block(&block)
+        end
       end
 
       def mutation(name, &block : Hash(String, ReturnType) -> _ )
-        @mutation_resolver.cb_hash[name.to_s] = cast_wrap_block(&block)
+        qrslv = @mutation_resolver
+        if qrslv.is_a? ResolverObject
+          qrslv.cb_hash[name.to_s] = cast_wrap_block(&block)
+        end
       end
 
       def cast_wrap_block(&block : Hash(String, ReturnType) -> _)

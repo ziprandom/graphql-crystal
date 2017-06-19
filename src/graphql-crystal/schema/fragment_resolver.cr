@@ -4,8 +4,8 @@ module GraphQL
 
       # replace named fragments with their concrete selections before
       # the query is resolved
-      def self.resolve(value : Array(Language::Field), fragments)
-        visit(value, fragments).map &.as(Language::Field)
+      def self.resolve(value , fragments)
+        visit(value, fragments)
       end
 
       def self.visit(values : Array, fragments : Array(Language::FragmentDefinition))

@@ -22,7 +22,7 @@ module GraphQL
         begin
           substitute_variables_from_params(query, params || {} of String => ReturnType)
           query.selections = GraphQL::Schema::FragmentResolver.resolve(
-            query.selections.map(&.as(Language::Field)),
+            query.selections,
             fragments
           ).map &.as(Language::AbstractNode)
         rescue e : Exception
@@ -36,7 +36,7 @@ module GraphQL
 
         result, errors = resolve_selections_for(
                   root_element_definition,
-                  query.selections.map(&.as(Language::Field)),
+                  query.selections,
                   root_element, context
                 )
 
@@ -312,7 +312,6 @@ module GraphQL
 
 
       def substitute_variables_from_params(query, params : Hash)
-
         if (superfluous = params.keys - query.variables.map(&.name)).any?
           raise "unknown variables #{superfluous.join(", ")}"
         end
