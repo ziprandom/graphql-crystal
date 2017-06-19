@@ -19,7 +19,7 @@ module GraphQL
 
   module Schema
 
-    alias ReturnType = String | Int32 | Float64 | Bool | Nil | Array(ReturnType) | Hash(String, ReturnType)
+    alias ReturnType = String | Int32 | Int64 | Float64 | Bool | Nil | Array(ReturnType) | Hash(String, ReturnType)
     alias ResolveCBReturnType = ReturnType | ObjectType | Nil | Array(ResolveCBReturnType)
 
     def self.substitute_argument_variables(query : GraphQL::Language::OperationDefinition, params)

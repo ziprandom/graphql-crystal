@@ -33,9 +33,9 @@ module GraphQL
       when Language::ScalarTypeDefinition
         case type_definition.name
         when "ID"
-          value.is_a?(Int32) || value.is_a?(String)
+          value.is_a?(Int) || value.is_a?(String)
         when "Int"
-          value.is_a?(Int32)
+          value.is_a?(Int)
         when "Float"
           value.is_a?(Number)
         when "String"
