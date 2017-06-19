@@ -1,4 +1,3 @@
-require "../../src/graphql-crystal"
 require "./star_wars_data"
 
 abstract class Character

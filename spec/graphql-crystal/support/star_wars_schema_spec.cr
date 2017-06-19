@@ -1,5 +1,4 @@
-require "spec"
-require "../support/star_wars_schema"
+require "../../spec_helper"
 
 describe StarWarsSchema do
   describe "Basic Queries" do

@@ -1,5 +1,4 @@
-require "spec"
-require "../support/star_wars_schema"
+require "../../spec_helper"
 
 describe GraphQL::Schema::Schema do
   it "Allows querying the schema for types" do
