@@ -3,9 +3,7 @@
 
 A implementation of [GraphQL](http://graphql.org/learn/) for the crystal programming language inspired by [graphql-ruby](https://github.com/rmosolgo/graphql-ruby) & [go-graphql](https://github.com/playlyfe/go-graphql).
 
-## WIP
-
-Although the feature set is pretty complete there still remain very rough edges with this library. Several missing validations render it unusable in production at the moment. pull-requests, suggestions & criticism are very welcome!
+The Library is in Beta state atm. Should already be usable but expect to find bugs (and open issues about them). pull-requests, suggestions & criticism are very welcome!
 
 ## Installation
 
