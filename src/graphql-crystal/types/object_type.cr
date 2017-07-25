@@ -81,22 +81,24 @@ macro on_included
   end
 end
 
-macro graphql_type(name)
-  def graphql_type
-    {{name}}
-  end
-end
-
-macro graphql_type(&block)
-  {% if block.is_a?(Block)%}
-    def graphql_type
-      {{block.body}}
-    end
-  {% end %}
-end
 
 module GraphQL
+
   module ObjectType
+
+    macro graphql_type(name)
+      def graphql_type
+        {{name}}
+      end
+    end
+
+    macro graphql_type(&block)
+      {% if block.is_a?(Block)%}
+        def graphql_type
+          {{block.body}}
+        end
+      {% end %}
+    end
 
     def resolve_field(name, arguments, context)
       pp "field not defined", name, self.class
