@@ -9,9 +9,13 @@ require "./schema/*"
 # require "./schema/fragment_resolver"
 module GraphQL
 
+  # Record the message and path of a resolution error
   alias Error = {message: String, path: Array(String|Int32) }
 
   module Schema
+    # Instantiate the `Schema` class from a
+    # String that represents a graphql-schema in
+    # the graphql schema definition language
     def self.from_schema(schema_string)
       Schema.new GraphQL::Language.parse(schema_string)
     end
