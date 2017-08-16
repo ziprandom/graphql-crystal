@@ -21,7 +21,7 @@ end
 macro on_included
   on_included_s do
     on_all_child_classes do
-      FIELDS = [] of Tuple(Symbol, String, Hash(String, String)?, String)
+      GRAPHQL_FIELDS = [] of Tuple(Symbol, String, Hash(String, String)?, String)
     end
 
     on_all_child_classes do
@@ -31,7 +31,7 @@ macro on_included
       end
 
       macro field(name, description, args, typename, &block)
-        \\{% FIELDS << {name, description, args, typename} %}
+        \\{% GRAPHQL_FIELDS << {name, description, args, typename} %}
         def \\{{name.id}}_field(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}, \\{{((block.is_a?(Block) && block.args.size > 1) ? block.args[1].id : "context").id}})
           \\{% if block.is_a?(Block) %}
               context.with_self(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}) do
@@ -52,9 +52,9 @@ macro on_included
       macro finished
         def resolve_field(name : String, arguments, context)
           \\{% prev_def = @type.methods.find(&.name.==("resolve_field")) %}
-          \\{% if !FIELDS.empty? %}
+          \\{% if !GRAPHQL_FIELDS.empty? %}
               case name
-                  \\{% for field in @type.constant("FIELDS") %}
+                  \\{% for field in @type.constant("GRAPHQL_FIELDS") %}
                     when "\\{{ field[0].id }}" #\\\\\{{@type}}
                       \\{{field[0].id}}_field(arguments, context)
                       \\{% end %}
