@@ -11,8 +11,8 @@ module GraphQL
         description: "the name of this GraphQL type"
       )
 
-      def execute(document : String, params = nil)
-        execute(Language.parse(document), params, Context.new(self, max_depth))
+      def execute(document : String, params = nil, context = Context.new(self, max_depth) )
+        execute(Language.parse(document), params, context)
       end
 
       def execute(document : Language::Document, params, context)
