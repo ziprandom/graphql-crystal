@@ -453,6 +453,30 @@ puts schema.execute(mutation_string, mutation_args).to_pretty_json
 }
 ```
 
+### Custom Context Types
+
+Custom context types can be used to pass additional information to the object type's field resolves. An example can be found [here](spec/support/custom_context_schema.cr).
+
+A Custom context type should inherit from `GraphQL::Schema::Context` and therefore be initialized with the served schema and a max_depth.
+
+```cr
+GraphQL::Schema::Schema#execute(query_string, query_arguments = nil, context = GraphQL::Schema::Context.new(self, max_depth))
+```
+accepts a context type as its third argument.
+
+Field Resolver Callbacks on Object Types (including top level Query & Mutation Type) get called with the context as their third argument:
+```cr
+field :users do |args, context|
+  # casting to your custom type
+  # is necessary here
+  context = context.as(CustomContext)
+  unless context.authenticated
+    raise "Authentication Error"
+  end
+  ...
+end
+```
+
 ## Parser Performance
 
 The parser has been implemented using my [crystal language toolkit](https://github.com/ziprandom/cltk) and does not have optimal performance atm.
