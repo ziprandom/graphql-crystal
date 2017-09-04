@@ -2,25 +2,17 @@ require "json"
 require "tempfile"
 
 class CustomContext < GraphQL::Schema::Context
-  @user: {authenticated: Bool, name: String}?
+
+  def initialize(@user : {authenticated: Bool, name: String}, @schema, @max_depth); end
 
   def authenticated
-    if @user
-      @user.not_nil![:authenticated]
-    else
-      false
-    end
+    @user[:authenticated]
   end
 
   def username
-    if @user
-      @user.not_nil![:name]
-    else
-      nil
-    end
+    @user[:name]
   end
 
-  def initialize(@user, @schema, @max_depth); end
 end
 
 class ProcessType
