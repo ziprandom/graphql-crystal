@@ -1,5 +1,4 @@
 require "json"
-require "tempfile"
 
 class CustomContext < GraphQL::Schema::Context
 
@@ -48,7 +47,7 @@ module LogStore
   `touch #{TEMPFILENAME}`;
 
   def read_logs
-    raw_content = File.read(TEMPFILENAME, nil, "[]l")
+    raw_content = File.read(TEMPFILENAME)
     Array(LogType).from_json raw_content
   rescue
       [] of LogType
