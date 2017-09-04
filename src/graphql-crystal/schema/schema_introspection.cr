@@ -239,8 +239,8 @@ module GraphQL
 
     class GraphQL::Language::ObjectTypeDefinition
       field :kind { "OBJECT" }
-      field :fields do |args|
-        _fields = (resolved_interfaces(schema).flat_map(&.fields) + fields)
+      field :fields do |args, context|
+        _fields = (resolved_interfaces(context.schema).flat_map(&.fields) + fields)
           .reduce(Hash(String, FieldDefinition).new) do |dict, field|
           dict[field.name] = field
           dict
@@ -251,7 +251,7 @@ module GraphQL
           _fields.reject( &.directives.any?( &.name.==("deprecated") ) )
         end
       end
-      field :interfaces { resolved_interfaces(schema) }
+      field :interfaces { |args, context| resolved_interfaces(context.schema) }
 
       def resolved_interfaces(schema)
         interfaces.map do |iface_name|
@@ -262,13 +262,13 @@ module GraphQL
 
     class GraphQL::Language::UnionTypeDefinition
       field :kind { "UNION" }
-      field :possibleTypes { types.map{|t| schema.type_resolve(t)} }
+      field :possibleTypes { |args, context| types.map{|t| context.schema.type_resolve(t)} }
     end
 
     class GraphQL::Language::InterfaceTypeDefinition
       field :kind { "INTERFACE" }
-      field :possibleTypes do
-        schema.types.values.select do |t|
+      field :possibleTypes do |args, context|
+        context.schema.types.values.select do |t|
           t.is_a?(ObjectTypeDefinition) && t.interfaces.includes?(self.name)
         end
       end
@@ -282,7 +282,7 @@ module GraphQL
 
     class GraphQL::Language::WrapperType
       field :name { nil }
-      field :ofType { schema.type_resolve(of_type) }
+      field :ofType { |args, context| context.schema.type_resolve(of_type) }
     end
 
     class GraphQL::Language::ListType
@@ -302,7 +302,7 @@ module GraphQL
       field :name
       field :description
       field :args { self.arguments }
-      field :type { schema.type_resolve(type) }
+      field :type { |args, context| context.schema.type_resolve(type) }
     end
 
     class GraphQL::Language::InputObjectTypeDefinition
@@ -314,7 +314,7 @@ module GraphQL
     class GraphQL::Language::InputValueDefinition
       field :name
       field :description
-      field :type { schema.type_resolve(type) }
+      field :type { |args, context| context.schema.type_resolve(type) }
       field :defaultValue do
         val = (
           default_value.is_a?(Language::AbstractNode) ?

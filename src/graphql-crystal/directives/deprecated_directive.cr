@@ -26,8 +26,8 @@ module GraphQL
           _graphql_deprecated
         end
 
-        field :deprecationReason do
-          _graphql_deprecation_reason(schema)
+        field :deprecationReason do |args, context|
+          _graphql_deprecation_reason(context.schema)
         end
       end
     end

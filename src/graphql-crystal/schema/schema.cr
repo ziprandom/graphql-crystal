@@ -13,7 +13,7 @@ module GraphQL
       def initialize(@schema : GraphQL::Schema::Schema, @max_depth = nil); end
 
       def with_self(args)
-        with self yield(args)
+        yield(args, self)
       end
     end
 
