@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
+  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../../js/doc.js"></script>
+  <title>GraphQL::Language::InlineFragment - github.com/ziprandom/graphql-crystal</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="../../index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
+      <a href="../../CLTK.html">CLTK</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/CLTK/TokenValue" data-name="cltk::tokenvalue">
+      <a href="../../CLTK/TokenValue.html">TokenValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/CLTK/Type" data-name="cltk::type">
+      <a href="../../CLTK/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/ziprandom/graphql-crystal/GraphQL" data-name="graphql">
+      <a href="../../GraphQL.html">GraphQL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directive" data-name="graphql::directive">
+      <a href="../../GraphQL/Directive.html">Directive</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directives" data-name="graphql::directives">
+      <a href="../../GraphQL/Directives.html">Directives</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directives/IncludeDirective" data-name="graphql::directives::includedirective">
+      <a href="../../GraphQL/Directives/IncludeDirective.html">IncludeDirective</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directives/IsDeprecated" data-name="graphql::directives::isdeprecated">
+      <a href="../../GraphQL/Directives/IsDeprecated.html">IsDeprecated</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directives/SkipDirective" data-name="graphql::directives::skipdirective">
+      <a href="../../GraphQL/Directives/SkipDirective.html">SkipDirective</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Error" data-name="graphql::error">
+      <a href="../../GraphQL/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language" data-name="graphql::language">
+      <a href="../../GraphQL/Language.html">Language</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/AbstractNode" data-name="graphql::language::abstractnode">
+      <a href="../../GraphQL/Language/AbstractNode.html">AbstractNode</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/AEnum" data-name="graphql::language::aenum">
+      <a href="../../GraphQL/Language/AEnum.html">AEnum</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Argument" data-name="graphql::language::argument">
+      <a href="../../GraphQL/Language/Argument.html">Argument</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
+      <a href="../../GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Directive" data-name="graphql::language::directive">
+      <a href="../../GraphQL/Language/Directive.html">Directive</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/DirectiveDefinition" data-name="graphql::language::directivedefinition">
+      <a href="../../GraphQL/Language/DirectiveDefinition.html">DirectiveDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Document" data-name="graphql::language::document">
+      <a href="../../GraphQL/Language/Document.html">Document</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/EnumTypeDefinition" data-name="graphql::language::enumtypedefinition">
+      <a href="../../GraphQL/Language/EnumTypeDefinition.html">EnumTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/EnumValueDefinition" data-name="graphql::language::enumvaluedefinition">
+      <a href="../../GraphQL/Language/EnumValueDefinition.html">EnumValueDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Field" data-name="graphql::language::field">
+      <a href="../../GraphQL/Language/Field.html">Field</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/FieldDefinition" data-name="graphql::language::fielddefinition">
+      <a href="../../GraphQL/Language/FieldDefinition.html">FieldDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/FragmentDefinition" data-name="graphql::language::fragmentdefinition">
+      <a href="../../GraphQL/Language/FragmentDefinition.html">FragmentDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/FragmentSpread" data-name="graphql::language::fragmentspread">
+      <a href="../../GraphQL/Language/FragmentSpread.html">FragmentSpread</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/FValue" data-name="graphql::language::fvalue">
+      <a href="../../GraphQL/Language/FValue.html">FValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Generation" data-name="graphql::language::generation">
+      <a href="../../GraphQL/Language/Generation.html">Generation</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InlineFragment" data-name="graphql::language::inlinefragment">
+      <a href="../../GraphQL/Language/InlineFragment.html">InlineFragment</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InputObject" data-name="graphql::language::inputobject">
+      <a href="../../GraphQL/Language/InputObject.html">InputObject</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InputObjectTypeDefinition" data-name="graphql::language::inputobjecttypedefinition">
+      <a href="../../GraphQL/Language/InputObjectTypeDefinition.html">InputObjectTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InputValueDefinition" data-name="graphql::language::inputvaluedefinition">
+      <a href="../../GraphQL/Language/InputValueDefinition.html">InputValueDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InterfaceTypeDefinition" data-name="graphql::language::interfacetypedefinition">
+      <a href="../../GraphQL/Language/InterfaceTypeDefinition.html">InterfaceTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Lexer" data-name="graphql::language::lexer">
+      <a href="../../GraphQL/Language/Lexer.html">Lexer</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
+      <a href="../../GraphQL/Language/ListType.html">ListType</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/NameOnlyNode" data-name="graphql::language::nameonlynode">
+      <a href="../../GraphQL/Language/NameOnlyNode.html">NameOnlyNode</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/NonNullType" data-name="graphql::language::nonnulltype">
+      <a href="../../GraphQL/Language/NonNullType.html">NonNullType</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/NullValue" data-name="graphql::language::nullvalue">
+      <a href="../../GraphQL/Language/NullValue.html">NullValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ObjectTypeDefinition" data-name="graphql::language::objecttypedefinition">
+      <a href="../../GraphQL/Language/ObjectTypeDefinition.html">ObjectTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/OperationDefinition" data-name="graphql::language::operationdefinition">
+      <a href="../../GraphQL/Language/OperationDefinition.html">OperationDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Parser" data-name="graphql::language::parser">
+      <a href="../../GraphQL/Language/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
+      <a href="../../GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/SchemaDefinition" data-name="graphql::language::schemadefinition">
+      <a href="../../GraphQL/Language/SchemaDefinition.html">SchemaDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
+      <a href="../../GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Type" data-name="graphql::language::type">
+      <a href="../../GraphQL/Language/Type.html">Type</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/TypeDefinition" data-name="graphql::language::typedefinition">
+      <a href="../../GraphQL/Language/TypeDefinition.html">TypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/TypeName" data-name="graphql::language::typename">
+      <a href="../../GraphQL/Language/TypeName.html">TypeName</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/UnionTypeDefinition" data-name="graphql::language::uniontypedefinition">
+      <a href="../../GraphQL/Language/UnionTypeDefinition.html">UnionTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/VariableDefinition" data-name="graphql::language::variabledefinition">
+      <a href="../../GraphQL/Language/VariableDefinition.html">VariableDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/VariableIdentifier" data-name="graphql::language::variableidentifier">
+      <a href="../../GraphQL/Language/VariableIdentifier.html">VariableIdentifier</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/WrapperType" data-name="graphql::language::wrappertype">
+      <a href="../../GraphQL/Language/WrapperType.html">WrapperType</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/ObjectType" data-name="graphql::objecttype">
+      <a href="../../GraphQL/ObjectType.html">ObjectType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema" data-name="graphql::schema">
+      <a href="../../GraphQL/Schema.html">Schema</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Context" data-name="graphql::schema::context">
+      <a href="../../GraphQL/Schema/Context.html">Context</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/FragmentResolver" data-name="graphql::schema::fragmentresolver">
+      <a href="../../GraphQL/Schema/FragmentResolver.html">FragmentResolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Introspection" data-name="graphql::schema::introspection">
+      <a href="../../GraphQL/Schema/Introspection.html">Introspection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Middleware" data-name="graphql::schema::middleware">
+      <a href="../../GraphQL/Schema/Middleware.html">Middleware</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Middleware/Proc" data-name="graphql::schema::middleware::proc">
+      <a href="../../GraphQL/Schema/Middleware/Proc.html">Proc</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/QueryReturnType" data-name="graphql::schema::queryreturntype">
+      <a href="../../GraphQL/Schema/QueryReturnType.html">QueryReturnType</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolveCBReturnType" data-name="graphql::schema::resolvecbreturntype">
+      <a href="../../GraphQL/Schema/ResolveCBReturnType.html">ResolveCBReturnType</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
+      <a href="../../GraphQL/Schema/ResolverObject.html">ResolverObject</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ReturnType" data-name="graphql::schema::returntype">
+      <a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema" data-name="graphql::schema::schema">
+      <a href="../../GraphQL/Schema/Schema.html">Schema</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/Args" data-name="graphql::schema::schema::args">
+      <a href="../../GraphQL/Schema/Schema/Args.html">Args</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Validation" data-name="graphql::schema::validation">
+      <a href="../../GraphQL/Schema/Validation.html">Validation</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/VariableResolver" data-name="graphql::schema::variableresolver">
+      <a href="../../GraphQL/Schema/VariableResolver.html">VariableResolver</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/TypeValidation" data-name="graphql::typevalidation">
+      <a href="../../GraphQL/TypeValidation.html">TypeValidation</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/Hash" data-name="hash(k, v)">
+      <a href="../../Hash.html">Hash</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/NamedTuple" data-name="namedtuple(**t)">
+      <a href="../../NamedTuple.html">NamedTuple</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/Object" data-name="object">
+      <a href="../../Object.html">Object</a>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> GraphQL::Language::InlineFragment
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Language/InlineFragment.html">GraphQL::Language::InlineFragment</a></li><li class="superclass"><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></li><li class="superclass">CLTK::ASTNode</li><li class="superclass">Reference</li><li class="superclass"><a href="../../Object.html">Object</a></li></ul>
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>An unnamed fragment, defined directly in the query with <code>... {  }</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/language/nodes.cr#L235" target="_blank">graphql-crystal/language/nodes.cr</a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>Constant Summary</h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="GRAPHQL_FIELDS">
+        <strong>GRAPHQL_FIELDS</strong> = <code>[{<span class="n">:__typename</span>, <span class="s">&quot;&quot;</span>, <span class="n">nil</span>, <span class="s">&quot;&quot;</span>}] <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">String</span>, <span class="t">Hash</span>(<span class="t">String</span>, <span class="t">String</span>) <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>, <span class="t">String</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="VALUES">
+        <strong>VALUES</strong> = <code>[{<span class="k">type</span>, <span class="t">::</span><span class="t">Union</span>(<span class="t">Type</span>, <span class="t">::</span><span class="t">Nil</span>)}, {directives, <span class="t">Array</span>(<span class="t">Directive</span>)}, {selections, <span class="t">Array</span>(<span class="t">Selection</span>)}] <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">Object</span>.<span class="k">class</span>)</code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>An unnamed fragment, defined directly in the query with <code>... {  }</code></p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="VISITS">
+        <strong>VISITS</strong> = <code>[{<span class="n">:children</span>, [<span class="n">:type</span>, <span class="n">:directives</span>, <span class="n">:selections</span>]}] <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">Array</span>(<span class="t">Symbol</span>))</code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>An unnamed fragment, defined directly in the query with <code>... {  }</code></p>
+      </dd>
+      
+    
+  </dl>
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28type%2Cdirectives%2Cselections%2C%2A%2Arest%29-class-method" class="signature"><strong>.new</strong>(type, directives, selections, **rest)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#values-class-method" class="signature"><strong>.values</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%28other%3AGraphQL%3A%3ALanguage%3A%3AInlineFragment%29-instance-method" class="signature"><strong>#==</strong>(other : GraphQL::Language::InlineFragment)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#__typename_field%28nil%2Ccontext%29-instance-method" class="signature"><strong>#__typename_field</strong>(nil, context)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clone-instance-method" class="signature"><strong>#clone</strong></a>
+        
+          <div class="summary"><p>Returns a copy of <code>self</code> with all instance variables cloned.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#directives%3AArray%28Directive%29-instance-method" class="signature"><strong>#directives</strong> : Array(Directive)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#directives%3D%28directives%3AArray%28Directive%29%29-instance-method" class="signature"><strong>#directives=</strong>(directives : Array(Directive))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_children%28%26block%3ACLTK%3A%3AASTNode-%3E_%29-instance-method" class="signature"><strong>#map_children</strong>(&block : CLTK::ASTNode -> _)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name : String, arguments, context)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#selections%3AArray%28Selection%29-instance-method" class="signature"><strong>#selections</strong> : Array(Selection)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#selections%3D%28selections%3AArray%28Selection%29%29-instance-method" class="signature"><strong>#selections=</strong>(selections : Array(Selection))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type%3A%3A%3AUnion%28Type%2CNil%29-instance-method" class="signature"><strong>#type</strong> : ::Union(Type, Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type%3D%28type%3A%3A%3AUnion%28Type%2CNil%29%29-instance-method" class="signature"><strong>#type=</strong>(type : ::Union(Type, Nil))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#values-instance-method" class="signature"><strong>#values</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2C%26block%3ACLTK%3A%3AASTNode-%3ECLTK%3A%3AASTNode%29-instance-method" class="signature"><strong>#visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, &block : CLTK::ASTNode -> CLTK::ASTNode)</a>
+        
+          <div class="summary"><p>Recursively apply the given block to each node that gets visited with the given key which nodes get traverses for a given key can be set on a class via the: <code>traverse :name, :child_1, :child2</code> macro.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2Cblock%3DProc%28CLTK%3A%3AASTNode%2CCLTK%3A%3AASTNode%29.newdo%0Aend%29-instance-method" class="signature"><strong>#visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>).<span class="k">new</span> <span class="k">do</span>
+<span class="k">end</span>)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Macro Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#accessors%28name%2Ctype%2Cdefault%29-macro" class="signature"><strong>accessors</strong>(name, type, default)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#field%28name%29-macro" class="signature"><strong>field</strong>(name)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#field%28name%2Cdescription%2Cargs%2Ctypename%29-macro" class="signature"><strong>field</strong>(name, description, args, typename)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inject-macro" class="signature"><strong>inject</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#injection-macro" class="signature"><strong>injection</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#traverse%28name%2C%2Avalues%29-macro" class="signature"><strong>traverse</strong>(name, *values)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#values%28args%29-macro" class="signature"><strong>values</strong>(args)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></code></h3>
+  
+  
+    <a href="../../GraphQL/Language/AbstractNode.html#%3D%3D%28other%3AGraphQL%3A%3ALanguage%3A%3AAbstractNode%29-instance-method" class="tooltip">
+      <span>==(other : GraphQL::Language::AbstractNode)</span>
+    ==</a>, 
+    
+  
+    <a href="../../GraphQL/Language/AbstractNode.html#__typename_field%28nil%2Ccontext%29-instance-method" class="tooltip">
+      <span>__typename_field(nil, context)</span>
+    __typename_field</a>, 
+    
+  
+    <a href="../../GraphQL/Language/AbstractNode.html#clone-instance-method" class="tooltip">
+      <span>clone</span>
+    clone</a>, 
+    
+  
+    <a href="../../GraphQL/Language/AbstractNode.html#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method" class="tooltip">
+      <span>resolve_field(name : String, arguments, context)</span>
+    resolve_field</a>, 
+    
+  
+    <a href="../../GraphQL/Language/AbstractNode.html#values-instance-method" class="tooltip">
+      <span>values</span>
+    values</a>, 
+    
+  
+    <a href="../../GraphQL/Language/AbstractNode.html#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2C%26block%3ACLTK%3A%3AASTNode-%3ECLTK%3A%3AASTNode%29-instance-method" class="tooltip">
+      <span>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, &block : CLTK::ASTNode -> CLTK::ASTNode)<br/>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>).<span class="k">new</span> <span class="k">do</span>
+<span class="k">end</span>)</span>
+    visit</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></code></h3>
+  
+  
+    <a href="../../GraphQL/Language/AbstractNode.html#new-class-method" class="tooltip">
+      <span>new</span>
+    new</a>
+    
+  
+
+
+    
+
+  <h3>Class methods inherited from class <code><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></code></h3>
+  
+  
+    <a href="../../GraphQL/Language/AbstractNode.html#values-class-method" class="tooltip">
+      <span>values</span>
+    values</a>
+    
+  
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../GraphQL/ObjectType.html">GraphQL::ObjectType</a></code></h3>
+  
+  
+    <a href="../../GraphQL/ObjectType.html#graphql_type-instance-method" class="tooltip">
+      <span>graphql_type</span>
+    graphql_type</a>, 
+    
+  
+    <a href="../../GraphQL/ObjectType.html#resolve_field%28name%2Carguments%2Ccontext%29-instance-method" class="tooltip">
+      <span>resolve_field(name, arguments, context)</span>
+    resolve_field</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../Object.html">Object</a></code></h3>
+  
+  
+    <a href="../../Object.html#debug-instance-method" class="tooltip">
+      <span>debug</span>
+    debug</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new&#40;type,directives,selections,**rest&#41;-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(type, directives, selections, **rest)
+
+        <a class="method-permalink" href="#new%28type%2Cdirectives%2Cselections%2C%2A%2Arest%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="values-class-method">
+      <div class="signature">
+        
+        def self.<strong>values</strong>
+
+        <a class="method-permalink" href="#values-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="&#61;&#61;&#40;other:GraphQL::Language::InlineFragment&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(other : <a href="../../GraphQL/Language/InlineFragment.html">GraphQL::Language::InlineFragment</a>)
+
+        <a class="method-permalink" href="#%3D%3D%28other%3AGraphQL%3A%3ALanguage%3A%3AInlineFragment%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="__typename_field&#40;nil,context&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>__typename_field</strong>(nil, context)
+
+        <a class="method-permalink" href="#__typename_field%28nil%2Ccontext%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clone-instance-method">
+      <div class="signature">
+        
+        def <strong>clone</strong>
+
+        <a class="method-permalink" href="#clone-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns a copy of <code>self</code> with all instance variables cloned.</p></div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="directives:Array&#40;Directive&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>directives</strong> : Array(<a href="../../GraphQL/Language/Directive.html">Directive</a>)
+
+        <a class="method-permalink" href="#directives%3AArray%28Directive%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="directives&#61;&#40;directives:Array&#40;Directive&#41;&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>directives=</strong>(directives : Array(<a href="../../GraphQL/Language/Directive.html">Directive</a>))
+
+        <a class="method-permalink" href="#directives%3D%28directives%3AArray%28Directive%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_children&#40;&amp;block:CLTK::ASTNode-&gt;_&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>map_children</strong>(&block : CLTK::ASTNode -> _)
+
+        <a class="method-permalink" href="#map_children%28%26block%3ACLTK%3A%3AASTNode-%3E_%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="resolve_field&#40;name:String,arguments,context&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>resolve_field</strong>(name : String, arguments, context)
+
+        <a class="method-permalink" href="#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="selections:Array&#40;Selection&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>selections</strong> : Array(<a href="../../GraphQL/Language/Selection.html">Selection</a>)
+
+        <a class="method-permalink" href="#selections%3AArray%28Selection%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="selections&#61;&#40;selections:Array&#40;Selection&#41;&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>selections=</strong>(selections : Array(<a href="../../GraphQL/Language/Selection.html">Selection</a>))
+
+        <a class="method-permalink" href="#selections%3D%28selections%3AArray%28Selection%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type:::Union&#40;Type,Nil&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>type</strong> : ::Union(<a href="../../GraphQL/Language/Type.html">Type</a>, Nil)
+
+        <a class="method-permalink" href="#type%3A%3A%3AUnion%28Type%2CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type&#61;&#40;type:::Union&#40;Type,Nil&#41;&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>type=</strong>(type : ::Union(<a href="../../GraphQL/Language/Type.html">Type</a>, Nil))
+
+        <a class="method-permalink" href="#type%3D%28type%3A%3A%3AUnion%28Type%2CNil%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="values-instance-method">
+      <div class="signature">
+        
+        def <strong>values</strong>
+
+        <a class="method-permalink" href="#values-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit&#40;name,visited_ids&#61;&#91;&#93;ofUInt64,&amp;block:CLTK::ASTNode-&gt;CLTK::ASTNode&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, &block : CLTK::ASTNode -> CLTK::ASTNode)
+
+        <a class="method-permalink" href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2C%26block%3ACLTK%3A%3AASTNode-%3ECLTK%3A%3AASTNode%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Recursively apply the given block to each
+node that gets visited with the given key
+which nodes get traverses for a given key
+can be set on a class via the:
+<code>traverse :name, :child_1, :child2</code>
+macro. If no children are defined for a
+given traversal path name the block is invoked
+only with self.</p></div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="visit&#40;name,visited_ids&#61;&#91;&#93;ofUInt64,block&#61;Proc&#40;CLTK::ASTNode,CLTK::ASTNode&#41;.newdo
+end&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>).<span class="k">new</span> <span class="k">do</span>
+<span class="k">end</span>)
+
+        <a class="method-permalink" href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2Cblock%3DProc%28CLTK%3A%3AASTNode%2CCLTK%3A%3AASTNode%29.newdo%0Aend%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Macro Detail</h2>
+  
+    <div class="entry-detail" id="accessors&#40;name,type,default&#41;-macro">
+      <div class="signature">
+        
+        macro <strong>accessors</strong>(name, type, default)
+
+        <a class="method-permalink" href="#accessors%28name%2Ctype%2Cdefault%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="field&#40;name&#41;-macro">
+      <div class="signature">
+        
+        macro <strong>field</strong>(name)
+
+        <a class="method-permalink" href="#field%28name%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="field&#40;name,description,args,typename&#41;-macro">
+      <div class="signature">
+        
+        macro <strong>field</strong>(name, description, args, typename)
+
+        <a class="method-permalink" href="#field%28name%2Cdescription%2Cargs%2Ctypename%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inject-macro">
+      <div class="signature">
+        
+        macro <strong>inject</strong>
+
+        <a class="method-permalink" href="#inject-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="injection-macro">
+      <div class="signature">
+        
+        macro <strong>injection</strong>
+
+        <a class="method-permalink" href="#injection-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="traverse&#40;name,*values&#41;-macro">
+      <div class="signature">
+        
+        macro <strong>traverse</strong>(name, *values)
+
+        <a class="method-permalink" href="#traverse%28name%2C%2Avalues%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="values&#40;args&#41;-macro">
+      <div class="signature">
+        
+        macro <strong>values</strong>(args)
+
+        <a class="method-permalink" href="#values%28args%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+</div>
+
+</body>
+</html>

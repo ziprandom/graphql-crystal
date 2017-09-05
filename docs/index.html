@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="js/doc.js"></script>
+  <title>README - github.com/ziprandom/graphql-crystal</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li class="current"><a href="index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
+      <a href="CLTK.html">CLTK</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/CLTK/TokenValue" data-name="cltk::tokenvalue">
+      <a href="CLTK/TokenValue.html">TokenValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/CLTK/Type" data-name="cltk::type">
+      <a href="CLTK/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL" data-name="graphql">
+      <a href="GraphQL.html">GraphQL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directive" data-name="graphql::directive">
+      <a href="GraphQL/Directive.html">Directive</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directives" data-name="graphql::directives">
+      <a href="GraphQL/Directives.html">Directives</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directives/IncludeDirective" data-name="graphql::directives::includedirective">
+      <a href="GraphQL/Directives/IncludeDirective.html">IncludeDirective</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directives/IsDeprecated" data-name="graphql::directives::isdeprecated">
+      <a href="GraphQL/Directives/IsDeprecated.html">IsDeprecated</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Directives/SkipDirective" data-name="graphql::directives::skipdirective">
+      <a href="GraphQL/Directives/SkipDirective.html">SkipDirective</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Error" data-name="graphql::error">
+      <a href="GraphQL/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language" data-name="graphql::language">
+      <a href="GraphQL/Language.html">Language</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/AbstractNode" data-name="graphql::language::abstractnode">
+      <a href="GraphQL/Language/AbstractNode.html">AbstractNode</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/AEnum" data-name="graphql::language::aenum">
+      <a href="GraphQL/Language/AEnum.html">AEnum</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Argument" data-name="graphql::language::argument">
+      <a href="GraphQL/Language/Argument.html">Argument</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
+      <a href="GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Directive" data-name="graphql::language::directive">
+      <a href="GraphQL/Language/Directive.html">Directive</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/DirectiveDefinition" data-name="graphql::language::directivedefinition">
+      <a href="GraphQL/Language/DirectiveDefinition.html">DirectiveDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Document" data-name="graphql::language::document">
+      <a href="GraphQL/Language/Document.html">Document</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/EnumTypeDefinition" data-name="graphql::language::enumtypedefinition">
+      <a href="GraphQL/Language/EnumTypeDefinition.html">EnumTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/EnumValueDefinition" data-name="graphql::language::enumvaluedefinition">
+      <a href="GraphQL/Language/EnumValueDefinition.html">EnumValueDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Field" data-name="graphql::language::field">
+      <a href="GraphQL/Language/Field.html">Field</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/FieldDefinition" data-name="graphql::language::fielddefinition">
+      <a href="GraphQL/Language/FieldDefinition.html">FieldDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/FragmentDefinition" data-name="graphql::language::fragmentdefinition">
+      <a href="GraphQL/Language/FragmentDefinition.html">FragmentDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/FragmentSpread" data-name="graphql::language::fragmentspread">
+      <a href="GraphQL/Language/FragmentSpread.html">FragmentSpread</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/FValue" data-name="graphql::language::fvalue">
+      <a href="GraphQL/Language/FValue.html">FValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Generation" data-name="graphql::language::generation">
+      <a href="GraphQL/Language/Generation.html">Generation</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InlineFragment" data-name="graphql::language::inlinefragment">
+      <a href="GraphQL/Language/InlineFragment.html">InlineFragment</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InputObject" data-name="graphql::language::inputobject">
+      <a href="GraphQL/Language/InputObject.html">InputObject</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InputObjectTypeDefinition" data-name="graphql::language::inputobjecttypedefinition">
+      <a href="GraphQL/Language/InputObjectTypeDefinition.html">InputObjectTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InputValueDefinition" data-name="graphql::language::inputvaluedefinition">
+      <a href="GraphQL/Language/InputValueDefinition.html">InputValueDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/InterfaceTypeDefinition" data-name="graphql::language::interfacetypedefinition">
+      <a href="GraphQL/Language/InterfaceTypeDefinition.html">InterfaceTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Lexer" data-name="graphql::language::lexer">
+      <a href="GraphQL/Language/Lexer.html">Lexer</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
+      <a href="GraphQL/Language/ListType.html">ListType</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/NameOnlyNode" data-name="graphql::language::nameonlynode">
+      <a href="GraphQL/Language/NameOnlyNode.html">NameOnlyNode</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/NonNullType" data-name="graphql::language::nonnulltype">
+      <a href="GraphQL/Language/NonNullType.html">NonNullType</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/NullValue" data-name="graphql::language::nullvalue">
+      <a href="GraphQL/Language/NullValue.html">NullValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ObjectTypeDefinition" data-name="graphql::language::objecttypedefinition">
+      <a href="GraphQL/Language/ObjectTypeDefinition.html">ObjectTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/OperationDefinition" data-name="graphql::language::operationdefinition">
+      <a href="GraphQL/Language/OperationDefinition.html">OperationDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Parser" data-name="graphql::language::parser">
+      <a href="GraphQL/Language/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
+      <a href="GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/SchemaDefinition" data-name="graphql::language::schemadefinition">
+      <a href="GraphQL/Language/SchemaDefinition.html">SchemaDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
+      <a href="GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Type" data-name="graphql::language::type">
+      <a href="GraphQL/Language/Type.html">Type</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/TypeDefinition" data-name="graphql::language::typedefinition">
+      <a href="GraphQL/Language/TypeDefinition.html">TypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/TypeName" data-name="graphql::language::typename">
+      <a href="GraphQL/Language/TypeName.html">TypeName</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/UnionTypeDefinition" data-name="graphql::language::uniontypedefinition">
+      <a href="GraphQL/Language/UnionTypeDefinition.html">UnionTypeDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/VariableDefinition" data-name="graphql::language::variabledefinition">
+      <a href="GraphQL/Language/VariableDefinition.html">VariableDefinition</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/VariableIdentifier" data-name="graphql::language::variableidentifier">
+      <a href="GraphQL/Language/VariableIdentifier.html">VariableIdentifier</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/WrapperType" data-name="graphql::language::wrappertype">
+      <a href="GraphQL/Language/WrapperType.html">WrapperType</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/ObjectType" data-name="graphql::objecttype">
+      <a href="GraphQL/ObjectType.html">ObjectType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema" data-name="graphql::schema">
+      <a href="GraphQL/Schema.html">Schema</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Context" data-name="graphql::schema::context">
+      <a href="GraphQL/Schema/Context.html">Context</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/FragmentResolver" data-name="graphql::schema::fragmentresolver">
+      <a href="GraphQL/Schema/FragmentResolver.html">FragmentResolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Introspection" data-name="graphql::schema::introspection">
+      <a href="GraphQL/Schema/Introspection.html">Introspection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Middleware" data-name="graphql::schema::middleware">
+      <a href="GraphQL/Schema/Middleware.html">Middleware</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Middleware/Proc" data-name="graphql::schema::middleware::proc">
+      <a href="GraphQL/Schema/Middleware/Proc.html">Proc</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/QueryReturnType" data-name="graphql::schema::queryreturntype">
+      <a href="GraphQL/Schema/QueryReturnType.html">QueryReturnType</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolveCBReturnType" data-name="graphql::schema::resolvecbreturntype">
+      <a href="GraphQL/Schema/ResolveCBReturnType.html">ResolveCBReturnType</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
+      <a href="GraphQL/Schema/ResolverObject.html">ResolverObject</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ReturnType" data-name="graphql::schema::returntype">
+      <a href="GraphQL/Schema/ReturnType.html">ReturnType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema" data-name="graphql::schema::schema">
+      <a href="GraphQL/Schema/Schema.html">Schema</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/Args" data-name="graphql::schema::schema::args">
+      <a href="GraphQL/Schema/Schema/Args.html">Args</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Validation" data-name="graphql::schema::validation">
+      <a href="GraphQL/Schema/Validation.html">Validation</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/VariableResolver" data-name="graphql::schema::variableresolver">
+      <a href="GraphQL/Schema/VariableResolver.html">VariableResolver</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/TypeValidation" data-name="graphql::typevalidation">
+      <a href="GraphQL/TypeValidation.html">TypeValidation</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/Hash" data-name="hash(k, v)">
+      <a href="Hash.html">Hash</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/NamedTuple" data-name="namedtuple(**t)">
+      <a href="NamedTuple.html">NamedTuple</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/Object" data-name="object">
+      <a href="Object.html">Object</a>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1>graphql-crystal <a href="https://travis-ci.org/ziprandom/graphql-crystal" target="_blank"><img src="https://api.travis-ci.org/ziprandom/graphql-crystal.svg" alt="Build Status"/></a></h1>
+
+<p>A implementation of <a href="http://graphql.org/learn/" target="_blank">GraphQL</a> for the crystal programming language inspired by <a href="https://github.com/rmosolgo/graphql-ruby" target="_blank">graphql-ruby</a> & <a href="https://github.com/playlyfe/go-graphql" target="_blank">go-graphql</a>.</p>
+
+<p>The library is in beta state atm. Should already be usable but expect to find bugs (and open issues about them). pull-requests, suggestions & criticism are very welcome!</p>
+
+<h2>Installation</h2>
+
+<p>Add this to your application's <code>shard.yml</code>:</p>
+
+<pre><code class='language-yaml'>dependencies:
+  graphql-crystal:
+    github: ziprandom/graphql-crystal</code></pre>
+
+<h2>Usage</h2>
+
+<p>In order to create a GraphQL Schema and execute queries and mutations against it three steps have to be performed:</p>
+
+<ol><li>define a GraphQL Schema in the <a href="http://graphql.org/learn/schema/" target="_blank">graphql schema definition language</a></li><li>reopen existing domain models to act as graphql object types by including the <code></code><code><a href="GraphQL/ObjectType.html">GraphQL::ObjectType</a></code><code></code> and defining accessable fields.</li><li>define the resolve callbacks for the root queries and mutations.</li></ol>
+
+<h3>Example</h3>
+
+<p>All the following code can be found in <a href="example/simple_blog_example.cr" target="_blank">example/simple_blog_example.cr</a>.</p>
+
+<p>We will assume a very simple domain model for a web application that gives us some users with different user roles, posts and comments:</p>
+
+<pre><code class='language-crystal'><span class="k">require</span> <span class="s">&quot;graphql-crystal&quot;</span>
+<span class="k">require</span> <span class="s">&quot;secure_random&quot;</span>
+
+<span class="k">enum</span> <span class="t">UserRole</span>
+  <span class="t">Author</span>
+  <span class="t">Reader</span>
+  <span class="t">Admin</span>
+<span class="k">end</span>
+
+<span class="c">#</span>
+<span class="c"># Lets create a simple Blog Scenario where there exist Users, Posts and Comments</span>
+<span class="c">#</span>
+<span class="c"># First we define 4 classes to represent our Model: User, Content, Post &lt; Content &amp; Comment &lt; Content</span>
+<span class="c">#</span>
+
+<span class="k">class</span> <span class="t">User</span>
+  getter <span class="n">:id</span>, <span class="n">:first_name</span>, <span class="n">:last_name</span>, <span class="n">:role</span>
+  <span class="k">def</span> <span class="m">initialize</span>(
+    @id : <span class="t">String</span>, @first_name : <span class="t">String</span>,
+    @last_name : <span class="t">String</span>, @role : <span class="t">UserRole</span>); <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">abstract</span> <span class="k">class</span> <span class="t">Content</span>
+  <span class="c"># due to https://github.com/crystal-lang/crystal/issues/4580</span>
+  <span class="c"># we have to include the ObjectType module at the first definition of Content</span>
+  <span class="c"># in order for the field macro to work on child classes. Once this is fixed the</span>
+  <span class="c"># arbitrary classes can declared as GraphQL Object types easily via monkey Patching</span>
+  <span class="k">include</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">ObjectType</span>
+  @id: <span class="t">String</span>
+  @body: <span class="t">String</span>
+  @author: <span class="t">User</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@id, @body, @author); <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="t">Post</span> <span class="o"><</span> <span class="t">Content</span>
+  getter <span class="n">:id</span>, <span class="n">:author</span>, <span class="n">:title</span>, <span class="n">:body</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@id : <span class="t">String</span>, @author : <span class="t">User</span>,
+    @title : <span class="t">String</span>, @body : <span class="t">String</span>); <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="t">Comment</span> <span class="o"><</span> <span class="t">Content</span>
+  getter <span class="n">:id</span>, <span class="n">:author</span>, <span class="n">:post</span>, <span class="n">:body</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@id : <span class="t">String</span>, @author : <span class="t">User</span>,
+    @post : <span class="t">Post</span>, @body : <span class="t">String</span>); <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c">#</span>
+<span class="c"># and create some fixtures to work with</span>
+<span class="c">#</span>
+<span class="t">USERS</span> <span class="o">=</span> [
+  {
+   id: <span class="t">SecureRandom</span>.uuid, first_name: <span class="s">&quot;Bob&quot;</span>,
+   last_name: <span class="s">&quot;Bobson&quot;</span>, role: <span class="t">UserRole</span><span class="t">::</span><span class="t">Author</span>
+  },{
+   id: <span class="t">SecureRandom</span>.uuid, first_name: <span class="s">&quot;Alice&quot;</span>,
+   last_name: <span class="s">&quot;Alicen&quot;</span>, role: <span class="t">UserRole</span><span class="t">::</span><span class="t">Admin</span>
+  },{
+    id: <span class="t">SecureRandom</span>.uuid, first_name: <span class="s">&quot;Grace&quot;</span>,
+    last_name: <span class="s">&quot;Graham&quot;</span>, role: <span class="t">UserRole</span><span class="t">::</span><span class="t">Reader</span>
+  }
+].map { <span class="o">|</span>args<span class="o">|</span> <span class="t">User</span>.<span class="k">new</span> <span class="o">**</span>args }
+
+<span class="t">POSTS</span> <span class="o">=</span> [
+  {
+    id: <span class="t">SecureRandom</span>.uuid, author: <span class="t">USERS</span>[<span class="n">0</span>],
+    title: <span class="s">&quot;GraphQL for Dummies&quot;</span>, body: <span class="s">&quot;GraphQL is pretty simple.&quot;</span>
+  },{
+    id: <span class="t">SecureRandom</span>.uuid, author: <span class="t">USERS</span>[<span class="n">0</span>],
+    title: <span class="s">&quot;REST vs. GraphQL&quot;</span>, body: <span class="s">&quot;GraphQL has certain advantages over REST.&quot;</span>
+  },{
+    id: <span class="t">SecureRandom</span>.uuid, author: <span class="t">USERS</span>[<span class="n">1</span>], title: <span class="s">&quot;The Crystal Programming Language &quot;</span>,
+    body: <span class="s">&quot;The nicest syntax on the planet now comes with typesafety, performance and parallelisation support&#40;ójala&#33;&#41;&quot;</span>
+  }
+].map { <span class="o">|</span>args<span class="o">|</span> <span class="t">Post</span>.<span class="k">new</span> <span class="o">**</span>args }
+
+<span class="t">COMMENTS</span> <span class="o">=</span> [
+  {
+    id: <span class="t">SecureRandom</span>.uuid, author: <span class="t">USERS</span>[<span class="n">2</span>],
+    post: <span class="t">POSTS</span>[<span class="n">1</span>], body: <span class="s">&quot;I like rest more&#33;&quot;</span>
+  },{
+    id: <span class="t">SecureRandom</span>.uuid, author: <span class="t">USERS</span>[<span class="n">2</span>],
+    post: <span class="t">POSTS</span>[<span class="n">1</span>], body: <span class="s">&quot;But think of all the possibilities with GraphQL&#33;&quot;</span>
+  },{
+    id: <span class="t">SecureRandom</span>.uuid, author: <span class="t">USERS</span>[<span class="n">1</span>],
+    post: <span class="t">POSTS</span>[<span class="n">2</span>], body: <span class="s">&quot;When will I finally have static compilation support?&quot;</span>
+  }
+].map { <span class="o">|</span>args<span class="o">|</span> <span class="t">Comment</span>.<span class="k">new</span> <span class="o">**</span>args }</code></pre>
+
+<p>Based on this data we define a graphql schema using the schema definition language:</p>
+
+<pre><code class='language-crystal'>graphql_schema_definition <span class="o">=</span> <span class="s">&lt;&lt;-graphql_schema
+  schema &#123;
+    query: QueryType,
+    mutation: MutationType
+  &#125;
+
+  type QueryType &#123;
+    # retrieve a user by id
+    user&#40;id: ID&#33;&#41;: User
+    # retrieve a post by id
+    post&#40;id: ID&#33;&#41;: Post
+    # get all posts
+    posts: &#91;Post&#33;&#93;
+  &#125;
+
+  type MutationType &#123;
+    # create a new post
+    post&#40;payload: PostInput&#33;&#41;: Post
+    # create a new comment
+    comment&#40;payload: CommentInput&#33;&#41;: Comment
+  &#125;
+
+  # Input format for
+  # new Posts
+  input PostInput &#123;
+    # title for the new post
+    title: String&#33;
+    # body for the new post
+    body: String&#33;
+    # id of the posts author
+    authorId: ID&#33;
+  &#125;
+
+  # Input format for
+  # new Comments
+  input CommentInput &#123;
+    # id of the post on
+    # which is being commented
+    postId: ID&#33;
+    # id of the comments author
+    authorId: ID&#33;
+    # the comments text
+    body: String&#33;
+  &#125;
+
+  # Possible roles
+  # for users in the system
+  enum UserRole &#123;
+    # A user with
+    # readonly access to
+    # the Content of the system
+    Reader
+    # A user with read
+    # &amp; write access
+    Author
+    # A administrator
+    # of the system
+    Admin
+  &#125;
+
+  # Types identified by a
+  # unique ID
+  interface UniqueId &#123;
+    # the unique idenfifier
+    # for this entity
+    id: ID&#33;
+  &#125;
+
+  # A User
+  type User implements UniqueId &#123;
+    # users first name
+    firstName: String&#33;
+    # users last name
+    lastName: String&#33;
+    # full name string for the user
+    fullName: String&#33;
+    # users role
+    role: UserRole&#33;
+    # posts published
+    # by this user
+    posts: &#91;Post&#33;&#93;
+    # total number of posts
+    # published by this user
+    postsCount: Int&#33;
+  &#125;
+
+  # Text content
+  interface Content &#123;
+    # text body of this entity
+    body: String&#33;
+    # author of this entity
+    author: User&#33;
+  &#125;
+
+  # A post in the system
+  type Post implements UniqueId, Content &#123;
+    # title of this post
+    title: String&#33;
+  &#125;
+
+  # A comment on a post
+  type Comment implements UniqueId, Content &#123;
+    # post on which this
+    # comment was made
+    post: Post&#33;
+  &#125;
+graphql_schema</span></code></pre>
+
+<p>and instantiate a <code></code><code><a href="GraphQL/Schema.html">GraphQL::Schema</a></code><code></code> with it using the <code></code><code>.from_schema</code><code></code> class method:</p>
+
+<pre><code class='language-crystal'>schema <span class="o">=</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">Schema</span>.from_schema(graphql_schema_definition)</code></pre>
+
+<p>next we reopen our domain model classes and enhance them to act as GraphQL Objects:</p>
+
+<pre><code class='language-crystal'><span class="k">abstract</span> <span class="k">class</span> <span class="t">Content</span>
+  <span class="c"># this doesn&#39;t work here atm. due to</span>
+  <span class="c"># https://github.com/crystal-lang/crystal/issues/4580</span>
+  <span class="c"># so we had to include the module at the first</span>
+  <span class="c"># declaration of the Content class above</span>
+  <span class="c"># include GraphQL::ObjectType</span>
+  field <span class="n">:id</span>
+  field <span class="n">:body</span>
+  field <span class="n">:author</span>
+<span class="k">end</span>
+
+<span class="c"># you see it works nicely with inheritance</span>
+<span class="k">class</span> <span class="t">Post</span>
+  field <span class="n">:title</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="t">Comment</span>
+  field <span class="n">:post</span>
+<span class="k">end</span>
+
+<span class="c">#</span>
+<span class="c"># Here we make use of custom callbacks</span>
+<span class="c"># to convert snake_case to camelCase</span>
+<span class="c"># and add virtual accessors</span>
+<span class="c">#</span>
+<span class="k">class</span> <span class="t">User</span>
+  <span class="k">include</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">ObjectType</span>
+  field <span class="n">:firstName</span> { first_name }
+  field <span class="n">:lastName</span> { last_name }
+  field <span class="n">:fullName</span> { <span class="s">&quot;</span><span class="i">#{</span></span>@first_name<span class="s"><span class="i">}</span> </span><span class="i">#{</span></span>@last_name<span class="s"><span class="i">}</span>&quot;</span> }
+  field <span class="n">:posts</span> { <span class="t">POSTS</span>.select <span class="o">&</span>.author.<span class="o">==</span>(<span class="k">self</span>)}
+  field <span class="n">:postsCount</span> { <span class="t">POSTS</span>.select( <span class="o">&</span>.author.<span class="o">==</span>(<span class="k">self</span>) ).size }
+  field <span class="n">:role</span>
+<span class="k">end</span></code></pre>
+
+<p>in the last step we define the entrypoints of the schema by providing the logic for the RootQuery and RootMutation Fields:</p>
+
+<pre><code class='language-crystal'>schema.resolve <span class="k">do</span>
+
+  query <span class="s">&quot;posts&quot;</span> { <span class="t">POSTS</span> }
+
+  query <span class="s">&quot;user&quot;</span> <span class="k">do</span> <span class="o">|</span>args<span class="o">|</span>
+    <span class="t">USERS</span>.find( <span class="o">&</span>.id.<span class="o">==</span>(args[<span class="s">&quot;id&quot;</span>]) )
+  <span class="k">end</span>
+
+  query <span class="s">&quot;post&quot;</span> <span class="k">do</span> <span class="o">|</span>args<span class="o">|</span>
+    <span class="t">POSTS</span>.find( <span class="o">&</span>.id.<span class="o">==</span>(args[<span class="s">&quot;id&quot;</span>]) )
+  <span class="k">end</span>
+
+  mutation <span class="s">&quot;post&quot;</span> <span class="k">do</span> <span class="o">|</span>args<span class="o">|</span>
+    payload <span class="o">=</span> args[<span class="s">&quot;payload&quot;</span>].<span class="k">as</span>(<span class="t">Hash</span>)
+
+    author <span class="o">=</span> <span class="t">USERS</span>.find( <span class="o">&</span>.id.<span class="o">==</span>(payload[<span class="s">&quot;authorId&quot;</span>]) )
+    raise <span class="s">&quot;authorId doesn&#39;t exist&#33;&quot;</span> <span class="k">unless</span> author
+
+    post <span class="o">=</span> <span class="t">Post</span>.<span class="k">new</span>(
+      id: <span class="t">SecureRandom</span>.uuid, author: author,
+      title: payload[<span class="s">&quot;title&quot;</span>].<span class="k">as</span>(<span class="t">String</span>), body: payload[<span class="s">&quot;body&quot;</span>].<span class="k">as</span>(<span class="t">String</span>)
+    )
+
+    <span class="t">POSTS</span> <span class="o"><<</span> post
+    post
+  <span class="k">end</span>
+
+  mutation <span class="s">&quot;comment&quot;</span> <span class="k">do</span> <span class="o">|</span>args<span class="o">|</span>
+    payload <span class="o">=</span> args[<span class="s">&quot;payload&quot;</span>].<span class="k">as</span>(<span class="t">Hash</span>)
+
+    author <span class="o">=</span> <span class="t">USERS</span>.find( <span class="o">&</span>.id.<span class="o">==</span>(payload[<span class="s">&quot;authorId&quot;</span>]) )
+    raise <span class="s">&quot;authorId doesn&#39;t exist&#33;&quot;</span> <span class="k">unless</span> author
+
+    post <span class="o">=</span> <span class="t">POSTS</span>.find( <span class="o">&</span>.id.<span class="o">==</span>(payload[<span class="s">&quot;postId&quot;</span>]) )
+    raise <span class="s">&quot;postId doesn&#39;t exist&#33;&quot;</span> <span class="k">unless</span> post
+
+    comment <span class="o">=</span> <span class="t">Comment</span>.<span class="k">new</span>(
+      id: <span class="t">SecureRandom</span>.uuid, author: author,
+      post: post, body: payload[<span class="s">&quot;body&quot;</span>].<span class="k">as</span>(<span class="t">String</span>)
+    )
+    <span class="t">COMMENTS</span> <span class="o"><<</span> comment
+    comment
+  <span class="k">end</span>
+
+<span class="k">end</span></code></pre>
+
+<p>This is all we need to define a GraphQL Schema and serve our Application Data.</p>
+
+<p>Lets run an simple introspection query:</p>
+
+<pre><code class='language-crystal'>puts schema.execute(<span class="s">&quot;&#123; __type&#40;name: \&quot;Post\&quot;&#41; &#123; fields &#123; name description type &#123; kind &#125; &#125; &#125; &#125;&quot;</span>).to_pretty_json</code></pre>
+
+<pre><code class='language-json'>{
+  "data": {
+    "__type": {
+      "fields": [
+        {
+          "name": "author",
+          "description": "author of this entity",
+          "type": {
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "body",
+          "description": "text body of this entity",
+          "type": {
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "id",
+          "description": "the unique idenfifier for this entity",
+          "type": {
+            "kind": "NON_NULL"
+          }
+        },
+        {
+          "name": "title",
+          "description": "title of this post",
+          "type": {
+            "kind": "NON_NULL"
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+
+<p>And request all the posts:</p>
+
+<pre><code class='language-crystal'>puts schema.execute(<span class="s">&quot; &#123; posts &#123; id title body author &#123; fullName &#125; &#125; &#125; &quot;</span>).to_pretty_json</code></pre>
+
+<pre><code class='language-json'>{
+  "data": {
+    "posts": [
+      {
+        "id": "a9b55bc6-5bcc-4828-8527-542015af830e",
+        "title": "GraphQL for Dummies",
+        "body": "GraphQL is pretty simple.",
+        "author": {
+          "fullName": "Bob Bobson"
+        }
+      },
+      {
+        "id": "3f8d01af-41ff-417d-998b-f832ac5d31ee",
+        "title": "REST vs. GraphQL",
+        "body": "GraphQL has certain advantages over REST.",
+        "author": {
+          "fullName": "Bob Bobson"
+        }
+      },
+      {
+        "id": "b13cdefd-859a-4b13-ae34-cf7b3c60205e",
+        "title": "The Crystal Programming Language ",
+        "body": "The nicest syntax on the planet now comes with typesafety, performance and parallelisation support(ójala!)",
+        "author": {
+          "fullName": "Alice Alicen"
+        }
+      }
+    ]
+  }
+}</code></pre>
+
+<p>Next let's create a mutation to push a Post:</p>
+
+<pre><code class='language-crystal'>mutation_string <span class="o">=</span> <span class="s">&#37;&#123;
+  mutation CreatePost&#40;&#36;payload: PostInput&#41; &#123;
+    post&#40;payload: &#36;payload&#41; &#123;
+      id
+      title
+      body
+      author &#123;
+        postsCount
+      &#125;
+    &#125;
+  &#125;
+&#125;</span>
+
+mutation_args <span class="o">=</span> {
+  <span class="s">&quot;payload&quot;</span> => {
+    <span class="s">&quot;title&quot;</span> => <span class="s">&quot;Using Crystal 1.0 in Production&quot;</span>,
+    <span class="s">&quot;body&quot;</span> => <span class="s">&quot;would be the most wonderful thing&quot;</span>,
+    <span class="s">&quot;authorId&quot;</span> => <span class="t">USERS</span>.first.id
+  }
+}
+puts schema.execute(mutation_string, mutation_args).to_pretty_json</code></pre>
+
+<pre><code class='language-json'>{
+  "data": {
+    "post": {
+      "id": "a8ad1fea-2a07-4aef-a6f3-a9051cce15e8",
+      "title": "Using Crystal 1.0 in Production",
+      "body": "would be the most wonderful thing",
+      "author": {
+        "postsCount": 3
+      }
+    }
+  }
+}</code></pre>
+
+<h3>Custom Context Types</h3>
+
+<p>Custom context types can be used to pass additional information to the object type's field resolves. An example can be found <a href="spec/support/custom_context_schema.cr" target="_blank">here</a>.</p>
+
+<p>A Custom context type should inherit from <code><a href="GraphQL/Schema.html">GraphQL::Schema</a>::Context</code> and therefore be initialized with the served schema and a max_depth.</p>
+
+<pre><code class='language-cr'>GraphQL::Schema::Schema#execute(query_string, query_arguments = nil, context = GraphQL::Schema::Context.new(self, max_depth))</code></pre>
+
+<p>accepts a context type as its third argument.</p>
+
+<p>Field Resolver Callbacks on Object Types (including top level Query & Mutation Type) get called with the context as their third argument:</p>
+
+<pre><code class='language-cr'>field :users do |args, context|
+  # casting to your custom type
+  # is necessary here
+  context = context.as(CustomContext)
+  unless context.authenticated
+    raise "Authentication Error"
+  end
+  ...
+end</code></pre>
+
+<h2>Parser Performance</h2>
+
+<p>The parser has been implemented using my <a href="https://github.com/ziprandom/cltk" target="_blank">crystal language toolkit</a> and does not have optimal performance atm.</p>
+
+<p>To compare the performance of the Parser with <a href="https://github.com/graphql/libgraphqlparser" target="_blank">facebooks GraphQL parser</a> you need to have the library installed on your machine. Then run</p>
+
+<pre><code class='language-sh'>crystal build --release benchmark/compare_benchmarks.cr</code></pre>
+
+<h3>Recent Results:</h3>
+
+<pre><code class='language-sh'>c implementation from facebook:   47.29k ( 21.15µs) (± 0.70%)       fastest
+     cltk based implementation:  904.46  (  1.11ms) (± 0.96%) 52.28× slower</code></pre>
+
+<h2>Development</h2>
+
+<p>run tests with</p>
+
+<pre><code>crystal spec</code></pre>
+
+<h2>Contributing</h2>
+
+<ol><li>Fork it ( https://github.com/ziprandom/graphql-crystal/fork )</li><li>Create your feature branch (git checkout -b my-new-feature)</li><li>Commit your changes (git commit -am 'Add some feature')</li><li>Push to the branch (git push origin my-new-feature)</li><li>Create a new Pull Request</li></ol>
+
+<h2>Contributors</h2>
+
+<ul><li><a href="https://github.com/ziprandom" target="_blank">ziprandom</a>  - creator, maintainer</li></ul>
+</div>
+</body>
+</html>

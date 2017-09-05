@@ -5,6 +5,8 @@ A implementation of [GraphQL](http://graphql.org/learn/) for the crystal program
 
 The library is in beta state atm. Should already be usable but expect to find bugs (and open issues about them). pull-requests, suggestions & criticism are very welcome!
 
+Find the api docs [here](https://ziprandom.github.io/graphql-crystal/).
+
 ## Installation
 
 Add this to your application's `shard.yml`:
