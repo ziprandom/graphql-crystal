@@ -228,14 +228,14 @@ end
 
 Custom context types can be used to pass additional information to the object type's field resolves. An example can be found [here](spec/support/custom_context_schema.cr).
 
-A Custom context type should inherit from `GraphQL::Schema::Context` and therefore be initialized with the served schema and a max_depth.
+A custom context type should inherit from `GraphQL::Schema::Context` and therefore be initialized with the served schema and a max_depth.
 
 ```cr
 GraphQL::Schema::Schema#execute(query_string, query_arguments = nil, context = GraphQL::Schema::Context.new(self, max_depth))
 ```
 accepts a context type as its third argument.
 
-Field Resolver Callbacks on Object Types (including top level Query & Mutation Type) get called with the context as their third argument:
+Field resolver callbacks on object types (including top level query & mutation types) get called with the context as their second argument:
 ```cr
 field :users do |args, context|
   # casting to your custom type
