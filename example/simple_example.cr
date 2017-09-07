@@ -5,7 +5,7 @@ require "../src/graphql-crystal"
 # Given this simple domain model of users and posts
 #
 class User
-  property name, posts
+  property name
   def initialize(@name : String); end
 end
 

@@ -25,7 +25,7 @@ Given this simple domain model of users and posts
 
 ```cr
 class User
-  property name, posts
+  property name
   def initialize(@name : String); end
 end
 
@@ -85,7 +85,7 @@ Then we create the backing types by including the ```GraphQL::ObjectType``` and 
 class User
   include GraphQL::ObjectType
 
-# defaults to the method of
+  # defaults to the method of
   # the same name without block
   field :name
 
