@@ -1,29 +1,9 @@
-# graphql-crystal [![Build Status](https://api.travis-ci.org/ziprandom/graphql-crystal.svg)](https://travis-ci.org/ziprandom/graphql-crystal)
+require "spec"
+require "../src/graphql-crystal"
 
-
-An implementation of [GraphQL](http://graphql.org/learn/) for the crystal programming language inspired by [graphql-ruby](https://github.com/rmosolgo/graphql-ruby) & [go-graphql](https://github.com/playlyfe/go-graphql).
-
-The library is in beta state atm. Should already be usable but expect to find bugs (and open issues about them). pull-requests, suggestions & criticism are very welcome!
-
-Find the api docs [here](https://ziprandom.github.io/graphql-crystal/).
-
-## Installation
-
-Add this to your application's `shard.yml`:
-
-```yaml
-dependencies:
-  graphql-crystal:
-    github: ziprandom/graphql-crystal
-```
-
-## Usage
-
-Complete source [here](example/simple_example.cr).
-
-Given this simple domain model of users and posts
-
-```cr
+#
+# Given this simple domain model of users and posts
+#
 class User
   property name, posts
   def initialize(@name : String); end
@@ -36,11 +16,12 @@ end
 
 POSTS = [] of Post
 USERS = [User.new("Alice"), User.new("Bob")]
-```
 
-We can instantiate a GraphQL schema directly from a graphql schema definition string
+#
+# We can instantiate a GraphQL Schema Validator/Executor
+# by parsing from a graphql schema definition
+#
 
-```cr
 schema = GraphQL::Schema.from_schema(
   %{
     schema {
@@ -76,16 +57,15 @@ schema = GraphQL::Schema.from_schema(
     }
   }
 )
-```
 
-Then we create the backing types by including the ```GraphQL::ObjectType``` and defining the fields using the ```field``` macro
+#
+# Then we create the backing types by including the
+# GraphQL::ObjectType and defining the fields
 
-```cr
 # reopening User and Post class
 class User
   include GraphQL::ObjectType
-
-# defaults to the method of
+  # defaults to the method of
   # the same name without block
   field :name
 
@@ -100,14 +80,11 @@ class Post
   field :body
   field :author
 end
-```
 
-Now we define the top level queries
-
-```cr
-# extend self when using a module or a class (not an instance)
-# as the actual Object
-
+#
+# Then we define the top level queries
+# extending self to make the module
+# act as a singleton model
 module QueryType
   include GraphQL::ObjectType
   extend self
@@ -149,18 +126,13 @@ module MutationType
     ).last
   end
 end
-```
 
-Finally set the top level Object Types on the schema
-
-```
+#
+# finally set the top level Object Types
+# on the schema
 schema.query_resolver = QueryType
 schema.mutation_resolver = MutationType
-```
 
-And we are ready to run some tests
-
-```cr
 describe "my graphql schema" do
   it "does queries" do
     schema.execute("{ users { name posts } }")
@@ -222,65 +194,3 @@ describe "my graphql schema" do
                   })
   end
 end
-```
-
-### Custom Context Types
-
-Custom context types can be used to pass additional information to the object type's field resolves. An example can be found [here](spec/support/custom_context_schema.cr).
-
-A Custom context type should inherit from `GraphQL::Schema::Context` and therefore be initialized with the served schema and a max_depth.
-
-```cr
-GraphQL::Schema::Schema#execute(query_string, query_arguments = nil, context = GraphQL::Schema::Context.new(self, max_depth))
-```
-accepts a context type as its third argument.
-
-Field Resolver Callbacks on Object Types (including top level Query & Mutation Type) get called with the context as their third argument:
-```cr
-field :users do |args, context|
-  # casting to your custom type
-  # is necessary here
-  context = context.as(CustomContext)
-  unless context.authenticated
-    raise "Authentication Error"
-  end
-  ...
-end
-```
-
-## Parser Performance
-
-The parser has been implemented using my [crystal language toolkit](https://github.com/ziprandom/cltk) and does not have optimal performance atm.
-
-To compare the performance of the Parser with [facebooks GraphQL parser](https://github.com/graphql/libgraphqlparser) you need to have the library installed on your machine. Then run
-
-```sh
-crystal build --release benchmark/compare_benchmarks.cr
-```
-
-### Recent Results:
-
-```sh
-c implementation from facebook:   47.29k ( 21.15µs) (± 0.70%)       fastest
-     cltk based implementation:  904.46  (  1.11ms) (± 0.96%) 52.28× slower
-```
-
-## Development
-
-run tests with
-
-```
-crystal spec
-```
-
-## Contributing
-
-1. Fork it ( https://github.com/ziprandom/graphql-crystal/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create a new Pull Request
-
-## Contributors
-
-- [ziprandom](https://github.com/ziprandom)  - creator, maintainer
