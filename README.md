@@ -153,7 +153,7 @@ end
 
 Finally set the top level Object Types on the schema
 
-```
+```cr
 schema.query_resolver = QueryType
 schema.mutation_resolver = MutationType
 ```
