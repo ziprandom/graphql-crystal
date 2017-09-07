@@ -248,6 +248,10 @@ field :users do |args, context|
 end
 ```
 
+### Serving over HTTP
+
+For an example of how to serve a schema over a webserver([kemal](https://github.com/kemalcr/kemal)) see [kemal-graphql-example](https://github.com/ziprandom/kemal-graphql-example).
+
 ## Parser Performance
 
 The parser has been implemented using my [crystal language toolkit](https://github.com/ziprandom/cltk) and does not have optimal performance atm.
