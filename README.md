@@ -117,11 +117,7 @@ module QueryType
   end
 
   field :user do |args|
-    begin
-      USERS.find &.name.==( args["name"].as(String) )
-    rescue
-      raise "no user by that name"
-    end
+    USERS.find( &.name.==(args["name"].as(String)) ) || raise "no user by that name"
   end
 
   field :posts do
