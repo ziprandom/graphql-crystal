@@ -290,6 +290,11 @@
       
         <ul>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/AlibiType" data-name="graphql::schema::alibitype">
+      <a href="../../GraphQL/Schema/AlibiType.html">AlibiType</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Context" data-name="graphql::schema::context">
       <a href="../../GraphQL/Schema/Context.html">Context</a>
       
@@ -297,6 +302,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/FragmentResolver" data-name="graphql::schema::fragmentresolver">
       <a href="../../GraphQL/Schema/FragmentResolver.html">FragmentResolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/InputType" data-name="graphql::schema::inputtype">
+      <a href="../../GraphQL/Schema/InputType.html">InputType</a>
       
     </li>
   
@@ -380,11 +390,6 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/Hash" data-name="hash(k, v)">
-      <a href="../../Hash.html">Hash</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/NamedTuple" data-name="namedtuple(**t)">
       <a href="../../NamedTuple.html">NamedTuple</a>
       
@@ -428,12 +433,12 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/language/nodes.cr#L218" target="_blank">graphql-crystal/language/nodes.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/language/nodes.cr#L218" target="_blank">graphql-crystal/language/nodes.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_introspection.cr#L263" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_introspection.cr#L263" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
     
     <br/>
   
@@ -554,15 +559,10 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2C%26block%3ACLTK%3A%3AASTNode-%3ECLTK%3A%3AASTNode%29-instance-method" class="signature"><strong>#visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, &block : CLTK::ASTNode -> CLTK::ASTNode)</a>
+        <a href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2Cblock%3DProc%28CLTK%3A%3AASTNode%2CCLTK%3A%3AASTNode%7C%3A%3ANil%29.newdo%0Aend%29-instance-method" class="signature"><strong>#visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>).<span class="k">new</span> <span class="k">do</span>
+<span class="k">end</span>)</a>
         
           <div class="summary"><p>Recursively apply the given block to each node that gets visited with the given key which nodes get traverses for a given key can be set on a class via the: <code>traverse :name, :child_1, :child2</code> macro.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2Cblock%3DProc%28CLTK%3A%3AASTNode%2CCLTK%3A%3AASTNode%29.newdo%0Aend%29-instance-method" class="signature"><strong>#visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>).<span class="k">new</span> <span class="k">do</span>
-<span class="k">end</span>)</a>
         
       </li>
     
@@ -719,8 +719,8 @@
     values</a>, 
     
   
-    <a href="../../GraphQL/Language/TypeDefinition.html#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2C%26block%3ACLTK%3A%3AASTNode-%3ECLTK%3A%3AASTNode%29-instance-method" class="tooltip">
-      <span>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, &block : CLTK::ASTNode -> CLTK::ASTNode)<br/>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>).<span class="k">new</span> <span class="k">do</span>
+    <a href="../../GraphQL/Language/TypeDefinition.html#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2Cblock%3DProc%28CLTK%3A%3AASTNode%2CCLTK%3A%3AASTNode%7C%3A%3ANil%29.newdo%0Aend%29-instance-method" class="tooltip">
+      <span>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>).<span class="k">new</span> <span class="k">do</span>
 <span class="k">end</span>)</span>
     visit</a>
     
@@ -782,8 +782,8 @@
     values</a>, 
     
   
-    <a href="../../GraphQL/Language/AbstractNode.html#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2C%26block%3ACLTK%3A%3AASTNode-%3ECLTK%3A%3AASTNode%29-instance-method" class="tooltip">
-      <span>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, &block : CLTK::ASTNode -> CLTK::ASTNode)<br/>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>).<span class="k">new</span> <span class="k">do</span>
+    <a href="../../GraphQL/Language/AbstractNode.html#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2Cblock%3DProc%28CLTK%3A%3AASTNode%2CCLTK%3A%3AASTNode%7C%3A%3ANil%29.newdo%0Aend%29-instance-method" class="tooltip">
+      <span>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>).<span class="k">new</span> <span class="k">do</span>
 <span class="k">end</span>)</span>
     visit</a>
     
@@ -1091,12 +1091,14 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="visit&#40;name,visited_ids&#61;&#91;&#93;ofUInt64,&amp;block:CLTK::ASTNode-&gt;CLTK::ASTNode&#41;-instance-method">
+    <div class="entry-detail" id="visit&#40;name,visited_ids&#61;&#91;&#93;ofUInt64,block&#61;Proc&#40;CLTK::ASTNode,CLTK::ASTNode|::Nil&#41;.newdo
+end&#41;-instance-method">
       <div class="signature">
         
-        def <strong>visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, &block : CLTK::ASTNode -> CLTK::ASTNode)
+        def <strong>visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>).<span class="k">new</span> <span class="k">do</span>
+<span class="k">end</span>)
 
-        <a class="method-permalink" href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2C%26block%3ACLTK%3A%3AASTNode-%3ECLTK%3A%3AASTNode%29-instance-method">#</a>
+        <a class="method-permalink" href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2Cblock%3DProc%28CLTK%3A%3AASTNode%2CCLTK%3A%3AASTNode%7C%3A%3ANil%29.newdo%0Aend%29-instance-method">#</a>
       </div>
       
         <div class="doc"><p>Recursively apply the given block to each
@@ -1107,22 +1109,6 @@ can be set on a class via the:
 macro. If no children are defined for a
 given traversal path name the block is invoked
 only with self.</p></div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="visit&#40;name,visited_ids&#61;&#91;&#93;ofUInt64,block&#61;Proc&#40;CLTK::ASTNode,CLTK::ASTNode&#41;.newdo
-end&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>, <span class="t">CLTK</span><span class="t">::</span><span class="t">ASTNode</span>).<span class="k">new</span> <span class="k">do</span>
-<span class="k">end</span>)
-
-        <a class="method-permalink" href="#visit%28name%2Cvisited_ids%3D%5B%5DofUInt64%2Cblock%3DProc%28CLTK%3A%3AASTNode%2CCLTK%3A%3AASTNode%29.newdo%0Aend%29-instance-method">#</a>
-      </div>
       
       <br/>
       <div>

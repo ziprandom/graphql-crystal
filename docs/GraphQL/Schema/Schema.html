@@ -290,6 +290,11 @@
       
         <ul>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/AlibiType" data-name="graphql::schema::alibitype">
+      <a href="../../GraphQL/Schema/AlibiType.html">AlibiType</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Context" data-name="graphql::schema::context">
       <a href="../../GraphQL/Schema/Context.html">Context</a>
       
@@ -297,6 +302,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/FragmentResolver" data-name="graphql::schema::fragmentresolver">
       <a href="../../GraphQL/Schema/FragmentResolver.html">FragmentResolver</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/InputType" data-name="graphql::schema::inputtype">
+      <a href="../../GraphQL/Schema/InputType.html">InputType</a>
       
     </li>
   
@@ -380,11 +390,6 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/Hash" data-name="hash(k, v)">
-      <a href="../../Hash.html">Hash</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/NamedTuple" data-name="namedtuple(**t)">
       <a href="../../NamedTuple.html">NamedTuple</a>
       
@@ -437,12 +442,12 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L22" target="_blank">graphql-crystal/schema/schema.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L22" target="_blank">graphql-crystal/schema/schema.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L5" target="_blank">graphql-crystal/schema/schema_execute.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L5" target="_blank">graphql-crystal/schema/schema_execute.cr</a>
     
     <br/>
   
@@ -508,6 +513,18 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#_resolve_selections_for%28object_type%3ALanguage%3A%3AObjectTypeDefinition%2Cselections%3AArray%28Language%3A%3ASelection%29%2Cresolved%3AObjectType%2Ccontext%29%3ATuple%28ReturnType%2CArray%28Error%29%29-instance-method" class="signature"><strong>#_resolve_selections_for</strong>(object_type : Language::ObjectTypeDefinition, selections : Array(Language::Selection), resolved : ObjectType, context) : Tuple(ReturnType, Array(Error))</a>
+        
+          <div class="summary"><p>Resolve an ObjectTypeDefinition </p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#_resolve_selections_for%28field_definition%3ALanguage%3A%3AFieldDefinition%2Cselections%3AArray%2Cresolved%3AObjectType%2Ccontext%29-instance-method" class="signature"><strong>#_resolve_selections_for</strong>(field_definition : Language::FieldDefinition, selections : Array, resolved : ObjectType, context)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#_resolve_selections_for%28field_type%3ALanguage%3A%3AListType%2Cselections%3AArray%28Language%3A%3ASelection%29%2Cresolved%3AArray%2Ccontext%29%3ATuple%28ReturnType%2CArray%28Error%29%29-instance-method" class="signature"><strong>#_resolve_selections_for</strong>(field_type : Language::ListType, selections : Array(Language::Selection), resolved : Array, context) : Tuple(ReturnType, Array(Error))</a>
         
           <div class="summary"><p>Resolve a ListType </p></div>
@@ -522,24 +539,19 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#_resolve_selections_for%28field_definition%3ALanguage%3A%3AFieldDefinition%2Cselections%3AArray%2Cresolved%3AObjectType%2Ccontext%29-instance-method" class="signature"><strong>#_resolve_selections_for</strong>(field_definition : Language::FieldDefinition, selections : Array, resolved : ObjectType, context)</a>
+        <a href="#add_input_type%28name%3AString%2Ctype%3AInputType.class%29-instance-method" class="signature"><strong>#add_input_type</strong>(name : String, type : InputType.class)</a>
+        
+          <div class="summary"><p>register a Struct to parse query variables name : the name of the GraphQL Input Type that gets parsed type : the Struct Type to parse the JSON into (has to have the class method from_json see https://crystal-lang.org/api/0.23.1/JSON.html#mapping%28properties%2Cstrict%3Dfalse%29-macro) for more infos</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#_resolve_selections_for%28object_type%3ALanguage%3A%3AObjectTypeDefinition%2Cselections%3AArray%28Language%3A%3ASelection%29%2Cresolved%3AObjectType%2Ccontext%29%3ATuple%28ReturnType%2CArray%28Error%29%29-instance-method" class="signature"><strong>#_resolve_selections_for</strong>(object_type : Language::ObjectTypeDefinition, selections : Array(Language::Selection), resolved : ObjectType, context) : Tuple(ReturnType, Array(Error))</a>
-        
-          <div class="summary"><p>Resolve an ObjectTypeDefinition </p></div>
+        <a href="#cast_to_jsontype%28v%29-instance-method" class="signature"><strong>#cast_to_jsontype</strong>(v)</a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#cast_to_resolvecbreturntype%28v%29-instance-method" class="signature"><strong>#cast_to_resolvecbreturntype</strong>(v)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#cast_wrap_block%28%26block%3AHash%28String%2CReturnType%29-%3E_%29-instance-method" class="signature"><strong>#cast_wrap_block</strong>(&block : Hash(String, ReturnType) -> _)</a>
         
       </li>
     
@@ -559,17 +571,21 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%3F%2Ccontext%29-instance-method" class="signature"><strong>#execute</strong>(document : Language::Document, params : Hash(String, JSON::Type)?, context)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%2Ccontext%29-instance-method" class="signature"><strong>#execute</strong>(document : Language::Document, params, context)</a>
+        
+          <div class="summary"><p>Initializer recursivly casts params to JSON::Type </p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#execute%28document%3AString%2Cparams%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(document : String, params = <span class="n">nil</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#extract_elements%28node%3D%40document%29-instance-method" class="signature"><strong>#extract_elements</strong>(node = @document)</a>
+          <div class="summary"><p>Initializer takes request as a String </p></div>
         
       </li>
     
@@ -584,12 +600,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#max_depth%28max_depth%29-instance-method" class="signature"><strong>#max_depth</strong>(max_depth)</a>
+        <a href="#max_depth%3AInt32%3F-instance-method" class="signature"><strong>#max_depth</strong> : Int32?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#max_depth%3AInt32%3F-instance-method" class="signature"><strong>#max_depth</strong> : Int32?</a>
+        <a href="#max_depth%28max_depth%29-instance-method" class="signature"><strong>#max_depth</strong>(max_depth)</a>
         
       </li>
     
@@ -659,12 +675,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#substitute_variables_from_params%28query%2Cparams%3AHash%29-instance-method" class="signature"><strong>#substitute_variables_from_params</strong>(query, params : Hash)</a>
+        <a href="#substitute_variables_from_params%28query%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%29-instance-method" class="signature"><strong>#substitute_variables_from_params</strong>(query, params : Hash(String, JSON::Type))</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#type_resolve%28type%29-instance-method" class="signature"><strong>#type_resolve</strong>(type)</a>
+        <a href="#type_resolve%28type_name%3AString%29-instance-method" class="signature"><strong>#type_resolve</strong>(type_name : String)</a>
         
       </li>
     
@@ -674,7 +690,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#type_resolve%28type_name%3AString%29-instance-method" class="signature"><strong>#type_resolve</strong>(type_name : String)</a>
+        <a href="#type_resolve%28type%29-instance-method" class="signature"><strong>#type_resolve</strong>(type)</a>
         
       </li>
     
@@ -845,7 +861,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L300" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L310" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -863,59 +879,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L290" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="_resolve_selections_for&#40;field_type:Language::ListType,selections:Array&#40;Language::Selection&#41;,resolved:Array,context&#41;:Tuple&#40;ReturnType,Array&#40;Error&#41;&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>_resolve_selections_for</strong>(field_type : <a href="../../GraphQL/Language/ListType.html">Language::ListType</a>, selections : Array(<a href="../../GraphQL/Language/Selection.html">Language::Selection</a>), resolved : Array, context) : Tuple(<a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>, Array(<a href="../../GraphQL/Error.html">Error</a>))
-
-        <a class="method-permalink" href="#_resolve_selections_for%28field_type%3ALanguage%3A%3AListType%2Cselections%3AArray%28Language%3A%3ASelection%29%2Cresolved%3AArray%2Ccontext%29%3ATuple%28ReturnType%2CArray%28Error%29%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc"><p>Resolve a ListType</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L267" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="_resolve_selections_for&#40;field_type:Language::TypeName,selections:Array&#40;Language::Selection&#41;,resolved,context&#41;:Tuple&#40;ReturnType,Array&#40;Error&#41;&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>_resolve_selections_for</strong>(field_type : <a href="../../GraphQL/Language/TypeName.html">Language::TypeName</a>, selections : Array(<a href="../../GraphQL/Language/Selection.html">Language::Selection</a>), resolved, context) : Tuple(<a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>, Array(<a href="../../GraphQL/Error.html">Error</a>))
-
-        <a class="method-permalink" href="#_resolve_selections_for%28field_type%3ALanguage%3A%3ATypeName%2Cselections%3AArray%28Language%3A%3ASelection%29%2Cresolved%2Ccontext%29%3ATuple%28ReturnType%2CArray%28Error%29%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc"><p>Resolve a TypeName</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L235" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="_resolve_selections_for&#40;field_definition:Language::FieldDefinition,selections:Array,resolved:ObjectType,context&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>_resolve_selections_for</strong>(field_definition : <a href="../../GraphQL/Language/FieldDefinition.html">Language::FieldDefinition</a>, selections : Array, resolved : <a href="../../GraphQL/ObjectType.html">ObjectType</a>, context)
-
-        <a class="method-permalink" href="#_resolve_selections_for%28field_definition%3ALanguage%3A%3AFieldDefinition%2Cselections%3AArray%2Cresolved%3AObjectType%2Ccontext%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L184" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L300" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -933,7 +897,98 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L97" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L107" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="_resolve_selections_for&#40;field_definition:Language::FieldDefinition,selections:Array,resolved:ObjectType,context&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>_resolve_selections_for</strong>(field_definition : <a href="../../GraphQL/Language/FieldDefinition.html">Language::FieldDefinition</a>, selections : Array, resolved : <a href="../../GraphQL/ObjectType.html">ObjectType</a>, context)
+
+        <a class="method-permalink" href="#_resolve_selections_for%28field_definition%3ALanguage%3A%3AFieldDefinition%2Cselections%3AArray%2Cresolved%3AObjectType%2Ccontext%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L194" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="_resolve_selections_for&#40;field_type:Language::ListType,selections:Array&#40;Language::Selection&#41;,resolved:Array,context&#41;:Tuple&#40;ReturnType,Array&#40;Error&#41;&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>_resolve_selections_for</strong>(field_type : <a href="../../GraphQL/Language/ListType.html">Language::ListType</a>, selections : Array(<a href="../../GraphQL/Language/Selection.html">Language::Selection</a>), resolved : Array, context) : Tuple(<a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>, Array(<a href="../../GraphQL/Error.html">Error</a>))
+
+        <a class="method-permalink" href="#_resolve_selections_for%28field_type%3ALanguage%3A%3AListType%2Cselections%3AArray%28Language%3A%3ASelection%29%2Cresolved%3AArray%2Ccontext%29%3ATuple%28ReturnType%2CArray%28Error%29%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Resolve a ListType</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L277" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="_resolve_selections_for&#40;field_type:Language::TypeName,selections:Array&#40;Language::Selection&#41;,resolved,context&#41;:Tuple&#40;ReturnType,Array&#40;Error&#41;&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>_resolve_selections_for</strong>(field_type : <a href="../../GraphQL/Language/TypeName.html">Language::TypeName</a>, selections : Array(<a href="../../GraphQL/Language/Selection.html">Language::Selection</a>), resolved, context) : Tuple(<a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>, Array(<a href="../../GraphQL/Error.html">Error</a>))
+
+        <a class="method-permalink" href="#_resolve_selections_for%28field_type%3ALanguage%3A%3ATypeName%2Cselections%3AArray%28Language%3A%3ASelection%29%2Cresolved%2Ccontext%29%3ATuple%28ReturnType%2CArray%28Error%29%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Resolve a TypeName</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L245" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="add_input_type&#40;name:String,type:InputType.class&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>add_input_type</strong>(name : String, type : InputType.class)
+
+        <a class="method-permalink" href="#add_input_type%28name%3AString%2Ctype%3AInputType.class%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>register a Struct to parse query variables
+name : the name of the GraphQL Input Type that gets parsed
+type : the Struct Type to parse the JSON into
+(has to have the class method from_json see
+https://crystal-lang.org/api/0.23.1/JSON.html#mapping%28properties%2Cstrict%3Dfalse%29-macro)
+for more infos</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L75" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cast_to_jsontype&#40;v&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>cast_to_jsontype</strong>(v)
+
+        <a class="method-permalink" href="#cast_to_jsontype%28v%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L447" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -949,23 +1004,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L420" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="cast_wrap_block&#40;&amp;block:Hash&#40;String,ReturnType&#41;-&gt;_&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>cast_wrap_block</strong>(&block : <a href="../../Hash.html">Hash</a>(String, <a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>) -> _)
-
-        <a class="method-permalink" href="#cast_wrap_block%28%26block%3AHash%28String%2CReturnType%29-%3E_%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L121" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L436" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -973,7 +1012,7 @@
     <div class="entry-detail" id="directive_definitions:Hash&#40;String,GraphQL::Language::DirectiveDefinition&#41;-instance-method">
       <div class="signature">
         
-        def <strong>directive_definitions</strong> : <a href="../../Hash.html">Hash</a>(String, <a href="../../GraphQL/Language/DirectiveDefinition.html">GraphQL::Language::DirectiveDefinition</a>)
+        def <strong>directive_definitions</strong> : Hash(String, <a href="../../GraphQL/Language/DirectiveDefinition.html">GraphQL::Language::DirectiveDefinition</a>)
 
         <a class="method-permalink" href="#directive_definitions%3AHash%28String%2CGraphQL%3A%3ALanguage%3A%3ADirectiveDefinition%29-instance-method">#</a>
       </div>
@@ -981,7 +1020,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -997,7 +1036,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1016,6 +1055,22 @@
       </div>
     </div>
   
+    <div class="entry-detail" id="execute&#40;document:Language::Document,params:Hash&#40;String,JSON::Type&#41;?,context&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>execute</strong>(document : <a href="../../GraphQL/Language/Document.html">Language::Document</a>, params : Hash(String, JSON::Type)?, context)
+
+        <a class="method-permalink" href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%3F%2Ccontext%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="execute&#40;document:Language::Document,params,context&#41;-instance-method">
       <div class="signature">
         
@@ -1024,10 +1079,12 @@
         <a class="method-permalink" href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%2Ccontext%29-instance-method">#</a>
       </div>
       
+        <div class="doc"><p>Initializer recursivly casts params to JSON::Type</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1040,26 +1097,12 @@
         <a class="method-permalink" href="#execute%28document%3AString%2Cparams%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L14" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="extract_elements&#40;node&#61;&#64;document&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>extract_elements</strong>(node = @document)
-
-        <a class="method-permalink" href="#extract_elements%28node%3D%40document%29-instance-method">#</a>
-      </div>
+        <div class="doc"><p>Initializer takes request as a String</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1075,7 +1118,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L394" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L410" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1091,23 +1134,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L376" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="max_depth&#40;max_depth&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>max_depth</strong>(max_depth)
-
-        <a class="method-permalink" href="#max_depth%28max_depth%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L392" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1123,7 +1150,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_depth&#40;max_depth&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>max_depth</strong>(max_depth)
+
+        <a class="method-permalink" href="#max_depth%28max_depth%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L118" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1131,7 +1174,7 @@
     <div class="entry-detail" id="mutation&#40;name,&amp;block:Hash&#40;String,ReturnType&#41;-&gt;_&#41;-instance-method">
       <div class="signature">
         
-        def <strong>mutation</strong>(name, &block : <a href="../../Hash.html">Hash</a>(String, <a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>) -> _)
+        def <strong>mutation</strong>(name, &block : Hash(String, <a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>) -> _)
 
         <a class="method-permalink" href="#mutation%28name%2C%26block%3AHash%28String%2CReturnType%29-%3E_%29-instance-method">#</a>
       </div>
@@ -1139,7 +1182,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L114" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L132" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1155,7 +1198,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1171,7 +1214,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1201,7 +1244,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L350" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L360" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1209,7 +1252,7 @@
     <div class="entry-detail" id="query&#40;name,&amp;block:Hash&#40;String,ReturnType&#41;-&gt;_&#41;-instance-method">
       <div class="signature">
         
-        def <strong>query</strong>(name, &block : <a href="../../Hash.html">Hash</a>(String, <a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>) -> _)
+        def <strong>query</strong>(name, &block : Hash(String, <a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>) -> _)
 
         <a class="method-permalink" href="#query%28name%2C%26block%3AHash%28String%2CReturnType%29-%3E_%29-instance-method">#</a>
       </div>
@@ -1217,7 +1260,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L107" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L125" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1233,7 +1276,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1249,7 +1292,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1279,7 +1322,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L130" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L120" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1309,7 +1352,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1325,55 +1368,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="substitute_variables_from_params&#40;query,params:Hash&#41;-instance-method">
+    <div class="entry-detail" id="substitute_variables_from_params&#40;query,params:Hash&#40;String,JSON::Type&#41;&#41;-instance-method">
       <div class="signature">
         
-        def <strong>substitute_variables_from_params</strong>(query, params : <a href="../../Hash.html">Hash</a>)
+        def <strong>substitute_variables_from_params</strong>(query, params : Hash(String, JSON::Type))
 
-        <a class="method-permalink" href="#substitute_variables_from_params%28query%2Cparams%3AHash%29-instance-method">#</a>
+        <a class="method-permalink" href="#substitute_variables_from_params%28query%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L306" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="type_resolve&#40;type&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>type_resolve</strong>(type)
-
-        <a class="method-permalink" href="#type_resolve%28type%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L74" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="type_resolve&#40;type:Language::TypeName&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>type_resolve</strong>(type : <a href="../../GraphQL/Language/TypeName.html">Language::TypeName</a>)
-
-        <a class="method-permalink" href="#type_resolve%28type%3ALanguage%3A%3ATypeName%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L316" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1389,7 +1400,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L79" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type_resolve&#40;type:Language::TypeName&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>type_resolve</strong>(type : <a href="../../GraphQL/Language/TypeName.html">Language::TypeName</a>)
+
+        <a class="method-permalink" href="#type_resolve%28type%3ALanguage%3A%3ATypeName%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type_resolve&#40;type&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>type_resolve</strong>(type)
+
+        <a class="method-permalink" href="#type_resolve%28type%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1397,7 +1440,7 @@
     <div class="entry-detail" id="types:Hash&#40;String,GraphQL::Language::TypeDefinition&#41;-instance-method">
       <div class="signature">
         
-        def <strong>types</strong> : <a href="../../Hash.html">Hash</a>(String, <a href="../../GraphQL/Language/TypeDefinition.html">GraphQL::Language::TypeDefinition</a>)
+        def <strong>types</strong> : Hash(String, <a href="../../GraphQL/Language/TypeDefinition.html">GraphQL::Language::TypeDefinition</a>)
 
         <a class="method-permalink" href="#types%3AHash%28String%2CGraphQL%3A%3ALanguage%3A%3ATypeDefinition%29-instance-method">#</a>
       </div>
@@ -1405,7 +1448,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1435,7 +1478,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L413" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L429" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1451,7 +1494,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cf83b36c7deeaf2cd36015d656e810f5d99b517c/src/graphql-crystal/schema/schema_execute.cr#L281" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_execute.cr#L291" target="_blank">View source</a>]
         
       </div>
     </div>
