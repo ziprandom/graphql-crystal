@@ -82,6 +82,18 @@ class Post
 end
 
 #
+# A Struct to hold input parameters
+#
+struct PostInput < GraphQL::Schema::InputType
+  JSON.mapping(
+    author: String,
+    title: String,
+    body: String
+  )
+end
+schema.add_input_type("PostInput", PostInput)
+
+#
 # Then we define the top level queries
 # extending self to make the module
 # act as a singleton model
@@ -107,19 +119,13 @@ module MutationType
   extend self
 
   field :post do |args|
+    input = args["post"].as(PostInput)
 
-    user = USERS.find &.name.==(
-      args["post"].as(Hash)["author"].as(String)
-    )
-    raise "author doesn't exist" unless user
+    author = USERS.find &.name.==(input.author) ||
+           raise "author doesn't exist"
 
-    (
-      POSTS << Post.new(
-        args["post"].as(Hash)["title"].as(String),
-        args["post"].as(Hash)["body"].as(String),
-        user
-      )
-    ).last
+    POSTS << Post.new(input.title, input.body, author)
+    POSTS.last
   end
 end
 

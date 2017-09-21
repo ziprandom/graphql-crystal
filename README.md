@@ -220,6 +220,45 @@ describe "my graphql schema" do
 end
 ```
 
+### Automatic Parsing of JSON Query & Mutation Variables into InputType Structs
+
+To ease working with input parameters custom structs can be registered to be instantiated from the json params of query and mutation requests. Given the schema from above one can define a PostInput struct as follows
+
+```cr
+struct PostInput < GraphQL::Schema::InputType
+  JSON.mapping(
+    author: String,
+    title: String,
+    body: String
+  )
+end
+```
+
+and register it in the schema like:
+
+```cr
+schema.add_input_type("PostInput", PostInput)
+```
+
+Now the argument `post` which is expected to be a GraphQL InputType `PostInput` will be automatically parsed into a crystal `PostInput`-struct. Thus the code in the `post` mutation callback becomes more simple:
+
+```cr
+module MutationType
+  include GraphQL::ObjectType
+  extend self
+
+  field :post do |args|
+    input = args["post"].as(PostInput)
+
+    author = USERS.find &.name.==(input.author) ||
+           raise "author doesn't exist"
+
+    POSTS << Post.new(input.title, input.body, author)
+    POSTS.last
+  end
+end
+```
+
 ### Custom Context Types
 
 Custom context types can be used to pass additional information to the object type's field resolves. An example can be found [here](spec/support/custom_context_schema.cr).

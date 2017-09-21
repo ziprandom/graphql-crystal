@@ -40,6 +40,8 @@ module GraphQL
       ]
       @type_validation : GraphQL::TypeValidation
 
+      @input_types = Hash(String, InputType.class).new
+
       def initialize(@document : Language::Document)
         schema, @types, @directive_definitions = extract_elements
 
@@ -63,6 +65,17 @@ module GraphQL
         { "ID", "An ID" }
       }
 
+      #
+      # register a Struct to parse query variables
+      # name : the name of the GraphQL Input Type that gets parsed
+      # type : the Struct Type to parse the JSON into
+      # (has to have the class method from_json see
+      # https://crystal-lang.org/api/0.23.1/JSON.html#mapping%28properties%2Cstrict%3Dfalse%29-macro)
+      # for more infos
+      def add_input_type(name : String, type : InputType.class)
+        @input_types[name] = type
+      end
+
       def type_resolve(type_name : String)
         @types[type_name]
       end
@@ -75,7 +88,7 @@ module GraphQL
         type
       end
 
-      def extract_elements(node = @document)
+      private def extract_elements(node = @document)
         types = Hash(String, Language::TypeDefinition).new
         directives = Hash(String, Language::DirectiveDefinition).new
 
@@ -104,6 +117,11 @@ module GraphQL
 
       def max_depth(@max_depth); end
 
+      def resolve
+        with self yield
+        self
+      end
+
       def query(name, &block : Hash(String, ReturnType) -> _ )
         qrslv = @query_resolver
         if qrslv.is_a? ResolverObject
@@ -118,7 +136,7 @@ module GraphQL
         end
       end
 
-      def cast_wrap_block(&block : Hash(String, ReturnType) -> _)
+      private def cast_wrap_block(&block : Hash(String, ReturnType) -> _)
         Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType).new do |args, context|
           res = context.with_self args, &block
           (
@@ -127,10 +145,6 @@ module GraphQL
         end
       end
 
-      def resolve
-        with self yield
-        self
-      end
     end
 
     #

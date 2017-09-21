@@ -11,16 +11,26 @@ module GraphQL
         description: "the name of this GraphQL type"
       )
 
+      #
+      # Initializer takes request as a String
+      #
       def execute(document : String, params = nil, context = Context.new(self, max_depth) )
         execute(Language.parse(document), params, context)
       end
 
+      #
+      # Initializer recursivly casts params to JSON::Type
+      #
       def execute(document : Language::Document, params, context)
+        execute(document, cast_to_jsontype(params), context)
+      end
+
+      def execute(document : Language::Document, params : Hash(String, JSON::Type)?, context)
         queries, mutations, fragments = extract_request_parts(document)
         context.fragments = fragments
         query = (queries + mutations).first
         begin
-          substitute_variables_from_params(query, params || {} of String => ReturnType)
+          substitute_variables_from_params(query, params ? params : {} of String => JSON::Type)
         rescue e : Exception
           # we hit an error while resolving fragments
           # no path info atm
@@ -303,7 +313,7 @@ module GraphQL
       end
 
 
-      def substitute_variables_from_params(query, params : Hash)
+      def substitute_variables_from_params(query, params : Hash(String, JSON::Type))
         if (superfluous = params.keys - query.variables.map(&.name)).any?
           raise "unknown variables #{superfluous.join(", ")}"
         end
@@ -368,6 +378,12 @@ module GraphQL
                   else
                     provided
                   end
+
+          if definition.type.is_a?(Language::TypeName) &&
+             (type = @input_types[definition.type.as(Language::TypeName).name]?)
+            value = type.from_json(cast_to_jsontype(value).to_json)
+          end
+
           args[definition.name] = GraphQL::Schema.cast_to_return(value)
           args
         end
@@ -426,6 +442,24 @@ module GraphQL
         else
           v
         end.as(ResolveCBReturnType)
+      end
+
+      def cast_to_jsontype(v)
+        case v
+        when Int32
+          v.to_i64.as(JSON::Type)
+        when Float32
+          v.to_f64.as(JSON::Type)
+        when Array
+          v.map { |vv| cast_to_jsontype(vv).as(JSON::Type) }
+        when Hash
+          v.keys.reduce(Hash(String, JSON::Type).new) do |hash, key|
+            hash[key] = cast_to_jsontype v[key]
+            hash
+          end
+        else
+          v
+        end.as(JSON::Type)
       end
 
     end

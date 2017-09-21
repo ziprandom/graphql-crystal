@@ -19,11 +19,23 @@ module GraphQL
     def self.from_schema(schema_string)
       Schema.new GraphQL::Language.parse(schema_string)
     end
+
+    abstract struct InputType
+      macro inherited
+        def_clone
+      end
+      #abstract def self.from_json(json) : InputType
+    end
+    struct AlibiType < InputType
+      JSON.mapping({some: Bool})
+    end
   end
+
 
   module Schema
 
-    alias ReturnType = String | Int32 | Int64 | Float64 | Bool | Nil | Array(ReturnType) | Hash(String, ReturnType)
+    alias ReturnType = String | Int32 | Int64 | Float64 | Bool | Nil | Array(ReturnType) | Hash(String, ReturnType) |
+                       InputType
     alias ResolveCBReturnType = ReturnType | ObjectType | Nil | Array(ResolveCBReturnType)
 
     def self.substitute_argument_variables(query : GraphQL::Language::OperationDefinition, params)

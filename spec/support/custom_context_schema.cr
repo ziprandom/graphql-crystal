@@ -16,16 +16,19 @@ end
 
 class ProcessType
   include GraphQL::ObjectType
-  JSON.mapping(
-    name: String,
-    pid: Int32
-  )
-  field name
-  field pid
+  def initialize(@name : String, @pid : Int32); end
+  JSON.mapping({name: String, pid: Int32})
+  field :name
+  field :pid
 end
 
 class LogType
   include GraphQL::ObjectType
+  def initialize(
+        @time : String, @hostName : String,
+        @userName : String, @process : ProcessType,
+        @message : String); end
+
   JSON.mapping(
     time: String,
     hostName: String,
@@ -33,11 +36,37 @@ class LogType
     process: ProcessType,
     message: String
   )
-  field time
-  field userName
-  field hostName
-  field process
-  field message
+
+  field :time
+  field :userName
+  field :hostName
+  field :process
+  field :message
+end
+
+#
+# Structs to hold input data
+#
+struct ProcessInput < GraphQL::Schema::InputType
+  JSON.mapping(
+    name: String,
+    pid: Int32
+  )
+  def to_process_type
+    ProcessType.new(@name, @pid)
+  end
+end
+
+struct LogInput < GraphQL::Schema::InputType
+  JSON.mapping(
+    time: String,
+    hostName: String,
+    process: ProcessInput,
+    message: String
+  )
+  def to_log_type(username)
+    LogType.new(@time, @hostName, username, @process.to_process_type, @message)
+  end
 end
 
 module LogStore
@@ -82,9 +111,7 @@ module MutationType
       raise "you are not allowed to read the logs #{context.username}!"
     end
 
-    new_log = LogType.from_json(
-      args["log"].as(Hash).merge({"userName"=> context.username}).to_json
-    )
+    new_log = args["log"].as(LogInput).to_log_type(context.username)
 
     LogStore.write_logs LogStore.read_logs << new_log
     new_log
@@ -136,4 +163,8 @@ CUSTOM_CONTEXT_SCHEMA = ::GraphQL::Schema.from_schema(
 CUSTOM_CONTEXT_SCHEMA.tap do |schema|
   schema.query_resolver = QueryType
   schema.mutation_resolver = MutationType
+  # add Types to parse from respective
+  # Json Input Types
+  schema.add_input_type("LogInput", LogInput)
+  schema.add_input_type("ProcessInput", ProcessInput)
 end
