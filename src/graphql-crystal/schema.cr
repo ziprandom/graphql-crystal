@@ -20,6 +20,9 @@ module GraphQL
       Schema.new GraphQL::Language.parse(schema_string)
     end
 
+    # a struct that can be inherited from
+    # when defining custom InputType structs
+    # for conveniently accessing query parameters
     abstract struct InputType
       macro inherited
         def_clone
@@ -31,34 +34,8 @@ module GraphQL
     end
   end
 
+  private alias ReturnType = String | Int32 | Int64 | Float64 | Bool | Nil | Array(ReturnType) | Hash(String, ReturnType) |
+                             Schema::InputType
+  private alias ResolveCBReturnType = ReturnType | ObjectType | Nil | Array(ResolveCBReturnType)
 
-  module Schema
-
-    alias ReturnType = String | Int32 | Int64 | Float64 | Bool | Nil | Array(ReturnType) | Hash(String, ReturnType) |
-                       InputType
-    alias ResolveCBReturnType = ReturnType | ObjectType | Nil | Array(ResolveCBReturnType)
-
-    def self.substitute_argument_variables(query : GraphQL::Language::OperationDefinition, params)
-      full_params, errors = GraphQL::Schema::Validation.validate_params_against_query_definition(query, params);
-      raise "provided params had errors #{errors}" if errors.any?
-      GraphQL::Schema::VariableResolver.visit(query, full_params)
-    end
-
-    def self.cast_to_return(value)
-      case value
-      when Hash
-        value.reduce(Hash(String, ReturnType).new) do |memo, h|
-          memo[h[0]] = cast_to_return(h[1]).as(ReturnType)
-          memo
-        end
-      when Array
-        value.map { |v| cast_to_return(v).as(ReturnType) }
-      when GraphQL::Language::AEnum
-        value.name
-      else
-        value
-      end.as(ReturnType)
-    end
-
-  end
 end

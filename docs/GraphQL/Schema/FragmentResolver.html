@@ -335,18 +335,8 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolveCBReturnType" data-name="graphql::schema::resolvecbreturntype">
-      <a href="../../GraphQL/Schema/ResolveCBReturnType.html">ResolveCBReturnType</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
       <a href="../../GraphQL/Schema/ResolverObject.html">ResolverObject</a>
-      
-    </li>
-  
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ReturnType" data-name="graphql::schema::returntype">
-      <a href="../../GraphQL/Schema/ReturnType.html">ReturnType</a>
       
     </li>
   
@@ -431,7 +421,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/fragment_resolver.cr#L3" target="_blank">graphql-crystal/schema/fragment_resolver.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/fragment_resolver.cr#L3" target="_blank">graphql-crystal/schema/fragment_resolver.cr</a>
     
     <br/>
   
@@ -449,33 +439,6 @@
         <a href="#resolve%28value%2Cfragments%29-class-method" class="signature"><strong>.resolve</strong>(value, fragments)</a>
         
           <div class="summary"><p>replace named fragments with their concrete selections before the query is resolved</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#visit%28values%3AArray%2Cfragments%3AArray%28Language%3A%3AFragmentDefinition%29%29-class-method" class="signature"><strong>.visit</strong>(values : Array, fragments : Array(Language::FragmentDefinition))</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#visit%28value%3ALanguage%3A%3AField%2Cfragments%29-class-method" class="signature"><strong>.visit</strong>(value : Language::Field, fragments)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#visit%28value%3ALanguage%3A%3AFragmentSpread%2Cfragments%29-class-method" class="signature"><strong>.visit</strong>(value : Language::FragmentSpread, fragments)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#visit%28value%3ALanguage%3A%3AInlineFragment%2Cfragments%29-class-method" class="signature"><strong>.visit</strong>(value : Language::InlineFragment, fragments)</a>
-        
-          <div class="summary"><p>Inline fragments will be resolved inline as they carry all the information needed to validate and apply them with a concrete object further down the line of then object type resolution</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#visit%28value%2Cfragments%29-class-method" class="signature"><strong>.visit</strong>(value, fragments)</a>
         
       </li>
     
@@ -510,91 +473,7 @@ the query is resolved</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/fragment_resolver.cr#L7" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="visit&#40;values:Array,fragments:Array&#40;Language::FragmentDefinition&#41;&#41;-class-method">
-      <div class="signature">
-        
-        def self.<strong>visit</strong>(values : Array, fragments : Array(<a href="../../GraphQL/Language/FragmentDefinition.html">Language::FragmentDefinition</a>))
-
-        <a class="method-permalink" href="#visit%28values%3AArray%2Cfragments%3AArray%28Language%3A%3AFragmentDefinition%29%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/fragment_resolver.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="visit&#40;value:Language::Field,fragments&#41;-class-method">
-      <div class="signature">
-        
-        def self.<strong>visit</strong>(value : <a href="../../GraphQL/Language/Field.html">Language::Field</a>, fragments)
-
-        <a class="method-permalink" href="#visit%28value%3ALanguage%3A%3AField%2Cfragments%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/fragment_resolver.cr#L17" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="visit&#40;value:Language::FragmentSpread,fragments&#41;-class-method">
-      <div class="signature">
-        
-        def self.<strong>visit</strong>(value : <a href="../../GraphQL/Language/FragmentSpread.html">Language::FragmentSpread</a>, fragments)
-
-        <a class="method-permalink" href="#visit%28value%3ALanguage%3A%3AFragmentSpread%2Cfragments%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/fragment_resolver.cr#L26" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="visit&#40;value:Language::InlineFragment,fragments&#41;-class-method">
-      <div class="signature">
-        
-        def self.<strong>visit</strong>(value : <a href="../../GraphQL/Language/InlineFragment.html">Language::InlineFragment</a>, fragments)
-
-        <a class="method-permalink" href="#visit%28value%3ALanguage%3A%3AInlineFragment%2Cfragments%29-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>Inline fragments will be resolved inline as they carry all the
-information needed to validate and apply them with a concrete
-object further down the line of then object type resolution</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/fragment_resolver.cr#L40" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="visit&#40;value,fragments&#41;-class-method">
-      <div class="signature">
-        
-        def self.<strong>visit</strong>(value, fragments)
-
-        <a class="method-permalink" href="#visit%28value%2Cfragments%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/fragment_resolver.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/fragment_resolver.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>

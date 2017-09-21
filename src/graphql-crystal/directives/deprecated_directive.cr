@@ -1,6 +1,11 @@
 require "./directive"
 module GraphQL
   module Directives
+    #
+    # Directive that allows to annote
+    # fields as deprecated in the schema
+    # definition
+    #
     module IsDeprecated
       macro included
         @deprecated : Bool?

@@ -8,7 +8,7 @@ module GraphQL
                      selection : Array(Language::Selection),
                      object : ResolveCBReturnType, context : Context)
 
-        def call_next(*args)
+        private def call_next(*args)
 
           next_handler = @next
           if next_handler
@@ -20,7 +20,7 @@ module GraphQL
 
         alias Proc = Language::AbstractNode,
               Array(Language::AbstractNode),
-              ResolveCBReturnType, Context -> {GraphQL::Schema::ReturnType, Array(GraphQL::Error)}
+              ResolveCBReturnType, Context -> {ReturnType, Array(GraphQL::Error)}
       end
 
   end

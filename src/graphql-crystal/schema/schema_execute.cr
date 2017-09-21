@@ -63,7 +63,7 @@ module GraphQL
 
       alias Args = Tuple(Language::AbstractNode, Array(Language::AbstractNode), ResolveCBReturnType, Context)
 
-      def run_directives(location, *args, &block : *Args -> {ReturnType, Array(Error)})
+      private def run_directives(location, *args, &block : *Args -> {ReturnType, Array(Error)})
         if location.responds_to? :directives
           # Find Directive Middlewares for directives invoked on location
           # prepare arguments hash and set it on the direction
@@ -89,7 +89,7 @@ module GraphQL
         end
       end
 
-      def resolve_selections_for(field_definition, selections, resolved, context)
+      private def resolve_selections_for(field_definition, selections, resolved, context)
         begin
           _selections = GraphQL::Schema::FragmentResolver.resolve(
             selections,
@@ -104,7 +104,7 @@ module GraphQL
       #
       # Resolve an ObjectTypeDefinition
       #
-      def _resolve_selections_for(
+      private def _resolve_selections_for(
             object_type : Language::ObjectTypeDefinition,
             selections : Array(Language::Selection), resolved : ObjectType, context
           ) : Tuple( ReturnType, Array(Error) )
@@ -191,7 +191,7 @@ module GraphQL
         {result.as(ReturnType), errors}
       end
 
-      def _resolve_selections_for(
+      private def _resolve_selections_for(
             field_definition : Language::FieldDefinition,
             selections : Array, resolved : ObjectType, context
           )
@@ -242,7 +242,7 @@ module GraphQL
       #
       # Resolve a TypeName
       #
-      def _resolve_selections_for(
+      private def _resolve_selections_for(
             field_type : Language::TypeName, selections : Array(Language::Selection), resolved, context
           ) : Tuple(ReturnType, Array(Error))
         type_definition = @types[field_type.name]
@@ -274,7 +274,7 @@ module GraphQL
       #
       # Resolve a ListType
       #
-      def _resolve_selections_for(field_type : Language::ListType, selections : Array(Language::Selection),
+      private def _resolve_selections_for(field_type : Language::ListType, selections : Array(Language::Selection),
                                  resolved : Array, context) : Tuple(ReturnType, Array(Error))
         errors = Array(Error).new
         inner_type = field_type.of_type
@@ -297,7 +297,7 @@ module GraphQL
       #
       # Resolve A NonNullType
       #
-      def _resolve_selections_for(
+      private def _resolve_selections_for(
             field_type : Language::NonNullType, selections : Array(Language::Selection), resolved, context
           ) : Tuple(ReturnType, Array(Error))
         if resolved == nil
@@ -307,13 +307,13 @@ module GraphQL
         resolve_selections_for(field_type.of_type, selections, resolved, context)
       end
 
-      def _resolve_selections_for(field_type, selections, resolved, context) : Tuple(ReturnType, Array(Error))
+      private def _resolve_selections_for(field_type, selections, resolved, context) : Tuple(ReturnType, Array(Error))
         pp field_type, selections, resolved
         raise "I should have never come here"
       end
 
 
-      def substitute_variables_from_params(query, params : Hash(String, JSON::Type))
+      private def substitute_variables_from_params(query, params : Hash(String, JSON::Type))
         if (superfluous = params.keys - query.variables.map(&.name)).any?
           raise "unknown variables #{superfluous.join(", ")}"
         end
@@ -337,7 +337,7 @@ module GraphQL
               path: [] of (String|Int32)
             )
           else
-            full_params[variable_definition.name] = GraphQL::Schema.cast_to_return(param)
+            full_params[variable_definition.name] = cast_to_return(param)
           end
         end
 
@@ -357,7 +357,7 @@ module GraphQL
         end
       end
 
-      def prepare_args(defined : Array(Language::InputValueDefinition), given )
+      private def prepare_args(defined : Array(Language::InputValueDefinition), given )
         if (superfluous = given.reject { |g| defined.any?(&.name.==(g.name)) }) &&
            superfluous.any?
           ## TODO: Custom Exceptions here please
@@ -384,12 +384,12 @@ module GraphQL
             value = type.from_json(cast_to_jsontype(value).to_json)
           end
 
-          args[definition.name] = GraphQL::Schema.cast_to_return(value)
+          args[definition.name] = cast_to_return(value)
           args
         end
       end
 
-      def inline_inline_fragment_selections(type, selections)
+      private def inline_inline_fragment_selections(type, selections)
         type = type.as(Language::ObjectTypeDefinition)
         selections.reduce([] of Language::Field) do |selections, selection|
           case selection
@@ -407,7 +407,7 @@ module GraphQL
         end
       end
 
-      def extract_request_parts(document)
+      private def extract_request_parts(document)
         Tuple.new(
           Array(Language::OperationDefinition).new,
           Array(Language::OperationDefinition).new,
@@ -426,14 +426,14 @@ module GraphQL
         end
       end
 
-      def wrap_callback_cast_result(block)
+      private def wrap_callback_cast_result(block)
         Proc(String, Hash(String, ReturnType), ResolveCBReturnType).new do |name, args|
           res = block.call(name, args)
           cast_to_resolvecbreturntype(res)
         end
       end
 
-      def cast_to_resolvecbreturntype(v)
+      private def cast_to_resolvecbreturntype(v)
         case v
         when Array
           v.map { |vv| cast_to_resolvecbreturntype(vv).as(ResolveCBReturnType) }
@@ -444,7 +444,7 @@ module GraphQL
         end.as(ResolveCBReturnType)
       end
 
-      def cast_to_jsontype(v)
+      private def cast_to_jsontype(v)
         case v
         when Int32
           v.to_i64.as(JSON::Type)
@@ -460,6 +460,22 @@ module GraphQL
         else
           v
         end.as(JSON::Type)
+      end
+
+      private def cast_to_return(value)
+        case value
+        when Hash
+          value.reduce(Hash(String, ReturnType).new) do |memo, h|
+            memo[h[0]] = cast_to_return(h[1]).as(ReturnType)
+            memo
+          end
+        when Array
+          value.map { |v| cast_to_return(v).as(ReturnType) }
+        when GraphQL::Language::AEnum
+          value.name
+        else
+          value
+        end.as(ReturnType)
       end
 
     end

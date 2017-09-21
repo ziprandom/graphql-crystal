@@ -2,16 +2,16 @@ require "./dummy_data"
 require "./dummy_schema_string"
 require "../../../src/graphql-crystal/schema";
 
-def fetchItem(type, data : Hash)
-  Proc(Hash(String, GraphQL::Schema::ReturnType), GraphQL::Schema::ResolveCBReturnType).new do |args|
-    data.find(&.[0].to_s.==(args["id"].to_s)).not_nil![1].as(GraphQL::Schema::ResolveCBReturnType)
-  end
-end
+# def fetchItem(type, data : Hash)
+#   Proc(Hash(String, JSON::Type), JSON::Type).new do |args|
+#     data.find(&.[0].to_s.==(args["id"].to_s)).not_nil![1].as(JSON::Type)
+#   end
+# end
 
 module Dummy
   Schema = GraphQL::Schema.from_schema(Dummy::SCHEMA_STRING).resolve do
-    query :cheese { |args| fetchItem(Cheese, CHEESES).call(args) }
-    query :milk { |args| fetchItem(Milk, MILKS).call(args) }
+#    query :cheese { |args| fetchItem(Cheese, CHEESES).call(args.as(Hash(String,JSON::Type))) }
+#    query :milk { |args| fetchItem(Milk, MILKS).call(args.as(Hash(String,JSON::Type))) }
     query :dairy { DAIRY }
     query :favouriteEdible { MILKS[1] }
     query :cow { COW }

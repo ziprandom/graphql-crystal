@@ -335,18 +335,8 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolveCBReturnType" data-name="graphql::schema::resolvecbreturntype">
-      <a href="../GraphQL/Schema/ResolveCBReturnType.html">ResolveCBReturnType</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
       <a href="../GraphQL/Schema/ResolverObject.html">ResolverObject</a>
-      
-    </li>
-  
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ReturnType" data-name="graphql::schema::returntype">
-      <a href="../GraphQL/Schema/ReturnType.html">ReturnType</a>
       
     </li>
   
@@ -431,32 +421,32 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/language/generation.cr#L4" target="_blank">graphql-crystal/language/generation.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/language/generation.cr#L4" target="_blank">graphql-crystal/language/generation.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/language/nodes.cr#L6" target="_blank">graphql-crystal/language/nodes.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/language/nodes.cr#L6" target="_blank">graphql-crystal/language/nodes.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/language/lexer.cr#L5" target="_blank">graphql-crystal/language/lexer.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/language/lexer.cr#L5" target="_blank">graphql-crystal/language/lexer.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/language/parser.cr#L7" target="_blank">graphql-crystal/language/parser.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/language/parser.cr#L7" target="_blank">graphql-crystal/language/parser.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/language.cr#L6" target="_blank">graphql-crystal/language.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/language.cr#L6" target="_blank">graphql-crystal/language.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/schema/schema_introspection.cr#L224" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema_introspection.cr#L224" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
     
     <br/>
   
@@ -471,7 +461,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#parse%28query_string%2Coptions%3DNamedTuple.new%29-class-method" class="signature"><strong>.parse</strong>(query_string, options = <span class="t">NamedTuple</span>.<span class="k">new</span>)</a>
+        <a href="#parse%28query_string%2Coptions%3DNamedTuple.new%29%3AGraphQL%3A%3ALanguage%3A%3ADocument-class-method" class="signature"><strong>.parse</strong>(query_string, options = <span class="t">NamedTuple</span>.<span class="k">new</span>) : GraphQL::Language::Document</a>
+        
+          <div class="summary"><p>Parse a query string and return the Document </p></div>
         
       </li>
     
@@ -492,18 +484,20 @@
 
   <h2>Class Method Detail</h2>
   
-    <div class="entry-detail" id="parse&#40;query_string,options&#61;NamedTuple.new&#41;-class-method">
+    <div class="entry-detail" id="parse&#40;query_string,options&#61;NamedTuple.new&#41;:GraphQL::Language::Document-class-method">
       <div class="signature">
         
-        def self.<strong>parse</strong>(query_string, options = <span class="t">NamedTuple</span>.<span class="k">new</span>)
+        def self.<strong>parse</strong>(query_string, options = <span class="t">NamedTuple</span>.<span class="k">new</span>) : <a href="../GraphQL/Language/Document.html">GraphQL::Language::Document</a>
 
-        <a class="method-permalink" href="#parse%28query_string%2Coptions%3DNamedTuple.new%29-class-method">#</a>
+        <a class="method-permalink" href="#parse%28query_string%2Coptions%3DNamedTuple.new%29%3AGraphQL%3A%3ALanguage%3A%3ADocument-class-method">#</a>
       </div>
+      
+        <div class="doc"><p>Parse a query string and return the Document</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/language.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/language.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>

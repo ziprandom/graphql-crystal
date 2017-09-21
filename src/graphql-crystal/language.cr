@@ -4,7 +4,10 @@ require "./language/parser"
 require "./language/generation"
 
 module GraphQL::Language
-  def self.parse(query_string, options = NamedTuple.new)
+  #
+  # Parse a query string and return the Document
+  #
+  def self.parse(query_string, options = NamedTuple.new) : GraphQL::Language::Document
     GraphQL::Language::Parser.parse(
       GraphQL::Language::Lexer.lex(
         query_string

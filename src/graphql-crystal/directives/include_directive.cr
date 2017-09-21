@@ -1,5 +1,8 @@
 module GraphQL
   module Directives
+    #
+    # The @include(if: ...) directive
+    #
     class IncludeDirective
       include GraphQL::Directive
       getter :name

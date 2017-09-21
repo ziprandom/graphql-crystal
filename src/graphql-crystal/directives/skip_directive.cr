@@ -1,5 +1,8 @@
 module GraphQL
   module Directives
+    #
+    # The @skip(if: ...) directive
+    #
     class SkipDirective
       include GraphQL::Directive
       getter :name

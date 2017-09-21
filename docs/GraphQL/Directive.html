@@ -335,18 +335,8 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolveCBReturnType" data-name="graphql::schema::resolvecbreturntype">
-      <a href="../GraphQL/Schema/ResolveCBReturnType.html">ResolveCBReturnType</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
       <a href="../GraphQL/Schema/ResolverObject.html">ResolverObject</a>
-      
-    </li>
-  
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ReturnType" data-name="graphql::schema::returntype">
-      <a href="../GraphQL/Schema/ReturnType.html">ReturnType</a>
       
     </li>
   
@@ -415,6 +405,11 @@
 
 
 
+  <h2>Overview</h2>
+
+  <p>A module to be included in a
+directive to act as a middleware</p>
+
 
 
 
@@ -447,7 +442,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/directives/directive.cr#L3" target="_blank">graphql-crystal/directives/directive.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/directives/directive.cr#L7" target="_blank">graphql-crystal/directives/directive.cr</a>
     
     <br/>
   
@@ -464,12 +459,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#args%3AHash%28String%2CGraphQL%3A%3ASchema%3A%3AReturnType%29%3F-instance-method" class="signature"><strong>#args</strong> : Hash(String, GraphQL::Schema::ReturnType)?</a>
+        <a href="#args%3AHash%28String%2CReturnType%29%3F-instance-method" class="signature"><strong>#args</strong> : Hash(String, ReturnType)?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#args%3D%28args%3AHash%28String%2CGraphQL%3A%3ASchema%3A%3AReturnType%29%3F%29-instance-method" class="signature"><strong>#args=</strong>(args : Hash(String, GraphQL::Schema::ReturnType)?)</a>
+        <a href="#args%3D%28args%3AHash%28String%2CReturnType%29%3F%29-instance-method" class="signature"><strong>#args=</strong>(args : Hash(String, ReturnType)?)</a>
         
       </li>
     
@@ -494,11 +489,6 @@
     <a href="../GraphQL/Schema/Middleware.html#call%28node%3AGraphQL%3A%3ALanguage%3A%3ATypeDefinition%7CGraphQL%3A%3ALanguage%3A%3AFieldDefinition%2Cselection%3AArray%28Language%3A%3ASelection%29%2Cobject%3AResolveCBReturnType%2Ccontext%3AContext%29-instance-method" class="tooltip">
       <span>call(node : GraphQL::Language::TypeDefinition | GraphQL::Language::FieldDefinition, selection : Array(Language::Selection), object : ResolveCBReturnType, context : Context)</span>
     call</a>, 
-    
-  
-    <a href="../GraphQL/Schema/Middleware.html#call_next%28%2Aargs%29-instance-method" class="tooltip">
-      <span>call_next(*args)</span>
-    call_next</a>, 
     
   
     <a href="../GraphQL/Schema/Middleware.html#next%3AMiddleware%7CProc%7CNil-instance-method" class="tooltip">
@@ -529,34 +519,34 @@
 
   <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="args:Hash&#40;String,GraphQL::Schema::ReturnType&#41;?-instance-method">
+    <div class="entry-detail" id="args:Hash&#40;String,ReturnType&#41;?-instance-method">
       <div class="signature">
         
-        def <strong>args</strong> : Hash(String, <a href="../GraphQL/Schema/ReturnType.html">GraphQL::Schema::ReturnType</a>)?
+        def <strong>args</strong> : Hash(String, ReturnType)?
 
-        <a class="method-permalink" href="#args%3AHash%28String%2CGraphQL%3A%3ASchema%3A%3AReturnType%29%3F-instance-method">#</a>
+        <a class="method-permalink" href="#args%3AHash%28String%2CReturnType%29%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/directives/directive.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/directives/directive.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="args&#61;&#40;args:Hash&#40;String,GraphQL::Schema::ReturnType&#41;?&#41;-instance-method">
+    <div class="entry-detail" id="args&#61;&#40;args:Hash&#40;String,ReturnType&#41;?&#41;-instance-method">
       <div class="signature">
         
-        def <strong>args=</strong>(args : Hash(String, <a href="../GraphQL/Schema/ReturnType.html">GraphQL::Schema::ReturnType</a>)?)
+        def <strong>args=</strong>(args : Hash(String, ReturnType)?)
 
-        <a class="method-permalink" href="#args%3D%28args%3AHash%28String%2CGraphQL%3A%3ASchema%3A%3AReturnType%29%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#args%3D%28args%3AHash%28String%2CReturnType%29%3F%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/directives/directive.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/directives/directive.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -572,7 +562,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/dc811c6941dd397405d151b0f11279c753b107bb/src/graphql-crystal/directives/directive.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/directives/directive.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>

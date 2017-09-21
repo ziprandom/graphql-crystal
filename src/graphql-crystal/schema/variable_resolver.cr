@@ -1,8 +1,9 @@
 module GraphQL
   module Schema
     #
-    # Traverse the Queries AST and replace VariableIdentifiers
-    # with the variables provided in params
+    # Visitor to Traverse the Queries AST and replace
+    # VariableIdentifiers with the variables provided
+    # in params
     class VariableResolver
 
       def self.visit(query : Language::OperationDefinition, params)

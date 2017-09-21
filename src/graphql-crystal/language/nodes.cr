@@ -86,7 +86,7 @@ module GraphQL
       traverse :children, :type
     end
 
-    alias ArgumentValue = GraphQL::Schema::ReturnType | InputObject | VariableIdentifier | Array(ArgumentValue)
+    alias ArgumentValue = ReturnType | InputObject | VariableIdentifier | Array(ArgumentValue)
 
     class Argument < AbstractNode
       values({name: String, value: ArgumentValue})
