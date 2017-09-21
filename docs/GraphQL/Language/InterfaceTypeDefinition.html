@@ -418,12 +418,12 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/language/nodes.cr#L212" target="_blank">graphql-crystal/language/nodes.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/language/nodes.cr#L212" target="_blank">graphql-crystal/language/nodes.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/schema/schema_introspection.cr#L268" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/schema/schema_introspection.cr#L268" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
     
     <br/>
   
@@ -487,11 +487,6 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#__typename_field%28nil%2Ccontext%29-instance-method" class="signature"><strong>#__typename_field</strong>(nil, context)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#clone-instance-method" class="signature"><strong>#clone</strong></a>
         
           <div class="summary"><p>Returns a copy of <code>self</code> with all instance variables cloned.</p></div>
@@ -519,27 +514,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#fields_field%28nil%2Ccontext%29-instance-method" class="signature"><strong>#fields_field</strong>(nil, context)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#kind_field%28nil%2Ccontext%29-instance-method" class="signature"><strong>#kind_field</strong>(nil, context)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#map_children%28%26block%3ACLTK%3A%3AASTNode-%3E_%29-instance-method" class="signature"><strong>#map_children</strong>(&block : CLTK::ASTNode -> _)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#possibleTypes_field%28args%2Ccontext%29-instance-method" class="signature"><strong>#possibleTypes_field</strong>(args, context)</a>
+        <a href="#resolve_field%28name%3AString%2Carguments%2Ccontext%3AGraphQL%3A%3ASchema%3A%3AContext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name : String, arguments, context : GraphQL::Schema::Context)</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name : String, arguments, context)</a>
+          <div class="summary"><p>resolve a named field on this object with query arguments and context </p></div>
         
       </li>
     
@@ -614,19 +596,9 @@
     ==</a>, 
     
   
-    <a href="../../GraphQL/Language/TypeDefinition.html#__typename_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>__typename_field(nil, context)</span>
-    __typename_field</a>, 
-    
-  
     <a href="../../GraphQL/Language/TypeDefinition.html#clone-instance-method" class="tooltip">
       <span>clone</span>
     clone</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#deprecationReason_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>deprecationReason_field(nil, context)</span>
-    deprecationReason_field</a>, 
     
   
     <a href="../../GraphQL/Language/TypeDefinition.html#description%3A%3A%3AUnion%28String%2CNil%29-instance-method" class="tooltip">
@@ -639,41 +611,6 @@
     description=</a>, 
     
   
-    <a href="../../GraphQL/Language/TypeDefinition.html#description_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>description_field(nil, context)</span>
-    description_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#enumValues_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>enumValues_field(nil, context)</span>
-    enumValues_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#fields_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>fields_field(nil, context)</span>
-    fields_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#inputFields_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>inputFields_field(nil, context)</span>
-    inputFields_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#interfaces_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>interfaces_field(nil, context)</span>
-    interfaces_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#isDeprecated_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>isDeprecated_field(nil, context)</span>
-    isDeprecated_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#kind_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>kind_field(nil, context)</span>
-    kind_field</a>, 
-    
-  
     <a href="../../GraphQL/Language/TypeDefinition.html#name%3AString-instance-method" class="tooltip">
       <span>name : String</span>
     name</a>, 
@@ -684,23 +621,8 @@
     name=</a>, 
     
   
-    <a href="../../GraphQL/Language/TypeDefinition.html#name_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>name_field(nil, context)</span>
-    name_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#ofType_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>ofType_field(nil, context)</span>
-    ofType_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#possibleTypes_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>possibleTypes_field(nil, context)</span>
-    possibleTypes_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/TypeDefinition.html#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method" class="tooltip">
-      <span>resolve_field(name : String, arguments, context)</span>
+    <a href="../../GraphQL/Language/TypeDefinition.html#resolve_field%28name%3AString%2Carguments%2Ccontext%3AGraphQL%3A%3ASchema%3A%3AContext%29-instance-method" class="tooltip">
+      <span>resolve_field(name : String, arguments, context : GraphQL::Schema::Context)</span>
     resolve_field</a>, 
     
   
@@ -752,18 +674,13 @@
     ==</a>, 
     
   
-    <a href="../../GraphQL/Language/AbstractNode.html#__typename_field%28nil%2Ccontext%29-instance-method" class="tooltip">
-      <span>__typename_field(nil, context)</span>
-    __typename_field</a>, 
-    
-  
     <a href="../../GraphQL/Language/AbstractNode.html#clone-instance-method" class="tooltip">
       <span>clone</span>
     clone</a>, 
     
   
-    <a href="../../GraphQL/Language/AbstractNode.html#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method" class="tooltip">
-      <span>resolve_field(name : String, arguments, context)</span>
+    <a href="../../GraphQL/Language/AbstractNode.html#resolve_field%28name%3AString%2Carguments%2Ccontext%3AGraphQL%3A%3ASchema%3A%3AContext%29-instance-method" class="tooltip">
+      <span>resolve_field(name : String, arguments, context : GraphQL::Schema::Context)</span>
     resolve_field</a>, 
     
   
@@ -925,20 +842,6 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="__typename_field&#40;nil,context&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>__typename_field</strong>(nil, context)
-
-        <a class="method-permalink" href="#__typename_field%28nil%2Ccontext%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="clone-instance-method">
       <div class="signature">
         
@@ -1011,34 +914,6 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="fields_field&#40;nil,context&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>fields_field</strong>(nil, context)
-
-        <a class="method-permalink" href="#fields_field%28nil%2Ccontext%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="kind_field&#40;nil,context&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>kind_field</strong>(nil, context)
-
-        <a class="method-permalink" href="#kind_field%28nil%2Ccontext%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="map_children&#40;&amp;block:CLTK::ASTNode-&gt;_&#41;-instance-method">
       <div class="signature">
         
@@ -1053,27 +928,15 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="possibleTypes_field&#40;args,context&#41;-instance-method">
+    <div class="entry-detail" id="resolve_field&#40;name:String,arguments,context:GraphQL::Schema::Context&#41;-instance-method">
       <div class="signature">
         
-        def <strong>possibleTypes_field</strong>(args, context)
+        def <strong>resolve_field</strong>(name : String, arguments, context : <a href="../../GraphQL/Schema/Context.html">GraphQL::Schema::Context</a>)
 
-        <a class="method-permalink" href="#possibleTypes_field%28args%2Ccontext%29-instance-method">#</a>
+        <a class="method-permalink" href="#resolve_field%28name%3AString%2Carguments%2Ccontext%3AGraphQL%3A%3ASchema%3A%3AContext%29-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="resolve_field&#40;name:String,arguments,context&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>resolve_field</strong>(name : String, arguments, context)
-
-        <a class="method-permalink" href="#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method">#</a>
-      </div>
+        <div class="doc"><p>resolve a named field on this object with query arguments and context</p></div>
       
       <br/>
       <div>

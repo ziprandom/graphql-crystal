@@ -430,7 +430,7 @@ resolve callbacks of the schema</p>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/schema/schema.cr#L170" target="_blank">graphql-crystal/schema/schema.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/schema/schema.cr#L170" target="_blank">graphql-crystal/schema/schema.cr</a>
     
     <br/>
   
@@ -459,11 +459,6 @@ resolve callbacks of the schema</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#__typename_field%28nil%2Ccontext%29-instance-method" class="signature"><strong>#__typename_field</strong>(nil, context)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#cb_hash%3AHash%28String%2CHash%28String%2CGraphQL%3A%3AReturnType%29%2CGraphQL%3A%3ASchema%3A%3AContext-%3EArray%28GraphQL%3A%3AObjectType%3F%29%7CArray%28GraphQL%3A%3AReturnType%29%7CBool%7CFloat64%7CGraphQL%3A%3AObjectType%7CGraphQL%3A%3ASchema%3A%3AInputType%7CHash%28String%2CGraphQL%3A%3AReturnType%29%7CInt32%7CInt64%7CString%7CNil%29-instance-method" class="signature"><strong>#cb_hash</strong> : Hash(String, Hash(String, GraphQL::ReturnType), GraphQL::Schema::Context -> Array(GraphQL::ObjectType?) | Array(GraphQL::ReturnType) | Bool | Float64 | GraphQL::ObjectType | GraphQL::Schema::InputType | Hash(String, GraphQL::ReturnType) | Int32 | Int64 | String | Nil)</a>
         
       </li>
@@ -489,7 +484,9 @@ resolve callbacks of the schema</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name : String, arguments, context)</a>
+        <a href="#resolve_field%28name%3AString%2Carguments%2Ccontext%3AGraphQL%3A%3ASchema%3A%3AContext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name : String, arguments, context : GraphQL::Schema::Context)</a>
+        
+          <div class="summary"><p>resolve a named field on this object with query arguments and context </p></div>
         
       </li>
     
@@ -593,20 +590,6 @@ resolve callbacks of the schema</p>
 
   <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="__typename_field&#40;nil,context&#41;-instance-method">
-      <div class="signature">
-        
-        def <strong>__typename_field</strong>(nil, context)
-
-        <a class="method-permalink" href="#__typename_field%28nil%2Ccontext%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="cb_hash:Hash&#40;String,Hash&#40;String,GraphQL::ReturnType&#41;,GraphQL::Schema::Context-&gt;Array&#40;GraphQL::ObjectType?&#41;|Array&#40;GraphQL::ReturnType&#41;|Bool|Float64|GraphQL::ObjectType|GraphQL::Schema::InputType|Hash&#40;String,GraphQL::ReturnType&#41;|Int32|Int64|String|Nil&#41;-instance-method">
       <div class="signature">
         
@@ -618,7 +601,7 @@ resolve callbacks of the schema</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/schema/schema.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/schema/schema.cr#L172" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -634,7 +617,7 @@ resolve callbacks of the schema</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/schema/schema.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/schema/schema.cr#L172" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -650,7 +633,7 @@ resolve callbacks of the schema</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/schema/schema.cr#L176" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/schema/schema.cr#L176" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -666,7 +649,7 @@ resolve callbacks of the schema</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/schema/schema.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/schema/schema.cr#L172" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -682,18 +665,20 @@ resolve callbacks of the schema</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/schema/schema.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/schema/schema.cr#L172" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="resolve_field&#40;name:String,arguments,context&#41;-instance-method">
+    <div class="entry-detail" id="resolve_field&#40;name:String,arguments,context:GraphQL::Schema::Context&#41;-instance-method">
       <div class="signature">
         
-        def <strong>resolve_field</strong>(name : String, arguments, context)
+        def <strong>resolve_field</strong>(name : String, arguments, context : <a href="../../GraphQL/Schema/Context.html">GraphQL::Schema::Context</a>)
 
-        <a class="method-permalink" href="#resolve_field%28name%3AString%2Carguments%2Ccontext%29-instance-method">#</a>
+        <a class="method-permalink" href="#resolve_field%28name%3AString%2Carguments%2Ccontext%3AGraphQL%3A%3ASchema%3A%3AContext%29-instance-method">#</a>
       </div>
+      
+        <div class="doc"><p>resolve a named field on this object with query arguments and context</p></div>
       
       <br/>
       <div>
@@ -712,7 +697,7 @@ resolve callbacks of the schema</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/schema/schema.cr#L178" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/cd207e0012285f82fc977e019d070a468709a57c/src/graphql-crystal/schema/schema.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
