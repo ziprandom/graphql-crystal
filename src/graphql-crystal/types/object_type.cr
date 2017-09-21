@@ -32,7 +32,7 @@ macro on_included
 
       macro field(name, description, args, typename, &block)
         \\{% GRAPHQL_FIELDS << {name, description, args, typename} %}
-        def \\{{name.id}}_field(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}, \\{{((block.is_a?(Block) && block.args.size > 1) ? block.args[1].id : "context").id}})
+        private def \\{{name.id}}_field(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}, \\{{((block.is_a?(Block) && block.args.size > 1) ? block.args[1].id : "context").id}})
           \\{% if block.is_a?(Block) %}
               context.with_self(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}) do
                 \\{{block.body}}
@@ -50,7 +50,10 @@ macro on_included
 
     on_all_child_classes do
       macro finished
-        def resolve_field(name : String, arguments, context)
+        #
+        # resolve a named field on this object with query arguments and context
+        #
+        def resolve_field(name : String, arguments, context : GraphQL::Schema::Context)
           \\{% prev_def = @type.methods.find(&.name.==("resolve_field")) %}
           \\{% if !GRAPHQL_FIELDS.empty? %}
               case name
