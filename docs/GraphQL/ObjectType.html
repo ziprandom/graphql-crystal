@@ -406,25 +406,22 @@
 to make them act as GraphQL Objects. Provides the
 <code>field</code> Macro for defining GraphQL Type Fields.</p>
 
-<pre><code class='language-cr'>class MyType
-  getter :name
-  def initialize(@name : String, @email : String); end
-  includes GraphQL::ObjectType
-  field :name  # with no further arguments
-               # the field will resolve to
-               # the getter method of the
-               # same name
+<pre><code class='language-crystal'><span class="k">class</span> <span class="t">MyType</span>
+  getter <span class="n">:name</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @email : <span class="t">String</span>); <span class="k">end</span>
+  includes <span class="t">GraphQL</span><span class="t">::</span><span class="t">ObjectType</span>
+  field <span class="n">:name</span>  <span class="c"># with no further arguments</span>
+               <span class="c"># the field will resolve to</span>
+               <span class="c"># the getter method of the</span>
+               <span class="c"># same name</span>
 
-  field :email { @email } # a block can be provided
-                          # to access instance vars
+  field <span class="n">:email</span> { @email } <span class="c"># a block can be provided</span>
+                          <span class="c"># to access instance vars</span>
 
-  # a block will be called with an arguments hash
-  # and the context of the graphql request
-  field :signature do |args, context|
-    "#{@name} - #{args['with_email']? ? @email : ""}"
-  end
-
-end</code></pre>
+  <span class="c"># a block will be called with an arguments hash</span>
+  <span class="c"># and the context of the graphql request</span>
+  field <span class="n">:signature</span> <span class="k">do</span> <span class="o">|</span>args, context<span class="o">|</span>
+    <span class="s">&quot;</span><span class="i">#{</span></span>@name<span class="s"><span class="i">}</span> - </span><span class="i">#{</span></span>args[</code></pre>
 
 
 
@@ -453,7 +450,7 @@ end</code></pre>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L113" target="_blank">graphql-crystal/types/object_type.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/types/object_type.cr#L113" target="_blank">graphql-crystal/types/object_type.cr</a>
     
     <br/>
   
@@ -533,7 +530,7 @@ defaults to the class name</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/types/object_type.cr#L119" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -553,7 +550,7 @@ for every ObjectType</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L154" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/types/object_type.cr#L154" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -579,7 +576,7 @@ used in introspection queries</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L129" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/types/object_type.cr#L129" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -600,7 +597,7 @@ used in introspection queries.</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/74d1cce8a81ccf1bd39660758488aec211da4c7d/src/graphql-crystal/types/object_type.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>

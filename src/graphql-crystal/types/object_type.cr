@@ -88,10 +88,11 @@ module GraphQL
   # to make them act as GraphQL Objects. Provides the
   # `field` Macro for defining GraphQL Type Fields.
   #
-  # ```cr
+  # ```crystal
   # class MyType
   #   getter :name
   #   def initialize(@name : String, @email : String); end
+  #
   #   includes GraphQL::ObjectType
   #   field :name  # with no further arguments
   #                # the field will resolve to
