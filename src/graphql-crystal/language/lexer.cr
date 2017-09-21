@@ -3,6 +3,9 @@ require "./type"
 
 module GraphQL
   module Language
+    #
+    # A Lexer for GraphQL Documents
+    #
     class Lexer < CLTK::Scanner
       extend CLTK::Scanner::LexerCompatibility
 

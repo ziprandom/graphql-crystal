@@ -2,6 +2,11 @@ require "./schema_introspection"
 module GraphQL
   module Schema
 
+    #
+    # The Context that will be created when `Schema::execute` is called
+    # and provided as an argument to the field resolution callbacks on
+    # Object Types. Can be subclassed and passed manually to `Schema::execute`.
+    #
     class Context
 
       getter :schema
@@ -17,8 +22,11 @@ module GraphQL
       end
     end
 
-    alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | ReturnType | Nil )
+    private alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | ReturnType | Nil )
 
+    #
+    # Represents a GraphQL Schema against which queries can be executed.
+    #
     class Schema
       include GraphQL::Schema::Introspection
       getter :types, :directive_middlewares, :directive_definitions,
@@ -42,6 +50,9 @@ module GraphQL
 
       @input_types = Hash(String, InputType.class).new
 
+      #
+      # Takes a parsed GraphQL schema definition
+      #
       def initialize(@document : Language::Document)
         schema, @types, @directive_definitions = extract_elements
 
@@ -57,6 +68,9 @@ module GraphQL
         @type_validation = GraphQL::TypeValidation.new(@types)
       end
 
+      #
+      # Descriptions for Scalar Types
+      #
       ScalarTypes = {
         { "String", "A String Value" },
         { "Boolean", "A Boolean Value" },
@@ -76,14 +90,17 @@ module GraphQL
         @input_types[name] = type
       end
 
+      # @deprecated
       def type_resolve(type_name : String)
         @types[type_name]
       end
 
+      # @deprecated
       def type_resolve(type : Language::TypeName)
         @types[type.name]
       end
 
+      # @deprecated
       def type_resolve(type)
         type
       end

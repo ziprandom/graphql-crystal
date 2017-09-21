@@ -1,10 +1,9 @@
 # coding: utf-8
 module GraphQL
   module Schema
-
     class Schema
 
-      TYPE_NAME_FIELD = Language::FieldDefinition.new(
+      private TYPE_NAME_FIELD = Language::FieldDefinition.new(
         name: "__typename", type: Language::TypeName.new(name: "String"),
         arguments: Array(Language::InputValueDefinition).new,
         directives: Array(Language::Directive).new,
@@ -12,19 +11,31 @@ module GraphQL
       )
 
       #
-      # Initializer takes request as a String
-      #
+      # Initializer recursivly casts params to JSON::Type
+      # `document`: a parsed query
+      # `params`: *optional* the query variables as a Hash
+      # `context`: *optional* a custom context to be injected in
+      #            field callbacks.
       def execute(document : String, params = nil, context = Context.new(self, max_depth) )
         execute(Language.parse(document), params, context)
       end
 
       #
       # Initializer recursivly casts params to JSON::Type
-      #
+      # `document`: a parsed query
+      # `params`: *optional* the query variables as a Hash
+      # `context`: *optional* a custom context to be injected in
+      #            field callbacks.
       def execute(document : Language::Document, params, context)
         execute(document, cast_to_jsontype(params), context)
       end
 
+      #
+      # Initializer recursivly casts params to JSON::Type
+      # `document`: a parsed query
+      # `params`: *optional* the query variables as a Hash
+      # `context`: *optional* a custom context to be injected in
+      #            field callbacks.
       def execute(document : Language::Document, params : Hash(String, JSON::Type)?, context)
         queries, mutations, fragments = extract_request_parts(document)
         context.fragments = fragments

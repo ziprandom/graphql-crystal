@@ -3,17 +3,17 @@ require "json"
 module GraphQL
   module Language
     # Exposes {.generate}, which turns AST nodes back into query strings.
+    # Turn an AST node back into a string.
+    #
+    # @example Turning a document into a query
+    #    document = GraphQL.parse(query_string)
+    #    Generation.generate(document)
+    #    # => "{ ... }"
+    #
+    # @param node [AbstractNode] an AST node to recursively stringify
+    # @param indent [String] Whitespace to add to each printed node
+    # @return [String] Valid GraphQL for `node`
     module Generation
-      # Turn an AST node back into a string.
-      #
-      # @example Turning a document into a query
-      #    document = GraphQL.parse(query_string)
-      #    Generation.generate(document)
-      #    # => "{ ... }"
-      #
-      # @param node [AbstractNode] an AST node to recursively stringify
-      # @param indent [String] Whitespace to add to each printed node
-      # @return [String] Valid GraphQL for `node`
 
       def self.generate(node : Document, indent : String = "")
         node.definitions.map { |d| generate(d) }.join("\n\n")

@@ -330,11 +330,6 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/QueryReturnType" data-name="graphql::schema::queryreturntype">
-      <a href="../GraphQL/Schema/QueryReturnType.html">QueryReturnType</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
       <a href="../GraphQL/Schema/ResolverObject.html">ResolverObject</a>
       
@@ -405,6 +400,32 @@
 
 
 
+  <h2>Overview</h2>
+
+  <p>module to be included or extended by Classes and Modules
+to make them act as GraphQL Objects. Provides the
+<code>field</code> Macro for defining GraphQL Type Fields.</p>
+
+<pre><code class='language-cr'>class MyType
+  getter :name
+  def initialize(@name : String, @email : String); end
+  includes GraphQL::ObjectType
+  field :name  # with no further arguments
+               # the field will resolve to
+               # the getter method of the
+               # same name
+
+  field :email { @email } # a block can be provided
+                          # to access instance vars
+
+  # a block will be called with an arguments hash
+  # and the context of the graphql request
+  field :signature do |args, context|
+    "#{@name} - #{args['with_email']? ? @email : ""}"
+  end
+
+end</code></pre>
+
 
 
 
@@ -432,7 +453,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/types/object_type.cr#L87" target="_blank">graphql-crystal/types/object_type.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L113" target="_blank">graphql-crystal/types/object_type.cr</a>
     
     <br/>
   
@@ -451,10 +472,14 @@
       <li class="entry-summary">
         <a href="#graphql_type-instance-method" class="signature"><strong>#graphql_type</strong></a>
         
+          <div class="summary"><p>get the GraphQL name of this object.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#resolve_field%28name%2Carguments%2Ccontext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name, arguments, context)</a>
+        
+          <div class="summary"><p>This method gets called when a field is resolved on this object.</p></div>
         
       </li>
     
@@ -468,10 +493,14 @@
       <li class="entry-summary">
         <a href="#graphql_type%28name%29-macro" class="signature"><strong>graphql_type</strong>(name)</a>
         
+          <div class="summary"><p>setter can be used to set GraphQL name of the Object.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#graphql_type-macro" class="signature"><strong>graphql_type</strong></a>
+        
+          <div class="summary"><p>setter that takes a block.</p></div>
         
       </li>
     
@@ -498,10 +527,13 @@
         <a class="method-permalink" href="#graphql_type-instance-method">#</a>
       </div>
       
+        <div class="doc"><p>get the GraphQL name of this object.
+defaults to the class name</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/types/object_type.cr#L108" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L119" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -514,10 +546,14 @@
         <a class="method-permalink" href="#resolve_field%28name%2Carguments%2Ccontext%29-instance-method">#</a>
       </div>
       
+        <div class="doc"><p>This method gets called when a field is resolved
+on this object. The method gets automatically created
+for every ObjectType</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/types/object_type.cr#L103" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L154" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -535,10 +571,15 @@
         <a class="method-permalink" href="#graphql_type%28name%29-macro">#</a>
       </div>
       
+        <div class="doc"><p>setter
+can be used to set GraphQL name of the
+Object. Defaults to the class name. Is
+used in introspection queries</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/types/object_type.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L129" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -551,10 +592,15 @@
         <a class="method-permalink" href="#graphql_type-macro">#</a>
       </div>
       
+        <div class="doc"><p>setter that takes a block.
+can be used to set GraphQL name of the
+Object. Defaults to the class name. Is
+used in introspection queries.</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/types/object_type.cr#L95" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/object_type.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>

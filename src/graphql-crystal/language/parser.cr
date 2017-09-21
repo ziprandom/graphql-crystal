@@ -5,6 +5,9 @@ require "./nodes"
 
 module GraphQL
   module Language
+    #
+    # A CLTK Parser for the GraphQL Language
+    #
     class Parser < CLTK::Parser
 
       production(:document) do

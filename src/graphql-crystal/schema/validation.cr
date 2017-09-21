@@ -1,5 +1,8 @@
 module GraphQL
   module Schema
+    #
+    # Module for validation functions
+    #
     module Validation
 
       def self.validate_params_against_query_definition(query : Language::OperationDefinition, params = nil)

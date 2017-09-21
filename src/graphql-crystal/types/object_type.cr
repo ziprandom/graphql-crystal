@@ -83,15 +83,61 @@ end
 
 
 module GraphQL
-
+  #
+  # module to be included or extended by Classes and Modules
+  # to make them act as GraphQL Objects. Provides the
+  # `field` Macro for defining GraphQL Type Fields.
+  #
+  # ```cr
+  # class MyType
+  #   getter :name
+  #   def initialize(@name : String, @email : String); end
+  #   includes GraphQL::ObjectType
+  #   field :name  # with no further arguments
+  #                # the field will resolve to
+  #                # the getter method of the
+  #                # same name
+  #
+  #   field :email { @email } # a block can be provided
+  #                           # to access instance vars
+  #
+  #   # a block will be called with an arguments hash
+  #   # and the context of the graphql request
+  #   field :signature do |args, context|
+  #     "#{@name} - #{args['with_email']? ? @email : ""}"
+  #   end
+  #
+  # end
+  # ```
+  #
   module ObjectType
 
+    #
+    # get the GraphQL name of this object.
+    # defaults to the class name
+    #
+    def graphql_type
+      self.class.to_s
+    end
+
+    #
+    # setter
+    # can be used to set GraphQL name of the
+    # Object. Defaults to the class name. Is
+    # used in introspection queries
+    #
     macro graphql_type(name)
       def graphql_type
         {{name}}
       end
     end
 
+    #
+    # setter that takes a block.
+    # can be used to set GraphQL name of the
+    # Object. Defaults to the class name. Is
+    # used in introspection queries.
+    #
     macro graphql_type(&block)
       {% if block.is_a?(Block)%}
         def graphql_type
@@ -100,13 +146,14 @@ module GraphQL
       {% end %}
     end
 
+    #
+    # This method gets called when a field is resolved
+    # on this object. The method gets automatically created
+    # for every ObjectType
+    #
     def resolve_field(name, arguments, context)
       pp "field not defined", name, self.class
       raise "field #{name} is not defined for #{self.class.name}"
-    end
-
-    def graphql_type
-      self.class.to_s
     end
 
     macro included

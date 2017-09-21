@@ -330,11 +330,6 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/QueryReturnType" data-name="graphql::schema::queryreturntype">
-      <a href="../GraphQL/Schema/QueryReturnType.html">QueryReturnType</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
       <a href="../GraphQL/Schema/ResolverObject.html">ResolverObject</a>
       
@@ -407,6 +402,11 @@
 
 
 
+  <h2>Overview</h2>
+
+  <p>A TypeValidation is used to validate a given input against a
+TypeDefinition.</p>
+
 
 
 
@@ -423,7 +423,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/types/type_validation.cr#L2" target="_blank">graphql-crystal/types/type_validation.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/type_validation.cr#L6" target="_blank">graphql-crystal/types/type_validation.cr</a>
     
     <br/>
   
@@ -450,7 +450,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#accepts%3F%28type_definition%2Cvalue%29-instance-method" class="signature"><strong>#accepts?</strong>(type_definition, value)</a>
+        <a href="#accepts%3F%28type_definition%3AGraphQL%3A%3ALanguage%3A%3AAbstractNode%2Cvalue%29%3ABool-instance-method" class="signature"><strong>#accepts?</strong>(type_definition : GraphQL::Language::AbstractNode, value) : Bool</a>
+        
+          <div class="summary"><p>Returns true if <code>value</code> corresponds to <code>type_definition</code>.</p></div>
         
       </li>
     
@@ -507,7 +509,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/types/type_validation.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/type_validation.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -519,18 +521,21 @@
 
   <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="accepts?&#40;type_definition,value&#41;-instance-method">
+    <div class="entry-detail" id="accepts?&#40;type_definition:GraphQL::Language::AbstractNode,value&#41;:Bool-instance-method">
       <div class="signature">
         
-        def <strong>accepts?</strong>(type_definition, value)
+        def <strong>accepts?</strong>(type_definition : <a href="../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a>, value) : Bool
 
-        <a class="method-permalink" href="#accepts%3F%28type_definition%2Cvalue%29-instance-method">#</a>
+        <a class="method-permalink" href="#accepts%3F%28type_definition%3AGraphQL%3A%3ALanguage%3A%3AAbstractNode%2Cvalue%29%3ABool-instance-method">#</a>
       </div>
+      
+        <div class="doc"><p>Returns true if <code>value</code> corresponds to
+<code>type_definition</code>.</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/types/type_validation.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/types/type_validation.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>

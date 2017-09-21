@@ -330,11 +330,6 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/QueryReturnType" data-name="graphql::schema::queryreturntype">
-      <a href="../../GraphQL/Schema/QueryReturnType.html">QueryReturnType</a>
-      
-    </li>
-  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
       <a href="../../GraphQL/Schema/ResolverObject.html">ResolverObject</a>
       
@@ -407,6 +402,10 @@
 
 
 
+  <h2>Overview</h2>
+
+  <p>Represents a GraphQL Schema against which queries can be executed.</p>
+
 
 
 
@@ -432,12 +431,12 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L22" target="_blank">graphql-crystal/schema/schema.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L30" target="_blank">graphql-crystal/schema/schema.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema_execute.cr#L5" target="_blank">graphql-crystal/schema/schema_execute.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema_execute.cr#L4" target="_blank">graphql-crystal/schema/schema_execute.cr</a>
     
     <br/>
   
@@ -458,10 +457,9 @@
         <strong>ScalarTypes</strong> = <code>{ {<span class="s">&quot;String&quot;</span>, <span class="s">&quot;A String Value&quot;</span>}, {<span class="s">&quot;Boolean&quot;</span>, <span class="s">&quot;A Boolean Value&quot;</span>}, {<span class="s">&quot;Int&quot;</span>, <span class="s">&quot;An Integer Number&quot;</span>}, {<span class="s">&quot;Float&quot;</span>, <span class="s">&quot;A Floating Point Number&quot;</span>}, {<span class="s">&quot;ID&quot;</span>, <span class="s">&quot;An ID&quot;</span>} }</code>
       </dt>
       
-    
-      <dt class="entry-const" id="TYPE_NAME_FIELD">
-        <strong>TYPE_NAME_FIELD</strong> = <code><span class="t">Language</span><span class="t">::</span><span class="t">FieldDefinition</span>.<span class="k">new</span>(name: <span class="s">&quot;__typename&quot;</span>, <span class="k">type</span>: <span class="t">Language</span><span class="t">::</span><span class="t">TypeName</span>.<span class="k">new</span>(name: <span class="s">&quot;String&quot;</span>), arguments: <span class="t">Array</span>(<span class="t">Language</span><span class="t">::</span><span class="t">InputValueDefinition</span>).<span class="k">new</span>, directives: <span class="t">Array</span>(<span class="t">Language</span><span class="t">::</span><span class="t">Directive</span>).<span class="k">new</span>, description: <span class="s">&quot;the name of this GraphQL type&quot;</span>)</code>
-      </dt>
+      <dd class="entry-const-doc">
+        <p>Descriptions for Scalar Types</p>
+      </dd>
       
     
   </dl>
@@ -515,19 +513,21 @@
       <li class="entry-summary">
         <a href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%2Ccontext%29-instance-method" class="signature"><strong>#execute</strong>(document : Language::Document, params, context)</a>
         
-          <div class="summary"><p>Initializer recursivly casts params to JSON::Type </p></div>
+          <div class="summary"><p>Initializer recursivly casts params to JSON::Type <code>document</code>: a parsed query <code>params</code>: <em>optional</em> the query variables as a Hash <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%3F%2Ccontext%29-instance-method" class="signature"><strong>#execute</strong>(document : Language::Document, params : Hash(String, JSON::Type)?, context)</a>
         
+          <div class="summary"><p>Initializer recursivly casts params to JSON::Type <code>document</code>: a parsed query <code>params</code>: <em>optional</em> the query variables as a Hash <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#execute%28document%3AString%2Cparams%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(document : String, params = <span class="n">nil</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
         
-          <div class="summary"><p>Initializer takes request as a String </p></div>
+          <div class="summary"><p>Initializer recursivly casts params to JSON::Type <code>document</code>: a parsed query <code>params</code>: <em>optional</em> the query variables as a Hash <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
         
       </li>
     
@@ -594,15 +594,21 @@
       <li class="entry-summary">
         <a href="#type_resolve%28type_name%3AString%29-instance-method" class="signature"><strong>#type_resolve</strong>(type_name : String)</a>
         
+          <div class="summary"><p>@deprecated</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#type_resolve%28type%3ALanguage%3A%3ATypeName%29-instance-method" class="signature"><strong>#type_resolve</strong>(type : Language::TypeName)</a>
         
+          <div class="summary"><p>@deprecated</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#type_resolve%28type%29-instance-method" class="signature"><strong>#type_resolve</strong>(type)</a>
+        
+          <div class="summary"><p>@deprecated</p></div>
         
       </li>
     
@@ -775,7 +781,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -791,7 +797,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -807,7 +813,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -834,12 +840,17 @@ for more infos</p></div>
         <a class="method-permalink" href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%2Ccontext%29-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Initializer recursivly casts params to JSON::Type</p></div>
+        <div class="doc"><p>Initializer recursivly casts params to JSON::Type
+<code>document</code>: a parsed query
+<code>params</code>: <em>optional</em> the query variables as a Hash
+<code>context</code>: <em>optional</em> a custom context to be injected in</p>
+
+<pre><code>       field callbacks.</code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema_execute.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema_execute.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -852,10 +863,17 @@ for more infos</p></div>
         <a class="method-permalink" href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%3F%2Ccontext%29-instance-method">#</a>
       </div>
       
+        <div class="doc"><p>Initializer recursivly casts params to JSON::Type
+<code>document</code>: a parsed query
+<code>params</code>: <em>optional</em> the query variables as a Hash
+<code>context</code>: <em>optional</em> a custom context to be injected in</p>
+
+<pre><code>       field callbacks.</code></pre></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema_execute.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema_execute.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -868,12 +886,17 @@ for more infos</p></div>
         <a class="method-permalink" href="#execute%28document%3AString%2Cparams%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Initializer takes request as a String</p></div>
+        <div class="doc"><p>Initializer recursivly casts params to JSON::Type
+<code>document</code>: a parsed query
+<code>params</code>: <em>optional</em> the query variables as a Hash
+<code>context</code>: <em>optional</em> a custom context to be injected in</p>
+
+<pre><code>       field callbacks.</code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema_execute.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema_execute.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -889,7 +912,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L118" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L135" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -905,7 +928,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -921,7 +944,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L132" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L149" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -937,7 +960,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -953,7 +976,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -983,7 +1006,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L125" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -999,7 +1022,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1015,7 +1038,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1045,7 +1068,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L137" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1072,10 +1095,12 @@ for more infos</p></div>
         <a class="method-permalink" href="#type_resolve%28type_name%3AString%29-instance-method">#</a>
       </div>
       
+        <div class="doc"><p>@deprecated</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1088,10 +1113,12 @@ for more infos</p></div>
         <a class="method-permalink" href="#type_resolve%28type%3ALanguage%3A%3ATypeName%29-instance-method">#</a>
       </div>
       
+        <div class="doc"><p>@deprecated</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1104,10 +1131,12 @@ for more infos</p></div>
         <a class="method-permalink" href="#type_resolve%28type%29-instance-method">#</a>
       </div>
       
+        <div class="doc"><p>@deprecated</p></div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1123,7 +1152,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1153,7 +1182,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/4d6ec94e7dd3101915a0712bde090084c04fc5eb/src/graphql-crystal/schema/schema_execute.cr#L291" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b07fb7c7cb0a2941e13027e6c5f5914b797c5a1d/src/graphql-crystal/schema/schema_execute.cr#L302" target="_blank">View source</a>]
         
       </div>
     </div>

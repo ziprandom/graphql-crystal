@@ -1,10 +1,19 @@
 module GraphQL
+  #
+  # A TypeValidation is used to validate a given input against a
+  # TypeDefinition.
+  #
   class TypeValidation
     @enum_values_cache = Hash(String, Array(String)?).new { |hash, key| hash[key] = nil }
 
     def initialize(@types : Hash(String, Language::TypeDefinition)); end
 
-    def accepts?(type_definition, value)
+
+    #
+    # Returns true if `value` corresponds to
+    # `type_definition`.
+    #
+    def accepts?(type_definition : GraphQL::Language::AbstractNode, value) : Bool
 
       # Nillable by default ..
       if value == nil && !type_definition.is_a?(Language::NonNullType)
@@ -60,6 +69,8 @@ module GraphQL
         return true
       when Language::TypeName
         accepts?(@types[type_definition.name], value)
+      else
+        false
       end
     end
   end
