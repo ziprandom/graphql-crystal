@@ -30,7 +30,9 @@ module Dummy
   }
 
   module DAIRY
-    extend GraphQL::ObjectType
+    include GraphQL::ObjectType
+    extend self
+
     ID = 1
     CHEESE = CHEESES[1]
     MILKS = [MILKS[1]]

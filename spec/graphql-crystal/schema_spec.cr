@@ -6,7 +6,7 @@ describe GraphQL::Schema do
   describe "resolve" do
 
     it "answers a simple field request" do
-      TestSchema.execute("{ user(id: 0) { name } }").should eq({ "data" => { "user" => { "name" => "otto neverthere" }}})
+      TestSchema::Schema.execute("{ user(id: 0) { name } }").should eq({ "data" => { "user" => { "name" => "otto neverthere" }}})
     end
 
     it "answers a simple field request for a field defined later in the inheritance chain (SpecialQuery)" do
@@ -19,7 +19,7 @@ describe GraphQL::Schema do
           ]
         }
       }
-      TestSchema.execute("{ addresses { city } }").should eq expected
+      TestSchema::Schema.execute("{ addresses { city } }").should eq expected
     end
 
     it "answers a simple field request for a field defined later in the inheritance chain (SpecialQuery)" do
@@ -31,7 +31,7 @@ describe GraphQL::Schema do
           ]
         }
       }
-      TestSchema.execute(%{
+      TestSchema::Schema.execute(%{
                            { addresses(city: [London, Miami]) { city street number } }
                          }).should eq expected
     end
@@ -42,7 +42,7 @@ describe GraphQL::Schema do
           "addresses" => [] of Nil
         }
       }
-      TestSchema.execute(%{
+      TestSchema::Schema.execute(%{
                            { addresses(city: [Istanbul]) { city street number } }
                          }).should eq expected
     end
@@ -56,13 +56,13 @@ describe GraphQL::Schema do
           }
         }
       }
-      TestSchema.execute(
+      TestSchema::Schema.execute(
         "{ user(id: 0) { id, name } }"
       ).should eq(expected)
     end
 
     it "answers a simple field request for a nested resource" do
-      TestSchema.execute(
+      TestSchema::Schema.execute(
         "{ user(id: 0) { id, address { city } } }"
       ).should eq({
                     "data" => {
@@ -77,7 +77,7 @@ describe GraphQL::Schema do
     end
 
     it "answers a more deep request for a list resource" do
-      TestSchema.execute(
+      TestSchema::Schema.execute(
         "{ user(id: 0) { id, friends { id, name } } }"
       ).should eq({
                     "data" => {
@@ -93,7 +93,7 @@ describe GraphQL::Schema do
     end
 
     it "answers a request for a field with a custom resolve callback" do
-      TestSchema.execute(
+      TestSchema::Schema.execute(
         "{ user(id: 0) { full_address } }"
       ).should eq({ "data" => {
                       "user" => {
@@ -116,7 +116,7 @@ describe GraphQL::Schema do
         }
       }
 
-      TestSchema.execute(%{
+      TestSchema::Schema.execute(%{
                            {
                              firstUser: user(id: 0) {
                                name
@@ -144,7 +144,7 @@ describe GraphQL::Schema do
         }
       }
 
-      TestSchema.execute(%{
+      TestSchema::Schema.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... userFields
@@ -170,7 +170,7 @@ describe GraphQL::Schema do
         }
       }
 
-      TestSchema.execute(%{
+      TestSchema::Schema.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... on User {
@@ -196,7 +196,7 @@ describe GraphQL::Schema do
         ]
       }
 
-      TestSchema.execute(%{
+      TestSchema::Schema.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... on Droid {
@@ -218,7 +218,7 @@ describe GraphQL::Schema do
         ]
       }
 
-      TestSchema.execute(%{
+      TestSchema::Schema.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... userFieldsNonExistent
@@ -251,7 +251,7 @@ describe GraphQL::Schema do
         ]
       }
 
-      TestSchema.execute(bad_query_string).should eq expected
+      TestSchema::Schema.execute(bad_query_string).should eq expected
     end
 
     it "raises an error if we request a field with an argument that hasn't been defined" do
@@ -275,7 +275,7 @@ describe GraphQL::Schema do
         ]
       }
 
-      TestSchema.execute(bad_query_string).should eq expected
+      TestSchema::Schema.execute(bad_query_string).should eq expected
     end
 
     it "raises an error if we request a field with defined argument using a wrong type" do
@@ -299,7 +299,7 @@ describe GraphQL::Schema do
         ]
       }
 
-      TestSchema.execute(bad_query_string).should eq expected
+      TestSchema::Schema.execute(bad_query_string).should eq expected
     end
 
   end

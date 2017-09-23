@@ -1,3 +1,4 @@
+module StarWars
 enum EpisodeEnum
   NEWHOPE = 4
   EMPIRE = 5
@@ -100,3 +101,4 @@ Characters = begin
                  end
                end
              end
+end

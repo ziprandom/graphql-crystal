@@ -2,9 +2,24 @@ module GraphQL
   module Schema
     module Introspection
 
+      #
+      # Wrap an ObjectType intercepting field
+      # resolution for `__schema` and `__type`
+      # keys
+      #
       class IntrospectionObject
         include ObjectType
-        def initialize(@schema : GraphQL::Schema::Schema, @query_resolver : GraphQL::ObjectType); end
+        @query_resolver : GraphQL::ObjectType
+        property :query_resolver, :mutation_resolver
+
+        def initialize(@schema : GraphQL::Schema::Schema, @query_resolver); end
+
+        def schema=(@schema); end
+
+        def graphql_type
+          @query_resolver.graphql_type
+        end
+
         def resolve_field(name, args, context)
           case name
           when "__schema"
@@ -22,18 +37,20 @@ module GraphQL
 
         field :types { @original_types.not_nil! }
         field :directives { @directive_definitions.values }
-        field :queryType { @original_query }
-        field :mutationType { @mutation ? types[@mutation.not_nil!.name] : nil }
+        field :queryType { @original_query_definition }
+        field :mutationType { @mutation_resolver ? @types[@mutation_resolver.as(ObjectType).graphql_type] : nil }
 
         macro finished
           # a clone of @query with the
           # meta fields removed
-          @original_query : Language::ObjectTypeDefinition?
+          @original_query_definition : Language::ObjectTypeDefinition?
           @original_types : Array(Language::TypeDefinition)?
 
           def initialize(document : Language::Document)
             previous_def(document)
-            @original_query = types[@query.not_nil!.name].clone.as(Language::ObjectTypeDefinition)
+            @original_query_definition =
+              types[@query_definition.not_nil!.name]
+              .clone.as(Language::ObjectTypeDefinition)
 
             # add introspection types to
             # schemas types index
@@ -45,12 +62,13 @@ module GraphQL
 
             # keep the original query within the
             # array used for introspection
-            @original_types = types.values.
-                              compact_map { |t| t.name == @query ? @original_query : t }
+            @original_types = types.values.compact_map do |t|
+              t.name == @query_definition ? @original_query_definition : t
+            end
 
             # add the schema field to the root query of
             # the schema
-            if root_query = @query
+            if root_query = @query_definition
               root_query.fields << Language::FieldDefinition.new(
                 "__schema", Array(Language::InputValueDefinition).new,
                 Language::TypeName.new(name: "__Schema"), Array(Language::Directive).new,
@@ -65,26 +83,15 @@ module GraphQL
                 "query a specific type in the schema by name"
               )
             end
-
-            # deprecated
-            # add the callback for
-            # the schema field of
-            # the root query
-            query(:__schema) do
-              self
-            end
-            query(:__type) do |args|
-              @types[args["name"]]
-            end
           end
 
           #
           # Wrap the Root Query in the IntrospectionObject
           # to intercept calls to __schema and __type field
           def query_resolver=(query : ObjectType)
-            intro_object = IntrospectionObject.new(self, query)
-            @query_resolver = intro_object
+            @query_resolver = IntrospectionObject.new(self, query)
           end
+
         end
 
       end

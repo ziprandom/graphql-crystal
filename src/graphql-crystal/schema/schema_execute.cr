@@ -49,7 +49,8 @@ module GraphQL
         end
 
         root_element, root_element_definition = query.operation_type == "query" ?
-                         {query_resolver, @query} : {mutation_resolver, @mutation}
+                         {query_resolver, @types[query_resolver.try &.graphql_type]} :
+                            {mutation_resolver, @types[mutation_resolver.try &.graphql_type]}
 
         result, errors = resolve_selections_for(
                   root_element_definition,

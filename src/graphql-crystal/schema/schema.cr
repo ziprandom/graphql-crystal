@@ -33,22 +33,35 @@ module GraphQL
              :query_resolver, :mutation_resolver, :max_depth
       property :query_resolver, :mutation_resolver
 
+      # max recursive execution depth
       @max_depth : Int32? = nil
-      @query : Language::ObjectTypeDefinition?
-      @mutation : Language::ObjectTypeDefinition?
 
-      @query_resolver : GraphQL::ObjectType = ResolverObject.new
-      @mutation_resolver : GraphQL::ObjectType = ResolverObject.new
+      # holds root query object
+      @query_resolver : GraphQL::ObjectType?
+      # holds root mutation object
+      @mutation_resolver : GraphQL::ObjectType?
 
+      # a index of all types defined in the schema
       @types : Hash(String, Language::TypeDefinition)
+
+      # holds structs for input type parsing
+      @input_types = Hash(String, InputType.class).new
+
+      # holds definitions of all directives used in the schema
       @directive_definitions = Hash(String, Language::DirectiveDefinition).new
+
+      # directive middlewares to be evaluated
+      # during query execution
       @directive_middlewares = [
         GraphQL::Directives::IncludeDirective.new,
         GraphQL::Directives::SkipDirective.new
       ]
+
+      # an instance of `GraphQL::TypeValidation`
+      # used for validating inputs against the
+      # schema definition
       @type_validation : GraphQL::TypeValidation
 
-      @input_types = Hash(String, InputType.class).new
 
       #
       # Takes a parsed GraphQL schema definition
@@ -57,13 +70,7 @@ module GraphQL
         schema, @types, @directive_definitions = extract_elements
 
         # substitute TypeNames with type definition
-        @query = @types[schema.query]?.as(Language::ObjectTypeDefinition?)
-        @query_resolver.is_a?(ResolverObject) && @query_resolver.as(ResolverObject).name = schema.query
-
-        if schema.mutation
-          @mutation = @types[schema.mutation]?.as(Language::ObjectTypeDefinition?)
-          @mutation_resolver.is_a?(ResolverObject) && @mutation_resolver.as(ResolverObject).name = schema.mutation.not_nil!
-        end
+        @query_definition = @types[schema.query]?.as(Language::ObjectTypeDefinition?)
 
         @type_validation = GraphQL::TypeValidation.new(@types)
       end
@@ -90,19 +97,17 @@ module GraphQL
         @input_types[name] = type
       end
 
-      # @deprecated
-      def type_resolve(type_name : String)
-        @types[type_name]
-      end
-
-      # @deprecated
-      def type_resolve(type : Language::TypeName)
-        @types[type.name]
-      end
-
-      # @deprecated
-      def type_resolve(type)
-        type
+      # get a type definition
+      #
+      def type_resolve(type : String | Language::AbstractNode)
+        case type
+        when String
+          @types[type]
+        when Language::TypeName
+          @types[type.name]
+        else
+          type
+        end
       end
 
       private def extract_elements(node = @document)
@@ -139,20 +144,6 @@ module GraphQL
         self
       end
 
-      def query(name, &block : Hash(String, ReturnType) -> _ )
-        qrslv = @query_resolver
-        if qrslv.is_a? ResolverObject
-          qrslv.cb_hash[name.to_s] = cast_wrap_block(&block)
-        end
-      end
-
-      def mutation(name, &block : Hash(String, ReturnType) -> _ )
-        qrslv = @mutation_resolver
-        if qrslv.is_a? ResolverObject
-          qrslv.cb_hash[name.to_s] = cast_wrap_block(&block)
-        end
-      end
-
       private def cast_wrap_block(&block : Hash(String, ReturnType) -> _)
         Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType).new do |args, context|
           res = context.with_self args, &block
@@ -163,24 +154,5 @@ module GraphQL
       end
 
     end
-
-    #
-    # A wrapper for the
-    # resolve callbacks of the schema
-    class ResolverObject
-      include GraphQL::ObjectType
-      property :cb_hash, :name
-      @name = ""
-      @cb_hash = Hash(String, Proc(Hash(String, ReturnType), GraphQL::Schema::Context, QueryReturnType)).new
-
-      graphql_type { @name }
-
-      def resolve_field(name, args, context)
-        cb = (@cb_hash[name]?)
-        cb ? cb.call(args, context) : super(name, args, context)
-      end
-
-    end
-
   end
 end

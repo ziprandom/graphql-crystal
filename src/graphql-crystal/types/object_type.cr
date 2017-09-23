@@ -84,6 +84,17 @@ macro on_included
   end
 end
 
+macro def_graphql_type(extended = false)
+  {% unless @type.methods.any? &.name.==("graphql_type")%}
+    #
+    # get the GraphQL name of this object.
+    # defaults to the class name
+    #
+    def {{extended ? "self.".id : "".id}}graphql_type
+      "{{@type.name.gsub(/^(.*::)/, "")}}"
+    end
+  {% end%}
+end
 
 module GraphQL
   #
@@ -121,7 +132,7 @@ module GraphQL
     # defaults to the class name
     #
     def graphql_type
-      self.class.to_s
+      {{@type.name.gsub(/^(.*::)/, "").stringify}}
     end
 
     #

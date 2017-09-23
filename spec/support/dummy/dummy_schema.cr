@@ -10,7 +10,7 @@ require "../../../src/graphql-crystal/schema";
 
 module Dummy
 
-  module QueryType
+  module DairyAppQuery
     include ::GraphQL::ObjectType
     extend self
 
@@ -40,7 +40,7 @@ module Dummy
     field :deepNonNull { nil }
   end
 
-  module MutationType
+  module DairyAppMutation
     include ::GraphQL::ObjectType
     extend self
 
@@ -55,7 +55,7 @@ module Dummy
   end
 
   Schema = GraphQL::Schema.from_schema(Dummy::SCHEMA_STRING)
-  Schema.query_resolver = QueryType
-  Schema.mutation_resolver = MutationType
+  Schema.query_resolver = DairyAppQuery
+  Schema.mutation_resolver = DairyAppMutation
 
 end
