@@ -195,4 +195,47 @@ describe "my graphql schema" do
                     }
                   })
   end
+
+  it "does introspection" do
+
+    query_string = %{
+      {
+        __schema {
+          types {
+            name
+          }
+        }
+      }
+    }
+
+
+    schema.execute(query_string)
+      .should eq ({
+                    "data" => {
+                      "__schema" => {
+                        "types" => [
+                          {"name" => "String"},
+                          {"name" => "Boolean"},
+                          {"name" => "Int"},
+                          {"name" => "Float"},
+                          {"name" => "ID"},
+                          {"name" => "QueryType"},
+                          {"name" => "MutationType"},
+                          {"name" => "PostInput"},
+                          {"name" => "UserType"},
+                          {"name" => "PostType"},
+                          {"name" => "__Schema"},
+                          {"name" => "__Type"},
+                          {"name" => "__Field"},
+                          {"name" => "__InputValue"},
+                          {"name" => "__EnumValue"},
+                          {"name" => "__Directive"},
+                          {"name" => "__TypeKind"},
+                          {"name" => "__DirectiveLocation"}
+                        ]
+                      }
+                    }
+                  }
+                 )
+  end
 end

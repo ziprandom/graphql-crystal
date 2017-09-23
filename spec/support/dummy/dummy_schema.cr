@@ -9,13 +9,18 @@ require "../../../src/graphql-crystal/schema";
 # end
 
 module Dummy
-  Schema = GraphQL::Schema.from_schema(Dummy::SCHEMA_STRING).resolve do
-#    query :cheese { |args| fetchItem(Cheese, CHEESES).call(args.as(Hash(String,JSON::Type))) }
-#    query :milk { |args| fetchItem(Milk, MILKS).call(args.as(Hash(String,JSON::Type))) }
-    query :dairy { DAIRY }
-    query :favouriteEdible { MILKS[1] }
-    query :cow { COW }
-    query :searchDairy do |args|
+
+  module QueryType
+    include ::GraphQL::ObjectType
+    extend self
+
+    #    field :cheese { |args| fetchItem(Cheese, CHEESES).call(args.as(Hash(String,JSON::Type))) }
+    #    field :milk { |args| fetchItem(Milk, MILKS).call(args.as(Hash(String,JSON::Type))) }
+
+    field :dairy { DAIRY }
+    field :favouriteEdible { MILKS[1] }
+    field :cow { COW }
+    field :searchDairy do |args|
       source = args["product"].as(Array).first.as(Hash)["source"]
       products = CHEESES.values + MILKS.values
       if source
@@ -24,22 +29,33 @@ module Dummy
         products.first
       end
     end
-    query :allDairy do |args|
+    field :allDairy do |args|
       result = CHEESES.values + MILKS.values
     end
 
-    query :allEdible { CHEESES.values + MILKS.values }
-    query :error { raise("This error was raised on purpose") }
-    query :executionError { raise("I don't have a dedicated ExecutionErrorObject :(" ) }
-    query :maybeNull { Dummy::MAYBE_NULL }
-    query :deepNonNull { nil }
+    field :allEdible { CHEESES.values + MILKS.values }
+    field :error { raise("This error was raised on purpose") }
+    field :executionError { raise("I don't have a dedicated ExecutionErrorObject :(" ) }
+    field :maybeNull { Dummy::MAYBE_NULL }
+    field :deepNonNull { nil }
+  end
 
-    mutation :pushValue do |args|
+  module MutationType
+    include ::GraphQL::ObjectType
+    extend self
+
+    field :pushValue do |args|
       args["value"]
     end
 
-    mutation :replaceValues do |args|
+    field :replaceValues do |args|
       CHEESES.values + MILKS.values
     end
+
   end
+
+  Schema = GraphQL::Schema.from_schema(Dummy::SCHEMA_STRING)
+  Schema.query_resolver = QueryType
+  Schema.mutation_resolver = MutationType
+
 end

@@ -2,6 +2,21 @@ module GraphQL
   module Schema
     module Introspection
 
+      class IntrospectionObject
+        include ObjectType
+        def initialize(@schema : GraphQL::Schema::Schema, @query_resolver : GraphQL::ObjectType); end
+        def resolve_field(name, args, context)
+          case name
+          when "__schema"
+            @schema
+          when "__type"
+            @schema.types[args["name"]]
+          else
+            @query_resolver.resolve_field(name, args, context)
+          end
+        end
+      end
+
       macro included
         include ObjectType
 
@@ -45,12 +60,13 @@ module GraphQL
                 "__type", [
                   Language::InputValueDefinition.new(
                   name: "name", type: Language::TypeName.new(name: "String"), default_value: nil,
-                  directives: [] of Language::Directive, description: ""
-                )
+                  directives: [] of Language::Directive, description: "")
                 ], Language::TypeName.new(name: "__Type"), Array(Language::Directive).new,
                 "query a specific type in the schema by name"
               )
             end
+
+            # deprecated
             # add the callback for
             # the schema field of
             # the root query
@@ -60,6 +76,14 @@ module GraphQL
             query(:__type) do |args|
               @types[args["name"]]
             end
+          end
+
+          #
+          # Wrap the Root Query in the IntrospectionObject
+          # to intercept calls to __schema and __type field
+          def query_resolver=(query : ObjectType)
+            intro_object = IntrospectionObject.new(self, query)
+            @query_resolver = intro_object
           end
         end
 
