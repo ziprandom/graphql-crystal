@@ -1,103 +1,112 @@
 # use compile time finalized  version
-require "../src/graphql-crystal/language/parser"
-require "../src/graphql-crystal/language/lexer"
+require "../src/graphql-crystal"
 require "./lib/libragphqlparserC"
 require "benchmark"
 
-schema_string = <<-schema
+schema_string = <<-schema_string
   schema {
     query: QueryType
-    mutation: MutationType
   }
 
-  # Union description
-  union AnnotatedUnion @onUnion = A | B
-
-  type Foo implements Bar {
-    one: Type
-    two(argument: InputType!): Type
-    three(argument: InputType, other: String): Int
-    four(argument: String = "string"): String
-    five(argument: [String] = ["string", "string"]): String
-    six(argument: InputType = {key: "value"}): Type
-    seven(argument: String = null): Type
+  # One of the Movies
+  enum Episode {
+    # Episode IV: A New Hope
+    NEWHOPE
+    # Episode V: The Empire Strikes Back
+    EMPIRE
+    # Episode VI: Return of the Jedi
+    JEDI
   }
 
-  # Scalar description
-  scalar CustomScalar
-
-  type AnnotatedObject @onObject(arg: "value") {
-    annotatedField(arg: Type = "default" @onArg): Type @onField
+  type QueryType {
+    # Get the main hero of an episode
+    hero(episode: Episode): Character
+    # Get Humans by Id
+    humans(ids: [String]): [Human]
+    # Get a Human by Id
+    human(id: String!): Human
+    # Get a Droid by Id
+    droid(id: String!): Droid
   }
 
-  interface Bar {
-    one: Type
-    four(argument: String = "string"): String
+  # A Star Wars Character
+  interface Character {
+    # The id of the character
+    id: String
+
+    # The name of the character
+    name: String
+
+    # The friends of the character or
+    # an empty list if the have none
+    friends: [Character]
+    # Which movies they appear in
+    appearsIn: [Episode]
+    # All secrets about their past
+    secretBackstory: String
   }
 
-  # Enum description
-  enum Site {
-    # Enum value description
-    DESKTOP
-    MOBILE
+  # A humanoid Star Wars Character
+  type Human implements Character {
+    # the home planet of the
+    # human, or null if unknown
+    homePlanet: String
   }
 
-  interface AnnotatedInterface @onInterface {
-    annotatedField(arg: Type @onArg): Type @onField
+  # A robotic Star Wars Character
+  type Droid implements Character {
+    # The primary function of the droid
+    primaryFunction: String
   }
 
-  union Feed = Story | Article | Advert
+schema_string
 
-  # Input description
-  input InputType {
-    key: String!
-    answer: Int = 42
+query_string = <<-query_string
+{
+  firstUser: user(id: 0) {
+    ... userFields
+  },
+  secondUser: user(id: 1) {
+    ... userFields
   }
+}
+fragment userFields on User {
+  id, name
+}
+query_string
 
-  union AnnotatedUnion @onUnion = A | B
-
-  scalar CustomScalar
-
-  # Directive description
-  directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
-
-  scalar AnnotatedScalar @onScalar
-
-  enum Site {
-    DESKTOP
-    MOBILE
-  }
-
-  enum AnnotatedEnum @onEnum {
-    ANNOTATED_VALUE @onEnumValue
-    OTHER_VALUE
-  }
-
-  input InputType {
-    key: String!
-    answer: Int = 42
-  }
-
-  input AnnotatedInput @onInputObjectType {
-    annotatedField: Type @onField
-  }
-
-  directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
-
-  directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
-schema
+puts GraphQL::Language::Parser.parse(
+      GraphQL::Language::Lexer.lex(schema_string)
+    ).as(GraphQL::Language::Document).to_query_string
+puts GraphQL::Language::Parser.parse(
+      GraphQL::Language::Lexer.lex(query_string)
+    ).as(GraphQL::Language::Document).to_query_string
 
 # Parse the Schema to a Document ASTNode
 Benchmark.ips(warmup: 4, calculation: 10) do |x|
 
-  x.report("c implementation from facebook: ") {
+  x.report("SCHEMA String: c implementation from facebook: ") {
     GraphQLParser.parse_string(schema_string, nil)
   }
 
-  x.report("cltk based implementation: ") {
+  x.report("SCHEMA String: cltk based implementation: ") {
     GraphQL::Language::Parser.parse(
       GraphQL::Language::Lexer.lex(schema_string)
     )
   }
 
+end
+
+# Parse the Schema to a Document ASTNode
+Benchmark.ips(warmup: 4, calculation: 10) do |x|
+
+  x.report("QUERY String: c implementation from facebook: ") {
+    GraphQLParser.parse_string(query_string, nil)
+  }
+
+  x.report("QUERY String: cltk based implementation: ") {
+    GraphQL::Language::Parser.parse(
+      GraphQL::Language::Lexer.lex(query_string)
+    )
+  }
 end
