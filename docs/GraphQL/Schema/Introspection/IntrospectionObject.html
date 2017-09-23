@@ -340,11 +340,6 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
-      <a href="../../../GraphQL/Schema/ResolverObject.html">ResolverObject</a>
-      
-    </li>
-  
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema" data-name="graphql::schema::schema">
       <a href="../../../GraphQL/Schema/Schema.html">Schema</a>
       
@@ -407,6 +402,12 @@
 
 
 
+  <h2>Overview</h2>
+
+  <p>Wrap an ObjectType intercepting field
+resolution for <code>__schema</code> and <code>__type</code>
+keys</p>
+
 
 
 
@@ -430,7 +431,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/f73a38c96cbfb8688384a4f3abb88f930b8f14fe/src/graphql-crystal/schema/schema_introspection.cr#L5" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L10" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
     
     <br/>
   
@@ -455,7 +456,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28schema%3AGraphQL%3A%3ASchema%3A%3ASchema%2Cquery_resolver%3AGraphQL%3A%3AObjectType%29-class-method" class="signature"><strong>.new</strong>(schema : GraphQL::Schema::Schema, query_resolver : GraphQL::ObjectType)</a>
+        <a href="#new%28schema%3AGraphQL%3A%3ASchema%3A%3ASchema%2Cquery_resolver%29-class-method" class="signature"><strong>.new</strong>(schema : GraphQL::Schema::Schema, query_resolver)</a>
         
       </li>
     
@@ -469,6 +470,31 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#graphql_type-instance-method" class="signature"><strong>#graphql_type</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mutation_resolver-instance-method" class="signature"><strong>#mutation_resolver</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mutation_resolver%3D%28mutation_resolver%29-instance-method" class="signature"><strong>#mutation_resolver=</strong>(mutation_resolver)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#query_resolver%3AGraphQL%3A%3AObjectType-instance-method" class="signature"><strong>#query_resolver</strong> : GraphQL::ObjectType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#query_resolver%3D%28query_resolver%29-instance-method" class="signature"><strong>#query_resolver=</strong>(query_resolver)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#resolve_field%28name%3AString%2Carguments%2Ccontext%3AGraphQL%3A%3ASchema%3A%3AContext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name : String, arguments, context : GraphQL::Schema::Context)</a>
         
           <div class="summary"><p>resolve a named field on this object with query arguments and context </p></div>
@@ -477,6 +503,11 @@
     
       <li class="entry-summary">
         <a href="#resolve_field%28name%2Cargs%2Ccontext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name, args, context)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#schema%3D%28schema%29-instance-method" class="signature"><strong>#schema=</strong>(schema)</a>
         
       </li>
     
@@ -571,18 +602,18 @@
 
   <h2>Constructor Detail</h2>
   
-    <div class="entry-detail" id="new&#40;schema:GraphQL::Schema::Schema,query_resolver:GraphQL::ObjectType&#41;-class-method">
+    <div class="entry-detail" id="new&#40;schema:GraphQL::Schema::Schema,query_resolver&#41;-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(schema : <a href="../../../GraphQL/Schema/Schema.html">GraphQL::Schema::Schema</a>, query_resolver : <a href="../../../GraphQL/ObjectType.html">GraphQL::ObjectType</a>)
+        def self.<strong>new</strong>(schema : <a href="../../../GraphQL/Schema/Schema.html">GraphQL::Schema::Schema</a>, query_resolver)
 
-        <a class="method-permalink" href="#new%28schema%3AGraphQL%3A%3ASchema%3A%3ASchema%2Cquery_resolver%3AGraphQL%3A%3AObjectType%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28schema%3AGraphQL%3A%3ASchema%3A%3ASchema%2Cquery_resolver%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/f73a38c96cbfb8688384a4f3abb88f930b8f14fe/src/graphql-crystal/schema/schema_introspection.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -593,6 +624,86 @@
 
 
   <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="graphql_type-instance-method">
+      <div class="signature">
+        
+        def <strong>graphql_type</strong>
+
+        <a class="method-permalink" href="#graphql_type-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mutation_resolver-instance-method">
+      <div class="signature">
+        
+        def <strong>mutation_resolver</strong>
+
+        <a class="method-permalink" href="#mutation_resolver-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mutation_resolver&#61;&#40;mutation_resolver&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>mutation_resolver=</strong>(mutation_resolver)
+
+        <a class="method-permalink" href="#mutation_resolver%3D%28mutation_resolver%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="query_resolver:GraphQL::ObjectType-instance-method">
+      <div class="signature">
+        
+        def <strong>query_resolver</strong> : <a href="../../../GraphQL/ObjectType.html">GraphQL::ObjectType</a>
+
+        <a class="method-permalink" href="#query_resolver%3AGraphQL%3A%3AObjectType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="query_resolver&#61;&#40;query_resolver&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>query_resolver=</strong>(query_resolver)
+
+        <a class="method-permalink" href="#query_resolver%3D%28query_resolver%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
   
     <div class="entry-detail" id="resolve_field&#40;name:String,arguments,context:GraphQL::Schema::Context&#41;-instance-method">
       <div class="signature">
@@ -621,7 +732,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/f73a38c96cbfb8688384a4f3abb88f930b8f14fe/src/graphql-crystal/schema/schema_introspection.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="schema&#61;&#40;schema&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>schema=</strong>(schema)
+
+        <a class="method-permalink" href="#schema%3D%28schema%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/52be2f248c83d07031cc5ff2eab1bb51fd990ab8/src/graphql-crystal/schema/schema_introspection.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>

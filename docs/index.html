@@ -340,11 +340,6 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/ResolverObject" data-name="graphql::schema::resolverobject">
-      <a href="GraphQL/Schema/ResolverObject.html">ResolverObject</a>
-      
-    </li>
-  
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema" data-name="graphql::schema::schema">
       <a href="GraphQL/Schema/Schema.html">Schema</a>
       
@@ -663,7 +658,7 @@ end</code></pre>
 
 <h2>Parser Performance</h2>
 
-<p>The parser has been implemented using my <a href="https://github.com/ziprandom/cltk" target="_blank">crystal language toolkit</a> and does not have optimal performance atm.</p>
+<p>The parser has been implemented using my <a href="https://github.com/ziprandom/cltk" target="_blank">crystal language toolkit</a> and is significantly slower than the c implementation for larger schema strings while performing ok on smaller query strings. See <a href="benchmark/compare_benchmarks.cr" target="_blank">benchmark/compare_benchmarks.cr</a> for the strings used in the test.</p>
 
 <p>To compare the performance of the Parser with <a href="https://github.com/graphql/libgraphqlparser" target="_blank">facebooks GraphQL parser</a> you need to have the library installed on your machine. Then run</p>
 
@@ -671,8 +666,10 @@ end</code></pre>
 
 <h3>Recent Results:</h3>
 
-<pre><code class='language-sh'>c implementation from facebook:   47.29k ( 21.15µs) (± 0.70%)       fastest
-     cltk based implementation:  904.46  (  1.11ms) (± 0.96%) 52.28× slower</code></pre>
+<pre><code class='language-sh'>SCHEMA String: c implementation from facebook:   64.87k ( 15.41µs) (± 1.89%)       fastest
+     SCHEMA String: cltk based implementation:     1.4k (713.07µs) (± 8.29%) 46.26× slower
+QUERY String: c implementation from facebook:   16.63k ( 60.13µs) (± 2.00%)       fastest
+     QUERY String: cltk based implementation:    5.62k ( 178.0µs) (± 4.34%)  2.96× slower</code></pre>
 
 <h2>Development</h2>
 
