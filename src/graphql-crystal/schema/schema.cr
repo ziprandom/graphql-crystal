@@ -29,8 +29,8 @@ module GraphQL
     #
     class Schema
       include GraphQL::Schema::Introspection
-      getter :types, :directive_middlewares, :directive_definitions,
-             :query_resolver, :mutation_resolver, :max_depth
+      getter :types, :directive_middlewares,
+             :directive_definitions, :max_depth
       property :query_resolver, :mutation_resolver
 
       # max recursive execution depth
