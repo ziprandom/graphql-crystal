@@ -11,8 +11,8 @@ module GraphQL
       )
 
       #
-      # Initializer recursivly casts params to JSON::Type
-      # `document`: a parsed query
+      # execute a query against the schema
+      # `document`: a string representing the query to be executed
       # `params`: *optional* the query variables as a Hash
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
@@ -21,22 +21,22 @@ module GraphQL
       end
 
       #
-      # Initializer recursivly casts params to JSON::Type
+      # execute a query against the schema
       # `document`: a parsed query
       # `params`: *optional* the query variables as a Hash
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : Language::Document, params, context)
+      def execute(document : Language::Document, params, context = Context.new(self, max_depth))
         execute(document, cast_to_jsontype(params), context)
       end
 
       #
-      # Initializer recursivly casts params to JSON::Type
+      # execute a query against the schema
       # `document`: a parsed query
       # `params`: *optional* the query variables as a Hash
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : Language::Document, params : Hash(String, JSON::Type)?, context)
+      def execute(document : Language::Document, params : Hash(String, JSON::Type)?, context = Context.new(self, max_depth))
         queries, mutations, fragments = extract_request_parts(document)
         context.fragments = fragments
         query = (queries + mutations).first
