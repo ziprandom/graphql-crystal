@@ -63,7 +63,8 @@ module GraphQL
             # keep the original query within the
             # array used for introspection
             @original_types = types.values.compact_map do |t|
-              t.name == @query_definition ? @original_query_definition : t
+              ( t.name == @query_definition.try &.name ) ?
+                @original_query_definition : t
             end
 
             # add the schema field to the root query of
