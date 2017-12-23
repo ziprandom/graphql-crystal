@@ -53,7 +53,7 @@ macro on_included
         #
         # resolve a named field on this object with query arguments and context
         #
-        def resolve_field(name : String, arguments, context : GraphQL::Schema::Context)
+        def resolve_field(name : String, arguments, context : ::GraphQL::Schema::Context)
           \\{% prev_def = @type.methods.find(&.name.==("resolve_field")) %}
           \\{% if !GRAPHQL_FIELDS.empty? %}
               case name
@@ -85,7 +85,7 @@ macro on_included
 end
 
 macro def_graphql_type(extended = false)
-  {% unless @type.methods.any? &.name.==("graphql_type")%}
+  {% unless @type.methods.any? &.name.==("graphql_type") %}
     #
     # get the GraphQL name of this object.
     # defaults to the class name
@@ -93,7 +93,7 @@ macro def_graphql_type(extended = false)
     def {{extended ? "self.".id : "".id}}graphql_type
       "{{@type.name.gsub(/^(.*::)/, "")}}"
     end
-  {% end%}
+  {% end %}
 end
 
 module GraphQL
@@ -126,7 +126,6 @@ module GraphQL
   # ```
   #
   module ObjectType
-
     #
     # get the GraphQL name of this object.
     # defaults to the class name
@@ -154,7 +153,7 @@ module GraphQL
     # used in introspection queries.
     #
     macro graphql_type(&block)
-      {% if block.is_a?(Block)%}
+      {% if block.is_a?(Block) %}
         def graphql_type
           {{block.body}}
         end
