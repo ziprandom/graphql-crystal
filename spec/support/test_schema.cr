@@ -1,5 +1,5 @@
 # coding: utf-8
-require "../src/graphql-crystal/schema"
+require "../../src/graphql-crystal/schema"
 
 module TestSchema
 

@@ -5,6 +5,20 @@ require "../types/object_type"
 module GraphQL
   module Language
 
+    macro define_array_cast(type)
+      def self.to_{{type.id.downcase}}(value : Array) : {{type.id}}
+        _values = [] of {{type.id}}
+        value.each do |val|
+          _values << to_{{type.id.downcase}}(val)
+        end
+        _values
+      end
+
+      def self.to_{{type.id.downcase}}(value) {{type.id}}
+        value.as({{type.id}})
+      end
+    end
+
     class AbstractNode < CLTK::ASTNode
       # this works only if the module
       # gets included in the class exactly
@@ -78,6 +92,8 @@ module GraphQL
 
     alias FValue = String | Int32 | Float64 | Bool |  Nil | AEnum | InputObject | Array(FValue) | Hash(String, FValue)
 
+    define_array_cast(FValue)
+
     alias Type = TypeName | NonNullType | ListType
     alias Selection = Field | FragmentSpread | InlineFragment
 
@@ -87,6 +103,8 @@ module GraphQL
     end
 
     alias ArgumentValue = ReturnType | InputObject | VariableIdentifier | Array(ArgumentValue)
+
+    define_array_cast(ArgumentValue)
 
     class Argument < AbstractNode
       values({name: String, value: ArgumentValue})

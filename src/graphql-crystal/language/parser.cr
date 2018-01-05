@@ -161,20 +161,11 @@ module GraphQL
         clause("LPAREN .argument* RPAREN") { |list| list }
       end
 
-      def self.argument_value_prepare(value)
-        case value
-        when Array
-          value.map { |v| argument_value_prepare(v).as(ArgumentValue) }
-        else
-          value
-        end.as(ArgumentValue)
-      end
-
       production(:argument) do
         clause(".name COLON .input_value") do |name, value|
           Argument.new(
             name: name,
-            value: argument_value_prepare(value)
+            value: Language.to_argumentvalue(value)
           )
         end
       end
@@ -212,10 +203,7 @@ module GraphQL
 
       production(:object_value_field) do
         clause(".name COLON .input_value") do |name, value|
-          cvalue = (
-            value.is_a?(Array) ? value.map { |v| v.as(ArgumentValue) } : value
-          ).as(ArgumentValue)
-          Argument.new(name: name, value: cvalue)
+          Argument.new(name: name, value: Language.to_argumentvalue(value))
         end
       end
 
@@ -323,8 +311,7 @@ module GraphQL
         clause(
           ".comments? .name COLON .type .default_value? .directive*") do |comment, name, type, default_value, directives|
           InputValueDefinition.new(
-            name: name, type: type,
-            default_value: (default_value.is_a?(Array) ? default_value.map &.as(FValue) : default_value).as(FValue),
+            name: name, type: type, default_value: Language.to_fvalue(default_value),
             directives: directives, description: comment)
         end
       end
@@ -376,7 +363,7 @@ module GraphQL
       end
 
       production(:directive_definition) do
-        clause (
+        clause(
           "DIRECTIVE DIR_SIGN .name .arguments_definitions? ON .directive_locations"
         ) do |name, arguments, locations|
           DirectiveDefinition.new(name: name, arguments: arguments, locations: locations, description: nil)
