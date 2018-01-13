@@ -2,7 +2,6 @@
 module GraphQL
   module Schema
     class Schema
-
       private TYPE_NAME_FIELD = Language::FieldDefinition.new(
         name: "__typename", type: Language::TypeName.new(name: "String"),
         arguments: Array(Language::InputValueDefinition).new,
@@ -10,64 +9,93 @@ module GraphQL
         description: "the name of this GraphQL type"
       )
 
+      alias ExecuteParams = Hash(String, JSON::Type) | Hash(String, String | Hash(String, JSON::Type | Nil))
+
+      #
+      # execute a query against the schema
+      # `params`: the Hash with main data
+      # `context`: *optional* a custom context to be injected in
+      #            field callbacks.
+      def execute(params = ExecuteParams, context = Context.new(self, max_depth))
+        document = params["query"]?.as(String)
+        variables = params["variables"]?.as(Hash(String, JSON::Type)?)
+        operation_name = params["operationName"]?.as(String?)
+
+        execute(Language.parse(document), variables, operation_name, context)
+      end
+
       #
       # execute a query against the schema
       # `document`: a string representing the query to be executed
       # `params`: *optional* the query variables as a Hash
+      # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : String, params = nil, context = Context.new(self, max_depth) )
-        execute(Language.parse(document), params, context)
+      def execute(document : String, params = nil, operation_name = nil, context = Context.new(self, max_depth))
+        execute(Language.parse(document), params, operation_name, context)
       end
 
       #
       # execute a query against the schema
       # `document`: a parsed query
       # `params`: *optional* the query variables as a Hash
+      # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : Language::Document, params, context = Context.new(self, max_depth))
-        execute(document, cast_to_jsontype(params), context)
+      def execute(document : Language::Document, params, operation_name = nil, context = Context.new(self, max_depth))
+        execute(document, cast_to_jsontype(params), operation_name, context)
       end
 
       #
       # execute a query against the schema
       # `document`: a parsed query
       # `params`: *optional* the query variables as a Hash
+      # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : Language::Document, params : Hash(String, JSON::Type)?, context = Context.new(self, max_depth))
+      def execute(document : Language::Document, params : Hash(String, JSON::Type)?, operation_name : String?, context = Context.new(self, max_depth))
         queries, mutations, fragments = extract_request_parts(document)
         context.fragments = fragments
-        query = (queries + mutations).first
+        operations = (queries + mutations)
+        query =
+          if operations.size > 1
+            operation = operations.find { |operation| operation.name == operation_name }
+          else
+            operations.first
+          end
+        return {"errors" => [{"message" => "Must provide a valid operation name if query contains multiple operations.", "path" => [] of String}]} unless query
+
         begin
           substitute_variables_from_params(query, params ? params : {} of String => JSON::Type)
         rescue e : Exception
           # we hit an error while resolving fragments
           # no path info atm
-          return { "data" => nil, "errors" => [{ "message" => e.message, "path" => [] of String}]}
+          return {"data" => nil, "errors" => [{"message" => e.message, "path" => [] of String}]}
         end
 
-        root_element, root_element_definition = query.operation_type == "query" ?
-                         {query_resolver, @types[query_resolver.try &.graphql_type]} :
-                            {mutation_resolver, @types[mutation_resolver.try &.graphql_type]}
+        root_element, root_element_definition =
+          if query.operation_type == "query"
+            {query_resolver, @types[query_resolver.try &.graphql_type]}
+          else
+            {mutation_resolver, @types[mutation_resolver.try &.graphql_type]}
+          end
 
         result, errors = resolve_selections_for(
-                  root_element_definition,
-                  query.selections,
-                  root_element, context
-                )
+          root_element_definition,
+          query.selections,
+          root_element, context
+        )
 
-        res = { "data" => result }
+        res = {"data" => result}
 
-        if ( errors.any? )
+        if (errors.any?)
           error_hash = errors.map do |e|
             ["message", "path"].reduce(nil) do |m, k|
               pair = {k => e[k]}
               m ? m.merge(pair) : pair
             end
           end
-          res.merge({ "errors" => error_hash })
+          res.merge({"errors" => error_hash})
         else
           res
         end
@@ -109,7 +137,7 @@ module GraphQL
           )
           _resolve_selections_for(field_definition, _selections, resolved, context)
         rescue e
-          {nil, [Error.new(message: e.message.as(String), path: [] of Int32|String)]}
+          {nil, [Error.new(message: e.message.as(String), path: [] of Int32 | String)]}
         end
       end
 
@@ -117,17 +145,16 @@ module GraphQL
       # Resolve an ObjectTypeDefinition
       #
       private def _resolve_selections_for(
-            object_type : Language::ObjectTypeDefinition,
-            selections : Array(Language::Selection), resolved : ObjectType, context
-          ) : Tuple( ReturnType, Array(Error) )
-
+        object_type : Language::ObjectTypeDefinition,
+        selections : Array(Language::Selection), resolved : ObjectType, context
+      ) : Tuple(ReturnType, Array(Error))
         context = context.dup
         context.depth += 1
 
         if context.max_depth && context.depth > context.max_depth.not_nil!
           return ({
             nil,
-            [Error.new(message: "max execution depth reached", path: [] of String|Int32)]
+            [Error.new(message: "max execution depth reached", path: [] of String | Int32)],
           })
         end
 
@@ -146,8 +173,8 @@ module GraphQL
         if prepared_selections.empty?
           errors << Error.new(
             message: "no selections found for this field! maybe you forgot to define an \
-                          inline fragment for this type in a union?",
-            path: [] of (String|Int32)
+                                inline fragment for this type in a union?",
+            path: [] of (String | Int32)
           )
           return nil, errors
         end
@@ -157,26 +184,25 @@ module GraphQL
         #
         available_fields = object_type.fields +
                            object_type.interfaces.map do |iface_name|
-          @types[iface_name].as(Language::InterfaceTypeDefinition).fields
-        end.flatten + [TYPE_NAME_FIELD]
+                             @types[iface_name].as(Language::InterfaceTypeDefinition).fields
+                           end.flatten + [TYPE_NAME_FIELD]
 
         #
         # Iterate selections fields, validate & resolve
         #
-        prepared_selections.map( &.as(Language::Field) ).each do |selection|
+        prepared_selections.map(&.as(Language::Field)).each do |selection|
           # field name to use
           field_name = selection._alias || selection.name
 
           # get field_definition from definition
           # set result to nil and add error if
           # not present
-          if !( field_definition = available_fields.find(
-                  &.as(Language::FieldDefinition).name.==(selection.name)) )
+          if !(field_definition = available_fields.find(&.as(Language::FieldDefinition).name.==(selection.name)))
             result[field_name] = nil
 
             errors << Error.new(
               message: "field not defined.",
-              path:  Array(String|Int32).new.unshift field_name
+              path: Array(String | Int32).new.unshift field_name
             )
             next
           end
@@ -188,11 +214,11 @@ module GraphQL
             resolved, context
           ) do |_field_definition, _selections, _resolved, _context|
             _result, _errors = resolve_selections_for(
-                       field_definition, [selection],
-                       resolved, context
-                     )
+              field_definition, [selection],
+              resolved, context
+            )
             errors += _errors.map do |e|
-              Error.new( message: e[:message], path: [field_name] + e[:path] )
+              Error.new(message: e[:message], path: [field_name] + e[:path])
             end
 
             result[field_name] = _result.as(ReturnType)
@@ -204,9 +230,9 @@ module GraphQL
       end
 
       private def _resolve_selections_for(
-            field_definition : Language::FieldDefinition,
-            selections : Array, resolved : ObjectType, context
-          )
+        field_definition : Language::FieldDefinition,
+        selections : Array, resolved : ObjectType, context
+      )
         errors = [] of Error
         # validate arguments and substitute with
         # default values if necessary
@@ -218,23 +244,23 @@ module GraphQL
           else
             raise "this sould not have happened"
           end
-        rescue e: Exception
+        rescue e : Exception
           errors << Error.new(
             message: e.message || "argument error",
-            path: Array(String|Int32).new
+            path: Array(String | Int32).new
           )
           return {nil, errors}
         end
 
         resolved = begin
-                     resolved.resolve_field(selection.name, final_args, context)
-                   rescue e: Exception
-                     errors << Error.new(
-                       message: e.message || "internal server error",
-                       path: [] of Int32|String
-                     )
-                     return {nil, errors}
-                   end
+          resolved.resolve_field(selection.name, final_args, context)
+        rescue e : Exception
+          errors << Error.new(
+            message: e.message || "internal server error",
+            path: [] of Int32 | String
+          )
+          return {nil, errors}
+        end
 
         field_type = field_definition.type
 
@@ -243,10 +269,10 @@ module GraphQL
         end
 
         result, _errors =
-             resolve_selections_for(
-               field_type, selection.selections,
-               resolved, context
-             )
+          resolve_selections_for(
+            field_type, selection.selections,
+            resolved, context
+          )
 
         {result, errors + _errors}
       end
@@ -255,28 +281,28 @@ module GraphQL
       # Resolve a TypeName
       #
       private def _resolve_selections_for(
-            field_type : Language::TypeName, selections : Array(Language::Selection), resolved, context
-          ) : Tuple(ReturnType, Array(Error))
+        field_type : Language::TypeName, selections : Array(Language::Selection), resolved, context
+      ) : Tuple(ReturnType, Array(Error))
         type_definition = @types[field_type.name]
         case type_definition
         # we can directly apply the selections
         when Language::ObjectTypeDefinition
           resolve_selections_for(type_definition, selections, resolved, context)
-        # we need to derive the type from the actual object
+          # we need to derive the type from the actual object
         when Language::UnionTypeDefinition, Language::InterfaceTypeDefinition
           if resolved.is_a? ObjectType
             # FixMe: this needs to be more flexible of course
             concrete_definition = @types[resolved.as(ObjectType).graphql_type]
             resolve_selections_for(concrete_definition, selections, resolved, context)
           end
-        # we already hold the results in our hands :)
+          # we already hold the results in our hands :)
         when Language::EnumTypeDefinition
-            { resolved.to_s, [] of Error }
+          {resolved.to_s, [] of Error}
         when Language::ScalarTypeDefinition
           if resolved.is_a?(ReturnType)
-            { resolved.as(ReturnType), [] of Error }
+            {resolved.as(ReturnType), [] of Error}
           else
-            { nil, [] of Error }
+            {nil, [] of Error}
           end
         else
           raise "this type? #{type_definition.inspect}"
@@ -287,7 +313,7 @@ module GraphQL
       # Resolve a ListType
       #
       private def _resolve_selections_for(field_type : Language::ListType, selections : Array(Language::Selection),
-                                 resolved : Array, context) : Tuple(ReturnType, Array(Error))
+                                          resolved : Array, context) : Tuple(ReturnType, Array(Error))
         errors = Array(Error).new
         inner_type = field_type.of_type
 
@@ -297,10 +323,10 @@ module GraphQL
           res.as(ReturnType)
         end.as(ReturnType)
 
-        { result, errors }
+        {result, errors}
       end
 
-      def wrap_cb(resolved : ObjectType )
+      def wrap_cb(resolved : ObjectType)
         ->(name : String, args : Hash(String, ReturnType), context : GraphQL::Schema::Context) {
           cast_to_resolvecbreturntype resolved.resolve_field(name, args, context)
         }
@@ -310,11 +336,11 @@ module GraphQL
       # Resolve A NonNullType
       #
       private def _resolve_selections_for(
-            field_type : Language::NonNullType, selections : Array(Language::Selection), resolved, context
-          ) : Tuple(ReturnType, Array(Error))
+        field_type : Language::NonNullType, selections : Array(Language::Selection), resolved, context
+      ) : Tuple(ReturnType, Array(Error))
         if resolved == nil
           pp "didn't resolve to a NonNull compatible Object"
-          return {nil, [Error.new(message: "internal server error", path: [] of (String|Int32))]}
+          return {nil, [Error.new(message: "internal server error", path: [] of (String | Int32))]}
         end
         resolve_selections_for(field_type.of_type, selections, resolved, context)
       end
@@ -324,18 +350,15 @@ module GraphQL
         raise "I should have never come here"
       end
 
-
       private def substitute_variables_from_params(query, params : Hash(String, JSON::Type))
         if (superfluous = params.keys - query.variables.map(&.name)).any?
           raise "unknown variables #{superfluous.join(", ")}"
         end
         errors = [] of Error
         full_params = Hash(String, ReturnType).new
-        query.variables
-          .as(Array(Language::VariableDefinition))
-          .each do |variable_definition|
+        query.variables.as(Array(Language::VariableDefinition)).each do |variable_definition|
           if !(params.has_key?(variable_definition.name) || variable_definition.default_value)
-            errors << Error.new(message: "missing variable #{variable_definition.name}", path: [] of (String|Int32))
+            errors << Error.new(message: "missing variable #{variable_definition.name}", path: [] of (String | Int32))
             next
           end
 
@@ -346,7 +369,7 @@ module GraphQL
             expected_type_string = Language::Generation.generate(variable_definition.type)
             errors << Error.new(
               message: "variable $#{variable_definition.name} is expected to be of type #{expected_type_string}",
-              path: [] of (String|Int32)
+              path: [] of (String | Int32)
             )
           else
             full_params[variable_definition.name] = cast_to_return(param)
@@ -369,20 +392,20 @@ module GraphQL
         end
       end
 
-      private def prepare_args(defined : Array(Language::InputValueDefinition), given )
+      private def prepare_args(defined : Array(Language::InputValueDefinition), given)
         if (superfluous = given.reject { |g| defined.any?(&.name.==(g.name)) }) &&
            superfluous.any?
-          ## TODO: Custom Exceptions here please
+          # # TODO: Custom Exceptions here please
           raise "Unknown argument \"#{superfluous.map(&.name).join(",")}\""
         end
         defined.reduce({} of String => ReturnType) do |args, definition|
           provided = given.find(&.name.==(definition.name))
           provided = provided ? provided.value : definition.default_value
           unless @type_validation.accepts?(definition.type, provided)
-            ## TODO: Custom Exceptions here please
+            # # TODO: Custom Exceptions here please
 
             raise %{argument "#{definition.name}" is expected to be of type: \
-                    "#{Language::Generation.generate(definition.type)}"}
+                          "#{Language::Generation.generate(definition.type)}"}
           end
 
           value = if provided.responds_to?(:to_value)
@@ -409,10 +432,9 @@ module GraphQL
             selections << selection
           when Language::InlineFragment
             if selection.type.as(Language::TypeName).name == type.name
-              selections += selection.selections.map(
-                # assign the fragments directive to the field
-                # for later evaluation.
-                &.as(Language::Field).tap{ |f| f.directives = selection.directives })
+              # assign the fragments directive to the field
+              # for later evaluation.
+              selections += selection.selections.map(&.as(Language::Field).tap { |f| f.directives = selection.directives })
             end
           end
           selections
@@ -489,7 +511,6 @@ module GraphQL
           value
         end.as(ReturnType)
       end
-
     end
   end
 end
