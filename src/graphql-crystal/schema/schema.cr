@@ -1,19 +1,18 @@
 require "./schema_introspection"
+
 module GraphQL
   module Schema
-
     #
     # The Context that will be created when `Schema::execute` is called
     # and provided as an argument to the field resolution callbacks on
     # Object Types. Can be subclassed and passed manually to `Schema::execute`.
     #
     class Context
-
       getter :schema
       @max_depth : Int32?
       @depth = 0
       @fragments : Array(Language::FragmentDefinition) = [] of Language::FragmentDefinition
-      property :max_depth, :depth , :fragments
+      property :max_depth, :depth, :fragments
 
       def initialize(@schema : GraphQL::Schema::Schema, @max_depth = nil); end
 
@@ -22,7 +21,7 @@ module GraphQL
       end
     end
 
-    private alias QueryReturnType = ( Array(GraphQL::ObjectType?) | GraphQL::ObjectType | ReturnType | Nil )
+    private alias QueryReturnType = Array(GraphQL::ObjectType?) | GraphQL::ObjectType | ReturnType | Nil
 
     #
     # Represents a GraphQL Schema against which queries can be executed.
@@ -30,7 +29,7 @@ module GraphQL
     class Schema
       include GraphQL::Schema::Introspection
       getter :types, :directive_middlewares,
-             :directive_definitions, :max_depth
+        :directive_definitions, :max_depth
       property :query_resolver, :mutation_resolver
 
       # max recursive execution depth
@@ -54,14 +53,13 @@ module GraphQL
       # during query execution
       @directive_middlewares = [
         GraphQL::Directives::IncludeDirective.new,
-        GraphQL::Directives::SkipDirective.new
+        GraphQL::Directives::SkipDirective.new,
       ]
 
       # an instance of `GraphQL::TypeValidation`
       # used for validating inputs against the
       # schema definition
       @type_validation : GraphQL::TypeValidation
-
 
       #
       # Takes a parsed GraphQL schema definition
@@ -79,11 +77,11 @@ module GraphQL
       # Descriptions for Scalar Types
       #
       ScalarTypes = {
-        { "String", "A String Value" },
-        { "Boolean", "A Boolean Value" },
-        { "Int", "An Integer Number" },
-        { "Float", "A Floating Point Number" },
-        { "ID", "An ID" }
+        {"String", "A String Value"},
+        {"Boolean", "A Boolean Value"},
+        {"Int", "An Integer Number"},
+        {"Float", "A Floating Point Number"},
+        {"ID", "An ID"},
       }
 
       #
@@ -124,15 +122,15 @@ module GraphQL
         end
 
         node.map_children do |node|
-            case node
-            when Language::SchemaDefinition
-              schema = node
-            when Language::TypeDefinition
-              types[node.name] = node
-            when Language::DirectiveDefinition
-              directives[node.name] = node
-            end
-            node
+          case node
+          when Language::SchemaDefinition
+            schema = node
+          when Language::TypeDefinition
+            types[node.name] = node
+          when Language::DirectiveDefinition
+            directives[node.name] = node
+          end
+          node
         end
         return {schema, types, directives}
       end
@@ -149,10 +147,9 @@ module GraphQL
           res = context.with_self args, &block
           (
             res.is_a?(Array) ? res.map(&.as(GraphQL::ObjectType?)) : res
-          ).as( QueryReturnType )
+          ).as(QueryReturnType)
         end
       end
-
     end
   end
 end

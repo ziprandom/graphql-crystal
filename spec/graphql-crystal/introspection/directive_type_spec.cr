@@ -18,42 +18,42 @@ describe "GraphQL::Introspection::DirectiveType" do
   result = Dummy::Schema.execute(query_string)
 
   it "shows directive info " do
-    expected = { "data" => {
-                   "__schema" => {
-                     "directives" => [
-                       {
-                         "name" => "include",
-                         "args" => [
-                           {"name"=>"if", "type"=>{"kind"=>"NON_NULL", "name"=>nil, "ofType"=>{"name"=>"Boolean"}}}
-                         ],
-                         "locations"=>["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
-                         "onField" => true,
-                         "onFragment" => true,
-                         "onOperation" => false,
-                       },
-                       {
-                         "name" => "skip",
-                         "args" => [
-                           {"name"=>"if", "type"=>{"kind"=>"NON_NULL", "name"=>nil, "ofType"=>{"name"=>"Boolean"}}}
-                         ],
-                         "locations"=>["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
-                         "onField" => true,
-                         "onFragment" => true,
-                         "onOperation" => false,
-                       },
-                       {
-                         "name" => "deprecated",
-                         "args" => [
-                           {"name"=>"reason", "type"=>{"kind"=>"SCALAR", "name"=>"String", "ofType"=>nil}}
-                         ],
-                         "locations"=>["FIELD_DEFINITION", "ENUM_VALUE"],
-                         "onField" => false,
-                         "onFragment" => false,
-                         "onOperation" => false,
-                       },
-                     ]
-                   }
-                 }}
+    expected = {"data" => {
+      "__schema" => {
+        "directives" => [
+          {
+            "name" => "include",
+            "args" => [
+              {"name" => "if", "type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "Boolean"}}},
+            ],
+            "locations"   => ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+            "onField"     => true,
+            "onFragment"  => true,
+            "onOperation" => false,
+          },
+          {
+            "name" => "skip",
+            "args" => [
+              {"name" => "if", "type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "Boolean"}}},
+            ],
+            "locations"   => ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+            "onField"     => true,
+            "onFragment"  => true,
+            "onOperation" => false,
+          },
+          {
+            "name" => "deprecated",
+            "args" => [
+              {"name" => "reason", "type" => {"kind" => "SCALAR", "name" => "String", "ofType" => nil}},
+            ],
+            "locations"   => ["FIELD_DEFINITION", "ENUM_VALUE"],
+            "onField"     => false,
+            "onFragment"  => false,
+            "onOperation" => false,
+          },
+        ],
+      },
+    }}
     result.should eq expected
   end
 end

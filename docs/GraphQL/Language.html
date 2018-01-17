@@ -80,7 +80,7 @@
       
     </li>
   
-  <li class="parent current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language" data-name="graphql::language">
+  <li class="parent open current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language" data-name="graphql::language">
       <a href="../GraphQL/Language.html">Language</a>
       
         <ul>
@@ -416,32 +416,32 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language/generation.cr#L4" target="_blank">graphql-crystal/language/generation.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/generation.cr#L4" target="_blank">graphql-crystal/language/generation.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language/nodes.cr#L6" target="_blank">graphql-crystal/language/nodes.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/nodes.cr#L7" target="_blank">graphql-crystal/language/nodes.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language/lexer.cr#L5" target="_blank">graphql-crystal/language/lexer.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/lexer.cr#L5" target="_blank">graphql-crystal/language/lexer.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language/parser.cr#L7" target="_blank">graphql-crystal/language/parser.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/parser.cr#L7" target="_blank">graphql-crystal/language/parser.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language.cr#L6" target="_blank">graphql-crystal/language.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language.cr#L6" target="_blank">graphql-crystal/language.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/schema/schema_introspection.cr#L255" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema_introspection.cr#L255" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
     
     <br/>
   
@@ -462,11 +462,41 @@
         
       </li>
     
+      <li class="entry-summary">
+        <a href="#to_argumentvalue%28value%3AArray%29%3AArgumentValue-class-method" class="signature"><strong>.to_argumentvalue</strong>(value : Array) : ArgumentValue</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_argumentvalue%28value%29-class-method" class="signature"><strong>.to_argumentvalue</strong>(value)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_fvalue%28value%3AArray%29%3AFValue-class-method" class="signature"><strong>.to_fvalue</strong>(value : Array) : FValue</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_fvalue%28value%29-class-method" class="signature"><strong>.to_fvalue</strong>(value)</a>
+        
+      </li>
+    
   </ul>
 
 
 
 
+
+  <h2>Macro Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#define_array_cast%28type%29-macro" class="signature"><strong>define_array_cast</strong>(type)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -479,7 +509,7 @@
 
   <h2>Class Method Detail</h2>
   
-    <div class="entry-detail" id="parse&#40;query_string,options&#61;NamedTuple.new&#41;:GraphQL::Language::Document-class-method">
+    <div class="entry-detail" id="parse(query_string,options=NamedTuple.new):GraphQL::Language::Document-class-method">
       <div class="signature">
         
         def self.<strong>parse</strong>(query_string, options = <span class="t">NamedTuple</span>.<span class="k">new</span>) : <a href="../GraphQL/Language/Document.html">GraphQL::Language::Document</a>
@@ -492,7 +522,71 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_argumentvalue(value:Array):ArgumentValue-class-method">
+      <div class="signature">
+        
+        def self.<strong>to_argumentvalue</strong>(value : Array) : <a href="../GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+
+        <a class="method-permalink" href="#to_argumentvalue%28value%3AArray%29%3AArgumentValue-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/nodes.cr#L106" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_argumentvalue(value)-class-method">
+      <div class="signature">
+        
+        def self.<strong>to_argumentvalue</strong>(value)
+
+        <a class="method-permalink" href="#to_argumentvalue%28value%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/nodes.cr#L106" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_fvalue(value:Array):FValue-class-method">
+      <div class="signature">
+        
+        def self.<strong>to_fvalue</strong>(value : Array) : <a href="../GraphQL/Language/FValue.html">FValue</a>
+
+        <a class="method-permalink" href="#to_fvalue%28value%3AArray%29%3AFValue-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/nodes.cr#L94" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_fvalue(value)-class-method">
+      <div class="signature">
+        
+        def self.<strong>to_fvalue</strong>(value)
+
+        <a class="method-permalink" href="#to_fvalue%28value%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/nodes.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -501,6 +595,25 @@
 
 
 
+
+  <h2>Macro Detail</h2>
+  
+    <div class="entry-detail" id="define_array_cast(type)-macro">
+      <div class="signature">
+        
+        macro <strong>define_array_cast</strong>(type)
+
+        <a class="method-permalink" href="#define_array_cast%28type%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/nodes.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 </div>

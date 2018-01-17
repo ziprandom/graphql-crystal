@@ -1,7 +1,6 @@
 require "json"
 
 class CustomContext < GraphQL::Schema::Context
-
   def initialize(@user : {authenticated: Bool, name: String}, @schema, @max_depth); end
 
   def authenticated
@@ -11,12 +10,13 @@ class CustomContext < GraphQL::Schema::Context
   def username
     @user[:name]
   end
-
 end
 
 class ProcessType
   include GraphQL::ObjectType
+
   def initialize(@name : String, @pid : Int32); end
+
   JSON.mapping({name: String, pid: Int32})
   field :name
   field :pid
@@ -24,10 +24,12 @@ end
 
 class LogType
   include GraphQL::ObjectType
+
   def initialize(
-        @time : String, @hostName : String,
-        @userName : String, @process : ProcessType,
-        @message : String); end
+    @time : String, @hostName : String,
+    @userName : String, @process : ProcessType,
+    @message : String
+  ); end
 
   JSON.mapping(
     time: String,
@@ -52,6 +54,7 @@ struct ProcessInput < GraphQL::Schema::InputType
     name: String,
     pid: Int32
   )
+
   def to_process_type
     ProcessType.new(@name, @pid)
   end
@@ -64,6 +67,7 @@ struct LogInput < GraphQL::Schema::InputType
     process: ProcessInput,
     message: String
   )
+
   def to_log_type(username)
     LogType.new(@time, @hostName, username, @process.to_process_type, @message)
   end
@@ -73,17 +77,17 @@ module LogStore
   extend self
   TEMPFILENAME = "./__logs.log"
 
-  `touch #{TEMPFILENAME}`;
+  `touch #{TEMPFILENAME}`
 
   def read_logs
     raw_content = File.read(TEMPFILENAME)
     Array(LogType).from_json raw_content
   rescue
-      [] of LogType
+    [] of LogType
   end
 
   def write_logs(logs)
-    File.write(TEMPFILENAME, logs.to_json);
+    File.write(TEMPFILENAME, logs.to_json)
   end
 end
 

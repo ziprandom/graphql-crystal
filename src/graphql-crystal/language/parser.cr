@@ -9,7 +9,6 @@ module GraphQL
     # A CLTK Parser for the GraphQL Language
     #
     class Parser < CLTK::Parser
-
       production(:document) do
         clause("definition+") { |definitions| Document.new(definitions: definitions) }
       end
@@ -118,15 +117,15 @@ module GraphQL
       end
 
       production(:schema_keyword) do
-        clause(:SCHEMA)     { "schema"     }
-        clause(:SCALAR)     { "scalar"     }
-        clause(:TYPE)       { "type"       }
+        clause(:SCHEMA) { "schema" }
+        clause(:SCALAR) { "scalar" }
+        clause(:TYPE) { "type" }
         clause(:IMPLEMENTS) { "implements" }
-        clause(:INTERFACE)  { "interface"  }
-        clause(:UNION)      { "union"      }
-        clause(:ENUM)       { "enum"       }
-        clause(:INPUT)      { "input"      }
-        clause(:DIRECTIVE)  { "directive"  }
+        clause(:INTERFACE) { "interface" }
+        clause(:UNION) { "union" }
+        clause(:ENUM) { "enum" }
+        clause(:INPUT) { "input" }
+        clause(:DIRECTIVE) { "directive" }
       end
 
       production(:name) do
@@ -171,11 +170,11 @@ module GraphQL
       end
 
       production(:input_value) do
-        clause(:FLOAT)        { |t| t.as(String).to_f64 }
-        clause(:INT)          { |t| t.as(String).to_i32 }
-        clause(:STRING)       { |t| t.as(String)        }
-        clause(:TRUE)         { |t| true                }
-        clause(:FALSE)        { |t| false               }
+        clause(:FLOAT) { |t| t.as(String).to_f64 }
+        clause(:INT) { |t| t.as(String).to_i32 }
+        clause(:STRING) { |t| t.as(String) }
+        clause(:TRUE) { |t| true }
+        clause(:FALSE) { |t| false }
         clause(:null_value)
         clause(:variable)
         clause(:list_value)
@@ -250,7 +249,6 @@ module GraphQL
           end
           definition
         end
-
       end
 
       production(:schema_definition) do
@@ -375,7 +373,7 @@ module GraphQL
         clause("comments COMMENT") do |comments, comment|
           [
             comments.as(String),
-            comment.as(String)
+            comment.as(String),
           ].join(" ")
         end
       end

@@ -17,55 +17,55 @@ describe GraphQL::Schema::Schema do
         "__schema" => {
           "types" => [
             {
-              "name" => "QueryType"
+              "name" => "QueryType",
             },
             {
-              "name" => "Episode"
+              "name" => "Episode",
             },
             {
-              "name" => "Character"
+              "name" => "Character",
             },
             {
-              "name" => "String"
+              "name" => "String",
             },
             {
-              "name" => "Human"
+              "name" => "Human",
             },
             {
-              "name" => "Droid"
+              "name" => "Droid",
             },
             {
-              "name" => "__Schema"
+              "name" => "__Schema",
             },
             {
-              "name" => "__Type"
+              "name" => "__Type",
             },
             {
-              "name" => "__TypeKind"
+              "name" => "__TypeKind",
             },
             {
-              "name" => "Boolean"
+              "name" => "Boolean",
             },
             {
-              "name" => "__Field"
+              "name" => "__Field",
             },
             {
-              "name" => "__InputValue"
+              "name" => "__InputValue",
             },
             {
-              "name" => "__EnumValue"
+              "name" => "__EnumValue",
             },
             {
-              "name" => "__Directive"
+              "name" => "__Directive",
             },
-#           Not Implemented ATM
-#            {
-#              "name" => "__DirectiveLocation"
-#            }
-          ]
-        }
-      }
-    }["data"].as(Hash)["__schema"].as(Hash)["types"].as(Array);
+            #           Not Implemented ATM
+            #            {
+            #              "name" => "__DirectiveLocation"
+            #            }
+          ],
+        },
+      },
+    }["data"].as(Hash)["__schema"].as(Hash)["types"].as(Array)
 
     result = StarWars::Schema.execute(query_string)["data"].as(Hash)["__schema"].as(Hash)["types"].as(Array)
     missing = expected.reject { |element| result.includes? element }

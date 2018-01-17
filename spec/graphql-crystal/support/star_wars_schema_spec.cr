@@ -12,12 +12,12 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "hero" => {
-                              "name" => "R2-D2"
-                            }
-                          }
-                        })
+        "data" => {
+          "hero" => {
+            "name" => "R2-D2",
+          },
+        },
+      })
     end
     it "Allows us to query for the ID and friends of R2-D2" do
       query_string = %{
@@ -33,24 +33,24 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "hero" =>  {
-                              "id" => "2001",
-                              "name" => "R2-D2",
-                              "friends" =>  [
-                                {
-                                  "name" => "Luke Skywalker",
-                                },
-                                {
-                                  "name" => "Han Solo",
-                                },
-                                {
-                                  "name" => "Leia Organa",
-                                },
-                              ]
-                            }
-                          }
-                        })
+        "data" => {
+          "hero" => {
+            "id"      => "2001",
+            "name"    => "R2-D2",
+            "friends" => [
+              {
+                "name" => "Luke Skywalker",
+              },
+              {
+                "name" => "Han Solo",
+              },
+              {
+                "name" => "Leia Organa",
+              },
+            ],
+          },
+        },
+      })
     end
   end
   describe "Nested Queries" do
@@ -71,65 +71,65 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "hero" => {
-                              "name" => "R2-D2",
-                              "friends" => [
-                                {
-                                  "name" => "Luke Skywalker",
-                                  "appearsIn" => [ "NEWHOPE", "EMPIRE", "JEDI" ],
-                                  "friends" => [
-                                    {
-                                      "name" => "Han Solo",
-                                    },
-                                    {
-                                      "name" => "Leia Organa",
-                                    },
-                                    {
-                                      "name" => "C-3PO",
-                                    },
-                                    {
-                                      "name" => "R2-D2",
-                                    },
-                                  ]
-                                },
-                                {
-                                  "name" => "Han Solo",
-                                  "appearsIn" => [ "NEWHOPE", "EMPIRE", "JEDI" ],
-                                  "friends" => [
-                                    {
-                                      "name" => "Luke Skywalker",
-                                    },
-                                    {
-                                      "name" => "Leia Organa",
-                                    },
-                                    {
-                                      "name" => "R2-D2",
-                                    },
-                                  ]
-                                },
-                                {
-                                  "name" => "Leia Organa",
-                                  "appearsIn" => [ "NEWHOPE", "EMPIRE", "JEDI" ],
-                                  "friends" => [
-                                    {
-                                      "name" => "Luke Skywalker",
-                                    },
-                                    {
-                                      "name" => "Han Solo",
-                                    },
-                                    {
-                                      "name" => "C-3PO",
-                                    },
-                                    {
-                                      "name" => "R2-D2",
-                                    },
-                                  ]
-                                },
-                              ]
-                            }
-                          }
-                        })
+        "data" => {
+          "hero" => {
+            "name"    => "R2-D2",
+            "friends" => [
+              {
+                "name"      => "Luke Skywalker",
+                "appearsIn" => ["NEWHOPE", "EMPIRE", "JEDI"],
+                "friends"   => [
+                  {
+                    "name" => "Han Solo",
+                  },
+                  {
+                    "name" => "Leia Organa",
+                  },
+                  {
+                    "name" => "C-3PO",
+                  },
+                  {
+                    "name" => "R2-D2",
+                  },
+                ],
+              },
+              {
+                "name"      => "Han Solo",
+                "appearsIn" => ["NEWHOPE", "EMPIRE", "JEDI"],
+                "friends"   => [
+                  {
+                    "name" => "Luke Skywalker",
+                  },
+                  {
+                    "name" => "Leia Organa",
+                  },
+                  {
+                    "name" => "R2-D2",
+                  },
+                ],
+              },
+              {
+                "name"      => "Leia Organa",
+                "appearsIn" => ["NEWHOPE", "EMPIRE", "JEDI"],
+                "friends"   => [
+                  {
+                    "name" => "Luke Skywalker",
+                  },
+                  {
+                    "name" => "Han Solo",
+                  },
+                  {
+                    "name" => "C-3PO",
+                  },
+                  {
+                    "name" => "R2-D2",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      })
     end
   end
 
@@ -144,12 +144,12 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "human" => {
-                              "name" => "Luke Skywalker"
-                            }
-                          }
-                        })
+        "data" => {
+          "human" => {
+            "name" => "Luke Skywalker",
+          },
+        },
+      })
     end
 
     it "Allows us to create a generic query, then use it to fetch Luke Skywalker using his ID" do
@@ -160,15 +160,15 @@ describe StarWars::Schema do
           }
         }
       }
-      params = { "someId" => "1000" }
+      params = {"someId" => "1000"}
       result = StarWars::Schema.execute(query_string, params)
       result.should eq ({
-                          "data" => {
-                            "human" => {
-                              "name" => "Luke Skywalker"
-                            }
-                          }
-                        })
+        "data" => {
+          "human" => {
+            "name" => "Luke Skywalker",
+          },
+        },
+      })
     end
 
     it "Allows us to create a generic query, then use it to fetch Luke Skywalker using his ID" do
@@ -179,15 +179,15 @@ describe StarWars::Schema do
           }
         }
       }
-      params = { "someId" => "1002" }
+      params = {"someId" => "1002"}
       result = StarWars::Schema.execute(query_string, params)
       result.should eq ({
-                          "data" => {
-                            "human" => {
-                              "name" => "Han Solo"
-                            }
-                          }
-                        })
+        "data" => {
+          "human" => {
+            "name" => "Han Solo",
+          },
+        },
+      })
     end
 
     it "Allows us to create a generic query, then pass an invalid ID to get null back" do
@@ -198,13 +198,13 @@ describe StarWars::Schema do
           }
         }
       }
-      params = { "id" => "not a valid id" }
+      params = {"id" => "not a valid id"}
       result = StarWars::Schema.execute(query_string, params)
       result.should eq ({
-                          "data" => {
-                            "human" => nil
-                          }
-                        })
+        "data" => {
+          "human" => nil,
+        },
+      })
     end
   end
 
@@ -219,12 +219,12 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "luke" => {
-                              "name" => "Luke Skywalker"
-                            }
-                          }
-                        })
+        "data" => {
+          "luke" => {
+            "name" => "Luke Skywalker",
+          },
+        },
+      })
     end
 
     it "Allows us to query for both Luke and Leia, using two root fields and an alias" do
@@ -240,15 +240,15 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "luke" => {
-                              "name" => "Luke Skywalker"
-                            },
-                            "leia" => {
-                              "name" => "Leia Organa"
-                            }
-                          }
-                        })
+        "data" => {
+          "luke" => {
+            "name" => "Luke Skywalker",
+          },
+          "leia" => {
+            "name" => "Leia Organa",
+          },
+        },
+      })
     end
   end
 
@@ -268,17 +268,17 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "luke" => {
-                              "name" => "Luke Skywalker",
-                              "homePlanet" => "Tatooine"
-                            },
-                            "leia" => {
-                              "name" => "Leia Organa",
-                              "homePlanet" => "Alderaan"
-                            }
-                          }
-                        })
+        "data" => {
+          "luke" => {
+            "name"       => "Luke Skywalker",
+            "homePlanet" => "Tatooine",
+          },
+          "leia" => {
+            "name"       => "Leia Organa",
+            "homePlanet" => "Alderaan",
+          },
+        },
+      })
     end
 
     it "Allows us to use a fragment to avoid duplicating content" do
@@ -298,17 +298,17 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "luke" => {
-                              "name" => "Luke Skywalker",
-                              "homePlanet" => "Tatooine"
-                            },
-                            "leia" => {
-                              "name" => "Leia Organa",
-                              "homePlanet" => "Alderaan"
-                            }
-                          }
-                        })
+        "data" => {
+          "luke" => {
+            "name"       => "Luke Skywalker",
+            "homePlanet" => "Tatooine",
+          },
+          "leia" => {
+            "name"       => "Leia Organa",
+            "homePlanet" => "Alderaan",
+          },
+        },
+      })
     end
   end
   describe "Using __typename to find the type of an object" do
@@ -323,13 +323,13 @@ describe StarWars::Schema do
       }
       result = StarWars::Schema.execute(query_string)
       result.should eq ({
-                          "data" => {
-                            "hero" => {
-                              "__typename" => "Droid",
-                              "name" => "R2-D2"
-                            }
-                          }
-                        })
+        "data" => {
+          "hero" => {
+            "__typename" => "Droid",
+            "name"       => "R2-D2",
+          },
+        },
+      })
     end
 
     it "Allows us to verify that Luke is a human" do
@@ -346,9 +346,9 @@ describe StarWars::Schema do
         "data" => {
           "hero" => {
             "__typename" => "Human",
-            "name" => "Luke Skywalker"
-          }
-        }
+            "name"       => "Luke Skywalker",
+          },
+        },
       })
     end
   end
@@ -367,18 +367,18 @@ describe StarWars::Schema do
       result.should eq ({
         "data" => {
           "hero" => {
-            "name" => "R2-D2",
-            "secretBackstory": nil
-          }
+            "name"          => "R2-D2",
+            "secretBackstory": nil,
+          },
         },
         "errors" => [
           {
             "message" => "secretBackstory is secret.",
             # no location data available atm :(
             # "locations" => [ { "line" => 5, "column" => 13 } ],
-            "path" => [ "hero", "secretBackstory" ]
-          }
-        ]
+            "path" => ["hero", "secretBackstory"],
+          },
+        ],
       })
     end
 
@@ -398,40 +398,40 @@ describe StarWars::Schema do
       result.should eq ({
         "data" => {
           "hero" => {
-            "name" => "R2-D2",
+            "name"  => "R2-D2",
             "friends": [
               {
-                "name" => "Luke Skywalker",
-                "secretBackstory": nil
-              },
-              {
-                "name" => "Han Solo",
-                "secretBackstory": nil
-              },
-              {
-                "name" => "Leia Organa",
+                "name"          => "Luke Skywalker",
                 "secretBackstory": nil,
               },
-            ]
-          }
+              {
+                "name"          => "Han Solo",
+                "secretBackstory": nil,
+              },
+              {
+                "name"          => "Leia Organa",
+                "secretBackstory": nil,
+              },
+            ],
+          },
         },
         "errors" => [
           {
             "message" => "secretBackstory is secret.",
-#            "locations" => [ { "line" => 7, "column" => 15 } ],
-            "path" => [ "hero", "friends", 0, "secretBackstory" ]
+            #            "locations" => [ { "line" => 7, "column" => 15 } ],
+            "path" => ["hero", "friends", 0, "secretBackstory"],
           },
           {
             "message" => "secretBackstory is secret.",
-#            "locations" => [ { "line" => 7, "column" => 15 } ],
-            "path" => [ "hero", "friends", 1, "secretBackstory" ]
+            #            "locations" => [ { "line" => 7, "column" => 15 } ],
+            "path" => ["hero", "friends", 1, "secretBackstory"],
           },
           {
             "message" => "secretBackstory is secret.",
-#            "locations" => [ { "line" => 7, "column" => 15 } ],
-            "path" => [ "hero", "friends", 2, "secretBackstory" ]
-          }
-        ]
+            #            "locations" => [ { "line" => 7, "column" => 15 } ],
+            "path" => ["hero", "friends", 2, "secretBackstory"],
+          },
+        ],
       })
     end
 
@@ -448,17 +448,17 @@ describe StarWars::Schema do
       result.should eq ({
         "data" => {
           "mainHero" => {
-            "name" => "R2-D2",
-            "story" => nil
-          }
+            "name"  => "R2-D2",
+            "story" => nil,
+          },
         },
         "errors" => [
           {
             "message" => "secretBackstory is secret.",
-#            "locations" => [ { "line" => 5, "column" => 13 } ],
-            "path" => [ "mainHero", "story" ]
-          }
-        ]
+            #            "locations" => [ { "line" => 5, "column" => 13 } ],
+            "path" => ["mainHero", "story"],
+          },
+        ],
       })
     end
   end

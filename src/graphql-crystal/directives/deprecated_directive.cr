@@ -1,4 +1,5 @@
 require "./directive"
+
 module GraphQL
   module Directives
     #
@@ -36,6 +37,5 @@ module GraphQL
         end
       end
     end
-
   end
 end

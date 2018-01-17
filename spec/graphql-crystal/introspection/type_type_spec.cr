@@ -13,65 +13,65 @@ pending "GraphQL::Introspection::TypeType" do
   query_string
   result = Dummy::Schema.execute(query_string)
   cheese_fields = [
-      {"name"=>"deeplyNullableCheese", "isDeprecated" => false, "type"=>{ "kind" => "OBJECT", "name" => "Cheese", "ofType" => nil}},
-      {"name"=>"flavor",      "isDeprecated" => false, "type" => { "kind" => "NON_NULL", "name" => nil, "ofType" => { "name" => "String"}}},
-      {"name"=>"id",          "isDeprecated" => false, "type" => { "kind" => "NON_NULL", "name" => nil, "ofType" => { "name" => "Int"}}},
-      {"name"=>"nullableCheese", "isDeprecated"=>false, "type"=>{ "kind" => "OBJECT",  "name" => "Cheese", "ofType"=>nil}},
-      {"name"=>"origin",      "isDeprecated" => false, "type" => { "kind" => "NON_NULL", "name" => nil, "ofType" => { "name" => "String"}}},
-      {"name"=>"selfAsEdible", "isDeprecated"=>false, "type"=>{"kind"=>"INTERFACE", "name"=>"Edible", "ofType"=>nil}},
-      {"name"=>"similarCheese", "isDeprecated"=>false, "type"=>{ "kind" => "OBJECT", "name"=>"Cheese", "ofType"=>nil}},
-      {"name"=>"source",      "isDeprecated" => false, "type" => { "kind" => "NON_NULL", "name" => nil, "ofType" => { "name" => "DairyAnimal"}}},
-    ]
+    {"name" => "deeplyNullableCheese", "isDeprecated" => false, "type" => {"kind" => "OBJECT", "name" => "Cheese", "ofType" => nil}},
+    {"name" => "flavor", "isDeprecated" => false, "type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "String"}}},
+    {"name" => "id", "isDeprecated" => false, "type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "Int"}}},
+    {"name" => "nullableCheese", "isDeprecated" => false, "type" => {"kind" => "OBJECT", "name" => "Cheese", "ofType" => nil}},
+    {"name" => "origin", "isDeprecated" => false, "type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "String"}}},
+    {"name" => "selfAsEdible", "isDeprecated" => false, "type" => {"kind" => "INTERFACE", "name" => "Edible", "ofType" => nil}},
+    {"name" => "similarCheese", "isDeprecated" => false, "type" => {"kind" => "OBJECT", "name" => "Cheese", "ofType" => nil}},
+    {"name" => "source", "isDeprecated" => false, "type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "DairyAnimal"}}},
+  ]
 
   dairy_animals = [
-    {"name"=>"COW",       "isDeprecated"=> false },
-    {"name"=>"DONKEY",    "isDeprecated"=> false },
-    {"name"=>"GOAT",      "isDeprecated"=> false },
-    {"name"=>"REINDEER",  "isDeprecated"=> false },
-    {"name"=>"SHEEP",     "isDeprecated"=> false },
-                   ]
+    {"name" => "COW", "isDeprecated" => false},
+    {"name" => "DONKEY", "isDeprecated" => false},
+    {"name" => "GOAT", "isDeprecated" => false},
+    {"name" => "REINDEER", "isDeprecated" => false},
+    {"name" => "SHEEP", "isDeprecated" => false},
+  ]
 
   it "exposes metadata about types" do
-    expected = {"data"=> {
+    expected = {"data" => {
       "cheeseType" => {
-        "name"=> "Cheese",
-        "kind" => "OBJECT",
-        "fields"=> cheese_fields
+        "name"   => "Cheese",
+        "kind"   => "OBJECT",
+        "fields" => cheese_fields,
       },
-      "milkType"=>{
-        "interfaces"=>[
-          {"name"=>"Edible"},
-          {"name"=>"AnimalProduct"},
-          {"name"=>"LocalProduct"},
+      "milkType" => {
+        "interfaces" => [
+          {"name" => "Edible"},
+          {"name" => "AnimalProduct"},
+          {"name" => "LocalProduct"},
         ],
-        "fields"=>[
-          {"type"=>{"kind"=>"LIST","name"=>nil, "ofType"=>{"name"=>"DairyProduct"}}},
-          {"type"=>{"kind"=>"SCALAR","name"=>"String", "ofType"=>nil}},
-          {"type"=>{"kind"=>"NON_NULL","name"=>nil, "ofType"=>{"name"=>"Float"}}},
-          {"type"=>{"kind"=>"LIST","name"=>nil, "ofType"=>{"name"=>"String"}}},
-          {"type"=>{"kind"=>"NON_NULL","name"=>nil, "ofType"=>{"name"=>"ID"}}},
-          {"type"=>{"kind"=>"NON_NULL","name"=>nil, "ofType"=>{"name"=>"String"}}},
-          {"type"=>{"kind"=>"INTERFACE", "name"=>"Edible", "ofType"=>nil}},
-          {"type"=>{"kind"=>"NON_NULL","name"=>nil,"ofType"=>{"name"=>"DairyAnimal"}}},
-        ]
+        "fields" => [
+          {"type" => {"kind" => "LIST", "name" => nil, "ofType" => {"name" => "DairyProduct"}}},
+          {"type" => {"kind" => "SCALAR", "name" => "String", "ofType" => nil}},
+          {"type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "Float"}}},
+          {"type" => {"kind" => "LIST", "name" => nil, "ofType" => {"name" => "String"}}},
+          {"type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "ID"}}},
+          {"type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "String"}}},
+          {"type" => {"kind" => "INTERFACE", "name" => "Edible", "ofType" => nil}},
+          {"type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "DairyAnimal"}}},
+        ],
       },
-      "dairyAnimal"=>{
-        "name"=>"DairyAnimal",
-        "kind"=>"ENUM",
-        "enumValues"=> dairy_animals,
+      "dairyAnimal" => {
+        "name"       => "DairyAnimal",
+        "kind"       => "ENUM",
+        "enumValues" => dairy_animals,
       },
-      "dairyProduct"=>{
-        "name"=>"DairyProduct",
-        "kind"=>"UNION",
-        "possibleTypes"=>[{"name"=>"Milk"}, {"name"=>"Cheese"}],
+      "dairyProduct" => {
+        "name"          => "DairyProduct",
+        "kind"          => "UNION",
+        "possibleTypes" => [{"name" => "Milk"}, {"name" => "Cheese"}],
       },
       "animalProduct" => {
-        "name"=>"AnimalProduct",
-        "kind"=>"INTERFACE",
-        "possibleTypes"=>[{"name"=>"Cheese"}, {"name"=>"Honey"}, {"name"=>"Milk"}],
-        "fields"=>[
-          {"name"=>"source"},
-        ]
+        "name"          => "AnimalProduct",
+        "kind"          => "INTERFACE",
+        "possibleTypes" => [{"name" => "Cheese"}, {"name" => "Honey"}, {"name" => "Milk"}],
+        "fields"        => [
+          {"name" => "source"},
+        ],
       },
       "missingType" => nil,
     }}
@@ -86,21 +86,21 @@ pending "GraphQL::Introspection::TypeType" do
        }
     query_string
     deprecated_fields = [
-      {"name"=>"fatContent", "isDeprecated"=>true, "type"=>{"kind"=>"NON_NULL","name"=>nil, "ofType"=>{"name"=>"Float"}}}
+      {"name" => "fatContent", "isDeprecated" => true, "type" => {"kind" => "NON_NULL", "name" => nil, "ofType" => {"name" => "Float"}}},
     ]
 
     it "can expose deprecated fields" do
       new_cheese_fields = ([deprecated_fields] + cheese_fields).sort_by { |f| f["name"] }
-      expected = { "data" => {
+      expected = {"data" => {
         "cheeseType" => {
-          "name"=> "Cheese",
-          "kind" => "OBJECT",
-          "fields"=> new_cheese_fields
+          "name"   => "Cheese",
+          "kind"   => "OBJECT",
+          "fields" => new_cheese_fields,
         },
-        "dairyAnimal"=>{
-          "name"=>"DairyAnimal",
-          "kind"=>"ENUM",
-          "enumValues"=> dairy_animals + [{"name" => "YAK", "isDeprecated" => true}],
+        "dairyAnimal" => {
+          "name"       => "DairyAnimal",
+          "kind"       => "ENUM",
+          "enumValues" => dairy_animals + [{"name" => "YAK", "isDeprecated" => true}],
         },
       }}
       result.should eq expected
@@ -114,20 +114,20 @@ pending "GraphQL::Introspection::TypeType" do
       }
 
       it "exposes metadata about input objects" do
-        expected = { "data" => {
-            "__type" => {
-              "name"=>"DairyProductInput",
-              "description"=>"Properties for finding a dairy product",
-              "kind"=>"INPUT_OBJECT",
-              "inputFields"=>[
-                {"name"=>"source", "type"=>{"kind"=>"NON_NULL","name"=>nil, }, "defaultValue"=>nil},
-                {"name"=>"originDairy", "type"=>{"kind"=>"SCALAR","name"=>"String"}, "defaultValue"=>"\"Sugar Hollow Dairy\""},
-                {"name"=>"fatContent", "type"=>{"kind"=>"SCALAR","name" => "Float"}, "defaultValue"=>"0.3"},
-                {"name"=>"organic", "type"=>{"kind"=>"SCALAR","name" => "Boolean"}, "defaultValue"=>"false"},
-                {"name"=>"order_by", "type"=>{"kind"=>"INPUT_OBJECT", "name"=>"ResourceOrderType"}, "defaultValue"=>"{direction:\"ASC\"}"},
-              ]
-            }
-          }}
+        expected = {"data" => {
+          "__type" => {
+            "name"        => "DairyProductInput",
+            "description" => "Properties for finding a dairy product",
+            "kind"        => "INPUT_OBJECT",
+            "inputFields" => [
+              {"name" => "source", "type" => {"kind" => "NON_NULL", "name" => nil}, "defaultValue" => nil},
+              {"name" => "originDairy", "type" => {"kind" => "SCALAR", "name" => "String"}, "defaultValue" => "\"Sugar Hollow Dairy\""},
+              {"name" => "fatContent", "type" => {"kind" => "SCALAR", "name" => "Float"}, "defaultValue" => "0.3"},
+              {"name" => "organic", "type" => {"kind" => "SCALAR", "name" => "Boolean"}, "defaultValue" => "false"},
+              {"name" => "order_by", "type" => {"kind" => "INPUT_OBJECT", "name" => "ResourceOrderType"}, "defaultValue" => "{direction:\"ASC\"}"},
+            ],
+          },
+        }}
         result.should eq expected
       end
 

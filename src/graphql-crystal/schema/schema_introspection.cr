@@ -1,7 +1,6 @@
 module GraphQL
   module Schema
     module Introspection
-
       #
       # Wrap an ObjectType intercepting field
       # resolution for `__schema` and `__type`
@@ -254,7 +253,6 @@ module GraphQL
   end
 
   module Language
-
     class GraphQL::Language::TypeDefinition
       field :kind { nil }
       field :name
@@ -263,7 +261,7 @@ module GraphQL
       field :fields { nil }
       field :interfaces { nil }
       field :possibleTypes { nil }
-      field :enumValues { nil } #(includeDeprecated: Boolean = false)
+      field :enumValues { nil } # (includeDeprecated: Boolean = false)
       field :ofType { nil }
       field :isDeprecated { false }
       field :deprecationReason { nil }
@@ -280,7 +278,7 @@ module GraphQL
         if args["includeDeprecated"]
           _fields
         else
-          _fields.reject( &.directives.any?( &.name.==("deprecated") ) )
+          _fields.reject(&.directives.any?(&.name.==("deprecated")))
         end
       end
       field :interfaces { |args, context| resolved_interfaces(context.schema) }
@@ -294,7 +292,7 @@ module GraphQL
 
     class GraphQL::Language::UnionTypeDefinition
       field :kind { "UNION" }
-      field :possibleTypes { |args, context| types.map{|t| context.schema.type_resolve(t)} }
+      field :possibleTypes { |args, context| types.map { |t| context.schema.type_resolve(t) } }
     end
 
     class GraphQL::Language::InterfaceTypeDefinition
@@ -309,7 +307,7 @@ module GraphQL
 
     class GraphQL::Language::EnumTypeDefinition
       field :kind { "ENUM" }
-      field :enumValues { self.fvalues }#(includeDeprecated: Boolean = false)
+      field :enumValues { self.fvalues } # (includeDeprecated: Boolean = false)
     end
 
     class GraphQL::Language::WrapperType
@@ -349,14 +347,10 @@ module GraphQL
       field :type { |args, context| context.schema.type_resolve(type) }
       field :defaultValue do
         val = (
-          default_value.is_a?(Language::AbstractNode) ?
-            GraphQL::Language::Generation.generate(default_value) :
-            (
-              default_value.is_a?(String) ?
-                # quote the string value
-                %{"#{default_value}"} :
-                default_value
-            )
+          default_value.is_a?(Language::AbstractNode) ? GraphQL::Language::Generation.generate(default_value) : (
+            default_value.is_a?(String) ?  # quote the string value
+%{"#{default_value}"} : default_value
+          )
         )
         val == nil ? nil : val.to_s
       end
@@ -368,8 +362,8 @@ module GraphQL
       field :args { arguments }
       field :locations
       field :onOperation { locations.includes? "OPERATION" }
-      field :onFragment  { locations.any? &.=~ /FRAGMENT/  }
-      field :onField     { locations.includes? "FIELD"     }
+      field :onFragment { locations.any? &.=~ /FRAGMENT/ }
+      field :onField { locations.includes? "FIELD" }
     end
 
     class GraphQL::Language::EnumValueDefinition
@@ -377,7 +371,5 @@ module GraphQL
       field :name
       field :description
     end
-
   end
-
 end

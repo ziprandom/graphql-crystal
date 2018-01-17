@@ -76,15 +76,14 @@ fragment userFields on User {
 query_string
 
 puts GraphQL::Language::Parser.parse(
-      GraphQL::Language::Lexer.lex(schema_string)
-    ).as(GraphQL::Language::Document).to_query_string
+  GraphQL::Language::Lexer.lex(schema_string)
+).as(GraphQL::Language::Document).to_query_string
 puts GraphQL::Language::Parser.parse(
-      GraphQL::Language::Lexer.lex(query_string)
-    ).as(GraphQL::Language::Document).to_query_string
+  GraphQL::Language::Lexer.lex(query_string)
+).as(GraphQL::Language::Document).to_query_string
 
 # Parse the Schema to a Document ASTNode
 Benchmark.ips(warmup: 4, calculation: 10) do |x|
-
   x.report("SCHEMA String: c implementation from facebook: ") {
     GraphQLParser.parse_string(schema_string, nil)
   }
@@ -94,12 +93,10 @@ Benchmark.ips(warmup: 4, calculation: 10) do |x|
       GraphQL::Language::Lexer.lex(schema_string)
     )
   }
-
 end
 
 # Parse the Schema to a Document ASTNode
 Benchmark.ips(warmup: 4, calculation: 10) do |x|
-
   x.report("QUERY String: c implementation from facebook: ") {
     GraphQLParser.parse_string(query_string, nil)
   }

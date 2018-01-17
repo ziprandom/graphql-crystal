@@ -1,15 +1,12 @@
 require "./dummy_data"
 require "./dummy_schema_string"
-require "../../../src/graphql-crystal/schema";
-
-# def fetchItem(type, data : Hash)
+require "../../../src/graphql-crystal/schema" # def fetchItem(type, data : Hash)
 #   Proc(Hash(String, JSON::Type), JSON::Type).new do |args|
 #     data.find(&.[0].to_s.==(args["id"].to_s)).not_nil![1].as(JSON::Type)
 #   end
 # end
 
 module Dummy
-
   module DairyAppQuery
     include ::GraphQL::ObjectType
     extend self
@@ -35,7 +32,7 @@ module Dummy
 
     field :allEdible { CHEESES.values + MILKS.values }
     field :error { raise("This error was raised on purpose") }
-    field :executionError { raise("I don't have a dedicated ExecutionErrorObject :(" ) }
+    field :executionError { raise("I don't have a dedicated ExecutionErrorObject :(") }
     field :maybeNull { Dummy::MAYBE_NULL }
     field :deepNonNull { nil }
   end
@@ -51,11 +48,9 @@ module Dummy
     field :replaceValues do |args|
       CHEESES.values + MILKS.values
     end
-
   end
 
   Schema = GraphQL::Schema.from_schema(Dummy::SCHEMA_STRING)
   Schema.query_resolver = DairyAppQuery
   Schema.mutation_resolver = DairyAppMutation
-
 end
