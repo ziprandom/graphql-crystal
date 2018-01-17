@@ -412,10 +412,10 @@ are of type <code>Symbol</code>), and the types for each key, are known at compi
 
 <p>A named tuple can be created with a named tuple literal:</p>
 
-<pre><code>language <span class="o">=</span> {name: <span class="s">&quot;Crystal&quot;</span>, year: <span class="n">2011</span>} <span class="c"># NamedTuple&#40;name: String, year: Int32&#41;</span>
+<pre><code>language <span class="o">=</span> {name: <span class="s">&quot;Crystal&quot;</span>, year: <span class="n">2011</span>} <span class="c"># NamedTuple(name: String, year: Int32)</span>
 
-language[<span class="n">:name</span>]  <span class="c"># &#61;&gt; &quot;Crystal&quot;</span>
-language[<span class="n">:year</span>]  <span class="c"># &#61;&gt; 2011</span>
+language[<span class="n">:name</span>]  <span class="c"># =&gt; &quot;Crystal&quot;</span>
+language[<span class="n">:year</span>]  <span class="c"># =&gt; 2011</span>
 language[<span class="n">:other</span>] <span class="c"># compile time error</span></code></pre>
 
 <p>The compiler knows what types are in each key, so when indexing a named tuple
@@ -443,17 +443,12 @@ and might raise <code>KeyError</code>.</p>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/core_ext/named_tuple.cr#L1" target="_blank">core_ext/named_tuple.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/core_ext/named_tuple.cr#L1" target="_blank">core_ext/named_tuple.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/lib/cltk/src/cltk/named_tuple_extensions.cr#L1" target="_blank">lib/cltk/src/cltk/named_tuple_extensions.cr</a>
-    
-    <br/>
-  
-    
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/lib/msgpack/src/message_pack/to_msgpack.cr#L56" target="_blank">lib/msgpack/src/message_pack/to_msgpack.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/lib/msgpack/src/message_pack/to_msgpack.cr#L56" target="_blank">lib/msgpack/src/message_pack/to_msgpack.cr</a>
     
     <br/>
   
@@ -465,6 +460,16 @@ and might raise <code>KeyError</code>.</p>
 
 
 
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#merge%28other%3ANamedTuple%3F%29-instance-method" class="signature"><strong>#merge</strong>(other : NamedTuple?)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -507,6 +512,25 @@ and might raise <code>KeyError</code>.</p>
 
 
 
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="merge(other:NamedTuple?)-instance-method">
+      <div class="signature">
+        
+        def <strong>merge</strong>(other : <a href="NamedTuple.html">NamedTuple</a>?)
+
+        <a class="method-permalink" href="#merge%28other%3ANamedTuple%3F%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/core_ext/named_tuple.cr#L2" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 

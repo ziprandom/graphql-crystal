@@ -429,7 +429,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language/lexer.cr#L9" target="_blank">graphql-crystal/language/lexer.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/lexer.cr#L9" target="_blank">graphql-crystal/language/lexer.cr</a>
     
     <br/>
   
@@ -442,7 +442,7 @@
   <dl>
     
       <dt class="entry-const" id="ESCAPES">
-        <strong>ESCAPES</strong> = <code><span class="s">/\\&#91;&quot;\\\/bfnrt&#93;/</span></code>
+        <strong>ESCAPES</strong> = <code><span class="s">/\\[&quot;\\\/bfnrt]/</span></code>
       </dt>
       
     
@@ -452,7 +452,7 @@
       
     
       <dt class="entry-const" id="UTF_8">
-        <strong>UTF_8</strong> = <code><span class="s">/\\u&#91;\dAa-f&#93;&#123;4&#125;/</span>i</code>
+        <strong>UTF_8</strong> = <code><span class="s">/\\u[\dAa-f]{4}/</span>i</code>
       </dt>
       
     
@@ -464,7 +464,7 @@
       
     
       <dt class="entry-const" id="VALID_STRING">
-        <strong>VALID_STRING</strong> = <code><span class="s">/\A&#40;?:&#91;^\\&#93;|</span><span class="i">#{</span></span><span class="t">ESCAPES</span><span class="s"><span class="i">}</span>|</span><span class="i">#{</span></span><span class="t">UTF_8</span><span class="s"><span class="i">}</span>&#41;*\z/</span></code>
+        <strong>VALID_STRING</strong> = <code><span class="s">/\A(?:[^\\]|</span><span class="i">#{</span></span><span class="t">ESCAPES</span><span class="s"><span class="i">}</span>|</span><span class="i">#{</span></span><span class="t">UTF_8</span><span class="s"><span class="i">}</span>)*\z/</span></code>
       </dt>
       
     
@@ -553,7 +553,7 @@
 
   <h2>Class Method Detail</h2>
   
-    <div class="entry-detail" id="lex&#40;string&#41;-class-method">
+    <div class="entry-detail" id="lex(string)-class-method">
       <div class="signature">
         
         def self.<strong>lex</strong>(string)
@@ -564,12 +564,12 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language/lexer.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/lexer.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="replace_escaped_characters_in_place&#40;raw_string&#41;-class-method">
+    <div class="entry-detail" id="replace_escaped_characters_in_place(raw_string)-class-method">
       <div class="signature">
         
         def self.<strong>replace_escaped_characters_in_place</strong>(raw_string)
@@ -580,7 +580,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language/lexer.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/lexer.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -590,7 +590,7 @@
 
   <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="lex&#40;string&#41;-instance-method">
+    <div class="entry-detail" id="lex(string)-instance-method">
       <div class="signature">
         
         def <strong>lex</strong>(string)
@@ -601,7 +601,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/3168abb98c0f1e6c3610e9ff9331f1dd9e4603b7/src/graphql-crystal/language/lexer.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/language/lexer.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
