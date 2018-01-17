@@ -1,5 +1,4 @@
 struct NamedTuple
-
   def merge(other : NamedTuple | Nil)
     if other.is_a? NamedTuple
       merge_implementation(other)
@@ -21,5 +20,4 @@ struct NamedTuple
     )
     {% end %}
   end
-
 end

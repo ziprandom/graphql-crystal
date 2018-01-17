@@ -1,10 +1,9 @@
 module GraphQL
   module Schema
     module FragmentResolver
-
       # replace named fragments with their concrete selections before
       # the query is resolved
-      def self.resolve(value , fragments)
+      def self.resolve(value, fragments)
         visit(value, fragments)
       end
 

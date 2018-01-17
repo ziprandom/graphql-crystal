@@ -20,34 +20,34 @@ describe GraphQL::Directive do
         TestSchema::Schema
           .execute(query_string)
           .should eq({
-                       "data" => {
-                         "__type" => {
-                           "fields" => [
-                             {
-                               "name" => "address",
-                               "isDeprecated" => false,
-                               "deprecationReason" => nil
-                             }, {
-                               "name" => "friends",
-                               "isDeprecated" => false,
-                               "deprecationReason" => nil
-                             }, {
-                               "name" => "full_address",
-                               "isDeprecated" => false,
-                               "deprecationReason" => nil
-                             }, {
-                               "name" => "id",
-                               "isDeprecated" => false,
-                               "deprecationReason" => nil
-                             }, {
-                               "name" => "name",
-                               "isDeprecated" => true,
-                               "deprecationReason" => "for no apparent Reason"
-                             }
-                           ]
-                         }
-                       }
-                     })
+          "data" => {
+            "__type" => {
+              "fields" => [
+                {
+                  "name"              => "address",
+                  "isDeprecated"      => false,
+                  "deprecationReason" => nil,
+                }, {
+                "name"              => "friends",
+                "isDeprecated"      => false,
+                "deprecationReason" => nil,
+              }, {
+                "name"              => "full_address",
+                "isDeprecated"      => false,
+                "deprecationReason" => nil,
+              }, {
+                "name"              => "id",
+                "isDeprecated"      => false,
+                "deprecationReason" => nil,
+              }, {
+                "name"              => "name",
+                "isDeprecated"      => true,
+                "deprecationReason" => "for no apparent Reason",
+              },
+              ],
+            },
+          },
+        })
       end
     end
 
@@ -69,33 +69,32 @@ describe GraphQL::Directive do
         TestSchema::Schema
           .execute(query_string)
           .should eq({
-                       "data" => {
-                         "__type" => {
-                           "name" => "City",
-                           "enumValues" => [
-                             {
-                               "name" => "London", "isDeprecated" => false,
-                               "deprecationReason" => nil
-                             }, {
-                               "name" => "Miami",
-                               "isDeprecated" => true,
-                               "deprecationReason" => "is not a capital"
-                             }, {
-                               "name" => "CABA",
-                               "isDeprecated" => false,
-                               "deprecationReason" => nil
-                             }, {
-                               "name" => "Istanbul",
-                               "isDeprecated" => false,
-                               "deprecationReason" => nil
-                             }
-                           ]
-                         }
-                       }
-                     })
+          "data" => {
+            "__type" => {
+              "name"       => "City",
+              "enumValues" => [
+                {
+                  "name" => "London", "isDeprecated" => false,
+                  "deprecationReason" => nil,
+                }, {
+                "name"              => "Miami",
+                "isDeprecated"      => true,
+                "deprecationReason" => "is not a capital",
+              }, {
+                "name"              => "CABA",
+                "isDeprecated"      => false,
+                "deprecationReason" => nil,
+              }, {
+                "name"              => "Istanbul",
+                "isDeprecated"      => false,
+                "deprecationReason" => nil,
+              },
+              ],
+            },
+          },
+        })
       end
     end
-
   end
 
   describe GraphQL::Directives::IncludeDirective do
@@ -115,24 +114,24 @@ describe GraphQL::Directive do
         TestSchema::Schema
           .execute(query_string, {"withName" => true})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0,
-                           "name" => "otto neverthere"
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id"   => 0,
+              "name" => "otto neverthere",
+            },
+          },
+        })
       end
       it "excludes if :if argument is false" do
         TestSchema::Schema
           .execute(query_string, {"withName" => false})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id" => 0,
+            },
+          },
+        })
       end
     end
 
@@ -152,25 +151,25 @@ describe GraphQL::Directive do
         TestSchema::Schema
           .execute(query_string, {"withName" => true})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0,
-                           "name" => "otto neverthere"
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id"   => 0,
+              "name" => "otto neverthere",
+            },
+          },
+        })
       end
 
       it "excludes if :if argument is false" do
         TestSchema::Schema
           .execute(query_string, {"withName" => false})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id" => 0,
+            },
+          },
+        })
       end
     end
 
@@ -191,25 +190,25 @@ describe GraphQL::Directive do
         TestSchema::Schema
           .execute(query_string, {"withName" => true})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0,
-                           "name" => "otto neverthere"
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id"   => 0,
+              "name" => "otto neverthere",
+            },
+          },
+        })
       end
 
       it "excludes if :if argument is false" do
         TestSchema::Schema
           .execute(query_string, {"withName" => false})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id" => 0,
+            },
+          },
+        })
       end
     end
   end
@@ -231,24 +230,24 @@ describe GraphQL::Directive do
         TestSchema::Schema
           .execute(query_string, {"skipName" => true})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id" => 0,
+            },
+          },
+        })
       end
       it "includes if :if argument is false" do
         TestSchema::Schema
           .execute(query_string, {"skipName" => false})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0,
-                           "name" => "otto neverthere"
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id"   => 0,
+              "name" => "otto neverthere",
+            },
+          },
+        })
       end
     end
 
@@ -268,25 +267,25 @@ describe GraphQL::Directive do
         TestSchema::Schema
           .execute(query_string, {"skipName" => true})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id" => 0,
+            },
+          },
+        })
       end
 
       it "includes if :if argument is false" do
         TestSchema::Schema
           .execute(query_string, {"skipName" => false})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0,
-                           "name" => "otto neverthere"
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id"   => 0,
+              "name" => "otto neverthere",
+            },
+          },
+        })
       end
     end
 
@@ -307,25 +306,25 @@ describe GraphQL::Directive do
         TestSchema::Schema
           .execute(query_string, {"skipName" => true})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id" => 0,
+            },
+          },
+        })
       end
 
       it "includes if :if argument is false" do
         TestSchema::Schema
           .execute(query_string, {"skipName" => false})
           .should eq({
-                       "data" => {
-                         "user" => {
-                           "id" => 0,
-                           "name" => "otto neverthere"
-                         }
-                       }
-                     })
+          "data" => {
+            "user" => {
+              "id"   => 0,
+              "name" => "otto neverthere",
+            },
+          },
+        })
       end
     end
   end

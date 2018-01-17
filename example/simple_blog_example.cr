@@ -18,6 +18,7 @@ module BlogExample
 
   class User
     getter :id, :first_name, :last_name, :role
+
     def initialize(@id : String, @first_name : String, @last_name : String, @role : UserRole); end
   end
 
@@ -28,19 +29,22 @@ module BlogExample
     # in order for the field macro to work on child classes. Once this is fixed the
     # arbitrary classes can declared as GraphQL Object types easily via monkey Patching
     include GraphQL::ObjectType
-    @id: String
-    @body: String
-    @author: User
+    @id : String
+    @body : String
+    @author : User
+
     def initialize(@id, @body, @author); end
   end
 
   class Post < Content
     getter :id, :author, :title, :body
+
     def initialize(@id : String, @author : User, @title : String, @body : String); end
   end
 
   class Comment < Content
     getter :id, :author, :post, :body
+
     def initialize(@id : String, @author : User, @post : Post, @body : String); end
   end
 
@@ -53,21 +57,20 @@ module BlogExample
   USERS = [
     {id: SecureRandom.uuid, first_name: "Bob", last_name: "Bobson", role: UserRole::Author},
     {id: SecureRandom.uuid, first_name: "Alice", last_name: "Alicen", role: UserRole::Admin},
-    {id: SecureRandom.uuid, first_name: "Grace", last_name: "Graham", role: UserRole::Reader}
+    {id: SecureRandom.uuid, first_name: "Grace", last_name: "Graham", role: UserRole::Reader},
   ].map { |args| User.new **args }
 
   POSTS = [
     {id: SecureRandom.uuid, author: USERS[0], title: "GraphQL for Dummies", body: "GraphQL is pretty simple."},
     {id: SecureRandom.uuid, author: USERS[0], title: "REST vs. GraphQL", body: "GraphQL has certain advantages over REST."},
-    {id: SecureRandom.uuid, author: USERS[1], title: "The Crystal Programming Language ", body: "The nicest syntax on the planet now comes with typesafety, performance and parallelisation support(ójala!)"}
+    {id: SecureRandom.uuid, author: USERS[1], title: "The Crystal Programming Language ", body: "The nicest syntax on the planet now comes with typesafety, performance and parallelisation support(ójala!)"},
   ].map { |args| Post.new **args }
 
   COMMENTS = [
     {id: SecureRandom.uuid, author: USERS[2], post: POSTS[1], body: "I like rest more!"},
     {id: SecureRandom.uuid, author: USERS[2], post: POSTS[1], body: "But think of all the possibilities with GraphQL!"},
-    {id: SecureRandom.uuid, author: USERS[1], post: POSTS[2], body: "When will I finally have static compilation support?"}
+    {id: SecureRandom.uuid, author: USERS[1], post: POSTS[2], body: "When will I finally have static compilation support?"},
   ].map { |args| Comment.new **args }
-
 
   #
   # Now we define our Schema
@@ -224,8 +227,8 @@ module BlogExample
     field :firstName { first_name }
     field :lastName { last_name }
     field :fullName { "#{@first_name} #{@last_name}" }
-    field :posts { POSTS.select &.author.==(self)}
-    field :postsCount { POSTS.select( &.author.==(self) ).size }
+    field :posts { POSTS.select &.author.==(self) }
+    field :postsCount { POSTS.select(&.author.==(self)).size }
     field :role
   end
 
@@ -236,13 +239,12 @@ module BlogExample
     field "posts" { POSTS }
 
     field "user" do |args|
-      USERS.find( &.id.==(args["id"]) )
+      USERS.find(&.id.==(args["id"]))
     end
 
     field "post" do |args|
-      POSTS.find( &.id.==(args["id"]) )
+      POSTS.find(&.id.==(args["id"]))
     end
-
   end
 
   module MutationType
@@ -252,7 +254,7 @@ module BlogExample
     field "post" do |args|
       payload = args["payload"].as(Hash)
 
-      author = USERS.find( &.id.==(payload["authorId"]) )
+      author = USERS.find(&.id.==(payload["authorId"]))
       raise "authorId doesn't exist!" unless author
 
       post = Post.new(
@@ -267,10 +269,10 @@ module BlogExample
     field "comment" do |args|
       payload = args["payload"].as(Hash)
 
-      author = USERS.find( &.id.==(payload["authorId"]) )
+      author = USERS.find(&.id.==(payload["authorId"]))
       raise "authorId doesn't exist!" unless author
 
-      post = POSTS.find( &.id.==(payload["postId"]) )
+      post = POSTS.find(&.id.==(payload["postId"]))
       raise "postId doesn't exist!" unless post
 
       comment = Comment.new(
@@ -280,7 +282,6 @@ module BlogExample
       COMMENTS << comment
       comment
     end
-
   end
 
   #
@@ -295,12 +296,10 @@ end
 #
 puts schema.execute("{ posts {id title body author {fullName}} }").to_pretty_json
 
-
 #
 # a simple introspection query:
 #
 puts schema.execute("{ __type(name: \"Post\") { fields { name description type { kind } } } }").to_pretty_json
-
 
 #
 # create a Post via a mutation
@@ -320,14 +319,13 @@ mutation_string = %{
 
 mutation_args = {
   "payload" => {
-    "title" => "Using Crystal 1.0 in Production",
-    "body" => "would be the most wonderful thing",
-    "authorId" => BlogExample::USERS.first.id
-  }
+    "title"    => "Using Crystal 1.0 in Production",
+    "body"     => "would be the most wonderful thing",
+    "authorId" => BlogExample::USERS.first.id,
+  },
 }
 
 puts schema.execute(mutation_string, mutation_args).to_pretty_json
-
 
 #
 # comment on the post we just created
@@ -343,14 +341,13 @@ mutation_string = %{
 
 mutation_args = {
   "payload" => {
-    "postId" => BlogExample::POSTS.last.id,
-    "body" => "would be the most wonderful thing",
-    "authorId" => BlogExample::USERS[1].id
-  }
+    "postId"   => BlogExample::POSTS.last.id,
+    "body"     => "would be the most wonderful thing",
+    "authorId" => BlogExample::USERS[1].id,
+  },
 }
 
 puts schema.execute(mutation_string, mutation_args).to_pretty_json
-
 
 # lets create lots of Comments
 

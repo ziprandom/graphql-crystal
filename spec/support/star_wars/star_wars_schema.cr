@@ -61,7 +61,7 @@ module StarWars
   abstract class Character
     field :id
     field :name
-    field :friends  do
+    field :friends do
       Characters.select { |c| self.friends.includes? c.id }
     end
 
@@ -92,17 +92,16 @@ module StarWars
     end
 
     field :humans do |args|
-      args["ids"].as(Array).map { |i| Characters.find( &.id.==(i) ) }
+      args["ids"].as(Array).map { |i| Characters.find(&.id.==(i)) }
     end
 
     field :human do |args|
-      Characters.select( &.is_a?(Human) ).find( &.id.==(args["id"]) )
+      Characters.select(&.is_a?(Human)).find(&.id.==(args["id"]))
     end
 
     field :droid do |args|
-      Characters.select(&.is_a?(Droid)).find( &.id.==(args["id"]))
+      Characters.select(&.is_a?(Droid)).find(&.id.==(args["id"]))
     end
-
   end
 
   Schema = GraphQL::Schema.from_schema(SCHEMA_DEFINITION)

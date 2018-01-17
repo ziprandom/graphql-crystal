@@ -2,7 +2,6 @@ require "../../spec_helper"
 
 describe GO_GRAPHQL_TEST_SCHEMA do
   it "parses the complex query that was used by the go-graphql benchmark" do
-
     query = %{
       query Example($size: Int) {
 	a,
@@ -66,7 +65,7 @@ describe GO_GRAPHQL_TEST_SCHEMA do
            }
          }
       }).as_h
-    result = GO_GRAPHQL_TEST_SCHEMA.execute(query, ({"size" => 50}) )
+    result = GO_GRAPHQL_TEST_SCHEMA.execute(query, ({"size" => 50}))
     result.should eq expected
   end
 end

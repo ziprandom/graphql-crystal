@@ -3,15 +3,15 @@
 require "../../spec_helper"
 
 class GraphQL::Language::Parser
-  def self.parse(prog : String, options = NamedTuple.new )
+  def self.parse(prog : String, options = NamedTuple.new)
     parse(GraphQL::Language::Lexer.lex(prog), options).as(GraphQL::Language::Document)
   end
 end
 
 def clean_string(string)
   string.gsub(/^  /m, "")
-    .gsub(/#[^\n]*\n/m, "\n")
-      .gsub(/[\n\s]+/m, "\n").strip
+        .gsub(/#[^\n]*\n/m, "\n")
+        .gsub(/[\n\s]+/m, "\n").strip
 end
 
 describe GraphQL::Language::Generation do
@@ -38,7 +38,6 @@ describe GraphQL::Language::Generation do
 
   document = GraphQL::Language::Parser.parse(query_string)
   describe ".generate" do
-
     it "should work" do
       document = GraphQL::Language::Parser.parse query_string
       document.to_query_string.gsub(/\s+/, " ").strip.should eq query_string.gsub(/\s+/, " ").strip

@@ -7,7 +7,7 @@ module DataType
   field :d { "Donut" }
   field :e { "Egg" }
   field :f { "Fish" }
-  field :pic { |args| "Pic of size: #{ args["size"]? || 50 }" }
+  field :pic { |args| "Pic of size: #{args["size"]? || 50}" }
   field :deep { DeepDataType }
   field :promise { DataType }
 end

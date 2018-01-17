@@ -15,7 +15,6 @@ module GraphQL
           {nil, [] of Error}
         end
       end
-
     end
   end
 end

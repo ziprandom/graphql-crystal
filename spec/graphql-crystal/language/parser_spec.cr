@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#require "cltk/parser/parse"
+# require "cltk/parser/parse"
 require "../../spec_helper"
 
 class GraphQL::Language::Parser
@@ -9,11 +9,9 @@ class GraphQL::Language::Parser
 end
 
 describe GraphQL::Language::Parser do
-
   subject = GraphQL::Language::Parser
 
   describe "anonymous fragment extension" do
-
     query_strings = [
       %{
         fragment on NestedType @or(something: "ok") {
@@ -119,8 +117,8 @@ describe GraphQL::Language::Parser do
             unit: LengthUnit = METER
           ): Float
         }
-      }
-    ];
+      },
+    ]
 
     query_strings.each do |query_string|
       it "parses different graphql docs: #{query_string}" do
@@ -134,7 +132,6 @@ describe GraphQL::Language::Parser do
     end
 
     it "creates an anonymous fragment definition" do
-
       document = subject.parse query_strings[0]
 
       fragment = document.definitions.first
@@ -159,12 +156,11 @@ describe GraphQL::Language::Parser do
     strings.each do |query_str|
       doc = subject.parse(query_str)
       field = doc.definitions
-              .first.as(GraphQL::Language::OperationDefinition)
-              .selections.first.as(GraphQL::Language::Field)
+                 .first.as(GraphQL::Language::OperationDefinition)
+        .selections.first.as(GraphQL::Language::Field)
       field.arguments.size.should eq 0
       field.selections.size.should eq 1
     end
-
   end
 
   pending "parses the test schema" do

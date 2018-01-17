@@ -4,6 +4,7 @@ lib GraphQLParser
   alias GraphQlAstNode = Void
   fun parse_string_with_experimental_schema_support = graphql_parse_string_with_experimental_schema_support(text : LibC::Char*, error : LibC::Char**) : GraphQlAstNode*
   fun parse_file = graphql_parse_file(file : File*, error : LibC::Char**) : GraphQlAstNode*
+
   struct X_IoFile
     _flags : LibC::Int
     _io_read_ptr : LibC::Char*
@@ -35,12 +36,15 @@ lib GraphQLParser
     _mode : LibC::Int
     _unused2 : LibC::Char
   end
+
   type File = X_IoFile
+
   struct X_IoMarker
     _next : X_IoMarker*
     _sbuf : X_IoFile*
     _pos : LibC::Int
   end
+
   alias X__OffT = LibC::Long
   alias X_IoLockT = Void
   alias X__Off64T = LibC::Long
