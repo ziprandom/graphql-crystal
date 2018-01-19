@@ -4,31 +4,30 @@ describe GO_GRAPHQL_TEST_SCHEMA do
   it "parses the complex query that was used by the go-graphql benchmark" do
     query = %{
       query Example($size: Int) {
-	a,
-	b,
-	x: c
-	...c
-	f
-	...on DataType {
-	  pic(size: $size)
-	  promise {
-	    a
-	  }
-	}
-	deep {
-	  a
-	  b
-	  c
-	  deeper {
-	    a
-	    b
-	  }
-	}
+      	a,
+      	b,
+      	x: c
+      	...c
+      	f
+      	...on DataType {
+      	  pic(size: $size)
+      	  promise {
+      	    a
+      	  }
+      	}
+      	deep {
+      	  a
+      	  b
+      	  c
+      	  deeper {
+      	    a
+      	    b
+      	  }
+      	}
       }
       fragment c on DataType {
-	d
-
-	e
+      	d
+      	e
       }
     }
 

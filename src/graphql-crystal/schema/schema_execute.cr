@@ -9,36 +9,62 @@ module GraphQL
         description: "the name of this GraphQL type"
       )
 
+      alias ExecuteParams = Hash(String, JSON::Type) | Hash(String, String | Hash(String, JSON::Type | Nil))
+
+      #
+      # execute a query against the schema
+      # `params`: the Hash with main data
+      # `context`: *optional* a custom context to be injected in
+      #            field callbacks.
+      def execute(params = ExecuteParams, context = Context.new(self, max_depth))
+        document = params["query"]?.as(String)
+        variables = params["variables"]?.as(Hash(String, JSON::Type)?)
+        operation_name = params["operationName"]?.as(String?)
+
+        execute(Language.parse(document), variables, operation_name, context)
+      end
+
       #
       # execute a query against the schema
       # `document`: a string representing the query to be executed
       # `params`: *optional* the query variables as a Hash
+      # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : String, params = nil, context = Context.new(self, max_depth))
-        execute(Language.parse(document), params, context)
+      def execute(document : String, params = nil, operation_name = nil, context = Context.new(self, max_depth))
+        execute(Language.parse(document), params, operation_name, context)
       end
 
       #
       # execute a query against the schema
       # `document`: a parsed query
       # `params`: *optional* the query variables as a Hash
+      # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : Language::Document, params, context = Context.new(self, max_depth))
-        execute(document, cast_to_jsontype(params), context)
+      def execute(document : Language::Document, params, operation_name = nil, context = Context.new(self, max_depth))
+        execute(document, cast_to_jsontype(params), operation_name, context)
       end
 
       #
       # execute a query against the schema
       # `document`: a parsed query
       # `params`: *optional* the query variables as a Hash
+      # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : Language::Document, params : Hash(String, JSON::Type)?, context = Context.new(self, max_depth))
+      def execute(document : Language::Document, params : Hash(String, JSON::Type)?, operation_name : String?, context = Context.new(self, max_depth))
         queries, mutations, fragments = extract_request_parts(document)
         context.fragments = fragments
-        query = (queries + mutations).first
+        operations = (queries + mutations)
+        query =
+          if operations.size > 1
+            operations.find { |operation| operation.name == operation_name }
+          else
+            operations.first
+          end
+        return {"errors" => [{"message" => "Must provide a valid operation name if query contains multiple operations.", "path" => [] of String}]} unless query
+
         begin
           substitute_variables_from_params(query, params ? params : {} of String => JSON::Type)
         rescue e : Exception
@@ -47,7 +73,12 @@ module GraphQL
           return {"data" => nil, "errors" => [{"message" => e.message, "path" => [] of String}]}
         end
 
-        root_element, root_element_definition = query.operation_type == "query" ? {query_resolver, @types[query_resolver.try &.graphql_type]} : {mutation_resolver, @types[mutation_resolver.try &.graphql_type]}
+        root_element, root_element_definition =
+          if query.operation_type == "query"
+            {query_resolver, @types[query_resolver.try &.graphql_type]}
+          else
+            {mutation_resolver, @types[mutation_resolver.try &.graphql_type]}
+          end
 
         result, errors = resolve_selections_for(
           root_element_definition,
@@ -142,7 +173,7 @@ module GraphQL
         if prepared_selections.empty?
           errors << Error.new(
             message: "no selections found for this field! maybe you forgot to define an \
-                          inline fragment for this type in a union?",
+                                inline fragment for this type in a union?",
             path: [] of (String | Int32)
           )
           return nil, errors
@@ -374,7 +405,7 @@ module GraphQL
             # # TODO: Custom Exceptions here please
 
             raise %{argument "#{definition.name}" is expected to be of type: \
-                    "#{Language::Generation.generate(definition.type)}"}
+                          "#{Language::Generation.generate(definition.type)}"}
           end
 
           value = if provided.responds_to?(:to_value)
@@ -401,9 +432,9 @@ module GraphQL
             selections << selection
           when Language::InlineFragment
             if selection.type.as(Language::TypeName).name == type.name
-              selections += selection.selections.map( # assign the fragments directive to the field
+              # assign the fragments directive to the field
               # for later evaluation.
-&.as(Language::Field).tap { |f| f.directives = selection.directives })
+              selections += selection.selections.map(&.as(Language::Field).tap { |f| f.directives = selection.directives })
             end
           end
           selections

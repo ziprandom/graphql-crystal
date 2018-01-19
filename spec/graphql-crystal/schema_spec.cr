@@ -295,4 +295,63 @@ describe GraphQL::Schema do
       TestSchema::Schema.execute(bad_query_string).should eq expected
     end
   end
+
+  describe "operationName" do
+    it "multiple operations with valid operationName" do
+      TestSchema::Schema.execute(
+        %{
+          query UserOne{ user(id: 0) { name } }
+          query UserTwo{ user(id: 0) { name } }
+        },
+        nil,
+        "UserOne"
+      ).should eq({"data" => {"user" => {"name" => "otto neverthere"}}})
+    end
+
+    it "one operation ignore operationName" do
+      TestSchema::Schema.execute(
+        %{
+          query UserOne{ user(id: 0) { name } }
+        },
+        nil,
+        "ignored operationName"
+      ).should eq({"data" => {"user" => {"name" => "otto neverthere"}}})
+    end
+
+    it "multiple operations without operationName" do
+      expected = {
+        "errors" => [
+          {
+            "message" => "Must provide a valid operation name if query contains multiple operations.",
+            "path"    => [] of String,
+          },
+        ],
+      }
+      TestSchema::Schema.execute(
+        %{
+          query UserOne{ user(id: 0) { name } }
+          query UserTwo{ user(id: 0) { name } }
+        }
+      ).should eq expected
+    end
+
+    it "multiple operations with invalid operationName" do
+      expected = {
+        "errors" => [
+          {
+            "message" => "Must provide a valid operation name if query contains multiple operations.",
+            "path"    => [] of String,
+          },
+        ],
+      }
+      TestSchema::Schema.execute(
+        %{
+          query UserOne{ user(id: 0) { name } }
+          query UserTwo{ user(id: 0) { name } }
+        },
+        nil,
+        "invalid operationName"
+      ).should eq expected
+    end
+  end
 end

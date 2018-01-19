@@ -23,6 +23,7 @@ describe GraphQL::Schema do
         CUSTOM_CONTEXT_SCHEMA.execute(
           "{ logs { time, hostName, userName, message, process { name pid } } }",
           nil,
+          nil,
           context
         ).should eq expected
       end
@@ -68,7 +69,7 @@ describe GraphQL::Schema do
         },
       }
 
-      CUSTOM_CONTEXT_SCHEMA.execute(mutation_string, mutation_args, context).should eq expected
+      CUSTOM_CONTEXT_SCHEMA.execute(mutation_string, mutation_args, nil, context).should eq expected
     end
   end
 
@@ -84,6 +85,7 @@ describe GraphQL::Schema do
           }
           CUSTOM_CONTEXT_SCHEMA.execute(
             "{ logs { time, hostName, userName, message, process { name pid } } }",
+            nil,
             nil,
             context
           ).should eq expected
@@ -135,7 +137,7 @@ describe GraphQL::Schema do
           },
         }
 
-        CUSTOM_CONTEXT_SCHEMA.execute(mutation_string, mutation_args, context).should eq expected
+        CUSTOM_CONTEXT_SCHEMA.execute(mutation_string, mutation_args, nil, context).should eq expected
       end
 
       it "persists the created log so later queries show it" do
@@ -155,6 +157,7 @@ describe GraphQL::Schema do
         }
         CUSTOM_CONTEXT_SCHEMA.execute(
           "{ logs { time, hostName, userName, message, process { name pid } } }",
+          nil,
           nil,
           context
         ).should eq expected
