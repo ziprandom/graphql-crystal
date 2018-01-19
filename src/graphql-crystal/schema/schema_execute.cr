@@ -59,7 +59,7 @@ module GraphQL
         operations = (queries + mutations)
         query =
           if operations.size > 1
-            operation = operations.find { |operation| operation.name == operation_name }
+            operations.find { |operation| operation.name == operation_name }
           else
             operations.first
           end
