@@ -350,6 +350,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/ExecuteParams" data-name="graphql::schema::schema::executeparams">
+      <a href="../../GraphQL/Schema/Schema/ExecuteParams.html">ExecuteParams</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -431,12 +436,12 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L29" target="_blank">graphql-crystal/schema/schema.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L29" target="_blank">graphql-crystal/schema/schema.cr</a>
     
     <br/>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema_execute.cr#L4" target="_blank">graphql-crystal/schema/schema_execute.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema_execute.cr#L4" target="_blank">graphql-crystal/schema/schema_execute.cr</a>
     
     <br/>
   
@@ -503,23 +508,30 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(document : Language::Document, params, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
+        <a href="#execute%28params%3DExecuteParams%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(params = <span class="t">ExecuteParams</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
         
-          <div class="summary"><p>execute a query against the schema <code>document</code>: a parsed query <code>params</code>: <em>optional</em> the query variables as a Hash <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%3F%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(document : Language::Document, params : Hash(String, JSON::Type)?, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
-        
-          <div class="summary"><p>execute a query against the schema <code>document</code>: a parsed query <code>params</code>: <em>optional</em> the query variables as a Hash <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
+          <div class="summary"><p>execute a query against the schema <code>params</code>: the Hash with main data <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#execute%28document%3AString%2Cparams%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(document : String, params = <span class="n">nil</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
+        <a href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%2Coperation_name%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(document : Language::Document, params, operation_name = <span class="n">nil</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
         
-          <div class="summary"><p>execute a query against the schema <code>document</code>: a string representing the query to be executed <code>params</code>: <em>optional</em> the query variables as a Hash <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
+          <div class="summary"><p>execute a query against the schema <code>document</code>: a parsed query <code>params</code>: <em>optional</em> the query variables as a Hash <code>operation_name</code>: <em>optional</em> the query or mutation name to be executed <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#execute%28document%3AString%2Cparams%3Dnil%2Coperation_name%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(document : String, params = <span class="n">nil</span>, operation_name = <span class="n">nil</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
+        
+          <div class="summary"><p>execute a query against the schema <code>document</code>: a string representing the query to be executed <code>params</code>: <em>optional</em> the query variables as a Hash <code>operation_name</code>: <em>optional</em> the query or mutation name to be executed <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%3F%2Coperation_name%3AString%3F%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method" class="signature"><strong>#execute</strong>(document : Language::Document, params : Hash(String, JSON::Type)?, operation_name : String?, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))</a>
+        
+          <div class="summary"><p>execute a query against the schema <code>document</code>: a parsed query <code>params</code>: <em>optional</em> the query variables as a Hash <code>operation_name</code>: <em>optional</em> the query or mutation name to be executed <code>context</code>: <em>optional</em> a custom context to be injected in            field callbacks.</p></div>
         
       </li>
     
@@ -731,7 +743,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -747,7 +759,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -763,22 +775,21 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="execute(document:Language::Document,params,context=Context.new(self,max_depth))-instance-method">
+    <div class="entry-detail" id="execute(params=ExecuteParams,context=Context.new(self,max_depth))-instance-method">
       <div class="signature">
         
-        def <strong>execute</strong>(document : <a href="../../GraphQL/Language/Document.html">Language::Document</a>, params, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))
+        def <strong>execute</strong>(params = <span class="t">ExecuteParams</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))
 
-        <a class="method-permalink" href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
+        <a class="method-permalink" href="#execute%28params%3DExecuteParams%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
       </div>
       
         <div class="doc"><p>execute a query against the schema
-<code>document</code>: a parsed query
-<code>params</code>: <em>optional</em> the query variables as a Hash
+<code>params</code>: the Hash with main data
 <code>context</code>: <em>optional</em> a custom context to be injected in</p>
 
 <pre><code>       field callbacks.</code></pre></div>
@@ -786,22 +797,23 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema_execute.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema_execute.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="execute(document:Language::Document,params:Hash(String,JSON::Type)?,context=Context.new(self,max_depth))-instance-method">
+    <div class="entry-detail" id="execute(document:Language::Document,params,operation_name=nil,context=Context.new(self,max_depth))-instance-method">
       <div class="signature">
         
-        def <strong>execute</strong>(document : <a href="../../GraphQL/Language/Document.html">Language::Document</a>, params : Hash(String, JSON::Type)?, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))
+        def <strong>execute</strong>(document : <a href="../../GraphQL/Language/Document.html">Language::Document</a>, params, operation_name = <span class="n">nil</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))
 
-        <a class="method-permalink" href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%3F%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
+        <a class="method-permalink" href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%2Coperation_name%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
       </div>
       
         <div class="doc"><p>execute a query against the schema
 <code>document</code>: a parsed query
 <code>params</code>: <em>optional</em> the query variables as a Hash
+<code>operation_name</code>: <em>optional</em> the query or mutation name to be executed
 <code>context</code>: <em>optional</em> a custom context to be injected in</p>
 
 <pre><code>       field callbacks.</code></pre></div>
@@ -809,22 +821,23 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema_execute.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema_execute.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="execute(document:String,params=nil,context=Context.new(self,max_depth))-instance-method">
+    <div class="entry-detail" id="execute(document:String,params=nil,operation_name=nil,context=Context.new(self,max_depth))-instance-method">
       <div class="signature">
         
-        def <strong>execute</strong>(document : String, params = <span class="n">nil</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))
+        def <strong>execute</strong>(document : String, params = <span class="n">nil</span>, operation_name = <span class="n">nil</span>, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))
 
-        <a class="method-permalink" href="#execute%28document%3AString%2Cparams%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
+        <a class="method-permalink" href="#execute%28document%3AString%2Cparams%3Dnil%2Coperation_name%3Dnil%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
       </div>
       
         <div class="doc"><p>execute a query against the schema
 <code>document</code>: a string representing the query to be executed
 <code>params</code>: <em>optional</em> the query variables as a Hash
+<code>operation_name</code>: <em>optional</em> the query or mutation name to be executed
 <code>context</code>: <em>optional</em> a custom context to be injected in</p>
 
 <pre><code>       field callbacks.</code></pre></div>
@@ -832,7 +845,31 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema_execute.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema_execute.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="execute(document:Language::Document,params:Hash(String,JSON::Type)?,operation_name:String?,context=Context.new(self,max_depth))-instance-method">
+      <div class="signature">
+        
+        def <strong>execute</strong>(document : <a href="../../GraphQL/Language/Document.html">Language::Document</a>, params : Hash(String, JSON::Type)?, operation_name : String?, context = <span class="t">Context</span>.<span class="k">new</span>(<span class="k">self</span>, max_depth))
+
+        <a class="method-permalink" href="#execute%28document%3ALanguage%3A%3ADocument%2Cparams%3AHash%28String%2CJSON%3A%3AType%29%3F%2Coperation_name%3AString%3F%2Ccontext%3DContext.new%28self%2Cmax_depth%29%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>execute a query against the schema
+<code>document</code>: a parsed query
+<code>params</code>: <em>optional</em> the query variables as a Hash
+<code>operation_name</code>: <em>optional</em> the query or mutation name to be executed
+<code>context</code>: <em>optional</em> a custom context to be injected in</p>
+
+<pre><code>       field callbacks.</code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema_execute.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -848,7 +885,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L138" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L138" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -864,7 +901,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -880,7 +917,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -896,7 +933,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -912,7 +949,7 @@ for more infos</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -945,7 +982,7 @@ to intercept calls to __schema and __type field</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -961,7 +998,7 @@ to intercept calls to __schema and __type field</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L140" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -995,7 +1032,7 @@ to intercept calls to __schema and __type field</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1011,7 +1048,7 @@ to intercept calls to __schema and __type field</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1027,7 +1064,7 @@ to intercept calls to __schema and __type field</p></div>
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e57202ce02d72882c2b00dc8f69059098ebda299/src/graphql-crystal/schema/schema_execute.cr#L298" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema_execute.cr#L329" target="_blank">View source</a>]
         
       </div>
     </div>
