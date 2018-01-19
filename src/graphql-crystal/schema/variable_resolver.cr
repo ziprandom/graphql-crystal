@@ -5,7 +5,6 @@ module GraphQL
     # VariableIdentifiers with the variables provided
     # in params
     class VariableResolver
-
       def self.visit(query : Language::OperationDefinition, params)
         query.tap &.selections = visit(query.selections, params).map &.as(Language::AbstractNode)
       end
@@ -32,7 +31,6 @@ module GraphQL
       def self.visit(field, params)
         field
       end
-
     end
   end
 end

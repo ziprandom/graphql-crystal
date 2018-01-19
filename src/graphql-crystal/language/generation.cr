@@ -14,7 +14,6 @@ module GraphQL
     # @param indent [String] Whitespace to add to each printed node
     # @return [String] Valid GraphQL for `node`
     module Generation
-
       def self.generate(node : Document, indent : String = "")
         node.definitions.map { |d| generate(d) }.join("\n\n")
       end
@@ -25,7 +24,7 @@ module GraphQL
 
       def self.generate(node : Directive, indent : String = "")
         out = "@#{node.name}"
-        out += "(#{node.arguments.map { |a| generate(a).as(String)}.join(", ")})" if node.arguments.any?
+        out += "(#{node.arguments.map { |a| generate(a).as(String) }.join(", ")})" if node.arguments.any?
         out
       end
 
@@ -60,7 +59,7 @@ module GraphQL
       def self.generate(node : FragmentSpread, indent : String = "")
         out = "#{indent}...#{node.name}"
         if node.directives.any?
-          out += " " + node.directives.map { |d| generate(d).as(String)}.join(" ")
+          out += " " + node.directives.map { |d| generate(d).as(String) }.join(" ")
         end
       end
 
@@ -136,7 +135,7 @@ module GraphQL
         out = generate_description(node)
         out += "type #{node.name}"
         out += generate_directives(node.directives)
-        out += " implements " + node.interfaces.map{ |i| i.as(String) }.join(", ") unless node.interfaces.empty?
+        out += " implements " + node.interfaces.map { |i| i.as(String) }.join(", ") unless node.interfaces.empty?
         out += generate_field_definitions(node.fields)
       end
 
@@ -149,7 +148,7 @@ module GraphQL
       def self.generate(node : FieldDefinition, indent : String = "")
         out = node.name.dup
         unless node.arguments.empty?
-          out += "(" + node.arguments.map{ |arg| generate(arg).as(String) }.join(", ") + ")"
+          out += "(" + node.arguments.map { |arg| generate(arg).as(String) }.join(", ") + ")"
         end
         out += ": #{generate(node.type)}"
         out += generate_directives(node.directives)
@@ -166,7 +165,7 @@ module GraphQL
         out = generate_description(node)
         out += "union #{node.name}"
         out += generate_directives(node.directives)
-        out += " = " + node.types.map{ |t| t.as(NameOnlyNode).name }.join(" | ")
+        out += " = " + node.types.map { |t| t.as(NameOnlyNode).name }.join(" | ")
       end
 
       def self.generate(node : EnumTypeDefinition, indent : String = "")
@@ -204,9 +203,9 @@ module GraphQL
         out += " on #{node.locations.join(" | ")}"
       end
 
-#      def self.generate(node : AbstractNode, indent : String = "")
-#        node.to_query_string()
-#      end
+      #      def self.generate(node : AbstractNode, indent : String = "")
+      #        node.to_query_string()
+      #      end
 
       def self.generate(node : Float | Int | String | Nil | Bool, indent : String = "")
         node.to_json
@@ -252,10 +251,10 @@ module GraphQL
 
       def self.generate_description(node, indent = "", first_in_block = true)
         ""
-        #return "" unless node.description
+        # return "" unless node.description
 
-        #description = indent != "" && !first_in_block ? "\n" : ""
-        #description += Comments.commentize(node.description, indent: indent)
+        # description = indent != "" && !first_in_block ? "\n" : ""
+        # description += Comments.commentize(node.description, indent: indent)
       end
 
       def self.generate_field_definitions(fields, indent : String = "")

@@ -2,7 +2,6 @@
 require "../../src/graphql-crystal/schema"
 
 module TestSchema
-
   #
   # Model Logic
   #
@@ -16,11 +15,11 @@ module TestSchema
   Addresses = [
     {"Downing Street", 11, CityEnum::London, 3231},
     {"Sunset Boulevard", 114, CityEnum::Miami, 123439},
-    {"Avenida Santa Fé", 3042, CityEnum::CABA, 12398}
+    {"Avenida Santa Fé", 3042, CityEnum::CABA, 12398},
   ].map { |vars| Address.new *vars }
 
   Users = [
-    "otto neverthere", "jennifer nonone", "wilma nunca"
+    "otto neverthere", "jennifer nonone", "wilma nunca",
   ].map_with_index do |name, idx|
     User.new idx, name, Addresses[idx]
   end
@@ -32,13 +31,16 @@ module TestSchema
   class Address
     include GraphQL::ObjectType
     getter :street, :number, :city, :postal_code
+
     def initialize(
-          @street : String, @number : Int32,
-          @city : CityEnum, @postal_code : Int32)
+      @street : String, @number : Int32,
+      @city : CityEnum, @postal_code : Int32
+    )
     end
+
     field :street
     field :number
-    field :city #{ city.to_s }
+    field :city # { city.to_s }
     field :postal_code
   end
 
@@ -46,10 +48,12 @@ module TestSchema
     include GraphQL::ObjectType
     getter :id, :name, :address
     property :friends
+
     def initialize(
-          @id : Int32, @name : String,
-          @address : Address,
-          @friends = Array(User).new)
+      @id : Int32, @name : String,
+      @address : Address,
+      @friends = Array(User).new
+    )
     end
 
     field :id
@@ -59,7 +63,7 @@ module TestSchema
     field :full_address do
       <<-address
       #{name}
-      #{name.size.times.to_a.map {"-"}.join}
+      #{name.size.times.to_a.map { "-" }.join}
       #{address.number} #{address.street}
       #{address.postal_code} #{address.city}
       address
@@ -109,14 +113,13 @@ module TestSchema
     extend self
 
     field :user do |args|
-      Users.find &.id.==( args["id"] )
+      Users.find &.id.==(args["id"])
     end
 
     field :addresses do |args|
-      (cities = args["city"]?) ?
-        Addresses.select do |address|
-          cities.as( Array ).includes? address.city.to_s
-        end : Addresses
+      (cities = args["city"]?) ? Addresses.select do |address|
+        cities.as(Array).includes? address.city.to_s
+      end : Addresses
     end
   end
 

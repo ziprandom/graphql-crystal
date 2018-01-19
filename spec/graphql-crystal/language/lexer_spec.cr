@@ -26,12 +26,12 @@ describe GraphQL::Language::Lexer do
 
     it "unescapes escaped characters" do
       subject.lex(
-                     %{"\\" \\\\ \\/ \\b \\f \\n \\r \\t"}
+        %{"\\" \\\\ \\/ \\b \\f \\n \\r \\t"}
       ).first.value.should eq "\" \\ / \b \f \n \r \t"
     end
 
     it "unescapes escaped unicode characters" do
-      subject.lex( %{"\u0009"} ).first.value.should eq "\t"
+      subject.lex(%{"\u0009"}).first.value.should eq "\t"
     end
 
     it "rejects bad unicode, even when there's good unicode in the string" do
