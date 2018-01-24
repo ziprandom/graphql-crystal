@@ -158,8 +158,13 @@ module GraphQL
       end
 
       production(:enum_value_definition) do
-        clause("comments? enum_name directive*") do |comment, name, directives|
-          EnumValueDefinition.new(name: name, directives: directives, selection: nil, description: comment)
+
+        clause("comments enum_value_definition") do |comment, definition|
+          definition.as(EnumValueDefinition).tap { |d| d.description = comment.as(String) }
+        end
+
+        clause("enum_name directive*") do |name, directives|
+          EnumValueDefinition.new(name: name, directives: directives, selection: nil, description: nil)
         end
       end
 
@@ -307,11 +312,16 @@ module GraphQL
       end
 
       production(:input_value_definition) do
+
+        clause("comments input_value_definition") do |comment, definition|
+          definition.as(InputValueDefinition).tap { |d| d.description = comment.as(String) }
+        end
+
         clause(
-          ".comments? .name COLON .type .default_value? .directive*") do |comment, name, type, default_value, directives|
+          ".name COLON .type .default_value? .directive*") do |name, type, default_value, directives|
           InputValueDefinition.new(
             name: name, type: type, default_value: Language.to_fvalue(default_value),
-            directives: directives, description: comment)
+            directives: directives, description: nil)
         end
       end
 
@@ -320,10 +330,15 @@ module GraphQL
       end
 
       production(:field_definition) do
+
+        clause("comments field_definition") do |comment, definition|
+          definition.as(FieldDefinition).tap { |d| d.description = comment.as(String) }
+        end
+
         clause(
-          ".comments? .name .arguments_definitions? COLON .type .directive*") do |comment, name, arguments, type, directives|
+          ".name .arguments_definitions? COLON .type .directive*") do |name, arguments, type, directives|
           FieldDefinition.new(name: name, arguments: arguments || [] of Argument,
-            type: type, directives: directives, description: comment)
+            type: type, directives: directives, description: nil)
         end
       end
 
@@ -371,15 +386,11 @@ module GraphQL
 
       production(:comments) do
         clause(:COMMENT)
-
-        clause("comments COMMENT") do |comments, comment|
-          "#{comments.as(String)} #{comment.as(String)}"
-        end
       end
 
       build_nonempty_list_production(:directive_locations, :name, :PIPE)
 
-      finalize(use: "./parser.bin", lookahead: false, precedence: false)
+      finalize(use: "./parser.bin")
     end
   end
 end

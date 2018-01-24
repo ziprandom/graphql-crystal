@@ -9,13 +9,17 @@ module GraphQL
     class Lexer < CLTK::Scanner
       extend CLTK::Scanner::LexerCompatibility
 
+      @@split_lines = false
+
       # set a delimiter to split the string
       # for faster lexing. defaults to "\n"
       # self.pre_delimiter = "\n"
 
       # ignore newlines, commas and comments
       rule(/[\n\r]|[, \t]+/)
-      rule(/#[^\n\r]*/) { |comment| {:COMMENT, comment[1..-1].lstrip} }
+      rule(/#[^\n\r]*([\n\r][\n\r \t]*#[^\n\r]*)*/) do |comment|
+        { :COMMENT, parse_comment(comment) }
+      end
       rule(":") { {:COLON} }
       rule("on") { {:ON} }
       rule("fragment") { {:FRAGMENT} }
@@ -72,6 +76,13 @@ module GraphQL
       rule(/[_A-Za-z][_0-9A-Za-z]*/) do |t|
         escaped = replace_escaped_characters_in_place(t)
         {:IDENTIFIER, escaped}
+      end
+
+      def self.parse_comment(raw)
+        comment = raw.lines.reduce("") do |c, line|
+          clean = line.lstrip(" \t").lstrip("#").rstrip
+          c + ( clean.empty? ? "\n" : clean )
+        end.lstrip
       end
 
       ESCAPES         = /\\["\\\/bfnrt]/
