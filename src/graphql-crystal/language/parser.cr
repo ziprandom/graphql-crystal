@@ -14,6 +14,13 @@ module GraphQL
       end
 
       production(:definition) do
+        clause("comments definition") do |comment, definition|
+          if definition.responds_to?(:"description=") && !definition.description
+            definition.description = comment.as(String)
+          end
+          definition
+        end
+
         clause(:operation_definition)
         clause(:fragment_definition)
         clause(:type_system_definition)
@@ -243,12 +250,6 @@ module GraphQL
         clause(:schema_definition)
         clause(:type_definition)
         clause(:directive_definition)
-        clause("comments type_system_definition") do |comment, definition|
-          if definition.responds_to?(:"description=")
-            definition.description = comment.as(String)
-          end
-          definition
-        end
       end
 
       production(:schema_definition) do
@@ -370,17 +371,15 @@ module GraphQL
 
       production(:comments) do
         clause(:COMMENT)
+
         clause("comments COMMENT") do |comments, comment|
-          [
-            comments.as(String),
-            comment.as(String),
-          ].join(" ")
+          "#{comments.as(String)} #{comment.as(String)}"
         end
       end
 
       build_nonempty_list_production(:directive_locations, :name, :PIPE)
 
-      finalize(use: "./parser.bin")
+      finalize(use: "./parser.bin", lookahead: false, precedence: false)
     end
   end
 end
