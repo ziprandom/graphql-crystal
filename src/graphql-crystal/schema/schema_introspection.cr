@@ -36,6 +36,8 @@ module GraphQL
 
         field :types { @original_types.not_nil! }
         field :directives { @directive_definitions.values }
+        # subscriptionType is not supported atm.
+        field :subscriptionType { nil }
         field :queryType { @original_query_definition }
         field :mutationType { @mutation_resolver ? @types[@mutation_resolver.as(ObjectType).graphql_type] : nil }
 
@@ -124,6 +126,7 @@ module GraphQL
           types: [__Type!]!
           queryType: __Type!
           mutationType: __Type
+          subscriptionType: __Type
           directives: [__Directive!]!
         }
 
