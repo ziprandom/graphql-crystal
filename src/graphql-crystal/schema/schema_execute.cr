@@ -9,7 +9,11 @@ module GraphQL
         description: "the name of this GraphQL type"
       )
 
+      {% if JSON::NEW_JSON_ANY_TYPE %}
       alias ExecuteParams = Hash(String, JSON::Any::Type) | Hash(String, String | Hash(String, JSON::Any::Type | Nil))
+      {% else %}
+      alias ExecuteParams = Hash(String, JSON::Type) | Hash(String, String | Hash(String, JSON::Type | Nil))
+      {% end %}
 
       #
       # execute a query against the schema
@@ -18,7 +22,11 @@ module GraphQL
       #            field callbacks.
       def execute(params = ExecuteParams, context = Context.new(self, max_depth))
         document = params["query"]?.as(String)
+        {% if JSON::NEW_JSON_ANY_TYPE %}
         variables = params["variables"]?.as(Hash(String, JSON::Any::Type)?)
+        {% else %}
+        variables = params["variables"]?.as(Hash(String, JSON::Type)?)
+        {% end %}
         operation_name = params["operationName"]?.as(String?)
 
         execute(Language.parse(document), variables, operation_name, context)
@@ -43,17 +51,6 @@ module GraphQL
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
       def execute(document : Language::Document, params, operation_name = nil, context = Context.new(self, max_depth))
-        execute(document, cast_to_jsontype(params), operation_name, context)
-      end
-
-      #
-      # execute a query against the schema
-      # `document`: a parsed query
-      # `params`: *optional* the query variables as a Hash
-      # `operation_name`: *optional* the query or mutation name to be executed
-      # `context`: *optional* a custom context to be injected in
-      #            field callbacks.
-      def execute(document : Language::Document, params : Hash(String, JSON::Any)?, operation_name : String?, context = Context.new(self, max_depth))
         queries, mutations, fragments = extract_request_parts(document)
         context.fragments = fragments
         operations = (queries + mutations)
@@ -66,7 +63,7 @@ module GraphQL
         return {"errors" => [{"message" => "Must provide a valid operation name if query contains multiple operations.", "path" => [] of String}]} unless query
 
         begin
-          substitute_variables_from_params(query, params ? params : {} of String => JSON::Any)
+          substitute_variables_from_params(query, params)
         rescue e : Exception
           # we hit an error while resolving fragments
           # no path info atm
@@ -350,7 +347,8 @@ module GraphQL
         raise "I should have never come here"
       end
 
-      private def substitute_variables_from_params(query, params : Hash(String, JSON::Any))
+      private def substitute_variables_from_params(query, params)
+        return if params.nil?
         if (superfluous = params.keys - query.variables.map(&.name)).any?
           raise "unknown variables #{superfluous.join(", ")}"
         end
@@ -365,7 +363,9 @@ module GraphQL
           default_value = variable_definition.default_value
           default_value = default_value.responds_to? :to_value ? default_value.to_value : default_value
           param = params.fetch(variable_definition.name, default_value)
+          {% if JSON::NEW_JSON_ANY_TYPE %}
           param = param.raw if param.is_a?(JSON::Any)
+          {% end %}
           if !@type_validation.accepts?(variable_definition.type, param)
             expected_type_string = Language::Generation.generate(variable_definition.type)
             errors << Error.new(
@@ -479,7 +479,9 @@ module GraphQL
         end.as(ResolveCBReturnType)
       end
 
+
       private def cast_to_jsontype(v)
+        {% if JSON::NEW_JSON_ANY_TYPE %}
         case v
         when Int32
           v.to_i64.as(JSON::Any::Type)
@@ -497,13 +499,36 @@ module GraphQL
         else
           v
         end.as(JSON::Any::Type)
+        {% else %}
+        case v
+        when Int32
+          v.to_i64.as(JSON::Any::Type)
+        when Float32
+          v.to_f64.as(JSON::Any::Type)
+        when Array
+          v.map { |vv| cast_to_jsontype(vv).as(JSON::Any::Type) }
+        when Hash
+          v.keys.reduce(Hash(String, JSON::Any).new) do |hash, key|
+            hash[key] = JSON::Any.new(cast_to_jsontype v[key])
+            hash
+          end
+        when JSON::Any
+          v.as_h?
+        else
+          v
+        end.as(JSON::Any::Type)
+        {% end %}
       end
 
       private def cast_to_return(value)
         case value
         when Hash
           value.reduce(Hash(String, ReturnType).new) do |memo, h|
+            {% if JSON::NEW_JSON_ANY_TYPE %}
             memo[h[0]] = cast_to_return(h[1].is_a?(JSON::Any) ? h[1].as(JSON::Any).raw : h[1]).as(ReturnType)
+            {% else %}
+            memo[h[0]] = cast_to_return(h[1]).as(ReturnType)
+            {% end %}
             memo
           end
         when Array
