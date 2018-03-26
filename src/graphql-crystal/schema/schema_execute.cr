@@ -498,25 +498,25 @@ module GraphQL
           v.as_h?
         else
           v
-        end.as(JSON::Any::Type)
+        end.as(JSON::Any::Type) 
         {% else %}
         case v
         when Int32
-          v.to_i64.as(JSON::Any::Type)
+          v.to_i64.as(JSON::Type)
         when Float32
-          v.to_f64.as(JSON::Any::Type)
+          v.to_f64.as(JSON::Type)
         when Array
-          v.map { |vv| cast_to_jsontype(vv).as(JSON::Any::Type) }
+          v.map { |vv| cast_to_jsontype(vv).as(JSON::Type) }
         when Hash
-          v.keys.reduce(Hash(String, JSON::Any).new) do |hash, key|
-            hash[key] = JSON::Any.new(cast_to_jsontype v[key])
+          v.keys.reduce(Hash(String, JSON::Type).new) do |hash, key|
+            hash[key] = cast_to_jsontype v[key]
             hash
           end
         when JSON::Any
           v.as_h?
         else
           v
-        end.as(JSON::Any::Type)
+        end.as(JSON::Type)
         {% end %}
       end
 
