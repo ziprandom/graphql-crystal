@@ -56,7 +56,8 @@ module GraphQL
         (type_definition.fields.map(&.name) + value.keys).uniq.each do |key|
           return false unless field = type_definition.fields.find(&.name.==(key))
           if value.has_key?(field.name)
-            return false unless accepts?(field.type, value[field.name])
+            return false unless accepts?(field.type, (value[field.name].is_a?(JSON::Any) ?
+                                                      value[field.name].as(JSON::Any).raw : value[field.name]))
           elsif field.default_value
             return false unless accepts?(field.type, field.default_value)
           else

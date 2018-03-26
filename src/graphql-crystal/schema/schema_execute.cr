@@ -53,7 +53,7 @@ module GraphQL
       # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
-      def execute(document : Language::Document, params : Hash(String, JSON::Any::Type)?, operation_name : String?, context = Context.new(self, max_depth))
+      def execute(document : Language::Document, params : Hash(String, JSON::Any)?, operation_name : String?, context = Context.new(self, max_depth))
         queries, mutations, fragments = extract_request_parts(document)
         context.fragments = fragments
         operations = (queries + mutations)
@@ -66,7 +66,7 @@ module GraphQL
         return {"errors" => [{"message" => "Must provide a valid operation name if query contains multiple operations.", "path" => [] of String}]} unless query
 
         begin
-          substitute_variables_from_params(query, params ? params : {} of String => JSON::Any::Type)
+          substitute_variables_from_params(query, params ? params : {} of String => JSON::Any)
         rescue e : Exception
           # we hit an error while resolving fragments
           # no path info atm
@@ -350,7 +350,7 @@ module GraphQL
         raise "I should have never come here"
       end
 
-      private def substitute_variables_from_params(query, params : Hash(String, JSON::Any::Type))
+      private def substitute_variables_from_params(query, params : Hash(String, JSON::Any))
         if (superfluous = params.keys - query.variables.map(&.name)).any?
           raise "unknown variables #{superfluous.join(", ")}"
         end
@@ -365,6 +365,7 @@ module GraphQL
           default_value = variable_definition.default_value
           default_value = default_value.responds_to? :to_value ? default_value.to_value : default_value
           param = params.fetch(variable_definition.name, default_value)
+          param = param.raw if param.is_a?(JSON::Any)
           if !@type_validation.accepts?(variable_definition.type, param)
             expected_type_string = Language::Generation.generate(variable_definition.type)
             errors << Error.new(
@@ -487,10 +488,12 @@ module GraphQL
         when Array
           v.map { |vv| cast_to_jsontype(vv).as(JSON::Any::Type) }
         when Hash
-          v.keys.reduce(Hash(String, JSON::Any::Type).new) do |hash, key|
-            hash[key] = cast_to_jsontype v[key]
+          v.keys.reduce(Hash(String, JSON::Any).new) do |hash, key|
+            hash[key] = JSON::Any.new(cast_to_jsontype v[key])
             hash
           end
+        when JSON::Any
+          v.as_h?
         else
           v
         end.as(JSON::Any::Type)
@@ -500,7 +503,7 @@ module GraphQL
         case value
         when Hash
           value.reduce(Hash(String, ReturnType).new) do |memo, h|
-            memo[h[0]] = cast_to_return(h[1]).as(ReturnType)
+            memo[h[0]] = cast_to_return(h[1].is_a?(JSON::Any) ? h[1].as(JSON::Any).raw : h[1]).as(ReturnType)
             memo
           end
         when Array
