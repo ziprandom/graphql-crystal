@@ -175,6 +175,44 @@ describe GraphQL::Schema do
                          }).should eq(expected)
     end
 
+    it "answers a request with nullable arg and arg ommited" do
+      TestSchema::Schema.execute(
+        "query getAddresses($city: [City]) { addresses(city: $city) { city } }"
+      ).should eq({
+        "data" => {
+          "addresses" => [
+            {"city" => "London"},
+            {"city" => "Miami"},
+            {"city" => "CABA"}
+          ],
+        }
+      })
+    end
+
+    it "answers a request with non-nullable arg and arg provided" do
+      TestSchema::Schema.execute(
+        "query getAddresses($city: [City]!) { addresses(city: $city) { city } }", {
+          "city" => [
+            "London"
+          ]
+        }
+      ).should eq({
+        "data" => {
+          "addresses" => [
+            {"city" => "London"}
+          ],
+        }
+      })
+    end
+
+    it "raises if non-nullable args ommited" do
+      TestSchema::Schema.execute(
+        "query getAddresses($city: [City]!) { addresses(city: $city) { city } }"
+      ).should eq({
+        "data" => nil, "errors" => [{"message" => "missing variable city", "path" => [] of String}]
+      })
+    end
+
     it "raises if no inline fragment was defined for the type actually returned" do
       expected = {
         "data" => {

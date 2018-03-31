@@ -357,7 +357,7 @@ module GraphQL
         errors = [] of Error
         full_params = Hash(String, ReturnType).new
         query.variables.as(Array(Language::VariableDefinition)).each do |variable_definition|
-          if !(params.has_key?(variable_definition.name) || variable_definition.default_value)
+          if variable_definition.nullable? && !(params.has_key?(variable_definition.name) || variable_definition.default_value)
             errors << Error.new(message: "missing variable #{variable_definition.name}", path: [] of (String | Int32))
             next
           end

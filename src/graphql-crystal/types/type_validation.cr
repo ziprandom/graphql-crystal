@@ -20,9 +20,10 @@ module GraphQL
 
       case type_definition
       when Language::EnumTypeDefinition
-        if value.is_a?(Language::AEnum)
+        if value.is_a?(Language::AEnum) || value.is_a?(String)
           @enum_values_cache[type_definition.name] ||= type_definition.fvalues.map(&.as(Language::EnumValueDefinition).name)
-          @enum_values_cache[type_definition.name].not_nil!.includes? value.name
+          value_name = value.is_a?(Language::AEnum) ? value.name : value
+          @enum_values_cache[type_definition.name].not_nil!.includes? value_name
         else
           false
         end
