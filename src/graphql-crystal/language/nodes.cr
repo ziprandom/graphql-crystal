@@ -99,10 +99,6 @@ module GraphQL
     class VariableDefinition < AbstractNode
       values({name: String, type: Type, default_value: FValue})
       traverse :children, :type
-
-      def nullable?
-        type.is_a? NonNullType
-      end
     end
 
     alias ArgumentValue = ReturnType | InputObject | VariableIdentifier | Array(ArgumentValue)

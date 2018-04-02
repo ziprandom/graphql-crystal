@@ -69,7 +69,7 @@ describe GraphQL::TypeValidation do
     type = TEST_SCHEMA.types["TestEnum"]
 
     it "accepts a string representing a valid enum value" do
-      TYPE_VALIDATION.accepts?(type, VALUES[:enum]).should eq true
+      TYPE_VALIDATION.accepts?(type, VALUES[:enum].name).should eq true
     end
 
     it "rejects a string representing an invalid enum value" do
