@@ -49,12 +49,12 @@ describe GraphQL::Schema do
       expected = {
         "data" => {
           "user" => {
-            "id" => 0, "name" => "otto neverthere",
+            "id" => 0, "name" => "otto neverthere", "created_at" => Time.now
           },
         },
       }
       TestSchema::Schema.execute(
-        "{ user(id: 0) { id, name } }"
+        "{ user(id: 0) { id, name, created_at } }"
       ).should eq(expected)
     end
 

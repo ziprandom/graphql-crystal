@@ -46,19 +46,21 @@ module TestSchema
 
   class User
     include GraphQL::ObjectType
-    getter :id, :name, :address
+    getter :id, :name, :address, :created_at
     property :friends
 
     def initialize(
       @id : Int32, @name : String,
       @address : Address,
-      @friends = Array(User).new
+      @friends = Array(User).new,
+      @created_at = Time.now
     )
     end
 
     field :id
     field :name
     field :address
+    field :created_at
     field :friends
     field :full_address do
       <<-address
@@ -134,6 +136,7 @@ module TestSchema
       id: ID!
       name: String @deprecated(reason: "for no apparent Reason")
       address: Address
+      created_at: Time
       friends: [User]
       full_address: String
     }
