@@ -49,7 +49,7 @@ describe GraphQL::Schema do
       expected = {
         "data" => {
           "user" => {
-            "id" => 0, "name" => "otto neverthere", "created_at" => Time.now
+            "id" => 0, "name" => "otto neverthere", "created_at" => Time.now.to_s
           },
         },
       }

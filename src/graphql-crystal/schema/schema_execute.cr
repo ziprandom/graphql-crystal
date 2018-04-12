@@ -280,6 +280,7 @@ module GraphQL
       private def _resolve_selections_for(
         field_type : Language::TypeName, selections : Array(Language::Selection), resolved, context
       ) : Tuple(ReturnType, Array(Error))
+
         type_definition = @types[field_type.name]
         case type_definition
         # we can directly apply the selections
@@ -298,6 +299,8 @@ module GraphQL
         when Language::ScalarTypeDefinition
           if resolved.is_a?(ReturnType)
             {resolved.as(ReturnType), [] of Error}
+          elsif resolved.is_a?(Time)
+            {resolved.to_s, [] of Error}
           else
             {nil, [] of Error}
           end
