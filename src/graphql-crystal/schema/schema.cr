@@ -82,6 +82,7 @@ module GraphQL
         {"Int", "An Integer Number"},
         {"Float", "A Floating Point Number"},
         {"ID", "An ID"},
+        {"Time", "A Time String Value"},
       }
 
       #

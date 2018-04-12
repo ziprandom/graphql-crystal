@@ -38,6 +38,8 @@ module GraphQL
         end
       when Language::ScalarTypeDefinition
         case type_definition.name
+        when "Time"
+          value.is_a?(Time)
         when "ID"
           value.is_a?(Int) || value.is_a?(String)
         when "Int"
@@ -56,7 +58,11 @@ module GraphQL
         (type_definition.fields.map(&.name) + value.keys).uniq.each do |key|
           return false unless field = type_definition.fields.find(&.name.==(key))
           if value.has_key?(field.name)
-            return false unless accepts?(field.type, value[field.name])
+            vv = value[field.name]
+            {% if JSON::NEW_JSON_ANY_TYPE %}
+            vv = vv.is_a?(JSON::Any) ? vv.as(JSON::Any).raw : vv
+            {% end %}
+            return false unless accepts?(field.type, vv)
           elsif field.default_value
             return false unless accepts?(field.type, field.default_value)
           else
