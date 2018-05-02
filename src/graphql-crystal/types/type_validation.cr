@@ -53,15 +53,16 @@ module GraphQL
           false
         end
       when Language::InputObjectTypeDefinition
-        return false unless value.is_a? Hash
-        (type_definition.fields.map(&.name) + value.keys).uniq.each do |key|
+        _value = value.is_a?(Language::InputObject) ? value.to_h : value
+        return false unless _value.is_a? Hash
+        (type_definition.fields.map(&.name) + _value.keys).uniq.each do |key|
           return false unless field = type_definition.fields.find(&.name.==(key))
-          if value.has_key?(field.name)
-            return false unless accepts?(field.type, value[field.name])
+          if _value.has_key?(field.name)
+            return false unless accepts?(field.type, _value[field.name])
           elsif field.default_value
             return false unless accepts?(field.type, field.default_value)
           else
-            return false
+            accepts?(field.type, nil)
           end
         end
         return true
