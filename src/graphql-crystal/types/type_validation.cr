@@ -62,7 +62,7 @@ module GraphQL
           elsif field.default_value
             return false unless accepts?(field.type, field.default_value)
           else
-            accepts?(field.type, nil)
+            return accepts?(field.type, nil)
           end
         end
         return true
