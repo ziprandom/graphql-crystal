@@ -18,7 +18,7 @@ module GraphQL
         value.selections.each do |s|
           new_values = new_values + visit(s, fragments).map &.as(Language::AbstractNode)
         end
-        value.selections = new_values.flatten
+        value.selections = new_values.flatten.map { |v| v.as(Language::Selection) }
         [value]
       end
 

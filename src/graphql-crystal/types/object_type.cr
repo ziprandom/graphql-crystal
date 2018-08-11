@@ -27,7 +27,7 @@ macro on_included
     on_all_child_classes do
 
       macro field(name, &block)
-        field(\\{{name}}, "", nil, "") \\{% if block.is_a?(Block)%} \\{{block}}\\{%end%}
+        field(\\{{name}}, "", args, "") \\{% if block.is_a?(Block)%} \\{{block}}\\{%end%}
       end
 
       macro field(name, description, args, typename, &block)

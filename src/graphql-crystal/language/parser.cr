@@ -36,8 +36,8 @@ module GraphQL
 
         clause("selection_set") do |selections|
           OperationDefinition.new(name: "",
-            variables: Array(Type).new,
-            directives: Array(Type).new,
+            variables: Array(VariableDefinition).new,
+            directives: Array(Directive).new,
             operation_type: "query",
             selections: selections)
         end
