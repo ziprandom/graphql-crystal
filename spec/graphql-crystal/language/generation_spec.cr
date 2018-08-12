@@ -143,7 +143,6 @@ describe GraphQL::Language::Generation do
             four(argument: String = "string"): String
             five(argument: [String] = ["string", "string"]): String
             six(argument: InputType = {key: "value"}): Type
-            seven(argument: String = null): Type
           }
 
           # Scalar description
@@ -217,6 +216,30 @@ describe GraphQL::Language::Generation do
             document.to_query_string
           ).should eq clean_string(
             query_string
+          )
+        end
+
+        it "generate argument default to null" do
+          query_string = <<-schema
+            type Foo {
+              one(argument: String = null): Type
+              two(argument: Color = Red): Type
+            }
+          schema
+
+          expected = <<-schema
+            type Foo {
+              one(argument: String): Type
+              two(argument: Color = Red): Type
+            }
+          schema
+
+          document = GraphQL::Language::Parser.parse(query_string)
+
+          clean_string(
+            document.to_query_string
+          ).should eq clean_string(
+            expected
           )
         end
 
