@@ -17,6 +17,14 @@ module GraphQL
       def self.to_{{type.id.downcase}}(value) {{type.id}}
         value.as({{type.id}})
       end
+
+      def self.to_fvalue(v : NullValue): Nil
+        nil
+      end
+
+      def self.to_argumentvalue(v : NullValue): Nil
+        nil
+      end
     end
 
     class AbstractNode < CLTK::ASTNode
@@ -48,7 +56,10 @@ module GraphQL
     #   # { ... }
     #
     class Document < AbstractNode
-      values({definitions: Array(OperationDefinition | FragmentDefinition)})
+      values({definitions: Array(
+        OperationDefinition | FragmentDefinition | SchemaDefinition | ObjectTypeDefinition | InputObjectTypeDefinition |
+        ScalarTypeDefinition | DirectiveDefinition | EnumTypeDefinition | InterfaceTypeDefinition | UnionTypeDefinition
+      )})
       traverse :children, :definitions
 
       def to_query_string
@@ -101,7 +112,7 @@ module GraphQL
       traverse :children, :type
     end
 
-    alias ArgumentValue = ReturnType | InputObject | VariableIdentifier | Array(ArgumentValue)
+    alias ArgumentValue = FValue | ReturnType | InputObject | VariableIdentifier | Array(ArgumentValue)
 
     define_array_cast(ArgumentValue)
 

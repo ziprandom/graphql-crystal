@@ -65,7 +65,7 @@ module GraphQL
 
       rule("\"", :string) { pop_state }
 
-      rule(/-?(0|[1-9][0-9]*)(\.[0-9]+)?((e|E)?(\+|\-)?[0-9]+)?/) do |t|
+      rule(/\-?(0|[1-9][0-9]*)(\.[0-9]+)?((e|E)?(\+|\-)?[0-9]+)?/) do |t|
         if t.includes?(".") || t.includes?("e") || t.includes?("E")
           {:FLOAT, t}
         else
