@@ -1,5 +1,5 @@
 name: graphql-crystal
-version: 0.1.4
+version: 0.1.5
 
 authors:
 - ziprandom - <ziprandom@gmail.com>
@@ -9,6 +9,6 @@ dependencies:
     github: ziprandom/cltk
     branch: master
 
-crystal: 0.24.1
+crystal: 0.25.0
 
 license: MIT
