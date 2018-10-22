@@ -205,6 +205,22 @@ describe GraphQL::Schema do
       })
     end
 
+    it "answers a request with non-nullable arg and arg provided with JSON::Any type" do
+      TestSchema::Schema.execute(
+        "query getAddresses($city: [City]!) { addresses(city: $city) { city } }", JSON.parse({
+          "city" => [
+            "London"
+          ]
+        }.to_json)
+      ).should eq({
+        "data" => {
+          "addresses" => [
+            {"city" => "London"}
+          ],
+        }
+      })
+    end
+
     it "raises if non-nullable args ommited" do
       TestSchema::Schema.execute(
         "query getAddresses($city: [City]!) { addresses(city: $city) { city } }"
