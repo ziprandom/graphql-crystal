@@ -54,6 +54,17 @@ module GraphQL
       #
       # execute a query against the schema
       # `document`: a parsed query
+      # `params`: *optional* the query variables as a JSON::Any
+      # `operation_name`: *optional* the query or mutation name to be executed
+      # `context`: *optional* a custom context to be injected in
+      #            field callbacks.
+      def execute(document : Language::Document, params : JSON::Any, operation_name : String?, context = Context.new(self, max_depth))
+        execute(document, cast_jsonany_to_jsontype(params), operation_name, context)
+      end
+
+      #
+      # execute a query against the schema
+      # `document`: a parsed query
       # `params`: *optional* the query variables as a Hash
       # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
@@ -481,6 +492,21 @@ module GraphQL
         else
           v
         end.as(ResolveCBReturnType)
+      end
+
+      private def cast_jsonany_to_jsontype(v : JSON::Any) : JSONType
+        raw = v.raw
+        case raw
+        when Array
+          raw.map{|vv| cast_jsonany_to_jsontype(vv).as(JSONType)}
+        when Hash
+          raw.keys.reduce(Hash(String, JSONType).new) do |hash, key|
+            hash[key] = cast_jsonany_to_jsontype(raw[key])
+            hash
+          end
+        else 
+          raw
+        end
       end
 
       private def cast_to_jsontype(v)
