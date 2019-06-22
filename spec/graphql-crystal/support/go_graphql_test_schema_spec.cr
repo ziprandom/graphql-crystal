@@ -4,30 +4,30 @@ describe GO_GRAPHQL_TEST_SCHEMA do
   it "parses the complex query that was used by the go-graphql benchmark" do
     query = %{
       query Example($size: Int) {
-      	a,
-      	b,
-      	x: c
-      	...c
-      	f
-      	...on DataType {
-      	  pic(size: $size)
-      	  promise {
-      	    a
-      	  }
-      	}
-      	deep {
-      	  a
-      	  b
-      	  c
-      	  deeper {
-      	    a
-      	    b
-      	  }
-      	}
+        A,
+        b,
+        x: c
+        ...c
+        f
+        ...on DataType {
+          Pic(size: $size)
+          promise {
+            A
+          }
+        }
+        deep {
+          A
+          b
+          c
+          deeper {
+            A
+            b
+          }
+        }
       }
       fragment c on DataType {
-      	d
-      	e
+        d
+        e
       }
     }
 
@@ -35,18 +35,18 @@ describe GO_GRAPHQL_TEST_SCHEMA do
       %{
          {
            "data": {
-             "a": "Apple",
+             "A": "Apple",
              "b": "Banana",
              "x": "Cookie",
              "d": "Donut",
              "e": "Egg",
              "f": "Fish",
-             "pic": "Pic of size: 50",
+             "Pic": "Pic of size: 50",
              "promise": {
-                 "a": "Apple"
+                 "A": "Apple"
                },
              "deep": {
-               "a": "Already Been Done",
+               "A": "Already Been Done",
                "b": "Boring",
                "c": [
                      "Contrived",
@@ -54,10 +54,10 @@ describe GO_GRAPHQL_TEST_SCHEMA do
                      "Confusing"
                    ],
                "deeper": [{
-                            "a": "Already Been Done",
+                            "A": "Already Been Done",
                             "b": "Boring"
                           },{
-                            "a": "Already Been Done",
+                            "A": "Already Been Done",
                             "b": "Boring"
                           }]
              }
