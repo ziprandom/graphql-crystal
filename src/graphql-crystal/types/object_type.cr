@@ -32,7 +32,7 @@ macro on_included
 
       macro field(name, description, args, typename, &block)
         \\{% GRAPHQL_FIELDS << {name, description, args, typename} %}
-        private def \\{{name.id}}_field(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}, \\{{((block.is_a?(Block) && block.args.size > 1) ? block.args[1].id : "context").id}})
+        private def field_\\{{name.id}}(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}, \\{{((block.is_a?(Block) && block.args.size > 1) ? block.args[1].id : "context").id}})
           \\{% if block.is_a?(Block) %}
               context.with_self(\\{{(block.is_a?(Block) && block.args.size > 0) ? block.args.first.id : args}}) do
                 \\{{block.body}}
@@ -59,7 +59,7 @@ macro on_included
               case name
                   \\{% for field in @type.constant("GRAPHQL_FIELDS") %}
                     when "\\{{ field[0].id }}" #\\\\\{{@type}}
-                      \\{{field[0].id}}_field(arguments, context)
+                      field_\\{{field[0].id}}(arguments, context)
                       \\{% end %}
               else
                 \\{% if prev_def.is_a?(Def) %}
