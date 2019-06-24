@@ -47,7 +47,7 @@ describe GraphQL::Language::Generation do
       document.to_query_string.gsub(/\s+/, " ").strip.should eq query_string.gsub(/\s+/, " ").strip
     end
 
-    it "inputs" do
+    context "inputs" do
       query_string = <<-query
         query {
           field(null_value: null, null_in_array: [1, null, 3], int: 3, float: 4.7e-24, bool: false, string: "☀︎🏆\\n escaped \\" unicode ¶ /", enum: ENUM_NAME, array: [7, 8, 9], object: {a: [1, 2, 3], b: {c: "4"}}, unicode_bom: "\xef\xbb\xbfquery")
@@ -77,7 +77,7 @@ describe GraphQL::Language::Generation do
         end
       end
 
-      it "schema with custom query root name" do
+      context "schema with custom query root name" do
         query_string = <<-schema
           schema {
             query: MyQuery
@@ -109,7 +109,7 @@ describe GraphQL::Language::Generation do
         end
       end
 
-      it "schema with custom subscription root name" do
+      context "schema with custom subscription root name" do
         query_string = <<-schema
           schema {
             query: Query

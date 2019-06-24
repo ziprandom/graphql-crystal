@@ -208,7 +208,7 @@ describe StarWars::Schema do
     end
   end
 
-  it "Using aliases to change the key in the response" do
+  context "Using aliases to change the key in the response" do
     it "Allows us to query for Luke, changing his key with an alias" do
       query_string = %{
         query FetchLukeAliased {

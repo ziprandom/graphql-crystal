@@ -1,7 +1,7 @@
 require "../../spec_helper"
 
 describe GraphQL::Schema::Schema do
-  it "Allows querying the schema for types" do
+
     query_string = <<-query
       query IntrospectionTypeQuery {
         __schema {
@@ -72,9 +72,12 @@ describe GraphQL::Schema::Schema do
     superfluous = result.reject { |element| expected.includes? element }
 
     empty = [] of Hash(String, String)
+
+  it "Allows querying the schema for types" do
     missing.should eq empty
-    pending "it should only return scalar types actually used in the schema" do
-      superfluous.should eq empty
-    end
+  end
+
+  pending "it should only return scalar types actually used in the schema" do
+    superfluous.should eq empty
   end
 end
