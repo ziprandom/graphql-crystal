@@ -1,4 +1,4 @@
-require "../../../spec_helper"
+require "../../spec_helper"
 describe "GraphQL::Introspection::SchemaType" do
   query_string = %{
     query getSchema {
