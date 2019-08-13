@@ -9,11 +9,7 @@ module GraphQL
         description: "the name of this GraphQL type"
       )
 
-      {% if compare_versions(Crystal::VERSION, "0.25.0") < 0 %}
-        alias JSONType = JSON::Type
-      {% else %}
-        alias JSONType = Nil | Bool | Int64 | Float64 | String | Array(JSONType) | Hash(String, JSONType)
-      {% end %}
+      alias JSONType = Nil | Bool | Int64 | Float64 | String | Array(JSONType) | Hash(String, JSONType)
       alias ExecuteParams = Hash(String, JSONType) | Hash(String, String | Hash(String, JSONType | Nil))
 
       #
