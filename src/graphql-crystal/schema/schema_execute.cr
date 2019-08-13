@@ -504,7 +504,7 @@ module GraphQL
             hash[key] = cast_jsonany_to_jsontype(raw[key])
             hash
           end
-        else 
+        else
           raw
         end
       end
