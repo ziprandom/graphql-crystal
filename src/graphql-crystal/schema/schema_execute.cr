@@ -39,23 +39,12 @@ module GraphQL
       #
       # execute a query against the schema
       # `document`: a parsed query
-      # `params`: *optional* the query variables as a Hash
+      # `params`: *optional* the query variables as Hash or JSON::Any
       # `operation_name`: *optional* the query or mutation name to be executed
       # `context`: *optional* a custom context to be injected in
       #            field callbacks.
       def execute(document : Language::Document, params, operation_name : String? = nil, context = Context.new(self, max_depth))
         execute(document, cast_to_jsontype(params), operation_name, context)
-      end
-
-      #
-      # execute a query against the schema
-      # `document`: a parsed query
-      # `params`: *optional* the query variables as a JSON::Any
-      # `operation_name`: *optional* the query or mutation name to be executed
-      # `context`: *optional* a custom context to be injected in
-      #            field callbacks.
-      def execute(document : Language::Document, params : JSON::Any, operation_name : String?, context = Context.new(self, max_depth))
-        execute(document, cast_jsonany_to_jsontype(params), operation_name, context)
       end
 
       #
