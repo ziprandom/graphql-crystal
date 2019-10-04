@@ -93,6 +93,12 @@ Benchmark.ips(warmup: 4, calculation: 10) do |x|
       GraphQL::Language::Lexer.lex(schema_string)
     )
   }
+
+  x.report("SCHEMA String: dotnet based implementation: ") {
+    GraphQL::WParser.new(
+      GraphQL::WLexer.new
+    ).parse(schema_string)
+  }
 end
 
 # Parse the Schema to a Document ASTNode
@@ -105,5 +111,11 @@ Benchmark.ips(warmup: 4, calculation: 10) do |x|
     GraphQL::Language::Parser.parse(
       GraphQL::Language::Lexer.lex(query_string)
     )
+  }
+
+  x.report("QUERY String: dotnet based implementation: ") {
+    GraphQL::WParser.new(
+      GraphQL::WLexer.new
+    ).parse(query_string)
   }
 end

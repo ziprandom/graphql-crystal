@@ -68,6 +68,8 @@ describe "GraphQL::Introspection::DirectiveType" do
         },
       },
     }
+    puts result.to_json
+    puts expected.to_json
     result.should eq expected
   end
 end
