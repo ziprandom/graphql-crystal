@@ -1,4 +1,4 @@
-class GraphQL::WLexerContext
+class GraphQL::Language::LexerContext
   def initialize(source : String, index : Int32)
     @current_index = index
     @source = source
@@ -44,7 +44,7 @@ class GraphQL::WLexerContext
 
     value += @source[chunk_start, (@current_index - chunk_start)]
 
-    Token.new(Token::Kind::COMMENT, value, start, @current_index + 1)
+    Token.new(Token::Kind::COMMENT, value.strip, start, @current_index + 1)
   end
 
   def read_number : Token

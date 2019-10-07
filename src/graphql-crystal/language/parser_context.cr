@@ -1,8 +1,10 @@
-class GraphQL::WParserContext
+require "./token"
+
+class GraphQL::Language::ParserContext
   @current_token : Token
   @comments = [] of String
 
-  def initialize(source : String, lexer : WLexer)
+  def initialize(source : String, lexer : Language::Lexer)
     @source = source
     @lexer = lexer
 
@@ -232,7 +234,7 @@ class GraphQL::WParserContext
     end_position : Int32
 
     while true
-      text.push(@current_token.value ? @current_token.value.not_nil!.strip : @current_token.value)
+      text.push(@current_token.value)
       end_position = @current_token.end_position
       advance
       break unless @current_token.kind == Token::Kind::COMMENT
@@ -394,7 +396,11 @@ class GraphQL::WParserContext
   end
 
   private def parse_fragment_name
-    raise Exception.new("Unexpected #{@current_token}") if @current_token.value == "on"
+    # raise Exception.new("Unexpected #{@current_token.kind}") if @current_token.value == "on"
+
+    if @current_token.value == "on"
+      return nil
+    end
 
     parse_name
   end

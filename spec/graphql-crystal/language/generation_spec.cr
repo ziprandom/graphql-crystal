@@ -230,7 +230,7 @@ describe GraphQL::Language::Generation do
           expected = <<-schema
             type Foo {
               one(argument: String): Type
-              two(argument: Color = Red): Type
+              two(argument: Color = "Red"): Type
             }
           schema
 

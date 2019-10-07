@@ -4,11 +4,6 @@ version: 0.1.5
 authors:
 - ziprandom - <ziprandom@gmail.com>
 
-dependencies:
-  cltk:
-    github: ziprandom/cltk
-    branch: master
-
 crystal: 0.25.0
 
 license: MIT

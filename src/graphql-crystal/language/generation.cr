@@ -250,11 +250,10 @@ module GraphQL
       end
 
       def self.generate_description(node, indent = "", first_in_block = true)
-        ""
-        # return "" unless node.description
+        return "" unless node.description
 
-        # description = indent != "" && !first_in_block ? "\n" : ""
-        # description += Comments.commentize(node.description, indent: indent)
+        description = indent != "" && !first_in_block ? "\n" : ""
+        description += "#{indent}# #{node.description}\n"
       end
 
       def self.generate_field_definitions(fields, indent : String = "")

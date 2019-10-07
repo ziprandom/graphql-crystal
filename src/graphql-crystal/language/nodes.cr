@@ -1,5 +1,5 @@
 # coding: utf-8
-require "cltk/ast"
+require "./ast"
 require "./generation"
 require "../types/object_type"
 
@@ -27,7 +27,7 @@ module GraphQL
       end
     end
 
-    class AbstractNode < CLTK::ASTNode
+    class AbstractNode < ASTNode
       # this works only if the module
       # gets included in the class exactly
       # at this file
@@ -112,7 +112,7 @@ module GraphQL
       traverse :children, :type
     end
 
-    alias ArgumentValue = FValue | ReturnType | InputObject | VariableIdentifier | Array(ArgumentValue)
+    alias ArgumentValue = FValue | InputObject | VariableIdentifier | Array(ArgumentValue) | ReturnType
 
     define_array_cast(ArgumentValue)
 

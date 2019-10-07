@@ -1,4 +1,4 @@
-class GraphQL::Token
+class GraphQL::Language::Token
   enum Kind
     BANG
     DOLLAR
