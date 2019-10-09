@@ -317,7 +317,7 @@ class GraphQL::Language::ParserContext
 
   private def parse_enum_value(token)
     advance
-    token.value
+    Language::AEnum.new(name: token.value)
   end
 
   private def parse_enum_value_definition

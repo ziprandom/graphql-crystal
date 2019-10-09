@@ -4,7 +4,7 @@ require "../../spec_helper"
 
 class GraphQL::Language::Parser
   def self.parse(prog : String, options = NamedTuple.new)
-    parse(GraphQL::Language::Lexer.lex(prog), options).as(GraphQL::Language::Document)
+    new(GraphQL::Language::Lexer.new).parse(prog).as(GraphQL::Language::Document)
   end
 end
 
@@ -230,7 +230,7 @@ describe GraphQL::Language::Generation do
           expected = <<-schema
             type Foo {
               one(argument: String): Type
-              two(argument: Color = "Red"): Type
+              two(argument: Color = Red): Type
             }
           schema
 
