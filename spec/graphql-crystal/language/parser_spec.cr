@@ -146,22 +146,20 @@ describe GraphQL::Language::Parser do
     end
   end
 
-  # TODO: should it behave this way?
-  # it "parses empty arguments" do
-  #   strings = [
-  #     "{ field { inner } }",
-  #     "{ field() { inner }}",
-  #   ]
+  it "parses empty arguments" do
+    strings = [
+      "{ field { inner } }",
+    ]
 
-  #   strings.each do |query_str|
-  #     doc = subject.parse(query_str)
-  #     field = doc.definitions
-  #                .first.as(GraphQL::Language::OperationDefinition)
-  #       .selections.first.as(GraphQL::Language::Field)
-  #     field.arguments.size.should eq 0
-  #     field.selections.size.should eq 1
-  #   end
-  # end
+    strings.each do |query_str|
+      doc = subject.parse(query_str)
+      field = doc.definitions
+                 .first.as(GraphQL::Language::OperationDefinition)
+        .selections.first.as(GraphQL::Language::Field)
+      field.arguments.size.should eq 0
+      field.selections.size.should eq 1
+    end
+  end
 
   pending "parses the test schema" do
     schema = Dummy::Schema
