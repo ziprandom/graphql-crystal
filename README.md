@@ -1,7 +1,7 @@
 # graphql-crystal [![Build Status](https://api.travis-ci.org/ziprandom/graphql-crystal.svg)](https://travis-ci.org/ziprandom/graphql-crystal)
 
 
-An implementation of [GraphQL](http://graphql.org/learn/) for the crystal programming language inspired by [graphql-ruby](https://github.com/rmosolgo/graphql-ruby) & [go-graphql](https://github.com/playlyfe/go-graphql).
+An implementation of [GraphQL](http://graphql.org/learn/) for the crystal programming language inspired by [graphql-ruby](https://github.com/rmosolgo/graphql-ruby) & [go-graphql](https://github.com/playlyfe/go-graphql) & [graphql-parser](https://github.com/graphql-dotnet/parser).
 
 The library is in beta state atm. Should already be usable but expect to find bugs (and open issues about them). pull-requests, suggestions & criticism are very welcome!
 
@@ -286,25 +286,6 @@ end
 ### Serving over HTTP
 
 For an example of how to serve a schema over a webserver([kemal](https://github.com/kemalcr/kemal)) see [kemal-graphql-example](https://github.com/ziprandom/kemal-graphql-example).
-
-## Parser Performance
-
-The parser has been implemented using my [crystal language toolkit](https://github.com/ziprandom/cltk) and is significantly slower than the c implementation for larger schema strings while performing ok on smaller query strings. See [benchmark/compare_benchmarks.cr](benchmark/compare_benchmarks.cr) for the strings used in the test.
-
-To compare the performance of the Parser with [facebooks GraphQL parser](https://github.com/graphql/libgraphqlparser) you need to have the library installed on your machine. Then run
-
-```sh
-crystal build --release benchmark/compare_benchmarks.cr
-```
-
-### Recent Results:
-
-```sh
-SCHEMA String: c implementation from facebook:   64.87k ( 15.41µs) (± 1.89%)       fastest
-     SCHEMA String: cltk based implementation:     1.4k (713.07µs) (± 8.29%) 46.26× slower
-QUERY String: c implementation from facebook:   16.63k ( 60.13µs) (± 2.00%)       fastest
-     QUERY String: cltk based implementation:    5.62k ( 178.0µs) (± 4.34%)  2.96× slower
-```
 
 ## Development
 

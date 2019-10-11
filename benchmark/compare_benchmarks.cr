@@ -75,23 +75,16 @@ fragment userFields on User {
 }
 query_string
 
-puts GraphQL::Language::Parser.parse(
-  GraphQL::Language::Lexer.lex(schema_string)
-).as(GraphQL::Language::Document).to_query_string
-puts GraphQL::Language::Parser.parse(
-  GraphQL::Language::Lexer.lex(query_string)
-).as(GraphQL::Language::Document).to_query_string
-
 # Parse the Schema to a Document ASTNode
 Benchmark.ips(warmup: 4, calculation: 10) do |x|
   x.report("SCHEMA String: c implementation from facebook: ") {
     GraphQLParser.parse_string(schema_string, nil)
   }
 
-  x.report("SCHEMA String: cltk based implementation: ") {
-    GraphQL::Language::Parser.parse(
-      GraphQL::Language::Lexer.lex(schema_string)
-    )
+  x.report("SCHEMA String: dotnet based implementation: ") {
+    GraphQL::Language::Parser.new(
+      GraphQL::Language::Lexer.new
+    ).parse(schema_string)
   }
 end
 
@@ -101,9 +94,9 @@ Benchmark.ips(warmup: 4, calculation: 10) do |x|
     GraphQLParser.parse_string(query_string, nil)
   }
 
-  x.report("QUERY String: cltk based implementation: ") {
-    GraphQL::Language::Parser.parse(
-      GraphQL::Language::Lexer.lex(query_string)
-    )
+  x.report("QUERY String: dotnet based implementation: ") {
+    GraphQL::Language::Parser.new(
+      GraphQL::Language::Lexer.new
+    ).parse(query_string)
   }
 end

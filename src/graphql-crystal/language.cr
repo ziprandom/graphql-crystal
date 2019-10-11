@@ -8,11 +8,10 @@ module GraphQL::Language
   # Parse a query string and return the Document
   #
   def self.parse(query_string, options = NamedTuple.new) : GraphQL::Language::Document
-    GraphQL::Language::Parser.parse(
-      GraphQL::Language::Lexer.lex(query_string), options
-    ).as(GraphQL::Language::Document)
-  rescue e #: CLTK::Parser::Exceptions::NotInLanguage
+    GraphQL::Language::Parser.new(
+      GraphQL::Language::Lexer.new
+    ).parse(query_string)
+  rescue e
     raise e
   end
-
 end

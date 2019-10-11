@@ -1,10 +1,9 @@
 # frozen_string_literal: true
-# require "cltk/parser/parse"
 require "../../spec_helper"
 
 class GraphQL::Language::Parser
   def self.parse(prog : String, options = {lookahead: false})
-    parse(GraphQL::Language::Lexer.lex(prog), options).as(GraphQL::Language::Document)
+    GraphQL::Language::Parser.new(GraphQL::Language::Lexer.new).parse(prog).as(GraphQL::Language::Document)
   end
 end
 
@@ -150,7 +149,6 @@ describe GraphQL::Language::Parser do
   it "parses empty arguments" do
     strings = [
       "{ field { inner } }",
-      "{ field() { inner }}",
     ]
 
     strings.each do |query_str|

@@ -4,7 +4,7 @@ require "../../spec_helper"
 
 class GraphQL::Language::Parser
   def self.parse(prog : String, options = NamedTuple.new)
-    parse(GraphQL::Language::Lexer.lex(prog), options).as(GraphQL::Language::Document)
+    new(GraphQL::Language::Lexer.new).parse(prog).as(GraphQL::Language::Document)
   end
 end
 
