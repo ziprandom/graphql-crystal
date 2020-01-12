@@ -51,7 +51,7 @@ schema = GraphQL::Schema.from_schema(
     type QueryType {
       posts: [PostType]
       users: [UserType]
-      user(name: String!): User
+      user(name: String!): UserType
     }
 
     type MutationType {
