@@ -284,7 +284,7 @@ module GraphQL
           _fields.reject(&.directives.any?(&.name.==("deprecated")))
         end
       end
-      field :interfaces { |args, context| resolved_interfaces(context.schema) }
+      field :interfaces { |_args, context| resolved_interfaces(context.schema) }
 
       def resolved_interfaces(schema)
         interfaces.map do |iface_name|
@@ -295,12 +295,12 @@ module GraphQL
 
     class GraphQL::Language::UnionTypeDefinition
       field :kind { "UNION" }
-      field :possibleTypes { |args, context| types.map { |t| context.schema.type_resolve(t) } }
+      field :possibleTypes { |_args, context| types.map { |t| context.schema.type_resolve(t) } }
     end
 
     class GraphQL::Language::InterfaceTypeDefinition
       field :kind { "INTERFACE" }
-      field :possibleTypes do |args, context|
+      field :possibleTypes do |_args, context|
         context.schema.types.values.select do |t|
           t.is_a?(ObjectTypeDefinition) && t.interfaces.includes?(self.name)
         end
@@ -315,7 +315,7 @@ module GraphQL
 
     class GraphQL::Language::WrapperType
       field :name { nil }
-      field :ofType { |args, context| context.schema.type_resolve(of_type) }
+      field :ofType { |_args, context| context.schema.type_resolve(of_type) }
     end
 
     class GraphQL::Language::ListType
@@ -335,7 +335,7 @@ module GraphQL
       field :name
       field :description
       field :args { self.arguments }
-      field :type { |args, context| context.schema.type_resolve(type) }
+      field :type { |_args, context| context.schema.type_resolve(type) }
     end
 
     class GraphQL::Language::InputObjectTypeDefinition
@@ -347,7 +347,7 @@ module GraphQL
     class GraphQL::Language::InputValueDefinition
       field :name
       field :description
-      field :type { |args, context| context.schema.type_resolve(type) }
+      field :type { |_args, context| context.schema.type_resolve(type) }
       field :defaultValue do
         val = (
           default_value.is_a?(Language::AbstractNode) ? GraphQL::Language::Generation.generate(default_value) : (

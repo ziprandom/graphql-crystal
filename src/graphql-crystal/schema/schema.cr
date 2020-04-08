@@ -76,7 +76,7 @@ module GraphQL
       #
       # Descriptions for Scalar Types
       #
-      ScalarTypes = {
+      SCALARTYPES = {
         {"String", "A String Value"},
         {"Boolean", "A Boolean Value"},
         {"Int", "An Integer Number"},
@@ -114,24 +114,24 @@ module GraphQL
 
         schema = uninitialized Language::SchemaDefinition
 
-        ScalarTypes.each do |(type_name, description)|
+        SCALARTYPES.each do |(type_name, description)|
           types[type_name] = Language::ScalarTypeDefinition.new(
             name: type_name, description: description,
             directives: [] of Language::Directive
           )
         end
 
-        node.map_children do |node|
-          case node
+        node.map_children do |n|
+          case n
           when Language::SchemaDefinition
-            schema = node
+            schema = n
           when Language::TypeDefinition
-            types[node.name] = node
+            types[n.name] = n
           when Language::DirectiveDefinition
-            directives[node.name] = node
+            directives[n.name] = n
           else
           end
-          node
+          n
         end
         return {schema, types, directives}
       end

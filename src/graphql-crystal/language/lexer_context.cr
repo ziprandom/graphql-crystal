@@ -89,25 +89,25 @@ class GraphQL::Language::LexerContext
   end
 
   private def append_to_value_by_code(value, code)
-    case code
+    value += case code
     when '"'
-      value += '"'
+      '"'
     when '/'
-      value += '/'
+      '/'
     when '\\'
-      value += '\\'
+      '\\'
     when 'b'
-      value += '\b'
+      '\b'
     when 'f'
-      value += '\f'
+      '\f'
     when 'n'
-      value += '\n'
+      '\n'
     when 'r'
-      value += '\r'
+      '\r'
     when 't'
-      value += '\t'
+      '\t'
     when 'u'
-      value += get_unicode_char
+      get_unicode_char
     else
       raise Exception.new("Invalid character escape sequence: \\#{code}.")
     end
@@ -213,7 +213,7 @@ class GraphQL::Language::LexerContext
   end
 
   private def if_unicode_get_string : String
-    return @source.size > @current_index + 5 &&
+    @source.size > @current_index + 5 &&
       only_hex_in_string(@source[(@current_index + 2), 4]) ? @source[@current_index, 6] : null
   end
 
@@ -223,7 +223,7 @@ class GraphQL::Language::LexerContext
 
   private def next_code
     @current_index += 1
-    return is_not_at_the_end_of_query() ? @source[@current_index] : Char::ZERO
+    is_not_at_the_end_of_query() ? @source[@current_index] : Char::ZERO
   end
 
   private def process_character(value_ptr, chunk_start_ptr)
@@ -237,7 +237,7 @@ class GraphQL::Language::LexerContext
       chunk_start_ptr.value = @current_index
     end
 
-    return get_code
+    get_code
   end
 
   private def process_string_chunks
@@ -264,6 +264,7 @@ class GraphQL::Language::LexerContext
       raise Exception.new("Invalid number, expected digit but got: #{resolve_char_name(code)}")
     end
 
+    condition = false
     while true
       code = (position += 1) < body.size ? body[position] : Char::ZERO
       break unless code.number?
@@ -281,6 +282,7 @@ class GraphQL::Language::LexerContext
     start = @current_index
     code = Char::ZERO
 
+    condition = false
     while true
       @current_index += 1
       code = get_code
@@ -294,7 +296,7 @@ class GraphQL::Language::LexerContext
     return "<EOF>" if (code == '\0')
 
     return "\"#{unicode_string}\"" if unicode_string && !unicode_string.blank?
-    return "\"#{code}\""
+    "\"#{code}\""
   end
 
   private def validate_character_code(code)
@@ -308,10 +310,10 @@ class GraphQL::Language::LexerContext
     while (position += 1) < body.size && (code = body[position]) != 0 && (code.ord > 0x001F || code.ord == 0x0009) && code.ord != 0x000A && code.ord != 0x000D
     end
 
-    return position
+    position
   end
 
   private def get_code
-    return is_not_at_the_end_of_query ? @source[@current_index] : Char::ZERO
+    is_not_at_the_end_of_query ? @source[@current_index] : Char::ZERO
   end
 end

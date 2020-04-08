@@ -181,7 +181,7 @@ module GraphQL
                             when InputObject
                               v.to_h
                             when Array
-                              v.map { |v| v.as(FValue) }
+                              v.map { |i| i.as(FValue) }
                             else
                               v
                             end.as(FValue)

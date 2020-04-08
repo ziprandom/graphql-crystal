@@ -1,6 +1,6 @@
 # coding: utf-8
 require "../src/graphql-crystal"
-require "secure_random"
+require "uuid"
 require "benchmark"
 
 module BlogExample
@@ -55,21 +55,21 @@ module BlogExample
   # and create some fixtures to work with
   #
   USERS = [
-    {id: SecureRandom.uuid, first_name: "Bob", last_name: "Bobson", role: UserRole::Author},
-    {id: SecureRandom.uuid, first_name: "Alice", last_name: "Alicen", role: UserRole::Admin},
-    {id: SecureRandom.uuid, first_name: "Grace", last_name: "Graham", role: UserRole::Reader},
+    {id: UUID.random.to_s, first_name: "Bob", last_name: "Bobson", role: UserRole::Author},
+    {id: UUID.random.to_s, first_name: "Alice", last_name: "Alicen", role: UserRole::Admin},
+    {id: UUID.random.to_s, first_name: "Grace", last_name: "Graham", role: UserRole::Reader},
   ].map { |args| User.new **args }
 
   POSTS = [
-    {id: SecureRandom.uuid, author: USERS[0], title: "GraphQL for Dummies", body: "GraphQL is pretty simple."},
-    {id: SecureRandom.uuid, author: USERS[0], title: "REST vs. GraphQL", body: "GraphQL has certain advantages over REST."},
-    {id: SecureRandom.uuid, author: USERS[1], title: "The Crystal Programming Language ", body: "The nicest syntax on the planet now comes with typesafety, performance and parallelisation support(ójala!)"},
+    {id: UUID.random.to_s, author: USERS[0], title: "GraphQL for Dummies", body: "GraphQL is pretty simple."},
+    {id: UUID.random.to_s, author: USERS[0], title: "REST vs. GraphQL", body: "GraphQL has certain advantages over REST."},
+    {id: UUID.random.to_s, author: USERS[1], title: "The Crystal Programming Language ", body: "The nicest syntax on the planet now comes with typesafety, performance and parallelisation support(ójala!)"},
   ].map { |args| Post.new **args }
 
   COMMENTS = [
-    {id: SecureRandom.uuid, author: USERS[2], post: POSTS[1], body: "I like rest more!"},
-    {id: SecureRandom.uuid, author: USERS[2], post: POSTS[1], body: "But think of all the possibilities with GraphQL!"},
-    {id: SecureRandom.uuid, author: USERS[1], post: POSTS[2], body: "When will I finally have static compilation support?"},
+    {id: UUID.random.to_s, author: USERS[2], post: POSTS[1], body: "I like rest more!"},
+    {id: UUID.random.to_s, author: USERS[2], post: POSTS[1], body: "But think of all the possibilities with GraphQL!"},
+    {id: UUID.random.to_s, author: USERS[1], post: POSTS[2], body: "When will I finally have static compilation support?"},
   ].map { |args| Comment.new **args }
 
   #
@@ -228,7 +228,7 @@ module BlogExample
     field :lastName { last_name }
     field :fullName { "#{@first_name} #{@last_name}" }
     field :posts { POSTS.select &.author.==(self) }
-    field :postsCount { POSTS.select(&.author.==(self)).size }
+    field :postsCount { POSTS.count &.author.==(self) }
     field :role
   end
 
@@ -258,7 +258,7 @@ module BlogExample
       raise "authorId doesn't exist!" unless author
 
       post = Post.new(
-        id: SecureRandom.uuid, author: author,
+        id: UUID.random.to_s, author: author,
         title: payload["title"].as(String), body: payload["body"].as(String)
       )
 
@@ -276,7 +276,7 @@ module BlogExample
       raise "postId doesn't exist!" unless post
 
       comment = Comment.new(
-        id: SecureRandom.uuid, author: author,
+        id: UUID.random.to_s, author: author,
         post: post, body: payload["body"].as(String)
       )
       COMMENTS << comment
