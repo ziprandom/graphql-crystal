@@ -131,6 +131,7 @@ module GraphQL
                   end
                 end
               \{% end %}
+              else
             \{% end %}\
             end
             \{% end %}\

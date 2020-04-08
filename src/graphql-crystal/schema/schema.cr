@@ -129,6 +129,7 @@ module GraphQL
             types[node.name] = node
           when Language::DirectiveDefinition
             directives[node.name] = node
+          else
           end
           node
         end

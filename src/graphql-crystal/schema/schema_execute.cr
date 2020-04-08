@@ -388,6 +388,7 @@ module GraphQL
             if value.is_a?(Language::VariableIdentifier)
               node.value = full_params[value.name].as(Language::ArgumentValue)
             end
+          else
           end
           node
         end
@@ -437,6 +438,7 @@ module GraphQL
               # for later evaluation.
               selections += selection.selections.map(&.as(Language::Field).tap { |f| f.directives = selection.directives })
             end
+          else
           end
           selections
         end
@@ -455,6 +457,7 @@ module GraphQL
               collection << node
             when Language::FragmentDefinition
               result[2] << node
+            else
             end
             node
           end
