@@ -17,7 +17,7 @@ describe GraphQL::Directive do
       }
 
       it "indicates the defined deprecation" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string)
           .should eq({
             "data" => {
@@ -66,7 +66,7 @@ describe GraphQL::Directive do
       }
 
       it "indicates the defined deprecation" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string)
           .should eq({
             "data" => {
@@ -111,7 +111,7 @@ describe GraphQL::Directive do
       }
 
       it "includes if :if argument is true" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"withName" => true})
           .should eq({
             "data" => {
@@ -123,7 +123,7 @@ describe GraphQL::Directive do
           })
       end
       it "excludes if :if argument is false" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"withName" => false})
           .should eq({
             "data" => {
@@ -148,7 +148,7 @@ describe GraphQL::Directive do
       }
 
       it "includes if :if argument is true" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"withName" => true})
           .should eq({
             "data" => {
@@ -161,7 +161,7 @@ describe GraphQL::Directive do
       end
 
       it "excludes if :if argument is false" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"withName" => false})
           .should eq({
             "data" => {
@@ -187,7 +187,7 @@ describe GraphQL::Directive do
       }
 
       it "includes if :if argument is true" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"withName" => true})
           .should eq({
             "data" => {
@@ -200,7 +200,7 @@ describe GraphQL::Directive do
       end
 
       it "excludes if :if argument is false" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"withName" => false})
           .should eq({
             "data" => {
@@ -227,7 +227,7 @@ describe GraphQL::Directive do
       }
 
       it "skips if :if argument is true" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"skipName" => true})
           .should eq({
             "data" => {
@@ -238,7 +238,7 @@ describe GraphQL::Directive do
           })
       end
       it "includes if :if argument is false" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"skipName" => false})
           .should eq({
             "data" => {
@@ -264,7 +264,7 @@ describe GraphQL::Directive do
       }
 
       it "skips if :if argument is true" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"skipName" => true})
           .should eq({
             "data" => {
@@ -276,7 +276,7 @@ describe GraphQL::Directive do
       end
 
       it "includes if :if argument is false" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"skipName" => false})
           .should eq({
             "data" => {
@@ -303,7 +303,7 @@ describe GraphQL::Directive do
       }
 
       it "skips if :if argument is true" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"skipName" => true})
           .should eq({
             "data" => {
@@ -315,7 +315,7 @@ describe GraphQL::Directive do
       end
 
       it "includes if :if argument is false" do
-        TestSchema::Schema
+        TestSchema::SCHEMA
           .execute(query_string, {"skipName" => false})
           .should eq({
             "data" => {

@@ -62,7 +62,7 @@ module StarWars
     field :id
     field :name
     field :friends do
-      Characters.select { |c| self.friends.includes? c.id }
+      CHARACTERS.select { |c| self.friends.includes? c.id }
     end
 
     field :appearsIn { self.appears_in }
@@ -85,25 +85,25 @@ module StarWars
 
     field :hero do |args|
       if (args["episode"]? == "EMPIRE")
-        Characters.find(&.id.==("1000"))
+        CHARACTERS.find(&.id.==("1000"))
       else
-        Characters.find(&.id.==("2001"))
+        CHARACTERS.find(&.id.==("2001"))
       end
     end
 
     field :humans do |args|
-      args["ids"].as(Array).map { |i| Characters.find(&.id.==(i)) }
+      args["ids"].as(Array).map { |i| CHARACTERS.find(&.id.==(i)) }
     end
 
     field :human do |args|
-      Characters.select(&.is_a?(Human)).find(&.id.==(args["id"]))
+      CHARACTERS.select(&.is_a?(Human)).find(&.id.==(args["id"]))
     end
 
     field :droid do |args|
-      Characters.select(&.is_a?(Droid)).find(&.id.==(args["id"]))
+      CHARACTERS.select(&.is_a?(Droid)).find(&.id.==(args["id"]))
     end
   end
 
-  Schema = GraphQL::Schema.from_schema(SCHEMA_DEFINITION)
-  Schema.query_resolver = QueryType
+  SCHEMA = GraphQL::Schema.from_schema(SCHEMA_DEFINITION)
+  SCHEMA.query_resolver = QueryType
 end

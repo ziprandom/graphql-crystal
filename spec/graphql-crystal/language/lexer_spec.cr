@@ -6,18 +6,6 @@ describe GraphQL::Language::Lexer do
   subject = GraphQL::Language::Lexer
 
   describe ".lex" do
-    query_string = " \
-      { \
-        query getCheese { \
-          cheese(id: 1) { \
-            ... cheeseFields \
-          } \
-        } \
-      } \
-    "
-
-    tokens = subject.lex(query_string)
-
     it "makes utf-8 comments" do
       comment_token = subject.lex("# 不要!\n{")
       comment_token.value.should eq "不要!"

@@ -65,7 +65,7 @@ module GraphQL
             return accepts?(field.type, nil)
           end
         end
-        return true
+        true
       when Language::TypeName
         accepts?(@types[type_definition.name], value)
       else

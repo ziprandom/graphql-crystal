@@ -4,7 +4,7 @@ require "../spec_helper"
 describe GraphQL::Schema do
   describe "resolve" do
     it "answers a simple field request" do
-      TestSchema::Schema.execute("{ user(id: 0) { name } }").should eq({"data" => {"user" => {"name" => "otto neverthere"}}})
+      TestSchema::SCHEMA.execute("{ user(id: 0) { name } }").should eq({"data" => {"user" => {"name" => "otto neverthere"}}})
     end
 
     it "answers a simple field request for a field defined later in the inheritance chain (SpecialQuery)" do
@@ -17,7 +17,7 @@ describe GraphQL::Schema do
           ],
         },
       }
-      TestSchema::Schema.execute("{ addresses { city } }").should eq expected
+      TestSchema::SCHEMA.execute("{ addresses { city } }").should eq expected
     end
 
     it "answers a simple field request for a field defined later in the inheritance chain (SpecialQuery)" do
@@ -29,7 +29,7 @@ describe GraphQL::Schema do
           ],
         },
       }
-      TestSchema::Schema.execute(%{
+      TestSchema::SCHEMA.execute(%{
                            { addresses(city: [London, Miami]) { city street number } }
                          }).should eq expected
     end
@@ -40,7 +40,7 @@ describe GraphQL::Schema do
           "addresses" => [] of Nil,
         },
       }
-      TestSchema::Schema.execute(%{
+      TestSchema::SCHEMA.execute(%{
                            { addresses(city: [Istanbul]) { city street number } }
                          }).should eq expected
     end
@@ -53,13 +53,13 @@ describe GraphQL::Schema do
           },
         },
       }
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         "{ user(id: 0) { id, name } }"
       ).should eq(expected)
     end
 
     it "answers a simple field request for a nested resource" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         "{ user(id: 0) { id, address { city } } }"
       ).should eq({
         "data" => {
@@ -74,7 +74,7 @@ describe GraphQL::Schema do
     end
 
     it "answers a more deep request for a list resource" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         "{ user(id: 0) { id, friends { id, name } } }"
       ).should eq({
         "data" => {
@@ -90,7 +90,7 @@ describe GraphQL::Schema do
     end
 
     it "answers a request for a field with a custom resolve callback" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         "{ user(id: 0) { full_address } }"
       ).should eq({"data" => {
         "user" => {
@@ -112,7 +112,7 @@ describe GraphQL::Schema do
         },
       }
 
-      TestSchema::Schema.execute(%{
+      TestSchema::SCHEMA.execute(%{
                            {
                              firstUser: user(id: 0) {
                                name
@@ -139,7 +139,7 @@ describe GraphQL::Schema do
         },
       }
 
-      TestSchema::Schema.execute(%{
+      TestSchema::SCHEMA.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... userFields
@@ -164,7 +164,7 @@ describe GraphQL::Schema do
         },
       }
 
-      TestSchema::Schema.execute(%{
+      TestSchema::SCHEMA.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... on User {
@@ -176,7 +176,7 @@ describe GraphQL::Schema do
     end
 
     it "answers a request with nullable arg and arg ommited" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         "query getAddresses($city: [City]) { addresses(city: $city) { city } }"
       ).should eq({
         "data" => {
@@ -190,7 +190,7 @@ describe GraphQL::Schema do
     end
 
     it "answers a request with non-nullable arg and arg provided" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         "query getAddresses($city: [City]!) { addresses(city: $city) { city } }", {
         "city" => [
           "London",
@@ -206,7 +206,7 @@ describe GraphQL::Schema do
     end
 
     it "answers a request with non-nullable arg and arg provided with JSON::Any type" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         "query getAddresses($city: [City]!) { addresses(city: $city) { city } }", JSON.parse({
         "city" => [
           "London",
@@ -222,7 +222,7 @@ describe GraphQL::Schema do
     end
 
     it "raises if non-nullable args ommited" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         "query getAddresses($city: [City]!) { addresses(city: $city) { city } }"
       ).should eq({
         "data" => nil, "errors" => [{"message" => "missing variable city", "path" => [] of String}],
@@ -243,7 +243,7 @@ describe GraphQL::Schema do
         ],
       }
 
-      TestSchema::Schema.execute(%{
+      TestSchema::SCHEMA.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... on Droid {
@@ -265,7 +265,7 @@ describe GraphQL::Schema do
         ],
       }
 
-      TestSchema::Schema.execute(%{
+      TestSchema::SCHEMA.execute(%{
                            {
                              firstUser: user(id: 0) {
                                ... userFieldsNonExistent
@@ -298,7 +298,7 @@ describe GraphQL::Schema do
         ],
       }
 
-      TestSchema::Schema.execute(bad_query_string).should eq expected
+      TestSchema::SCHEMA.execute(bad_query_string).should eq expected
     end
 
     it "raises an error if we request a field with an argument that hasn't been defined" do
@@ -322,7 +322,7 @@ describe GraphQL::Schema do
         ],
       }
 
-      TestSchema::Schema.execute(bad_query_string).should eq expected
+      TestSchema::SCHEMA.execute(bad_query_string).should eq expected
     end
 
     it "raises an error if we request a field with defined argument using a wrong type" do
@@ -346,13 +346,13 @@ describe GraphQL::Schema do
         ],
       }
 
-      TestSchema::Schema.execute(bad_query_string).should eq expected
+      TestSchema::SCHEMA.execute(bad_query_string).should eq expected
     end
   end
 
   describe "operationName" do
     it "multiple operations with valid operationName" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         %{
           query UserOne{ user(id: 0) { name } }
           query UserTwo{ user(id: 0) { name } }
@@ -363,7 +363,7 @@ describe GraphQL::Schema do
     end
 
     it "one operation ignore operationName" do
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         %{
           query UserOne{ user(id: 0) { name } }
         },
@@ -381,7 +381,7 @@ describe GraphQL::Schema do
           },
         ],
       }
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         %{
           query UserOne{ user(id: 0) { name } }
           query UserTwo{ user(id: 0) { name } }
@@ -398,7 +398,7 @@ describe GraphQL::Schema do
           },
         ],
       }
-      TestSchema::Schema.execute(
+      TestSchema::SCHEMA.execute(
         %{
           query UserOne{ user(id: 0) { name } }
           query UserTwo{ user(id: 0) { name } }

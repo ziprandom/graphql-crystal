@@ -45,9 +45,15 @@ lib GraphQLParser
     _pos : LibC::Int
   end
 
+  # ameba:disable Style/TypeNames
   alias X__OffT = LibC::Long
+  # ameba:enable Style/TypeNames
+  # ameba:disable Style/TypeNames
   alias X_IoLockT = Void
+  # ameba:enable Style/TypeNames
+  # ameba:disable Style/TypeNames
   alias X__Off64T = LibC::Long
+  # ameba:enable Style/TypeNames
   fun parse_file_with_experimental_schema_support = graphql_parse_file_with_experimental_schema_support(file : File*, error : LibC::Char**) : GraphQlAstNode*
   fun error_free = graphql_error_free(error : LibC::Char*)
 end

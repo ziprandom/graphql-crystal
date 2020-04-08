@@ -47,7 +47,7 @@ module Dummy
     LAST_PRODUCED_DAIRY = MILKS[1]
   end
 
-  module MAYBE_NULL
+  module MAYBENULL
     extend GraphQL::ObjectType
     CHEESE = nil
   end

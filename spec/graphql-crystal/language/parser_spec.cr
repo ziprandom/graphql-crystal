@@ -127,7 +127,9 @@ describe GraphQL::Language::Parser do
     end
 
     pending "parses the Dummy Schema" do
+      # ameba:disable Lint/UselessAssign
       document = subject.parse g
+      # ameba:enable Lint/UselessAssign
     end
 
     it "creates an anonymous fragment definition" do

@@ -78,7 +78,9 @@ class GraphQL::Language::ParserContext
   end
 
   private def create_operation_definition(start, operation, name)
+    # ameba:disable Lint/UselessAssign
     comment = get_comment
+    # ameba:enable Lint/UselessAssign
     Language::OperationDefinition.new(
       operation_type: operation,
       name: name,
@@ -89,7 +91,9 @@ class GraphQL::Language::ParserContext
   end
 
   private def create_operation_definition(start)
+    # ameba:disable Lint/UselessAssign
     comment = get_comment
+    # ameba:enable Lint/UselessAssign
     Language::OperationDefinition.new(
       operation_type: "query",
       name: nil,
@@ -164,8 +168,12 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_argument
+    # ameba:disable Lint/UselessAssign
     comment = get_comment
+    # ameba:enable Lint/UselessAssign
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
 
     Language::Argument.new(
       name: parse_name,
@@ -214,10 +222,11 @@ class GraphQL::Language::ParserContext
   private def parse_definitions_if_not_eof
     definitions = [] of Language::AbstractNode
     if @current_token.kind != Token::Kind::EOF
-      while true
+      condition = false
+      while !condition
         # yield parse_definition
         definitions.push(parse_definition)
-        break unless !skip(Token::Kind::EOF)
+        condition = true if skip(Token::Kind::EOF)
       end
     end
     definitions
@@ -229,14 +238,17 @@ class GraphQL::Language::ParserContext
     end
 
     text = [] of String?
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     end_position : Int32
 
-    while true
+    condition = false
+    while !condition
       text.push(@current_token.value)
       end_position = @current_token.end_position
       advance
-      break unless @current_token.kind == Token::Kind::COMMENT
+      condition = true unless @current_token.kind == Token::Kind::COMMENT
     end
 
     comment = text.join("\n")
@@ -245,7 +257,9 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_directive
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect(Token::Kind::AT)
     Language::Directive.new(
       name: parse_name,
@@ -255,7 +269,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_directive_definition
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("directive")
     expect(Token::Kind::AT)
 
@@ -276,9 +292,10 @@ class GraphQL::Language::ParserContext
   private def parse_directive_locations
     locations = [] of String?
 
-    while true
+    condition = false
+    while !condition
       locations.push(parse_name)
-      break unless skip(Token::Kind::PIPE)
+      condition = true unless skip(Token::Kind::PIPE)
     end
 
     locations
@@ -302,7 +319,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_enum_type_definition
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("enum")
 
     Language::EnumTypeDefinition.new(
@@ -320,7 +339,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_enum_value_definition
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
 
     Language::EnumValueDefinition.new(
       name: parse_name,
@@ -332,7 +353,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_field_definition
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     name = parse_name
     args = parse_argument_defs
     expect(Token::Kind::COLON)
@@ -381,8 +404,12 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_fragment_definition
+    # ameba:disable Lint/UselessAssign
     comment = get_comment
+    # ameba:enable Lint/UselessAssign
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("fragment")
 
     Language::FragmentDefinition.new(
@@ -408,9 +435,10 @@ class GraphQL::Language::ParserContext
     if @current_token.value == "implements"
       advance
 
-      while true
+      condition = false
+      while !condition
         types.push(parse_name)
-        break unless peek(Token::Kind::NAME)
+        condition = true unless peek(Token::Kind::NAME)
       end
     end
 
@@ -419,7 +447,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_input_object_type_definition
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("input")
 
     Language::InputObjectTypeDefinition.new(
@@ -432,7 +462,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_input_value_def
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     name = parse_name
     expect(Token::Kind::COLON)
     Language::InputValueDefinition.new(
@@ -452,7 +484,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_interface_type_definition
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("interface")
 
     Language::InterfaceTypeDefinition.new(
@@ -464,7 +498,9 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_list(is_constant) : Language::ArgumentValue
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     constant = Proc(Language::ArgumentValue).new { parse_constant_value }
     value = Proc(Language::ArgumentValue).new { parse_value_value }
 
@@ -472,7 +508,9 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_name : String?
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     value = @current_token.value
 
     expect(Token::Kind::NAME)
@@ -509,7 +547,9 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_named_type : Language::TypeName
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     Language::TypeName.new(name: parse_name)
   end
 
@@ -529,8 +569,12 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_object(is_constant)
+    # ameba:disable Lint/UselessAssign
     comment = get_comment
+    # ameba:enable Lint/UselessAssign
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
 
     Language::InputObject.new(arguments: parse_object_fields(is_constant))
   end
@@ -541,8 +585,12 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_object_field(is_constant)
+    # ameba:disable Lint/UselessAssign
     comment = get_comment
+    # ameba:enable Lint/UselessAssign
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     Language::Argument.new(
       name: parse_name,
       value: expect_colon_and_parse_value_literal(is_constant)
@@ -563,7 +611,9 @@ class GraphQL::Language::ParserContext
   private def parse_object_type_definition
     comment = get_comment
 
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("type")
 
     Language::ObjectTypeDefinition.new(
@@ -592,7 +642,9 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_operation_type_definition
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     operation = parse_operation_type
     expect(Token::Kind::COLON)
     type = parse_named_type
@@ -602,7 +654,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_scalar_type_definition
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("scalar")
     name = parse_name
     directives = parse_directives
@@ -615,10 +669,16 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_schema_definition
+    # ameba:disable Lint/UselessAssign
     comment = get_comment
+    # ameba:enable Lint/UselessAssign
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("schema")
+    # ameba:disable Lint/UselessAssign
     directives = parse_directives
+    # ameba:enable Lint/UselessAssign
     definitions = many(Token::Kind::BRACE_L, ->{ parse_operation_type_definition }, Token::Kind::BRACE_R)
 
     definitions = definitions.as(Array).reduce(Hash(String, String).new) do |memo, pair|
@@ -634,11 +694,13 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_selection
-    return peek(Token::Kind::SPREAD) ? parse_fragment : parse_field_selection
+    peek(Token::Kind::SPREAD) ? parse_fragment : parse_field_selection
   end
 
   private def parse_selection_set
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     many(Token::Kind::BRACE_L, ->{ parse_selection }, Token::Kind::BRACE_R)
   end
 
@@ -650,7 +712,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_type
     type = nil
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     if skip(Token::Kind::BRACKET_L)
       type = parse_type
       expect(Token::Kind::BRACKET_R)
@@ -689,7 +753,9 @@ class GraphQL::Language::ParserContext
 
   private def parse_union_type_definition
     comment = get_comment
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect_keyword("union")
     name = parse_name
     directives = parse_directives
@@ -733,14 +799,18 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_variable
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     expect(Token::Kind::DOLLAR)
 
     Language::VariableIdentifier.new(name: get_name)
   end
 
   private def parse_variable_definition : Language::VariableDefinition
+    # ameba:disable Lint/UselessAssign
     start = @current_token.start_position
+    # ameba:enable Lint/UselessAssign
     Language::VariableDefinition.new(
       name: parse_variable.name,
       type: advance_through_colon_and_parse_type,
@@ -749,7 +819,7 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_variable_definitions : Array(Language::VariableDefinition)
-    return peek(Token::Kind::PAREN_L) ? many(Token::Kind::PAREN_L, ->{ parse_variable_definition }, Token::Kind::PAREN_R) : [] of Language::VariableDefinition
+    peek(Token::Kind::PAREN_L) ? many(Token::Kind::PAREN_L, ->{ parse_variable_definition }, Token::Kind::PAREN_R) : [] of Language::VariableDefinition
   end
 
   private def peek(kind)

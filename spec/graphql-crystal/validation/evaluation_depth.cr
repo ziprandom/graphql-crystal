@@ -31,15 +31,15 @@ module EvaluationDepthTest
     field :firstElement { ListElement.new }
   end
 
-  Schema = GraphQL::Schema.from_schema(SCHEMA_STRING)
-  Schema.max_depth 5
-  Schema.query_resolver = QueryType
+  SCHEMA = GraphQL::Schema.from_schema(SCHEMA_STRING)
+  SCHEMA.max_depth 5
+  SCHEMA.query_resolver = QueryType
 end
 
 describe GraphQL::Schema do
   describe "Execution Depth Constraint" do
     it "allows queries that don't surpass the set max depth for the schema" do
-      EvaluationDepthTest::Schema.execute(%< { firstElement { index } } >).should eq ({
+      EvaluationDepthTest::SCHEMA.execute(%< { firstElement { index } } >).should eq ({
         "data" => {
           "firstElement" => {
             "index" => 0,
@@ -47,7 +47,7 @@ describe GraphQL::Schema do
         },
       })
 
-      EvaluationDepthTest::Schema
+      EvaluationDepthTest::SCHEMA
         .execute(%< { firstElement { next { next { index } } } } >)
         .should eq ({
           "data" => {
@@ -60,7 +60,7 @@ describe GraphQL::Schema do
             },
           },
         })
-      EvaluationDepthTest::Schema
+      EvaluationDepthTest::SCHEMA
         .execute(%< { firstElement { next { next { next { index } } } } } >)
         .should eq ({
           "data" => {
@@ -78,7 +78,7 @@ describe GraphQL::Schema do
     end
 
     it "throws an error when the max execution depth is reached" do
-      EvaluationDepthTest::Schema
+      EvaluationDepthTest::SCHEMA
         .execute(%< { firstElement { next { next { next { next { index } } } } } } >)
         .should eq ({
           "data" => {

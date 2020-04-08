@@ -27,7 +27,7 @@ module StarWars
                    @appears_in : Array(EpisodeEnum), @primary_function : String?); end
   end
 
-  Characters = begin
+  CHARACTERS = begin
     luke = {
       type:        "Human",
       id:          "1000",

@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe StarWars::Schema do
+describe StarWars::SCHEMA do
   describe "Basic Queries" do
     it "Correctly identifies R2-D2 as the hero of the Star Wars Saga" do
       query_string = %{
@@ -10,7 +10,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "hero" => {
@@ -31,7 +31,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "hero" => {
@@ -69,7 +69,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "hero" => {
@@ -142,7 +142,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "human" => {
@@ -161,7 +161,7 @@ describe StarWars::Schema do
         }
       }
       params = {"someId" => "1000"}
-      result = StarWars::Schema.execute(query_string, params)
+      result = StarWars::SCHEMA.execute(query_string, params)
       result.should eq ({
         "data" => {
           "human" => {
@@ -180,7 +180,7 @@ describe StarWars::Schema do
         }
       }
       params = {"someId" => "1002"}
-      result = StarWars::Schema.execute(query_string, params)
+      result = StarWars::SCHEMA.execute(query_string, params)
       result.should eq ({
         "data" => {
           "human" => {
@@ -199,7 +199,7 @@ describe StarWars::Schema do
         }
       }
       params = {"id" => "not a valid id"}
-      result = StarWars::Schema.execute(query_string, params)
+      result = StarWars::SCHEMA.execute(query_string, params)
       result.should eq ({
         "data" => {
           "human" => nil,
@@ -217,7 +217,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "luke" => {
@@ -238,7 +238,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "luke" => {
@@ -266,7 +266,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "luke" => {
@@ -296,7 +296,7 @@ describe StarWars::Schema do
           homePlanet
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "luke" => {
@@ -321,7 +321,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "hero" => {
@@ -341,7 +341,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "hero" => {
@@ -363,7 +363,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "hero" => {
@@ -394,7 +394,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "hero" => {
@@ -444,7 +444,7 @@ describe StarWars::Schema do
           }
         }
       }
-      result = StarWars::Schema.execute(query_string)
+      result = StarWars::SCHEMA.execute(query_string)
       result.should eq ({
         "data" => {
           "mainHero" => {
