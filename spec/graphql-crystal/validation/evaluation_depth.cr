@@ -50,57 +50,57 @@ describe GraphQL::Schema do
       EvaluationDepthTest::Schema
         .execute(%< { firstElement { next { next { index } } } } >)
         .should eq ({
-        "data" => {
-          "firstElement" => {
-            "next" => {
-              "next" => {
-                "index" => 2,
-              },
-            },
-          },
-        },
-      })
-      EvaluationDepthTest::Schema
-        .execute(%< { firstElement { next { next { next { index } } } } } >)
-        .should eq ({
-        "data" => {
-          "firstElement" => {
-            "next" => {
+          "data" => {
+            "firstElement" => {
               "next" => {
                 "next" => {
-                  "index" => 3,
+                  "index" => 2,
                 },
               },
             },
           },
-        },
-      })
+        })
+      EvaluationDepthTest::Schema
+        .execute(%< { firstElement { next { next { next { index } } } } } >)
+        .should eq ({
+          "data" => {
+            "firstElement" => {
+              "next" => {
+                "next" => {
+                  "next" => {
+                    "index" => 3,
+                  },
+                },
+              },
+            },
+          },
+        })
     end
 
     it "throws an error when the max execution depth is reached" do
       EvaluationDepthTest::Schema
         .execute(%< { firstElement { next { next { next { next { index } } } } } } >)
         .should eq ({
-        "data" => {
-          "firstElement" => {
-            "next" => {
+          "data" => {
+            "firstElement" => {
               "next" => {
                 "next" => {
-                  "next" => nil,
+                  "next" => {
+                    "next" => nil,
+                  },
                 },
               },
             },
           },
-        },
-        "errors" => [
-          {
-            "message" => "max execution depth reached",
-            "path"    => [
-              "firstElement", "next", "next", "next", "next",
-            ],
-          },
-        ],
-      })
+          "errors" => [
+            {
+              "message" => "max execution depth reached",
+              "path"    => [
+                "firstElement", "next", "next", "next", "next",
+              ],
+            },
+          ],
+        })
     end
   end
 end

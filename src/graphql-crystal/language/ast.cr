@@ -39,34 +39,34 @@ module GraphQL
       end
 
       def self.values
-        NamedTuple.new()
+        NamedTuple.new
       end
 
       def values
-        NamedTuple.new()
+        NamedTuple.new
       end
 
       def ==(other)
         self.class == other.class
       end
 
-    #    def inspect
-    #      "#{self.class.name}(" +
-    #        if vs = values
-    #          vs.map do |k, v|
-    #            value = if v.is_a?(Array)
-    #                      "[" + v.map{ |vv| vv.inspect.as(String) }.join(", ") + "]"
-    #                    elsif v.is_a?(Hash)
-    #                      "{" + v.map{ |kk, vv| "#{kk.inspect}: #{vv.inspect}".as(String) }.join(", ") + "}"
-    #                    else
-    #                      v.inspect
-    #                    end
-    #            "#{k}: #{value}"
-    #          end.join(", ")
-    #        else
-    #          ""
-    #        end + ")"
-    #    end
+      #    def inspect
+      #      "#{self.class.name}(" +
+      #        if vs = values
+      #          vs.map do |k, v|
+      #            value = if v.is_a?(Array)
+      #                      "[" + v.map{ |vv| vv.inspect.as(String) }.join(", ") + "]"
+      #                    elsif v.is_a?(Hash)
+      #                      "{" + v.map{ |kk, vv| "#{kk.inspect}: #{vv.inspect}".as(String) }.join(", ") + "}"
+      #                    else
+      #                      v.inspect
+      #                    end
+      #            "#{k}: #{value}"
+      #          end.join(", ")
+      #        else
+      #          ""
+      #        end + ")"
+      #    end
 
       def_clone
 
@@ -168,7 +168,6 @@ module GraphQL
       end
 
       make_value_methods
-
     end
   end
 end

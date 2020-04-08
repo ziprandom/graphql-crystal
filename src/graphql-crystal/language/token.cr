@@ -36,47 +36,47 @@ class GraphQL::Language::Token
   end
 
   def self.get_token_kind_description(kind : Kind) : String
-      case kind
-      when Kind::EOF
-        "EOF"
-      when Kind::BANG
-        "!"
-      when Kind::DOLLAR
-        "$"
-      when Kind::PAREN_L
-        "("
-      when Kind::PAREN_R
-        ")"
-      when Kind::SPREAD
-        "..."
-      when Kind::COLON
-        ":"
-      when Kind::EQUALS
-        "="
-      when Kind::AT
-        "@"
-      when Kind::BRACKET_L
-        "["
-      when Kind::BRACKET_R
-        "]"
-      when Kind::BRACE_L
-        "{"
-      when Kind::PIPE
-        "|"
-      when Kind::BRACE_R
-        "}"
-      when Kind::NAME
-        "Name"
-      when Kind::INT
-        "Int"
-      when Kind::FLOAT
-        "Float"
-      when Kind::STRING
-        "String"
-      when Kind::COMMENT
-        "#"
-      else
-        "";
-      end
+    case kind
+    when Kind::EOF
+      "EOF"
+    when Kind::BANG
+      "!"
+    when Kind::DOLLAR
+      "$"
+    when Kind::PAREN_L
+      "("
+    when Kind::PAREN_R
+      ")"
+    when Kind::SPREAD
+      "..."
+    when Kind::COLON
+      ":"
+    when Kind::EQUALS
+      "="
+    when Kind::AT
+      "@"
+    when Kind::BRACKET_L
+      "["
+    when Kind::BRACKET_R
+      "]"
+    when Kind::BRACE_L
+      "{"
+    when Kind::PIPE
+      "|"
+    when Kind::BRACE_R
+      "}"
+    when Kind::NAME
+      "Name"
+    when Kind::INT
+      "Int"
+    when Kind::FLOAT
+      "Float"
+    when Kind::STRING
+      "String"
+    when Kind::COMMENT
+      "#"
+    else
+      ""
+    end
   end
 end

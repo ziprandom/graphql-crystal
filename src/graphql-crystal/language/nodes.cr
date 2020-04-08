@@ -56,10 +56,8 @@ module GraphQL
     #   # { ... }
     #
     class Document < AbstractNode
-      values({definitions: Array(
-        OperationDefinition | FragmentDefinition | SchemaDefinition | ObjectTypeDefinition | InputObjectTypeDefinition |
-        ScalarTypeDefinition | DirectiveDefinition | EnumTypeDefinition | InterfaceTypeDefinition | UnionTypeDefinition
-      )})
+      values({definitions: Array(OperationDefinition | FragmentDefinition | SchemaDefinition | ObjectTypeDefinition | InputObjectTypeDefinition |
+                                 ScalarTypeDefinition | DirectiveDefinition | EnumTypeDefinition | InterfaceTypeDefinition | UnionTypeDefinition)})
       traverse :children, :definitions
 
       def to_query_string

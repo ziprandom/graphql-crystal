@@ -183,41 +183,41 @@ describe GraphQL::Schema do
           "addresses" => [
             {"city" => "London"},
             {"city" => "Miami"},
-            {"city" => "CABA"}
+            {"city" => "CABA"},
           ],
-        }
+        },
       })
     end
 
     it "answers a request with non-nullable arg and arg provided" do
       TestSchema::Schema.execute(
         "query getAddresses($city: [City]!) { addresses(city: $city) { city } }", {
-          "city" => [
-            "London"
-          ]
-        }
+        "city" => [
+          "London",
+        ],
+      }
       ).should eq({
         "data" => {
           "addresses" => [
-            {"city" => "London"}
+            {"city" => "London"},
           ],
-        }
+        },
       })
     end
 
     it "answers a request with non-nullable arg and arg provided with JSON::Any type" do
       TestSchema::Schema.execute(
         "query getAddresses($city: [City]!) { addresses(city: $city) { city } }", JSON.parse({
-          "city" => [
-            "London"
-          ]
-        }.to_json)
+        "city" => [
+          "London",
+        ],
+      }.to_json)
       ).should eq({
         "data" => {
           "addresses" => [
-            {"city" => "London"}
+            {"city" => "London"},
           ],
-        }
+        },
       })
     end
 
@@ -225,7 +225,7 @@ describe GraphQL::Schema do
       TestSchema::Schema.execute(
         "query getAddresses($city: [City]!) { addresses(city: $city) { city } }"
       ).should eq({
-        "data" => nil, "errors" => [{"message" => "missing variable city", "path" => [] of String}]
+        "data" => nil, "errors" => [{"message" => "missing variable city", "path" => [] of String}],
       })
     end
 

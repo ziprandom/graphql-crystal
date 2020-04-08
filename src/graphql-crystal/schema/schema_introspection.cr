@@ -275,9 +275,9 @@ module GraphQL
       field :fields do |args, context|
         _fields = (resolved_interfaces(context.schema).flat_map(&.fields) + fields)
           .reduce(Hash(String, FieldDefinition).new) do |dict, field|
-          dict[field.name] = field
-          dict
-        end.values.sort_by &.name
+            dict[field.name] = field
+            dict
+          end.values.sort_by &.name
         if args["includeDeprecated"]
           _fields
         else

@@ -483,7 +483,7 @@ module GraphQL
         raw = v.raw
         case raw
         when Array
-          raw.map{|vv| cast_jsonany_to_jsontype(vv).as(JSONType)}
+          raw.map { |vv| cast_jsonany_to_jsontype(vv).as(JSONType) }
         when Hash
           raw.keys.reduce(Hash(String, JSONType).new) do |hash, key|
             hash[key] = cast_jsonany_to_jsontype(raw[key])

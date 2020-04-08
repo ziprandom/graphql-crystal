@@ -20,7 +20,7 @@ class GraphQL::Language::ParserContext
   end
 
   def get_comment
-    @comments.size > 0 ? @comments.pop() : nil
+    @comments.size > 0 ? @comments.pop : nil
   end
 
   private def advance
@@ -71,7 +71,6 @@ class GraphQL::Language::ParserContext
 
   private def create_inline_fragment(start)
     Language::InlineFragment.new(
-      
       get_type_condition,
       parse_directives,
       parse_selection_set,
@@ -120,7 +119,7 @@ class GraphQL::Language::ParserContext
       return
     end
 
-    raise Exception.new("Expected \"#{keyword}\", found Name \"#{token.value}\"");
+    raise Exception.new("Expected \"#{keyword}\", found Name \"#{token.value}\"")
   end
 
   private def expect_on_keyword_and_parse_named_type
@@ -138,7 +137,7 @@ class GraphQL::Language::ParserContext
   end
 
   private def get_name
-    peek(Token::Kind::NAME) ? parse_name : nil;
+    peek(Token::Kind::NAME) ? parse_name : nil
   end
 
   private def get_type_condition
@@ -176,14 +175,14 @@ class GraphQL::Language::ParserContext
 
   private def parse_argument_defs
     if !peek(Token::Kind::PAREN_L)
-      return [] of Language::InputValueDefinition;
+      return [] of Language::InputValueDefinition
     end
 
     many(Token::Kind::PAREN_L, ->{ parse_input_value_def }, Token::Kind::PAREN_R)
   end
 
   private def parse_arguments
-    peek(Token::Kind::PAREN_L) ? many(Token::Kind::PAREN_L, -> { parse_argument }, Token::Kind::PAREN_R) : [] of Language::Argument
+    peek(Token::Kind::PAREN_L) ? many(Token::Kind::PAREN_L, ->{ parse_argument }, Token::Kind::PAREN_R) : [] of Language::Argument
   end
 
   private def parse_boolean_value(token)
@@ -251,7 +250,6 @@ class GraphQL::Language::ParserContext
     Language::Directive.new(
       name: parse_name,
       arguments: parse_arguments,
-      
     )
   end
 
@@ -375,7 +373,7 @@ class GraphQL::Language::ParserContext
     start = @current_token.start_position
     expect(Token::Kind::SPREAD)
 
-    if peek(Token::Kind::NAME) && !@current_token.value. == "on"
+    if peek(Token::Kind::NAME) && !@current_token.value.== "on"
       return create_graphql_fragment_spread(start)
     end
 
@@ -435,9 +433,8 @@ class GraphQL::Language::ParserContext
   private def parse_input_value_def
     comment = get_comment
     start = @current_token.start_position
-    name = parse_name;
-    expect(Token::Kind::COLON);
-
+    name = parse_name
+    expect(Token::Kind::COLON)
     Language::InputValueDefinition.new(
       name: name,
       type: parse_type,
@@ -502,8 +499,8 @@ class GraphQL::Language::ParserContext
       parse_enum_type_definition
     when "input"
       parse_input_object_type_definition
-    # when "extend"
-    #   parse_type_extension_definition
+      # when "extend"
+      #   parse_type_extension_definition
     when "directive"
       parse_directive_definition
     else
@@ -517,8 +514,7 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_name_value(is_constant)
-    token = @current_token;
-
+    token = @current_token
     if token.value == "true" || token.value == "false"
       return parse_boolean_value(token)
     elsif !token.value.nil?
@@ -586,7 +582,7 @@ class GraphQL::Language::ParserContext
       return create_operation_definition(start)
     end
 
-    create_operation_definition(start, parse_operation_type, get_name);
+    create_operation_definition(start, parse_operation_type, get_name)
   end
 
   private def parse_operation_type
@@ -684,8 +680,7 @@ class GraphQL::Language::ParserContext
   private def parse_union_members
     members = [] of Language::TypeName
 
-    while
-      members.push(Language::TypeName.new(name: parse_named_type.name))
+    while members.push(Language::TypeName.new(name: parse_named_type.name))
       break unless skip(Token::Kind::PIPE)
     end
 
@@ -729,7 +724,7 @@ class GraphQL::Language::ParserContext
       return parse_variable if !is_constant
     end
 
-    raise Exception.new("Unexpected #{@current_token.kind} at #{@current_token.start_position} near #{@source[@current_token.start_position-15,30]}")
+    raise Exception.new("Unexpected #{@current_token.kind} at #{@current_token.start_position} near #{@source[@current_token.start_position - 15, 30]}")
   end
 
   private def parse_value_value : Language::ArgumentValue
@@ -753,9 +748,7 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_variable_definitions : Array(Language::VariableDefinition)
-    return peek(Token::Kind::PAREN_L) ?
-      many(Token::Kind::PAREN_L, ->{ parse_variable_definition }, Token::Kind::PAREN_R) :
-      [] of Language::VariableDefinition
+    return peek(Token::Kind::PAREN_L) ? many(Token::Kind::PAREN_L, ->{ parse_variable_definition }, Token::Kind::PAREN_R) : [] of Language::VariableDefinition
   end
 
   private def peek(kind)

@@ -1,77 +1,76 @@
 require "../../spec_helper"
 
 describe GraphQL::Schema::Schema do
-
-    query_string = <<-query
-      query IntrospectionTypeQuery {
-        __schema {
-          types {
-            name
-           }
-        }
+  query_string = <<-query
+    query IntrospectionTypeQuery {
+      __schema {
+        types {
+          name
+         }
       }
-    query
+    }
+  query
 
-    expected = {
-      "data" => {
-        "__schema" => {
-          "types" => [
-            {
-              "name" => "QueryType",
-            },
-            {
-              "name" => "Episode",
-            },
-            {
-              "name" => "Character",
-            },
-            {
-              "name" => "String",
-            },
-            {
-              "name" => "Human",
-            },
-            {
-              "name" => "Droid",
-            },
-            {
-              "name" => "__Schema",
-            },
-            {
-              "name" => "__Type",
-            },
-            {
-              "name" => "__TypeKind",
-            },
-            {
-              "name" => "Boolean",
-            },
-            {
-              "name" => "__Field",
-            },
-            {
-              "name" => "__InputValue",
-            },
-            {
-              "name" => "__EnumValue",
-            },
-            {
-              "name" => "__Directive",
-            },
-            #           Not Implemented ATM
-            #            {
-            #              "name" => "__DirectiveLocation"
-            #            }
-          ],
-        },
+  expected = {
+    "data" => {
+      "__schema" => {
+        "types" => [
+          {
+            "name" => "QueryType",
+          },
+          {
+            "name" => "Episode",
+          },
+          {
+            "name" => "Character",
+          },
+          {
+            "name" => "String",
+          },
+          {
+            "name" => "Human",
+          },
+          {
+            "name" => "Droid",
+          },
+          {
+            "name" => "__Schema",
+          },
+          {
+            "name" => "__Type",
+          },
+          {
+            "name" => "__TypeKind",
+          },
+          {
+            "name" => "Boolean",
+          },
+          {
+            "name" => "__Field",
+          },
+          {
+            "name" => "__InputValue",
+          },
+          {
+            "name" => "__EnumValue",
+          },
+          {
+            "name" => "__Directive",
+          },
+          #           Not Implemented ATM
+          #            {
+          #              "name" => "__DirectiveLocation"
+          #            }
+        ],
       },
-    }["data"]["__schema"]["types"]
+    },
+  }["data"]["__schema"]["types"]
 
-    result = StarWars::Schema.execute(query_string)["data"].as(Hash)["__schema"].as(Hash)["types"].as(Array)
-    missing = expected.reject { |element| result.includes? element }
-    superfluous = result.reject { |element| expected.includes? element }
+  result = StarWars::Schema.execute(query_string)["data"].as(Hash)["__schema"].as(Hash)["types"].as(Array)
+  missing = expected.reject { |element| result.includes? element }
+  superfluous = result.reject { |element| expected.includes? element }
 
-    empty = [] of Hash(String, String)
+  empty = [] of Hash(String, String)
 
   it "Allows querying the schema for types" do
     missing.should eq empty

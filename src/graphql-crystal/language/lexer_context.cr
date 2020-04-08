@@ -24,7 +24,7 @@ class GraphQL::Language::LexerContext
     return read_number() if code.number? || code == '-'
     return read_string() if code == '"'
 
-    raise Exception.new("Unexpected character '#{code}' at #{@current_index} near #{@source[@current_index-15,30]}")
+    raise Exception.new("Unexpected character '#{code}' at #{@current_index} near #{@source[@current_index - 15, 30]}")
   end
 
   def only_hex_in_string(test)
@@ -34,7 +34,7 @@ class GraphQL::Language::LexerContext
   def read_comment : Token
     start = @current_index
     chunk_start = (@current_index += 1)
-    
+
     code = get_code
     value = ""
 
@@ -58,20 +58,19 @@ class GraphQL::Language::LexerContext
     code = next_code_char
     if code == '.'
       is_float = true
-      code = read_digits_from_own_source(self.next_code())
+      code = read_digits_from_own_source(self.next_code)
     end
 
     if code == 'E' || code == 'e'
       is_float = true
-      code = self.next_code()
+      code = self.next_code
       if code == '+' || code == '-'
-        code = self.next_code()
+        code = self.next_code
       end
       code = read_digits_from_own_source(code)
     end
 
-    is_float ? create_float_token(start)
-      : create_int_token(start)
+    is_float ? create_float_token(start) : create_int_token(start)
   end
 
   def read_string : Token
@@ -197,19 +196,19 @@ class GraphQL::Language::LexerContext
   end
 
   private def get_unicode_char
-      if @current_index + 5 > @source.size
-        truncated_expression = @source[@current_index, @source.size]
-        raise Exception.new("Invalid character escape sequence at EOF: \\#{truncated_expression}.")
-      end
+    if @current_index + 5 > @source.size
+      truncated_expression = @source[@current_index, @source.size]
+      raise Exception.new("Invalid character escape sequence at EOF: \\#{truncated_expression}.")
+    end
 
-      expression = @source[@current_index, 5]
+    expression = @source[@current_index, 5]
 
-      if !only_hex_in_string(expression[1, expression.size])
-        raise Exception.new("Invalid character escape sequence: \\#{expression}.")
-      end
+    if !only_hex_in_string(expression[1, expression.size])
+      raise Exception.new("Invalid character escape sequence: \\#{expression}.")
+    end
 
-      s = next_code.bytes << 12 | next_code.bytes << 8 | next_code.bytes << 4 | next_code.bytes
-      String.new(Slice.new(s.to_unsafe, 4))[0]
+    s = next_code.bytes << 12 | next_code.bytes << 8 | next_code.bytes << 4 | next_code.bytes
+    String.new(Slice.new(s.to_unsafe, 4))[0]
   end
 
   private def if_unicode_get_string : String

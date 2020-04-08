@@ -154,7 +154,7 @@ describe GraphQL::Language::Parser do
     strings.each do |query_str|
       doc = subject.parse(query_str)
       field = doc.definitions
-                 .first.as(GraphQL::Language::OperationDefinition)
+        .first.as(GraphQL::Language::OperationDefinition)
         .selections.first.as(GraphQL::Language::Field)
       field.arguments.size.should eq 0
       field.selections.size.should eq 1

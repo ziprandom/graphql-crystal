@@ -57,11 +57,11 @@ def reject_other_than(type, leave_out)
     leave_out.is_a?(Array) ? leave_out : [leave_out]
   ).map { |name| VALUES[name] }
   VALUES.to_a.reject { |(_, val)| leave_out.includes?(val) }
-             .each do |(_, val)|
-    it "rejects '#{val.inspect}'" do
-      TYPE_VALIDATION.accepts?(type, val).should eq false
+    .each do |(_, val)|
+      it "rejects '#{val.inspect}'" do
+        TYPE_VALIDATION.accepts?(type, val).should eq false
+      end
     end
-  end
 end
 
 describe GraphQL::TypeValidation do
