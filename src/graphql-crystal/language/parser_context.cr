@@ -202,6 +202,8 @@ class GraphQL::Language::ParserContext
     parse_value_literal(true)
   end
 
+  # Checks `@current_token` for tokenizing
+  # Decides what to do based on token
   private def parse_definition
     parse_comment
 
@@ -219,9 +221,12 @@ class GraphQL::Language::ParserContext
     raise Exception.new("Unexpected #{@current_token.kind} '#{@current_token.value}' at #{@current_token.start_position},#{@current_token.end_position}")
   end
 
+  # Main method to convert the schema string
+  # into a Language::Document
   private def parse_definitions_if_not_eof
     definitions = [] of Language::AbstractNode
     if @current_token.kind != Token::Kind::EOF
+      # Iterates through the string and tokenizes each char
       condition = false
       while !condition
         # yield parse_definition
@@ -518,32 +523,28 @@ class GraphQL::Language::ParserContext
   end
 
   private def parse_named_definition
-    case @current_token.value
-    when "query", "mutation", "subscription"
-      parse_operation_definition
-    when "fragment"
-      parse_fragment_definition
-    when "schema"
-      parse_schema_definition
-    when "scalar"
-      parse_scalar_type_definition
-    when "type"
-      parse_object_type_definition
-    when "interface"
-      parse_interface_type_definition
-    when "union"
-      parse_union_type_definition
-    when "enum"
-      parse_enum_type_definition
-    when "input"
-      parse_input_object_type_definition
+    {% begin %}
+      case @current_token.value
+      {% for i in ["interface", "union", "enum", "scalar"] %}
+        when {{i}}
+          parse_{{i.id}}_type_definition
+      {% end %}
+      when "type"
+        parse_object_type_definition
+      when "input"
+        parse_input_object_type_definition
+      when "directive"
+        parse_directive_definition
+      {% for i in ["query", "mutation", "subscription", "fragment", "schema"] %}
+        when {{i}}
+          parse_{{i.id}}_definition
+      {% end %}
       # when "extend"
       #   parse_type_extension_definition
-    when "directive"
-      parse_directive_definition
-    else
-      nil
-    end
+      else
+        nil
+      end
+    {% end %}
   end
 
   private def parse_named_type : Language::TypeName
@@ -623,6 +624,18 @@ class GraphQL::Language::ParserContext
       directives: parse_directives,
       fields: any(Token::Kind::BRACE_L, ->{ parse_field_definition }, Token::Kind::BRACE_R),
     )
+  end
+
+  private def parse_query_definition
+    parse_operation_definition
+  end
+
+  private def parse_mutation_definition
+    parse_operation_definition
+  end
+
+  private def parse_subscription_definition
+    parse_operation_definition
   end
 
   private def parse_operation_definition

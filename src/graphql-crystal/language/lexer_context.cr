@@ -94,27 +94,27 @@ class GraphQL::Language::LexerContext
   private def append_to_value_by_code!(value, code)
     # ameba:disable Lint/UselessAssign
     value += case code
-    when '"'
-      '"'
-    when '/'
-      '/'
-    when '\\'
-      '\\'
-    when 'b'
-      '\b'
-    when 'f'
-      '\f'
-    when 'n'
-      '\n'
-    when 'r'
-      '\r'
-    when 't'
-      '\t'
-    when 'u'
-      get_unicode_char
-    else
-      raise Exception.new("Invalid character escape sequence: \\#{code}.")
-    end
+             when '"'
+               '"'
+             when '/'
+               '/'
+             when '\\'
+               '\\'
+             when 'b'
+               '\b'
+             when 'f'
+               '\f'
+             when 'n'
+               '\n'
+             when 'r'
+               '\r'
+             when 't'
+               '\t'
+             when 'u'
+               get_unicode_char
+             else
+               raise Exception.new("Invalid character escape sequence: \\#{code}.")
+             end
     # ameba:enable Lint/UselessAssign
   end
 
@@ -123,35 +123,18 @@ class GraphQL::Language::LexerContext
   end
 
   private def check_for_punctuation_tokens(code)
-    case code
-    when '!'
-      create_punctuation_token(Token::Kind::BANG, 1)
-    when '$'
-      create_punctuation_token(Token::Kind::DOLLAR, 1)
-    when '('
-      create_punctuation_token(Token::Kind::PAREN_L, 1)
-    when ')'
-      create_punctuation_token(Token::Kind::PAREN_R, 1)
-    when '.'
-      check_for_spread_operator()
-    when ':'
-      create_punctuation_token(Token::Kind::COLON, 1)
-    when '='
-      create_punctuation_token(Token::Kind::EQUALS, 1)
-    when '@'
-      create_punctuation_token(Token::Kind::AT, 1)
-    when '['
-      create_punctuation_token(Token::Kind::BRACKET_L, 1)
-    when ']'
-      create_punctuation_token(Token::Kind::BRACKET_R, 1)
-    when '{'
-      create_punctuation_token(Token::Kind::BRACE_L, 1)
-    when '|'
-      create_punctuation_token(Token::Kind::PIPE, 1)
-    when '}'
-      create_punctuation_token(Token::Kind::BRACE_R, 1)
-    else
-    end
+    tokens = {
+      '!' => Token::Kind::BANG, '$' => Token::Kind::DOLLAR,
+      '(' => Token::Kind::PAREN_L, ')' => Token::Kind::PAREN_R,
+      ':' => Token::Kind::COLON, '=' =>Token::Kind::EQUALS,
+      '@' => Token::Kind::AT, '[' => Token::Kind::BRACKET_L,
+      ']' => Token::Kind::BRACKET_R, '{' => Token::Kind::BRACE_L,
+      '}' => Token::Kind::BRACE_R, '|' => Token::Kind::PIPE
+    }
+
+    return create_punctuation_token(tokens[code], 1) if tokens[code]?
+    return check_for_spread_operator() if code == '.'
+    nil
   end
 
   private def check_for_spread_operator : Token?

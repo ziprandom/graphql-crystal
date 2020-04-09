@@ -401,9 +401,9 @@ module GraphQL
         defined.reduce({} of String => ReturnType) do |args, definition|
           provided = given.find(&.name.==(definition.name))
           provided = provided ? provided.value : definition.default_value
+
           unless @type_validation.accepts?(definition.type, provided)
             # # TODO: Custom Exceptions here please
-
             raise %{argument "#{definition.name}" is expected to be of type: \
                           "#{Language::Generation.generate(definition.type)}"}
           end

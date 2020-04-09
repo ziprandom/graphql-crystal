@@ -66,6 +66,7 @@ module GraphQL
       #  def slice_definition(name)
       #    GraphQL::Language::DefinitionSlice.slice(self, name)
       #  end
+
     end
 
     class SchemaDefinition < AbstractNode
