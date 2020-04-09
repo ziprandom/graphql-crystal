@@ -53,9 +53,12 @@ class GraphQL::Language::LexerContext
     code = @source[start]
     code = self.next_code if code == '-'
     next_code_char = code == '0' ? self.next_code : read_digits_from_own_source(code)
-    raise Exception.new("Invalid number, unexpected digit after #{code}: #{next_code_char}") if (next_code_char.ord >= 48 && next_code_char.ord <= 57)
 
+    if (next_code_char.ord >= 48 && next_code_char.ord <= 57)
+      raise Exception.new("Invalid number, unexpected digit after #{code}: #{next_code_char}")
+    end
     code = next_code_char
+
     if code == '.'
       is_float = true
       code = read_digits_from_own_source(self.next_code)
@@ -67,7 +70,7 @@ class GraphQL::Language::LexerContext
       if code == '+' || code == '-'
         code = self.next_code
       end
-      code = read_digits_from_own_source(code)
+      read_digits_from_own_source(code)
     end
 
     is_float ? create_float_token(start) : create_int_token(start)
@@ -88,7 +91,8 @@ class GraphQL::Language::LexerContext
     value + @source[chunk_start, (@current_index - chunk_start - 1)]
   end
 
-  private def append_to_value_by_code(value, code)
+  private def append_to_value_by_code!(value, code)
+    # ameba:disable Lint/UselessAssign
     value += case code
     when '"'
       '"'
@@ -111,6 +115,7 @@ class GraphQL::Language::LexerContext
     else
       raise Exception.new("Invalid character escape sequence: \\#{code}.")
     end
+    # ameba:enable Lint/UselessAssign
   end
 
   private def check_for_invalid_characters(code)
@@ -231,7 +236,7 @@ class GraphQL::Language::LexerContext
     @current_index += 1
 
     if code == '\\'
-      value_ptr.value = append_to_value_by_code(append_characters_from_last_chunk(value_ptr.value, chunk_start_ptr.value), get_code)
+      value_ptr.value = append_to_value_by_code!(append_characters_from_last_chunk(value_ptr.value, chunk_start_ptr.value), get_code)
 
       @current_index += 1
       chunk_start_ptr.value = @current_index
@@ -265,9 +270,9 @@ class GraphQL::Language::LexerContext
     end
 
     condition = false
-    while true
+    while !condition
       code = (position += 1) < body.size ? body[position] : Char::ZERO
-      break unless code.number?
+      condition = true unless code.number?
     end
 
     position
@@ -283,10 +288,10 @@ class GraphQL::Language::LexerContext
     code = Char::ZERO
 
     condition = false
-    while true
+    while !condition
       @current_index += 1
       code = get_code
-      break unless is_not_at_the_end_of_query && is_valid_name_character(code)
+      condition = true unless is_not_at_the_end_of_query && is_valid_name_character(code)
     end
 
     create_name_token(start)

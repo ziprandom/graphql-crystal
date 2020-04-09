@@ -26,13 +26,11 @@ module Dummy
         products.first
       end
     end
-    # ameba:disable Lint/UnusedArgument
-    field :allDairy do |args|
+    field :allDairy do |_args|
       # ameba:disable Lint/UselessAssign
       result = CHEESES.values + MILKS.values
       # ameba:enable Lint/UselessAssign
     end
-    # ameba:enable Lint/UnusedArgument
 
     field :allEdible { CHEESES.values + MILKS.values }
     field :error { raise("This error was raised on purpose") }

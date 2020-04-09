@@ -682,7 +682,7 @@ class GraphQL::Language::ParserContext
     definitions = many(Token::Kind::BRACE_L, ->{ parse_operation_type_definition }, Token::Kind::BRACE_R)
 
     definitions = definitions.as(Array).reduce(Hash(String, String).new) do |memo, pair|
-      pair.as(Tuple(String, GraphQL::Language::TypeName)).tap { |pair| memo[pair[0]] = pair[1].name }
+      pair.as(Tuple(String, GraphQL::Language::TypeName)).tap { |_pair| memo[_pair[0]] = _pair[1].name }
       memo
     end
 

@@ -101,15 +101,13 @@ module QueryType
   include ::GraphQL::ObjectType
   extend self
 
-  # ameba:disable Lint/UnusedArgument
-  field :logs do |args, context|
+  field :logs do |_args, context|
     context = context.as(CustomContext)
     unless context.authenticated
       raise "you are not allowed to read the logs #{context.username}!"
     end
     LogStore.read_logs
   end
-  # ameba:enable Lint/UnusedArgument
 end
 
 module MutationType
