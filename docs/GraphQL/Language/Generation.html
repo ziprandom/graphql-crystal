@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../../";
+</script>
+
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="../../js/doc.js"></script>
   <title>GraphQL::Language::Generation - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
-<div id="types-list">
-  <div id="search-box">
-    <input type="search" id="search-input" placeholder="Search...">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../../index.html">README</a>
+    </div>
   </div>
 
-  <ul>
-    <li><a href="../../index.html">README</a></li>
-  </ul>
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
 
-  <ul>
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
   
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
       <a href="../../CLTK.html">CLTK</a>
@@ -102,6 +123,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
       <a href="../../GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
+      <a href="../../GraphQL/Language/ASTNode.html">ASTNode</a>
       
     </li>
   
@@ -190,6 +216,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/LexerContext" data-name="graphql::language::lexercontext">
+      <a href="../../GraphQL/Language/LexerContext.html">LexerContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
       <a href="../../GraphQL/Language/ListType.html">ListType</a>
       
@@ -225,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ParserContext" data-name="graphql::language::parsercontext">
+      <a href="../../GraphQL/Language/ParserContext.html">ParserContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
       <a href="../../GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
       
@@ -237,6 +273,21 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
       <a href="../../GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
+      <a href="../../GraphQL/Language/Token.html">Token</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
+      <a href="../../GraphQL/Language/Token/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -355,6 +406,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/JSONType" data-name="graphql::schema::schema::jsontype">
+      <a href="../../GraphQL/Schema/Schema/JSONType.html">JSONType</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -392,9 +448,11 @@
   
 </ul>
 
+  </div>
 </div>
 
-<div id="main-content">
+
+<div class="main-content">
 <h1 class="type-name">
 
   <span class="kind">module</span> GraphQL::Language::Generation
@@ -435,7 +493,9 @@ Turn an AST node back into a string.</p>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L16" target="_blank">graphql-crystal/language/generation.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L16" target="_blank">
+        graphql-crystal/language/generation.cr
+      </a>
     
     <br/>
   
@@ -450,182 +510,182 @@ Turn an AST node back into a string.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#generate%28node%3ADirective%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : Directive, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:Directive,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : Directive, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3ADirectiveDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : DirectiveDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:DirectiveDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : DirectiveDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AInputObjectTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : InputObjectTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:InputObjectTypeDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : InputObjectTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AEnumValueDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : EnumValueDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:EnumValueDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : EnumValueDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AEnumTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : EnumTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:EnumTypeDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : EnumTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AUnionTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : UnionTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:UnionTypeDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : UnionTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AInterfaceTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : InterfaceTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:InterfaceTypeDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : InterfaceTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AFieldDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : FieldDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:FieldDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : FieldDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AInputValueDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : InputValueDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:InputValueDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : InputValueDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AObjectTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : ObjectTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:ObjectTypeDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : ObjectTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AScalarTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : ScalarTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:ScalarTypeDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : ScalarTypeDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3ASchemaDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : SchemaDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:SchemaDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : SchemaDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AVariableIdentifier%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : VariableIdentifier, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:VariableIdentifier,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : VariableIdentifier, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AVariableDefinition%29-class-method" class="signature"><strong>.generate</strong>(node : VariableDefinition)</a>
+        <a href="#generate(node:VariableDefinition)-class-method" class="signature"><strong>.generate</strong>(node : VariableDefinition)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3ATypeName%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : TypeName, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:TypeName,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : TypeName, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AOperationDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : OperationDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:OperationDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : OperationDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AFloat%7CInt%7CString%7CNil%7CBool%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : Float | Int | String | Nil | Bool, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:Float%7CInt%7CString%7CNil%7CBool,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : Float | Int | String | Nil | Bool, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3ASymbol%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : Symbol, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:Symbol,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : Symbol, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AArray%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : Array, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:Array,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : Array, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AHash%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : Hash, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:Hash,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : Hash, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3ADocument%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : Document, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:Document,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : Document, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AArgument%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : Argument, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:Argument,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : Argument, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AAEnum%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : AEnum, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:AEnum,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : AEnum, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3ANullValue%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : NullValue, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:NullValue,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : NullValue, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AField%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : Field, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:Field,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : Field, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AFragmentDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : FragmentDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:FragmentDefinition,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : FragmentDefinition, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AFragmentSpread%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : FragmentSpread, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:FragmentSpread,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : FragmentSpread, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AInlineFragment%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : InlineFragment, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:InlineFragment,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : InlineFragment, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AInputObject%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : InputObject, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:InputObject,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : InputObject, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3AListType%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : ListType, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:ListType,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : ListType, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate%28node%3ANonNullType%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate</strong>(node : NonNullType, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate(node:NonNullType,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate</strong>(node : NonNullType, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate_description%28node%2Cindent%3D%26quot%3B%26quot%3B%2Cfirst_in_block%3Dtrue%29-class-method" class="signature"><strong>.generate_description</strong>(node, indent = <span class="s">&quot;&quot;</span>, first_in_block = <span class="n">true</span>)</a>
+        <a href="#generate_description(node,indent=&quot;&quot;,first_in_block=true)-class-method" class="signature"><strong>.generate_description</strong>(node, indent = <span class="s">&quot;&quot;</span>, first_in_block = <span class="n">true</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate_directives%28directives%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate_directives</strong>(directives, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate_directives(directives,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate_directives</strong>(directives, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate_field_definitions%28fields%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate_field_definitions</strong>(fields, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate_field_definitions(fields,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate_field_definitions</strong>(fields, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#generate_selections%28selections%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method" class="signature"><strong>.generate_selections</strong>(selections, indent : String = <span class="s">&quot;&quot;</span>)</a>
+        <a href="#generate_selections(selections,indent:String=&quot;&quot;)-class-method" class="signature"><strong>.generate_selections</strong>(selections, indent : String = <span class="s">&quot;&quot;</span>)</a>
         
       </li>
     
@@ -651,13 +711,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/Directive.html">Directive</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3ADirective%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:Directive,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -667,13 +727,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L227" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L227" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -683,13 +743,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/DirectiveDefinition.html">DirectiveDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3ADirectiveDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:DirectiveDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L199" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L199" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -699,13 +759,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/InputObjectTypeDefinition.html">InputObjectTypeDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AInputObjectTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:InputObjectTypeDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L187" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -715,13 +775,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/EnumValueDefinition.html">EnumValueDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AEnumValueDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:EnumValueDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L181" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L181" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -731,13 +791,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/EnumTypeDefinition.html">EnumTypeDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AEnumTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:EnumTypeDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L171" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -747,13 +807,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/UnionTypeDefinition.html">UnionTypeDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AUnionTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:UnionTypeDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -763,13 +823,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/InterfaceTypeDefinition.html">InterfaceTypeDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AInterfaceTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:InterfaceTypeDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L157" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L157" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -779,13 +839,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/FieldDefinition.html">FieldDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AFieldDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:FieldDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L148" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -795,13 +855,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/InputValueDefinition.html">InputValueDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AInputValueDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:InputValueDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L142" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -811,13 +871,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/ObjectTypeDefinition.html">ObjectTypeDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AObjectTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:ObjectTypeDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -827,13 +887,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AScalarTypeDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:ScalarTypeDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L128" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L128" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -843,13 +903,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/SchemaDefinition.html">SchemaDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3ASchemaDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:SchemaDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L115" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -859,13 +919,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/VariableIdentifier.html">VariableIdentifier</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AVariableIdentifier%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:VariableIdentifier,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -875,13 +935,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/VariableDefinition.html">VariableDefinition</a>)
 
-        <a class="method-permalink" href="#generate%28node%3AVariableDefinition%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:VariableDefinition)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L103" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L103" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -891,13 +951,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/TypeName.html">TypeName</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3ATypeName%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:TypeName,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -907,13 +967,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/OperationDefinition.html">OperationDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AOperationDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:OperationDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L88" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L88" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -923,13 +983,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : Float | Int | String | Nil | Bool, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AFloat%7CInt%7CString%7CNil%7CBool%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:Float%7CInt%7CString%7CNil%7CBool,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L210" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L210" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -939,13 +999,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : Symbol, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3ASymbol%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:Symbol,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L214" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L214" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -955,13 +1015,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : Array, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AArray%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:Array,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L218" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L218" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -971,13 +1031,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : Hash, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AHash%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:Hash,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L222" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L222" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -987,13 +1047,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/Document.html">Document</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3ADocument%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:Document,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1003,13 +1063,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/Argument.html">Argument</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AArgument%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:Argument,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1019,13 +1079,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/AEnum.html">AEnum</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AAEnum%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:AEnum,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1035,13 +1095,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/NullValue.html">NullValue</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3ANullValue%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:NullValue,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1051,13 +1111,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/Field.html">Field</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AField%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:Field,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1067,13 +1127,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/FragmentDefinition.html">FragmentDefinition</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AFragmentDefinition%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:FragmentDefinition,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1083,13 +1143,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/FragmentSpread.html">FragmentSpread</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AFragmentSpread%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:FragmentSpread,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L59" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1099,13 +1159,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/InlineFragment.html">InlineFragment</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AInlineFragment%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:InlineFragment,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1115,13 +1175,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/InputObject.html">InputObject</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AInputObject%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:InputObject,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1131,13 +1191,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/ListType.html">ListType</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3AListType%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:ListType,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1147,13 +1207,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate</strong>(node : <a href="../../GraphQL/Language/NonNullType.html">NonNullType</a>, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate%28node%3ANonNullType%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate(node:NonNullType,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1163,13 +1223,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate_description</strong>(node, indent = <span class="s">&quot;&quot;</span>, first_in_block = <span class="n">true</span>)
 
-        <a class="method-permalink" href="#generate_description%28node%2Cindent%3D%26quot%3B%26quot%3B%2Cfirst_in_block%3Dtrue%29-class-method">#</a>
+        <a class="method-permalink" href="#generate_description(node,indent=&quot;&quot;,first_in_block=true)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L252" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L252" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1179,13 +1239,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate_directives</strong>(directives, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate_directives%28directives%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate_directives(directives,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L232" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L232" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1195,13 +1255,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate_field_definitions</strong>(fields, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate_field_definitions%28fields%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate_field_definitions(fields,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L260" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L259" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1211,13 +1271,13 @@ Turn an AST node back into a string.</p>
         
         def self.<strong>generate_selections</strong>(selections, indent : String = <span class="s">&quot;&quot;</span>)
 
-        <a class="method-permalink" href="#generate_selections%28selections%2Cindent%3AString%3D%26quot%3B%26quot%3B%29-class-method">#</a>
+        <a class="method-permalink" href="#generate_selections(selections,indent:String=&quot;&quot;)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/generation.cr#L240" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/generation.cr#L240" target="_blank">View source</a>]
         
       </div>
     </div>

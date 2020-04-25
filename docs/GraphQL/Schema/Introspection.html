@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../../";
+</script>
+
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="../../js/doc.js"></script>
   <title>GraphQL::Schema::Introspection - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
-<div id="types-list">
-  <div id="search-box">
-    <input type="search" id="search-input" placeholder="Search...">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../../index.html">README</a>
+    </div>
   </div>
 
-  <ul>
-    <li><a href="../../index.html">README</a></li>
-  </ul>
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
 
-  <ul>
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
   
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
       <a href="../../CLTK.html">CLTK</a>
@@ -102,6 +123,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
       <a href="../../GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
+      <a href="../../GraphQL/Language/ASTNode.html">ASTNode</a>
       
     </li>
   
@@ -190,6 +216,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/LexerContext" data-name="graphql::language::lexercontext">
+      <a href="../../GraphQL/Language/LexerContext.html">LexerContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
       <a href="../../GraphQL/Language/ListType.html">ListType</a>
       
@@ -225,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ParserContext" data-name="graphql::language::parsercontext">
+      <a href="../../GraphQL/Language/ParserContext.html">ParserContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
       <a href="../../GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
       
@@ -237,6 +273,21 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
       <a href="../../GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
+      <a href="../../GraphQL/Language/Token.html">Token</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
+      <a href="../../GraphQL/Language/Token/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -355,6 +406,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/JSONType" data-name="graphql::schema::schema::jsontype">
+      <a href="../../GraphQL/Schema/Schema/JSONType.html">JSONType</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -392,9 +448,11 @@
   
 </ul>
 
+  </div>
 </div>
 
-<div id="main-content">
+
+<div class="main-content">
 <h1 class="type-name">
 
   <span class="kind">module</span> GraphQL::Schema::Introspection
@@ -428,7 +486,9 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema_introspection.cr#L3" target="_blank">graphql-crystal/schema/schema_introspection.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L3" target="_blank">
+        graphql-crystal/schema/schema_introspection.cr
+      </a>
     
     <br/>
   
@@ -441,7 +501,7 @@
   <dl>
     
       <dt class="entry-const" id="INTROSPECTION_TYPES">
-        <strong>INTROSPECTION_TYPES</strong> = <code><span class="s">&quot;\n  # A String Value\n  scalar String\n\n  # A Boolean Value\n  scalar Boolean\n\n  # An Integer Number\n  scalar Int\n\n  # A Floating Point Number\n  scalar Float\n\n  # An ID\n  scalar ID\n\n  # Optionally includes selection from the result set\n  directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT\n  # Optionally excludes selection from the result set\n  directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT\n  # Marks an element of a GraphQL schema as no longer supported.\n  directive @deprecated(reason: String = \&quot;No longer supported\&quot;) on FIELD_DEFINITION | ENUM_VALUE\n\n  type __Schema {\n    types: [__Type!]!\n    queryType: __Type!\n    mutationType: __Type\n    directives: [__Directive!]!\n  }\n\n  type __Type {\n    kind: __TypeKind!\n    name: String\n    description: String\n    # OBJECT and INTERFACE only\n    fields(includeDeprecated: Boolean = false): [__Field!]\n    # OBJECT only\n    interfaces: [__Type!]\n    # INTERFACE and UNION only\n    possibleTypes: [__Type!]\n    # ENUM only\n    enumValues(includeDeprecated: Boolean = false): [__EnumValue!]\n    # INPUT_OBJECT only\n    inputFields: [__InputValue!]\n    # NON_NULL and LIST only\n    ofType: __Type\n  }\n\n  type __Field {\n    name: String!\n    description: String\n    args: [__InputValue!]!\n    type: __Type!\n    isDeprecated: Boolean!\n    deprecationReason: String\n  }\n\n  type __InputValue {\n    name: String!\n    description: String\n    type: __Type!\n    defaultValue: String\n  }\n\n  type __EnumValue {\n    name: String!\n    description: String\n    isDeprecated: Boolean!\n    deprecationReason: String\n  }\n\n  type __Directive {\n    name: String!\n    description: String\n    args: [__InputValue!]!\n    locations: [__DirectiveLocation!]!\n    onOperation: Boolean!\n    onFragment: Boolean!\n    onField: Boolean!\n  }\n\n  enum __TypeKind {\n    SCALAR\n    OBJECT\n    INTERFACE\n    UNION\n    ENUM\n    INPUT_OBJECT\n    LIST\n    NON_NULL\n  }\n\n  # A Directive can be adjacent to many parts\n  # of the GraphQL language, a __DirectiveLocation\n  # describes one such possible adjacencies.\n  enum __DirectiveLocation {\n    # Location adjacent\n    # to a query operation\n    QUERY\n    # Location adjacent to\n    # a mutation operation\n    MUTATION\n    # Location adjacent to\n    # a subscription operation\n    SUBSCRIPTION\n    # Location adjacent to\n    # a field\n    FIELD\n    # Location adjacent to\n    # a fragment definition\n    FRAGMENT_DEFINITION\n    # Location adjacent to\n    # a fragment spread\n    FRAGMENT_SPREAD\n    # Location adjacent to\n    # an inline fragment\n    INLINE_FRAGMENT\n    # Location adjacent to\n    # a schema definition\n    SCHEMA\n    # Location adjacent to\n    # a scalar definition\n    SCALAR\n    # Location adjacent to\n    # an object type definition\n    OBJECT\n    # Location adjacent to\n    # a field definition\n    FIELD_DEFINITION\n    # Location adjacent to\n    # an argument definition\n    ARGUMENT_DEFINITION\n    # Location adjacent to\n    # an interface definition\n    INTERFACE\n    # Location adjacent to\n    # a union definition\n    UNION\n    # Location adjacent to\n    # an enum definition\n    ENUM\n    # Location adjacent to\n    # an enum value definition\n    ENUM_VALUE\n    # Location adjacent to\n    # an input object type definition\n    INPUT_OBJECT\n    # Location adjacent to\n    # an input object field definition\n    INPUT_FIELD_DEFINITION\n  }&quot;</span></code>
+        <strong>INTROSPECTION_TYPES</strong> = <code><span class="s">&quot;\n  # A String Value\n  scalar String\n\n  # A Boolean Value\n  scalar Boolean\n\n  # An Integer Number\n  scalar Int\n\n  # A Floating Point Number\n  scalar Float\n\n  # An ID\n  scalar ID\n\n  # Optionally includes selection from the result set\n  directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT\n  # Optionally excludes selection from the result set\n  directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT\n  # Marks an element of a GraphQL schema as no longer supported.\n  directive @deprecated(reason: String = \&quot;No longer supported\&quot;) on FIELD_DEFINITION | ENUM_VALUE\n\n  type __Schema {\n    types: [__Type!]!\n    queryType: __Type!\n    mutationType: __Type\n    subscriptionType: __Type\n    directives: [__Directive!]!\n  }\n\n  type __Type {\n    kind: __TypeKind!\n    name: String\n    description: String\n    # OBJECT and INTERFACE only\n    fields(includeDeprecated: Boolean = false): [__Field!]\n    # OBJECT only\n    interfaces: [__Type!]\n    # INTERFACE and UNION only\n    possibleTypes: [__Type!]\n    # ENUM only\n    enumValues(includeDeprecated: Boolean = false): [__EnumValue!]\n    # INPUT_OBJECT only\n    inputFields: [__InputValue!]\n    # NON_NULL and LIST only\n    ofType: __Type\n  }\n\n  type __Field {\n    name: String!\n    description: String\n    args: [__InputValue!]!\n    type: __Type!\n    isDeprecated: Boolean!\n    deprecationReason: String\n  }\n\n  type __InputValue {\n    name: String!\n    description: String\n    type: __Type!\n    defaultValue: String\n  }\n\n  type __EnumValue {\n    name: String!\n    description: String\n    isDeprecated: Boolean!\n    deprecationReason: String\n  }\n\n  type __Directive {\n    name: String!\n    description: String\n    args: [__InputValue!]!\n    locations: [__DirectiveLocation!]!\n    onOperation: Boolean!\n    onFragment: Boolean!\n    onField: Boolean!\n  }\n\n  enum __TypeKind {\n    SCALAR\n    OBJECT\n    INTERFACE\n    UNION\n    ENUM\n    INPUT_OBJECT\n    LIST\n    NON_NULL\n  }\n\n  # A Directive can be adjacent to many parts\n  # of the GraphQL language, a __DirectiveLocation\n  # describes one such possible adjacencies.\n  enum __DirectiveLocation {\n    # Location adjacent\n    # to a query operation\n    QUERY\n    # Location adjacent to\n    # a mutation operation\n    MUTATION\n    # Location adjacent to\n    # a subscription operation\n    SUBSCRIPTION\n    # Location adjacent to\n    # a field\n    FIELD\n    # Location adjacent to\n    # a fragment definition\n    FRAGMENT_DEFINITION\n    # Location adjacent to\n    # a fragment spread\n    FRAGMENT_SPREAD\n    # Location adjacent to\n    # an inline fragment\n    INLINE_FRAGMENT\n    # Location adjacent to\n    # a schema definition\n    SCHEMA\n    # Location adjacent to\n    # a scalar definition\n    SCALAR\n    # Location adjacent to\n    # an object type definition\n    OBJECT\n    # Location adjacent to\n    # a field definition\n    FIELD_DEFINITION\n    # Location adjacent to\n    # an argument definition\n    ARGUMENT_DEFINITION\n    # Location adjacent to\n    # an interface definition\n    INTERFACE\n    # Location adjacent to\n    # a union definition\n    UNION\n    # Location adjacent to\n    # an enum definition\n    ENUM\n    # Location adjacent to\n    # an enum value definition\n    ENUM_VALUE\n    # Location adjacent to\n    # an input object type definition\n    INPUT_OBJECT\n    # Location adjacent to\n    # an input object field definition\n    INPUT_FIELD_DEFINITION\n  }&quot;</span></code>
       </dt>
       
     

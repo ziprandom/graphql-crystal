@@ -14,7 +14,7 @@
 </script>
 
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <title>GraphQL::Language::EnumValueDefinition - github.com/ziprandom/graphql-crystal</title>
+  <title>GraphQL::Language::ASTNode - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
@@ -126,7 +126,7 @@
       
     </li>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
+  <li class=" current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
       <a href="../../GraphQL/Language/ASTNode.html">ASTNode</a>
       
     </li>
@@ -151,7 +151,7 @@
       
     </li>
   
-  <li class=" current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/EnumValueDefinition" data-name="graphql::language::enumvaluedefinition">
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/EnumValueDefinition" data-name="graphql::language::enumvaluedefinition">
       <a href="../../GraphQL/Language/EnumValueDefinition.html">EnumValueDefinition</a>
       
     </li>
@@ -455,12 +455,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> GraphQL::Language::EnumValueDefinition
+  <span class="kind">abstract class</span> GraphQL::Language::ASTNode
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Language/EnumValueDefinition.html">GraphQL::Language::EnumValueDefinition</a></li><li class="superclass"><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></li><li class="superclass"><a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a></li><li class="superclass">Reference</li><li class="superclass"><a href="../../Object.html">Object</a></li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a></li><li class="superclass">Reference</li><li class="superclass"><a href="../../Object.html">Object</a></li></ul>
 
 
 
@@ -469,16 +469,16 @@
 
 
 
-  <h2>Included Modules</h2>
+
+
+
+
+  <h2>Direct Known Subclasses</h2>
   <ul class="other-types-list">
   
-    <li class="other-type"><a href="../../GraphQL/Directives/IsDeprecated.html">GraphQL::Directives::IsDeprecated</a></li>
+    <li class="other-type"><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></li>
   
   </ul>
-
-
-
-
 
 
 
@@ -488,15 +488,8 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/nodes.cr#L269" target="_blank">
-        graphql-crystal/language/nodes.cr
-      </a>
-    
-    <br/>
-  
-    
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L372" target="_blank">
-        graphql-crystal/schema/schema_introspection.cr
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L3" target="_blank">
+        graphql-crystal/language/ast.cr
       </a>
     
     <br/>
@@ -509,34 +502,19 @@
   
   <dl>
     
-      <dt class="entry-const" id="GRAPHQL_FIELDS">
-        <strong>GRAPHQL_FIELDS</strong> = <code>[{<span class="n">:__typename</span>, <span class="s">&quot;&quot;</span>, args, <span class="s">&quot;&quot;</span>}, {<span class="n">:isDeprecated</span>, <span class="s">&quot;&quot;</span>, args, <span class="s">&quot;&quot;</span>}, {<span class="n">:deprecationReason</span>, <span class="s">&quot;&quot;</span>, args, <span class="s">&quot;&quot;</span>}, {<span class="n">:name</span>, <span class="s">&quot;&quot;</span>, args, <span class="s">&quot;&quot;</span>}, {<span class="n">:description</span>, <span class="s">&quot;&quot;</span>, args, <span class="s">&quot;&quot;</span>}] <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">String</span>, <span class="t">Hash</span>(<span class="t">String</span>, <span class="t">String</span>) <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>, <span class="t">String</span>)</code>
-      </dt>
-      
-    
       <dt class="entry-const" id="VALUES">
-        <strong>VALUES</strong> = <code>[{name, <span class="t">String</span>}, {directives, <span class="t">Array</span>(<span class="t">Directive</span>)}, {selection, <span class="t">::</span><span class="t">Union</span>(<span class="t">Array</span>(<span class="t">Selection</span>), <span class="t">::</span><span class="t">Nil</span>)}, {description, <span class="t">::</span><span class="t">Union</span>(<span class="t">String</span>, <span class="t">::</span><span class="t">Nil</span>)}] <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">Object</span>.<span class="k">class</span>)</code>
+        <strong>VALUES</strong> = <code><span class="o">[]</span> <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">Object</span>.<span class="k">class</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="VISITS">
-        <strong>VISITS</strong> = <code>[{<span class="n">:children</span>, [<span class="n">:directives</span>]}] <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">Array</span>(<span class="t">Symbol</span>))</code>
+        <strong>VISITS</strong> = <code><span class="o">[]</span> <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">Array</span>(<span class="t">Symbol</span>))</code>
       </dt>
       
     
   </dl>
 
 
-
-  <h2>Constructors</h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new(name,directives,selection,description,**rest)-class-method" class="signature"><strong>.new</strong>(name, directives, selection, description, **rest)</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -556,17 +534,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#==(other:GraphQL::Language::EnumValueDefinition)-instance-method" class="signature"><strong>#==</strong>(other : GraphQL::Language::EnumValueDefinition)</a>
+        <a href="#==(other)-instance-method" class="signature"><strong>#==</strong>(other)</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#_graphql_deprecated-instance-method" class="signature"><strong>#_graphql_deprecated</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#_graphql_deprecation_reason(schema)-instance-method" class="signature"><strong>#_graphql_deprecation_reason</strong>(schema)</a>
+          <div class="summary"><p>Returns <code>false</code> (other can only be a <code>Value</code> here).</p></div>
         
       </li>
     
@@ -578,67 +548,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#description:::Union(String,Nil)-instance-method" class="signature"><strong>#description</strong> : ::Union(String, Nil)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#description=(description:::Union(String,Nil))-instance-method" class="signature"><strong>#description=</strong>(description : ::Union(String, Nil))</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#directives:Array(Directive)-instance-method" class="signature"><strong>#directives</strong> : Array(Directive)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#directives=(directives:Array(Directive))-instance-method" class="signature"><strong>#directives=</strong>(directives : Array(Directive))</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#map_children(&block:ASTNode-%3EUNDERSCORE)-instance-method" class="signature"><strong>#map_children</strong>(&block : ASTNode -> UNDERSCORE)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#name:String-instance-method" class="signature"><strong>#name</strong> : String</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#name=(name:String)-instance-method" class="signature"><strong>#name=</strong>(name : String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#resolve_field(name:String,arguments,context:GraphQL::Schema::Context)-instance-method" class="signature"><strong>#resolve_field</strong>(name : String, arguments, context : GraphQL::Schema::Context)</a>
-        
-          <div class="summary"><p>resolve a named field on this object with query arguments and context </p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#selection:::Union(Array(Selection),Nil)-instance-method" class="signature"><strong>#selection</strong> : ::Union(Array(Selection), Nil)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#selection=(selection:::Union(Array(Selection),Nil))-instance-method" class="signature"><strong>#selection=</strong>(selection : ::Union(Array(Selection), Nil))</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#values-instance-method" class="signature"><strong>#values</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#visit(name,visited_ids=[]ofUInt64,block=Proc(ASTNode,ASTNode%7C::Nil).newdo%0Aend)-instance-method" class="signature"><strong>#visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">ASTNode</span>, <span class="t">ASTNode</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>).<span class="k">new</span> <span class="k">do</span>
-<span class="k">end</span>)</a>
-        
-          <div class="summary"><p>Recursively apply the given block to each node that gets visited with the given key which nodes get traverses for a given key can be set on a class via the: <code>traverse :name, :child_1, :child2</code> macro.</p></div>
         
       </li>
     
@@ -655,22 +565,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#field(name,&block)-macro" class="signature"><strong>field</strong>(name, &block)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#field(name,description,args,typename,&block)-macro" class="signature"><strong>field</strong>(name, description, args, typename, &block)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#inject-macro" class="signature"><strong>inject</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#injection-macro" class="signature"><strong>injection</strong></a>
+        <a href="#make_value_methods-macro" class="signature"><strong>make_value_methods</strong></a>
         
       </li>
     
@@ -689,136 +584,6 @@
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from class <code><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></code></h3>
-  
-  
-    <a href="../../GraphQL/Language/AbstractNode.html#==(other:GraphQL::Language::AbstractNode)-instance-method" class="tooltip">
-      <span>==(other : GraphQL::Language::AbstractNode)</span>
-    ==</a>, 
-    
-  
-    <a href="../../GraphQL/Language/AbstractNode.html#clone-instance-method" class="tooltip">
-      <span>clone</span>
-    clone</a>, 
-    
-  
-    <a href="../../GraphQL/Language/AbstractNode.html#resolve_field(name:String,arguments,context:GraphQL::Schema::Context)-instance-method" class="tooltip">
-      <span>resolve_field(name : String, arguments, context : GraphQL::Schema::Context)</span>
-    resolve_field</a>, 
-    
-  
-    <a href="../../GraphQL/Language/AbstractNode.html#values-instance-method" class="tooltip">
-      <span>values</span>
-    values</a>, 
-    
-  
-    <a href="../../GraphQL/Language/AbstractNode.html#visit(name,visited_ids=[]ofUInt64,block=Proc(ASTNode,ASTNode%7C::Nil).newdo%0Aend)-instance-method" class="tooltip">
-      <span>visit(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">ASTNode</span>, <span class="t">ASTNode</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>).<span class="k">new</span> <span class="k">do</span>
-<span class="k">end</span>)</span>
-    visit</a>
-    
-  
-
-
-    
-
-  <h3>Constructor methods inherited from class <code><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></code></h3>
-  
-  
-    <a href="../../GraphQL/Language/AbstractNode.html#new(**rest)-class-method" class="tooltip">
-      <span>new(**rest)</span>
-    new</a>
-    
-  
-
-
-    
-
-  <h3>Class methods inherited from class <code><a href="../../GraphQL/Language/AbstractNode.html">GraphQL::Language::AbstractNode</a></code></h3>
-  
-  
-    <a href="../../GraphQL/Language/AbstractNode.html#values-class-method" class="tooltip">
-      <span>values</span>
-    values</a>
-    
-  
-
-
-  
-    
-
-  <h3>Instance methods inherited from module <code><a href="../../GraphQL/ObjectType.html">GraphQL::ObjectType</a></code></h3>
-  
-  
-    <a href="../../GraphQL/ObjectType.html#graphql_type-instance-method" class="tooltip">
-      <span>graphql_type</span>
-    graphql_type</a>, 
-    
-  
-    <a href="../../GraphQL/ObjectType.html#resolve_field(name,arguments,context)-instance-method" class="tooltip">
-      <span>resolve_field(name, arguments, context)</span>
-    resolve_field</a>
-    
-  
-
-
-    
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from class <code><a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a></code></h3>
-  
-  
-    <a href="../../GraphQL/Language/ASTNode.html#==(other)-instance-method" class="tooltip">
-      <span>==(other)</span>
-    ==</a>, 
-    
-  
-    <a href="../../GraphQL/Language/ASTNode.html#clone-instance-method" class="tooltip">
-      <span>clone</span>
-    clone</a>, 
-    
-  
-    <a href="../../GraphQL/Language/ASTNode.html#values-instance-method" class="tooltip">
-      <span>values</span>
-    values</a>
-    
-  
-
-
-    
-
-
-    
-
-  <h3>Class methods inherited from class <code><a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a></code></h3>
-  
-  
-    <a href="../../GraphQL/Language/ASTNode.html#values-class-method" class="tooltip">
-      <span>values</span>
-    values</a>
-    
-  
-
-
   
     
 
@@ -852,23 +617,6 @@
 </div>
 
 
-  <h2>Constructor Detail</h2>
-  
-    <div class="entry-detail" id="new(name,directives,selection,description,**rest)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(name, directives, selection, description, **rest)
-
-        <a class="method-permalink" href="#new(name,directives,selection,description,**rest)-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-
 
 
   <h2>Class Method Detail</h2>
@@ -884,6 +632,8 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L39" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -892,48 +642,27 @@
 
   <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="==(other:GraphQL::Language::EnumValueDefinition)-instance-method">
+    <div class="entry-detail" id="==(other)-instance-method">
       <div class="signature">
         
-        def <strong>==</strong>(other : <a href="../../GraphQL/Language/EnumValueDefinition.html">GraphQL::Language::EnumValueDefinition</a>)
+        def <strong>==</strong>(other)
 
-        <a class="method-permalink" href="#==(other:GraphQL::Language::EnumValueDefinition)-instance-method">#</a>
+        <a class="method-permalink" href="#==(other)-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Returns <code>false</code> (other can only be a <code>Value</code> here).</p>
+        </div>
       
       <br/>
       <div>
         
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="_graphql_deprecated-instance-method">
-      <div class="signature">
-        
-        def <strong>_graphql_deprecated</strong>
-
-        <a class="method-permalink" href="#_graphql_deprecated-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L373" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="_graphql_deprecation_reason(schema)-instance-method">
-      <div class="signature">
-        
-        def <strong>_graphql_deprecation_reason</strong>(schema)
-
-        <a class="method-permalink" href="#_graphql_deprecation_reason(schema)-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L373" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -954,150 +683,7 @@
       <br/>
       <div>
         
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="description:::Union(String,Nil)-instance-method">
-      <div class="signature">
-        
-        def <strong>description</strong> : ::Union(String, Nil)
-
-        <a class="method-permalink" href="#description:::Union(String,Nil)-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="description=(description:::Union(String,Nil))-instance-method">
-      <div class="signature">
-        
-        def <strong>description=</strong>(description : ::Union(String, Nil))
-
-        <a class="method-permalink" href="#description=(description:::Union(String,Nil))-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="directives:Array(Directive)-instance-method">
-      <div class="signature">
-        
-        def <strong>directives</strong> : Array(<a href="../../GraphQL/Language/Directive.html">Directive</a>)
-
-        <a class="method-permalink" href="#directives:Array(Directive)-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="directives=(directives:Array(Directive))-instance-method">
-      <div class="signature">
-        
-        def <strong>directives=</strong>(directives : Array(<a href="../../GraphQL/Language/Directive.html">Directive</a>))
-
-        <a class="method-permalink" href="#directives=(directives:Array(Directive))-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="map_children(&amp;block:ASTNode-&gt;UNDERSCORE)-instance-method">
-      <div class="signature">
-        
-        def <strong>map_children</strong>(&block : <a href="../../GraphQL/Language/ASTNode.html">ASTNode</a> -> UNDERSCORE)
-
-        <a class="method-permalink" href="#map_children(&block:ASTNode-%3EUNDERSCORE)-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="name:String-instance-method">
-      <div class="signature">
-        
-        def <strong>name</strong> : String
-
-        <a class="method-permalink" href="#name:String-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="name=(name:String)-instance-method">
-      <div class="signature">
-        
-        def <strong>name=</strong>(name : String)
-
-        <a class="method-permalink" href="#name=(name:String)-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="resolve_field(name:String,arguments,context:GraphQL::Schema::Context)-instance-method">
-      <div class="signature">
-        
-        def <strong>resolve_field</strong>(name : String, arguments, context : <a href="../../GraphQL/Schema/Context.html">GraphQL::Schema::Context</a>)
-
-        <a class="method-permalink" href="#resolve_field(name:String,arguments,context:GraphQL::Schema::Context)-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>resolve a named field on this object with query arguments and context</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="selection:::Union(Array(Selection),Nil)-instance-method">
-      <div class="signature">
-        
-        def <strong>selection</strong> : ::Union(Array(<a href="../../GraphQL/Language/Selection.html">Selection</a>), Nil)
-
-        <a class="method-permalink" href="#selection:::Union(Array(Selection),Nil)-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="selection=(selection:::Union(Array(Selection),Nil))-instance-method">
-      <div class="signature">
-        
-        def <strong>selection=</strong>(selection : ::Union(Array(<a href="../../GraphQL/Language/Selection.html">Selection</a>), Nil))
-
-        <a class="method-permalink" href="#selection=(selection:::Union(Array(Selection),Nil))-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L69" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1113,33 +699,7 @@
       <br/>
       <div>
         
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="visit(name,visited_ids=[]ofUInt64,block=Proc(ASTNode,ASTNode|::Nil).newdo
-end)-instance-method">
-      <div class="signature">
-        
-        def <strong>visit</strong>(name, visited_ids = <span class="o">[]</span> <span class="k">of</span> <span class="t">UInt64</span>, block = <span class="t">Proc</span>(<span class="t">ASTNode</span>, <span class="t">ASTNode</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>).<span class="k">new</span> <span class="k">do</span>
-<span class="k">end</span>)
-
-        <a class="method-permalink" href="#visit(name,visited_ids=[]ofUInt64,block=Proc(ASTNode,ASTNode%7C::Nil).newdo%0Aend)-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Recursively apply the given block to each
-node that gets visited with the given key
-which nodes get traverses for a given key
-can be set on a class via the:
-<code>traverse :name, :child_1, :child2</code>
-macro. If no children are defined for a
-given traversal path name the block is invoked
-only with self.</p>
-        </div>
-      
-      <br/>
-      <div>
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1160,61 +720,23 @@ only with self.</p>
       <br/>
       <div>
         
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L167" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-    <div class="entry-detail" id="field(name,&amp;block)-macro">
+    <div class="entry-detail" id="make_value_methods-macro">
       <div class="signature">
         
-        macro <strong>field</strong>(name, &block)
+        macro <strong>make_value_methods</strong>
 
-        <a class="method-permalink" href="#field(name,&block)-macro">#</a>
+        <a class="method-permalink" href="#make_value_methods-macro">#</a>
       </div>
       
       <br/>
       <div>
         
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="field(name,description,args,typename,&amp;block)-macro">
-      <div class="signature">
-        
-        macro <strong>field</strong>(name, description, args, typename, &block)
-
-        <a class="method-permalink" href="#field(name,description,args,typename,&block)-macro">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="inject-macro">
-      <div class="signature">
-        
-        macro <strong>inject</strong>
-
-        <a class="method-permalink" href="#inject-macro">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="injection-macro">
-      <div class="signature">
-        
-        macro <strong>injection</strong>
-
-        <a class="method-permalink" href="#injection-macro">#</a>
-      </div>
-      
-      <br/>
-      <div>
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1230,6 +752,8 @@ only with self.</p>
       <br/>
       <div>
         
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L167" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1243,6 +767,8 @@ only with self.</p>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/ast.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>

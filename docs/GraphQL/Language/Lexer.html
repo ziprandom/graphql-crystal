@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../../";
+</script>
+
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="../../js/doc.js"></script>
   <title>GraphQL::Language::Lexer - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
-<div id="types-list">
-  <div id="search-box">
-    <input type="search" id="search-input" placeholder="Search...">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../../index.html">README</a>
+    </div>
   </div>
 
-  <ul>
-    <li><a href="../../index.html">README</a></li>
-  </ul>
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
 
-  <ul>
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
   
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
       <a href="../../CLTK.html">CLTK</a>
@@ -102,6 +123,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
       <a href="../../GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
+      <a href="../../GraphQL/Language/ASTNode.html">ASTNode</a>
       
     </li>
   
@@ -190,6 +216,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/LexerContext" data-name="graphql::language::lexercontext">
+      <a href="../../GraphQL/Language/LexerContext.html">LexerContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
       <a href="../../GraphQL/Language/ListType.html">ListType</a>
       
@@ -225,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ParserContext" data-name="graphql::language::parsercontext">
+      <a href="../../GraphQL/Language/ParserContext.html">ParserContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
       <a href="../../GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
       
@@ -237,6 +273,21 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
       <a href="../../GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
+      <a href="../../GraphQL/Language/Token.html">Token</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
+      <a href="../../GraphQL/Language/Token/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -355,6 +406,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/JSONType" data-name="graphql::schema::schema::jsontype">
+      <a href="../../GraphQL/Schema/Schema/JSONType.html">JSONType</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -392,9 +448,11 @@
   
 </ul>
 
+  </div>
 </div>
 
-<div id="main-content">
+
+<div class="main-content">
 <h1 class="type-name">
 
   <span class="kind">class</span> GraphQL::Language::Lexer
@@ -402,14 +460,7 @@
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Language/Lexer.html">GraphQL::Language::Lexer</a></li><li class="superclass">CLTK::Scanner</li><li class="superclass">Reference</li><li class="superclass"><a href="../../Object.html">Object</a></li></ul>
-
-
-
-
-  <h2>Overview</h2>
-
-  <p>A Lexer for GraphQL Documents</p>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Language/Lexer.html">GraphQL::Language::Lexer</a></li><li class="superclass">Reference</li><li class="superclass"><a href="../../Object.html">Object</a></li></ul>
 
 
 
@@ -417,12 +468,8 @@
 
 
 
-  <h2>Extended Modules</h2>
-  <ul class="other-types-list">
-  
-    <li class="other-type">CLTK::Scanner::LexerCompatibility</li>
-  
-  </ul>
+
+
 
 
 
@@ -434,46 +481,14 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/lexer.cr#L9" target="_blank">graphql-crystal/language/lexer.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/lexer.cr#L5" target="_blank">
+        graphql-crystal/language/lexer.cr
+      </a>
     
     <br/>
   
 
 
-
-  
-    <h2>Constant Summary</h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="ESCAPES">
-        <strong>ESCAPES</strong> = <code><span class="s">/\\[&quot;\\\/bfnrt]/</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="ESCAPES_REPLACE">
-        <strong>ESCAPES_REPLACE</strong> = <code>{<span class="s">&quot;\\\&quot;&quot;</span> => <span class="s">'"'</span>, <span class="s">&quot;\\\\&quot;</span> => <span class="s">&quot;\\&quot;</span>, <span class="s">&quot;\\/&quot;</span> => <span class="s">'/'</span>, <span class="s">&quot;\\b&quot;</span> => <span class="s">&quot;\b&quot;</span>, <span class="s">&quot;\\f&quot;</span> => <span class="s">&quot;\f&quot;</span>, <span class="s">&quot;\\n&quot;</span> => <span class="s">&quot;\n&quot;</span>, <span class="s">&quot;\\r&quot;</span> => <span class="s">&quot;\r&quot;</span>, <span class="s">&quot;\\t&quot;</span> => <span class="s">&quot;\t&quot;</span>}</code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="UTF_8">
-        <strong>UTF_8</strong> = <code><span class="s">/\\u[\dAa-f]{4}/</span>i</code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="UTF_8_REPLACE">
-        <strong>UTF_8_REPLACE</strong> = <code>->(m : <span class="t">String</span>) <span class="k">do</span>
-  [m[<span class="n">-4</span>..<span class="n">-1</span>].to_i(<span class="n">16</span>)]
-<span class="k">end</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="VALID_STRING">
-        <strong>VALID_STRING</strong> = <code><span class="s">/\A(?:[^\\]|</span><span class="i">#{</span></span><span class="t">ESCAPES</span><span class="s"><span class="i">}</span>|</span><span class="i">#{</span></span><span class="t">UTF_8</span><span class="s"><span class="i">}</span>)*\z/</span></code>
-      </dt>
-      
-    
-  </dl>
 
 
 
@@ -483,12 +498,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#lex%28string%29-class-method" class="signature"><strong>.lex</strong>(string)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#replace_escaped_characters_in_place%28raw_string%29-class-method" class="signature"><strong>.replace_escaped_characters_in_place</strong>(raw_string)</a>
+        <a href="#lex(source:String%7CIO)-class-method" class="signature"><strong>.lex</strong>(source : String | IO)</a>
         
       </li>
     
@@ -500,7 +510,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#lex%28string%29-instance-method" class="signature"><strong>#lex</strong>(string)</a>
+        <a href="#lex(source:String%7CIO,start_position:Int32):Token-instance-method" class="signature"><strong>#lex</strong>(source : String | IO, start_position : Int32) : Token</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lex(source:String%7CIO)-instance-method" class="signature"><strong>#lex</strong>(source : String | IO)</a>
         
       </li>
     
@@ -511,16 +526,6 @@
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
   
     
 
@@ -558,34 +563,18 @@
 
   <h2>Class Method Detail</h2>
   
-    <div class="entry-detail" id="lex(string)-class-method">
+    <div class="entry-detail" id="lex(source:String|IO)-class-method">
       <div class="signature">
         
-        def self.<strong>lex</strong>(string)
+        def self.<strong>lex</strong>(source : String | IO)
 
-        <a class="method-permalink" href="#lex%28string%29-class-method">#</a>
+        <a class="method-permalink" href="#lex(source:String%7CIO)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/lexer.cr#L10" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="replace_escaped_characters_in_place(raw_string)-class-method">
-      <div class="signature">
-        
-        def self.<strong>replace_escaped_characters_in_place</strong>(raw_string)
-
-        <a class="method-permalink" href="#replace_escaped_characters_in_place%28raw_string%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/lexer.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/lexer.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -595,18 +584,34 @@
 
   <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="lex(string)-instance-method">
+    <div class="entry-detail" id="lex(source:String|IO,start_position:Int32):Token-instance-method">
       <div class="signature">
         
-        def <strong>lex</strong>(string)
+        def <strong>lex</strong>(source : String | IO, start_position : Int32) : <a href="../../GraphQL/Language/Token.html">Token</a>
 
-        <a class="method-permalink" href="#lex%28string%29-instance-method">#</a>
+        <a class="method-permalink" href="#lex(source:String%7CIO,start_position:Int32):Token-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/lexer.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/lexer.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lex(source:String|IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>lex</strong>(source : String | IO)
+
+        <a class="method-permalink" href="#lex(source:String%7CIO)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/lexer.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
