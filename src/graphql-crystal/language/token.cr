@@ -36,47 +36,85 @@ class GraphQL::Language::Token
   end
 
   def self.get_token_kind_description(kind : Kind) : String
-      case kind
-      when Kind::EOF
-        "EOF"
-      when Kind::BANG
-        "!"
-      when Kind::DOLLAR
-        "$"
-      when Kind::PAREN_L
-        "("
-      when Kind::PAREN_R
-        ")"
-      when Kind::SPREAD
-        "..."
-      when Kind::COLON
-        ":"
-      when Kind::EQUALS
-        "="
-      when Kind::AT
-        "@"
-      when Kind::BRACKET_L
-        "["
-      when Kind::BRACKET_R
-        "]"
-      when Kind::BRACE_L
-        "{"
-      when Kind::PIPE
-        "|"
-      when Kind::BRACE_R
-        "}"
-      when Kind::NAME
-        "Name"
-      when Kind::INT
-        "Int"
-      when Kind::FLOAT
-        "Float"
-      when Kind::STRING
-        "String"
-      when Kind::COMMENT
-        "#"
-      else
-        "";
-      end
+    case kind
+    else
+      ""
+    end
+  end
+
+  def self.get_token_kind_description(kind : Kind::EOF) : String
+    "EOF"
+  end
+
+  def self.get_token_kind_description(kind : Kind::BANG) : String
+    "!"
+  end
+
+  def self.get_token_kind_description(kind : Kind::DOLLAR) : String
+    "$"
+  end
+
+  def self.get_token_kind_description(kind : Kind::PAREN_L) : String
+    "("
+  end
+
+  def self.get_token_kind_description(kind : Kind::PAREN_R) : String
+    ")"
+  end
+
+  def self.get_token_kind_description(kind : Kind::SPREAD) : String
+    "..."
+  end
+
+  def self.get_token_kind_description(kind : Kind::EQUALS) : String
+    "="
+  end
+
+  def self.get_token_kind_description(kind : Kind::AT) : String
+    "@"
+  end
+
+  def self.get_token_kind_description(kind : Kind::COLON) : String
+    ":"
+  end
+
+  def self.get_token_kind_description(kind : Kind::BRACKET_L) : String
+    "["
+  end
+
+  def self.get_token_kind_description(kind : Kind::BRACKET_R) : String
+    "]"
+  end
+
+  def self.get_token_kind_description(kind : Kind::BRACE_L) : String
+    "{"
+  end
+
+  def self.get_token_kind_description(kind : Kind::BRACE_R) : String
+    "}"
+  end
+
+  def self.get_token_kind_description(kind : Kind::PIPE) : String
+    "|"
+  end
+
+  def self.get_token_kind_description(kind : Kind::NAME) : String
+    "Name"
+  end
+
+  def self.get_token_kind_description(kind : Kind::INT) : String
+    "Int"
+  end
+
+  def self.get_token_kind_description(kind : Kind::FLOAT) : String
+    "Float"
+  end
+
+  def self.get_token_kind_description(kind : Kind::STRING) : String
+    "String"
+  end
+
+  def self.get_token_kind_description(kind : Kind::COMMENT) : String
+    "#"
   end
 end

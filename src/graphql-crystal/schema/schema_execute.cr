@@ -131,15 +131,13 @@ module GraphQL
       end
 
       private def resolve_selections_for(field_definition, selections, resolved, context)
-        begin
-          _selections = GraphQL::Schema::FragmentResolver.resolve(
-            selections,
-            context.fragments
-          )
-          _resolve_selections_for(field_definition, _selections.map(&.as(Language::Selection)).as(Array(Language::Selection)), resolved, context)
-        rescue e
-          {nil, [Error.new(message: e.message.as(String), path: [] of Int32 | String)]}
-        end
+        _selections = GraphQL::Schema::FragmentResolver.resolve(
+          selections,
+          context.fragments
+        )
+        _resolve_selections_for(field_definition, _selections.map(&.as(Language::Selection)).as(Array(Language::Selection)), resolved, context)
+      rescue e
+        {nil, [Error.new(message: e.message.as(String), path: [] of Int32 | String)]}
       end
 
       #
@@ -388,6 +386,7 @@ module GraphQL
             if value.is_a?(Language::VariableIdentifier)
               node.value = full_params[value.name].as(Language::ArgumentValue)
             end
+          else
           end
           node
         end
@@ -402,9 +401,9 @@ module GraphQL
         defined.reduce({} of String => ReturnType) do |args, definition|
           provided = given.find(&.name.==(definition.name))
           provided = provided ? provided.value : definition.default_value
+
           unless @type_validation.accepts?(definition.type, provided)
             # # TODO: Custom Exceptions here please
-
             raise %{argument "#{definition.name}" is expected to be of type: \
                           "#{Language::Generation.generate(definition.type)}"}
           end
@@ -427,18 +426,19 @@ module GraphQL
 
       private def inline_inline_fragment_selections(type, selections)
         type = type.as(Language::ObjectTypeDefinition)
-        selections.reduce([] of Language::Field) do |selections, selection|
+        selections.reduce([] of Language::Field) do |_selections, selection|
           case selection
           when Language::Field
-            selections << selection
+            _selections << selection
           when Language::InlineFragment
             if selection.type.as(Language::TypeName).name == type.name
               # assign the fragments directive to the field
               # for later evaluation.
-              selections += selection.selections.map(&.as(Language::Field).tap { |f| f.directives = selection.directives })
+              _selections += selection.selections.map(&.as(Language::Field).tap { |f| f.directives = selection.directives })
             end
+          else
           end
-          selections
+          _selections
         end
       end
 
@@ -455,6 +455,7 @@ module GraphQL
               collection << node
             when Language::FragmentDefinition
               result[2] << node
+            else
             end
             node
           end
@@ -483,7 +484,7 @@ module GraphQL
         raw = v.raw
         case raw
         when Array
-          raw.map{|vv| cast_jsonany_to_jsontype(vv).as(JSONType)}
+          raw.map { |vv| cast_jsonany_to_jsontype(vv).as(JSONType) }
         when Hash
           raw.keys.reduce(Hash(String, JSONType).new) do |hash, key|
             hash[key] = cast_jsonany_to_jsontype(raw[key])
@@ -515,19 +516,22 @@ module GraphQL
       end
 
       private def cast_to_return(value)
-        case value
-        when Hash
-          value.reduce(Hash(String, ReturnType).new) do |memo, h|
-            memo[h[0]] = cast_to_return(h[1]).as(ReturnType)
-            memo
-          end
-        when Array
-          value.map { |v| cast_to_return(v).as(ReturnType) }
-        when GraphQL::Language::AEnum
-          value.name
-        else
-          value
-        end.as(ReturnType)
+        value.as(ReturnType)
+      end
+
+      private def cast_to_return(value : Hash)
+        value.reduce(Hash(String, ReturnType).new) do |memo, h|
+          memo[h[0]] = cast_to_return(h[1]).as(ReturnType)
+          memo
+        end
+      end
+
+      private def cast_to_return(value : Array)
+        value.map { |v| cast_to_return(v).as(ReturnType) }
+      end
+
+      private def cast_to_return(value : GraphQL::Language::AEnum)
+        value.name.as(ReturnType)
       end
     end
   end

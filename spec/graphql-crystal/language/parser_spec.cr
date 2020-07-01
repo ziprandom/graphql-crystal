@@ -127,7 +127,9 @@ describe GraphQL::Language::Parser do
     end
 
     pending "parses the Dummy Schema" do
+      # ameba:disable Lint/UselessAssign
       document = subject.parse g
+      # ameba:enable Lint/UselessAssign
     end
 
     it "creates an anonymous fragment definition" do
@@ -154,7 +156,7 @@ describe GraphQL::Language::Parser do
     strings.each do |query_str|
       doc = subject.parse(query_str)
       field = doc.definitions
-                 .first.as(GraphQL::Language::OperationDefinition)
+        .first.as(GraphQL::Language::OperationDefinition)
         .selections.first.as(GraphQL::Language::Field)
       field.arguments.size.should eq 0
       field.selections.size.should eq 1

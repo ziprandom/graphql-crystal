@@ -10,8 +10,8 @@ end
 
 def clean_string(string)
   string.gsub(/^  /m, "")
-        .gsub(/#[^\n]*\n/m, "\n")
-        .gsub(/[\n\s]+/m, "\n").strip
+    .gsub(/#[^\n]*\n/m, "\n")
+    .gsub(/[\n\s]+/m, "\n").strip
 end
 
 describe GraphQL::Language::Generation do

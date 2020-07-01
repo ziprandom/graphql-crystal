@@ -9,12 +9,12 @@ describe "GraphQL::Introspection::SchemaType" do
       }
     }
   }
-  result = Dummy::Schema.execute(query_string)
+  result = Dummy::SCHEMA.execute(query_string)
 
   it "exposes the schema" do
     expected = {"data" => {
       "__schema" => {
-        "types"     => Dummy::Schema.types.values.map { |t| t.name.nil? ? (p t; raise("no name for #{t}")) : {"name" => t.name} },
+        "types"     => Dummy::SCHEMA.types.values.map { |t| t.name.nil? ? (p t; raise("no name for #{t}")) : {"name" => t.name} },
         "queryType" => {
           "fields" => [
             {"name" => "allDairy"},

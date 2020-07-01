@@ -26,8 +26,12 @@ class LogType
   include GraphQL::ObjectType
 
   def initialize(
+    # ameba:disable Style/VariableNames
     @time : String, @hostName : String,
+    # ameba:enable Style/VariableNames
+    # ameba:disable Style/VariableNames
     @userName : String, @process : ProcessType,
+    # ameba:enable Style/VariableNames
     @message : String
   ); end
 
@@ -69,7 +73,9 @@ struct LogInput < GraphQL::Schema::InputType
   )
 
   def to_log_type(username)
+    # ameba:disable Style/VariableNames
     LogType.new(@time, @hostName, username, @process.to_process_type, @message)
+    # ameba:enable Style/VariableNames
   end
 end
 
@@ -95,7 +101,7 @@ module QueryType
   include ::GraphQL::ObjectType
   extend self
 
-  field :logs do |args, context|
+  field :logs do |_args, context|
     context = context.as(CustomContext)
     unless context.authenticated
       raise "you are not allowed to read the logs #{context.username}!"

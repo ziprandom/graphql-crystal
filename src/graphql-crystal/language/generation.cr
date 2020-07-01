@@ -59,7 +59,7 @@ module GraphQL
       def self.generate(node : FragmentSpread, indent : String = "")
         out = "#{indent}...#{node.name}"
         if node.directives.any?
-          out += " " + node.directives.map { |d| generate(d).as(String) }.join(" ")
+          out + " " + node.directives.map { |d| generate(d).as(String) }.join(" ")
         end
       end
 
@@ -122,13 +122,13 @@ module GraphQL
         out += "  query: #{node.query}\n" if node.query
         out += "  mutation: #{node.mutation}\n" if node.mutation
         out += "  subscription: #{node.subscription}\n" if node.subscription
-        out += "}"
+        out + "}"
       end
 
       def self.generate(node : ScalarTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "scalar #{node.name}"
-        out += generate_directives(node.directives)
+        out + generate_directives(node.directives)
       end
 
       def self.generate(node : ObjectTypeDefinition, indent : String = "")
@@ -136,13 +136,13 @@ module GraphQL
         out += "type #{node.name}"
         out += generate_directives(node.directives)
         out += " implements " + node.interfaces.map { |i| i.as(String) }.join(", ") unless node.interfaces.empty?
-        out += generate_field_definitions(node.fields)
+        out + generate_field_definitions(node.fields)
       end
 
       def self.generate(node : InputValueDefinition, indent : String = "")
         out = "#{node.name}: #{generate(node.type)}"
         out += " = #{generate(node.default_value)}" unless node.default_value.nil?
-        out += generate_directives(node.directives)
+        out + generate_directives(node.directives)
       end
 
       def self.generate(node : FieldDefinition, indent : String = "")
@@ -151,21 +151,21 @@ module GraphQL
           out += "(" + node.arguments.map { |arg| generate(arg).as(String) }.join(", ") + ")"
         end
         out += ": #{generate(node.type)}"
-        out += generate_directives(node.directives)
+        out + generate_directives(node.directives)
       end
 
       def self.generate(node : InterfaceTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "interface #{node.name}"
         out += generate_directives(node.directives)
-        out += generate_field_definitions(node.fields)
+        out + generate_field_definitions(node.fields)
       end
 
       def self.generate(node : UnionTypeDefinition, indent : String = "")
         out = generate_description(node)
         out += "union #{node.name}"
         out += generate_directives(node.directives)
-        out += " = " + node.types.map { |t| t.as(NameOnlyNode).name }.join(" | ")
+        out + " = " + node.types.map { |t| t.as(NameOnlyNode).name }.join(" | ")
       end
 
       def self.generate(node : EnumTypeDefinition, indent : String = "")
@@ -175,13 +175,13 @@ module GraphQL
           out += generate_description(value, indent: "  ", first_in_block: i == 0)
           out += generate(value) || ""
         end
-        out += "}"
+        out + "}"
       end
 
       def self.generate(node : EnumValueDefinition, indent : String = "")
         out = "  #{node.name}"
         out += generate_directives(node.directives)
-        out += "\n"
+        out + "\n"
       end
 
       def self.generate(node : InputObjectTypeDefinition, indent : String = "")
@@ -200,7 +200,7 @@ module GraphQL
         out = generate_description(node)
         out += "directive @#{node.name}"
         out += "(#{node.arguments.map { |a| generate(a).as(String) }.join(", ")})" if node.arguments.any?
-        out += " on #{node.locations.join(" | ")}"
+        out + " on #{node.locations.join(" | ")}"
       end
 
       #      def self.generate(node : AbstractNode, indent : String = "")
@@ -226,7 +226,6 @@ module GraphQL
 
       def self.generate(node, indent : String = "")
         raise "TypeError (please define it :) )"
-        ""
       end
 
       def self.generate_directives(directives, indent : String = "")
@@ -253,7 +252,7 @@ module GraphQL
         return "" unless node.description
 
         description = indent != "" && !first_in_block ? "\n" : ""
-        description += "#{indent}# #{node.description}\n"
+        description + "#{indent}# #{node.description}\n"
       end
 
       def self.generate_field_definitions(fields, indent : String = "")

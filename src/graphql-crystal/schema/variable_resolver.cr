@@ -14,9 +14,9 @@ module GraphQL
       end
 
       def self.visit(field : Language::Field, params)
-        field.tap do |field|
-          field.selections = visit(field.selections, params).map &.as(Language::Selection)
-          field.arguments = visit(field.arguments, params).map &.as(Language::Argument)
+        field.tap do |_field|
+          _field.selections = visit(_field.selections, params).map &.as(Language::Selection)
+          _field.arguments = visit(_field.arguments, params).map &.as(Language::Argument)
         end
       end
 

@@ -56,10 +56,8 @@ module GraphQL
     #   # { ... }
     #
     class Document < AbstractNode
-      values({definitions: Array(
-        OperationDefinition | FragmentDefinition | SchemaDefinition | ObjectTypeDefinition | InputObjectTypeDefinition |
-        ScalarTypeDefinition | DirectiveDefinition | EnumTypeDefinition | InterfaceTypeDefinition | UnionTypeDefinition
-      )})
+      values({definitions: Array(OperationDefinition | FragmentDefinition | SchemaDefinition | ObjectTypeDefinition | InputObjectTypeDefinition |
+                                 ScalarTypeDefinition | DirectiveDefinition | EnumTypeDefinition | InterfaceTypeDefinition | UnionTypeDefinition)})
       traverse :children, :definitions
 
       def to_query_string
@@ -68,6 +66,7 @@ module GraphQL
       #  def slice_definition(name)
       #    GraphQL::Language::DefinitionSlice.slice(self, name)
       #  end
+
     end
 
     class SchemaDefinition < AbstractNode
@@ -183,7 +182,7 @@ module GraphQL
                             when InputObject
                               v.to_h
                             when Array
-                              v.map { |v| v.as(FValue) }
+                              v.map { |i| i.as(FValue) }
                             else
                               v
                             end.as(FValue)

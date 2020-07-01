@@ -31,15 +31,15 @@ module EvaluationDepthTest
     field :firstElement { ListElement.new }
   end
 
-  Schema = GraphQL::Schema.from_schema(SCHEMA_STRING)
-  Schema.max_depth 5
-  Schema.query_resolver = QueryType
+  SCHEMA = GraphQL::Schema.from_schema(SCHEMA_STRING)
+  SCHEMA.max_depth 5
+  SCHEMA.query_resolver = QueryType
 end
 
 describe GraphQL::Schema do
   describe "Execution Depth Constraint" do
     it "allows queries that don't surpass the set max depth for the schema" do
-      EvaluationDepthTest::Schema.execute(%< { firstElement { index } } >).should eq ({
+      EvaluationDepthTest::SCHEMA.execute(%< { firstElement { index } } >).should eq ({
         "data" => {
           "firstElement" => {
             "index" => 0,
@@ -47,60 +47,60 @@ describe GraphQL::Schema do
         },
       })
 
-      EvaluationDepthTest::Schema
+      EvaluationDepthTest::SCHEMA
         .execute(%< { firstElement { next { next { index } } } } >)
         .should eq ({
-        "data" => {
-          "firstElement" => {
-            "next" => {
-              "next" => {
-                "index" => 2,
-              },
-            },
-          },
-        },
-      })
-      EvaluationDepthTest::Schema
-        .execute(%< { firstElement { next { next { next { index } } } } } >)
-        .should eq ({
-        "data" => {
-          "firstElement" => {
-            "next" => {
+          "data" => {
+            "firstElement" => {
               "next" => {
                 "next" => {
-                  "index" => 3,
+                  "index" => 2,
                 },
               },
             },
           },
-        },
-      })
+        })
+      EvaluationDepthTest::SCHEMA
+        .execute(%< { firstElement { next { next { next { index } } } } } >)
+        .should eq ({
+          "data" => {
+            "firstElement" => {
+              "next" => {
+                "next" => {
+                  "next" => {
+                    "index" => 3,
+                  },
+                },
+              },
+            },
+          },
+        })
     end
 
     it "throws an error when the max execution depth is reached" do
-      EvaluationDepthTest::Schema
+      EvaluationDepthTest::SCHEMA
         .execute(%< { firstElement { next { next { next { next { index } } } } } } >)
         .should eq ({
-        "data" => {
-          "firstElement" => {
-            "next" => {
+          "data" => {
+            "firstElement" => {
               "next" => {
                 "next" => {
-                  "next" => nil,
+                  "next" => {
+                    "next" => nil,
+                  },
                 },
               },
             },
           },
-        },
-        "errors" => [
-          {
-            "message" => "max execution depth reached",
-            "path"    => [
-              "firstElement", "next", "next", "next", "next",
-            ],
-          },
-        ],
-      })
+          "errors" => [
+            {
+              "message" => "max execution depth reached",
+              "path"    => [
+                "firstElement", "next", "next", "next", "next",
+              ],
+            },
+          ],
+        })
     end
   end
 end

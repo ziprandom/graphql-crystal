@@ -12,21 +12,21 @@ module TestSchema
     Istanbul
   end
 
-  Addresses = [
+  ADDRESSES = [
     {"Downing Street", 11, CityEnum::London, 3231},
     {"Sunset Boulevard", 114, CityEnum::Miami, 123439},
     {"Avenida Santa Fé", 3042, CityEnum::CABA, 12398},
   ].map { |vars| Address.new *vars }
 
-  Users = [
+  USERS = [
     "otto neverthere", "jennifer nonone", "wilma nunca",
   ].map_with_index do |name, idx|
-    User.new idx, name, Addresses[idx]
+    User.new idx, name, ADDRESSES[idx]
   end
 
-  Users[2].friends = [Users[1], Users[0]]
-  Users[1].friends = [Users[2], Users[0]]
-  Users[0].friends = [Users[2], Users[1]]
+  USERS[2].friends = [USERS[1], USERS[0]]
+  USERS[1].friends = [USERS[2], USERS[0]]
+  USERS[0].friends = [USERS[2], USERS[1]]
 
   class Address
     include GraphQL::ObjectType
@@ -151,19 +151,19 @@ module TestSchema
     extend self
 
     field :user do |args|
-      Users.find &.id.==(args["id"])
+      USERS.find &.id.==(args["id"])
     end
 
     field :addresses do |args|
-      (cities = args["city"]?) ? Addresses.select do |address|
+      (cities = args["city"]?) ? ADDRESSES.select do |address|
         cities.as(Array).includes? address.city.to_s
-      end : Addresses
+      end : ADDRESSES
     end
   end
 
   #
   # instantiate the schema and add the RootQuery Resolver
   #
-  Schema = GraphQL::Schema.from_schema(SCHEMA_DEFINITION)
-  Schema.query_resolver = QueryType
+  SCHEMA = GraphQL::Schema.from_schema(SCHEMA_DEFINITION)
+  SCHEMA.query_resolver = QueryType
 end

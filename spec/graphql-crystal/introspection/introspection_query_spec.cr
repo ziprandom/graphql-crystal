@@ -2,7 +2,7 @@ require "../../spec_helper"
 
 describe "GraphQL::Introspection::INTROSPECTION_QUERY" do
   query_string = GraphQL::Schema::INTROSPECTION_QUERY
-  result = Dummy::Schema.execute(query_string)
+  result = Dummy::SCHEMA.execute(query_string)
 
   it "runs" do
     result["data"].should be_truthy

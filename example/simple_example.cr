@@ -141,20 +141,20 @@ schema.mutation_resolver = MutationType
 describe "my graphql schema" do
   it "does queries" do
     schema.execute("{ users { name posts } }")
-          .should eq ({
-      "data" => {
-        "users" => [
-          {
-            "name"  => "Alice",
-            "posts" => [] of String,
-          },
-          {
-            "name"  => "Bob",
-            "posts" => [] of String,
-          },
-        ],
-      },
-    })
+      .should eq ({
+        "data" => {
+          "users" => [
+            {
+              "name"  => "Alice",
+              "posts" => [] of String,
+            },
+            {
+              "name"  => "Bob",
+              "posts" => [] of String,
+            },
+          ],
+        },
+      })
   end
 
   it "does mutations" do
@@ -180,22 +180,22 @@ describe "my graphql schema" do
     }
 
     schema.execute(mutation_string, payload)
-          .should eq ({
-      "data" => {
-        "post" => {
-          "title"  => "the long and windy road",
-          "body"   => "that leads to your door",
-          "author" => {
-            "name"  => "Alice",
-            "posts" => [
-              {
-                "title" => "the long and windy road",
-              },
-            ],
+      .should eq ({
+        "data" => {
+          "post" => {
+            "title"  => "the long and windy road",
+            "body"   => "that leads to your door",
+            "author" => {
+              "name"  => "Alice",
+              "posts" => [
+                {
+                  "title" => "the long and windy road",
+                },
+              ],
+            },
           },
         },
-      },
-    })
+      })
   end
 
   it "does introspection" do
@@ -210,32 +210,32 @@ describe "my graphql schema" do
     }
 
     schema.execute(query_string)
-          .should eq ({
-      "data" => {
-        "__schema" => {
-          "types" => [
-            {"name" => "String"},
-            {"name" => "Boolean"},
-            {"name" => "Int"},
-            {"name" => "Float"},
-            {"name" => "ID"},
-            {"name" => "QueryType"},
-            {"name" => "MutationType"},
-            {"name" => "PostInput"},
-            {"name" => "UserType"},
-            {"name" => "PostType"},
-            {"name" => "__Schema"},
-            {"name" => "__Type"},
-            {"name" => "__Field"},
-            {"name" => "__InputValue"},
-            {"name" => "__EnumValue"},
-            {"name" => "__Directive"},
-            {"name" => "__TypeKind"},
-            {"name" => "__DirectiveLocation"},
-          ],
+      .should eq ({
+        "data" => {
+          "__schema" => {
+            "types" => [
+              {"name" => "String"},
+              {"name" => "Boolean"},
+              {"name" => "Int"},
+              {"name" => "Float"},
+              {"name" => "ID"},
+              {"name" => "QueryType"},
+              {"name" => "MutationType"},
+              {"name" => "PostInput"},
+              {"name" => "UserType"},
+              {"name" => "PostType"},
+              {"name" => "__Schema"},
+              {"name" => "__Type"},
+              {"name" => "__Field"},
+              {"name" => "__InputValue"},
+              {"name" => "__EnumValue"},
+              {"name" => "__Directive"},
+              {"name" => "__TypeKind"},
+              {"name" => "__DirectiveLocation"},
+            ],
+          },
         },
-      },
-    }
-      )
+      }
+        )
   end
 end

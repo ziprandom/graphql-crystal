@@ -26,14 +26,16 @@ module Dummy
         products.first
       end
     end
-    field :allDairy do |args|
+    field :allDairy do |_args|
+      # ameba:disable Lint/UselessAssign
       result = CHEESES.values + MILKS.values
+      # ameba:enable Lint/UselessAssign
     end
 
     field :allEdible { CHEESES.values + MILKS.values }
     field :error { raise("This error was raised on purpose") }
     field :executionError { raise("I don't have a dedicated ExecutionErrorObject :(") }
-    field :maybeNull { Dummy::MAYBE_NULL }
+    field :maybeNull { Dummy::MAYBENULL }
     field :deepNonNull { nil }
   end
 
@@ -45,12 +47,14 @@ module Dummy
       args["value"]
     end
 
+    # ameba:disable Lint/UnusedArgument
     field :replaceValues do |args|
       CHEESES.values + MILKS.values
     end
+    # ameba:enble Lint/UnusedArgument
   end
 
-  Schema = GraphQL::Schema.from_schema(Dummy::SCHEMA_STRING)
-  Schema.query_resolver = DairyAppQuery
-  Schema.mutation_resolver = DairyAppMutation
+  SCHEMA = GraphQL::Schema.from_schema(Dummy::SCHEMA_STRING)
+  SCHEMA.query_resolver = DairyAppQuery
+  SCHEMA.mutation_resolver = DairyAppMutation
 end

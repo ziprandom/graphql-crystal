@@ -24,7 +24,7 @@ class GraphQL::Language::LexerContext
     return read_number() if code.number? || code == '-'
     return read_string() if code == '"'
 
-    raise Exception.new("Unexpected character '#{code}' at #{@current_index} near #{@source[@current_index-15,30]}")
+    raise Exception.new("Unexpected character '#{code}' at #{@current_index} near #{@source[@current_index - 15, 30]}")
   end
 
   def only_hex_in_string(test)
@@ -34,7 +34,7 @@ class GraphQL::Language::LexerContext
   def read_comment : Token
     start = @current_index
     chunk_start = (@current_index += 1)
-    
+
     code = get_code
     value = ""
 
@@ -53,25 +53,27 @@ class GraphQL::Language::LexerContext
     code = @source[start]
     code = self.next_code if code == '-'
     next_code_char = code == '0' ? self.next_code : read_digits_from_own_source(code)
-    raise Exception.new("Invalid number, unexpected digit after #{code}: #{next_code_char}") if (next_code_char.ord >= 48 && next_code_char.ord <= 57)
 
+    if (next_code_char.ord >= 48 && next_code_char.ord <= 57)
+      raise Exception.new("Invalid number, unexpected digit after #{code}: #{next_code_char}")
+    end
     code = next_code_char
+
     if code == '.'
       is_float = true
-      code = read_digits_from_own_source(self.next_code())
+      code = read_digits_from_own_source(self.next_code)
     end
 
     if code == 'E' || code == 'e'
       is_float = true
-      code = self.next_code()
+      code = self.next_code
       if code == '+' || code == '-'
-        code = self.next_code()
+        code = self.next_code
       end
-      code = read_digits_from_own_source(code)
+      read_digits_from_own_source(code)
     end
 
-    is_float ? create_float_token(start)
-      : create_int_token(start)
+    is_float ? create_float_token(start) : create_int_token(start)
   end
 
   def read_string : Token
@@ -89,29 +91,31 @@ class GraphQL::Language::LexerContext
     value + @source[chunk_start, (@current_index - chunk_start - 1)]
   end
 
-  private def append_to_value_by_code(value, code)
-    case code
-    when '"'
-      value += '"'
-    when '/'
-      value += '/'
-    when '\\'
-      value += '\\'
-    when 'b'
-      value += '\b'
-    when 'f'
-      value += '\f'
-    when 'n'
-      value += '\n'
-    when 'r'
-      value += '\r'
-    when 't'
-      value += '\t'
-    when 'u'
-      value += get_unicode_char
-    else
-      raise Exception.new("Invalid character escape sequence: \\#{code}.")
-    end
+  private def append_to_value_by_code!(value, code)
+    # ameba:disable Lint/UselessAssign
+    value += case code
+             when '"'
+               '"'
+             when '/'
+               '/'
+             when '\\'
+               '\\'
+             when 'b'
+               '\b'
+             when 'f'
+               '\f'
+             when 'n'
+               '\n'
+             when 'r'
+               '\r'
+             when 't'
+               '\t'
+             when 'u'
+               get_unicode_char
+             else
+               raise Exception.new("Invalid character escape sequence: \\#{code}.")
+             end
+    # ameba:enable Lint/UselessAssign
   end
 
   private def check_for_invalid_characters(code)
@@ -119,34 +123,18 @@ class GraphQL::Language::LexerContext
   end
 
   private def check_for_punctuation_tokens(code)
-    case code
-    when '!'
-      create_punctuation_token(Token::Kind::BANG, 1)
-    when '$'
-      create_punctuation_token(Token::Kind::DOLLAR, 1)
-    when '('
-      create_punctuation_token(Token::Kind::PAREN_L, 1)
-    when ')'
-      create_punctuation_token(Token::Kind::PAREN_R, 1)
-    when '.'
-      check_for_spread_operator()
-    when ':'
-      create_punctuation_token(Token::Kind::COLON, 1)
-    when '='
-      create_punctuation_token(Token::Kind::EQUALS, 1)
-    when '@'
-      create_punctuation_token(Token::Kind::AT, 1)
-    when '['
-      create_punctuation_token(Token::Kind::BRACKET_L, 1)
-    when ']'
-      create_punctuation_token(Token::Kind::BRACKET_R, 1)
-    when '{'
-      create_punctuation_token(Token::Kind::BRACE_L, 1)
-    when '|'
-      create_punctuation_token(Token::Kind::PIPE, 1)
-    when '}'
-      create_punctuation_token(Token::Kind::BRACE_R, 1)
-    end
+    tokens = {
+      '!' => Token::Kind::BANG, '$' => Token::Kind::DOLLAR,
+      '(' => Token::Kind::PAREN_L, ')' => Token::Kind::PAREN_R,
+      ':' => Token::Kind::COLON, '=' =>Token::Kind::EQUALS,
+      '@' => Token::Kind::AT, '[' => Token::Kind::BRACKET_L,
+      ']' => Token::Kind::BRACKET_R, '{' => Token::Kind::BRACE_L,
+      '}' => Token::Kind::BRACE_R, '|' => Token::Kind::PIPE
+    }
+
+    return create_punctuation_token(tokens[code], 1) if tokens[code]?
+    return check_for_spread_operator() if code == '.'
+    nil
   end
 
   private def check_for_spread_operator : Token?
@@ -197,23 +185,23 @@ class GraphQL::Language::LexerContext
   end
 
   private def get_unicode_char
-      if @current_index + 5 > @source.size
-        truncated_expression = @source[@current_index, @source.size]
-        raise Exception.new("Invalid character escape sequence at EOF: \\#{truncated_expression}.")
-      end
+    if @current_index + 5 > @source.size
+      truncated_expression = @source[@current_index, @source.size]
+      raise Exception.new("Invalid character escape sequence at EOF: \\#{truncated_expression}.")
+    end
 
-      expression = @source[@current_index, 5]
+    expression = @source[@current_index, 5]
 
-      if !only_hex_in_string(expression[1, expression.size])
-        raise Exception.new("Invalid character escape sequence: \\#{expression}.")
-      end
+    if !only_hex_in_string(expression[1, expression.size])
+      raise Exception.new("Invalid character escape sequence: \\#{expression}.")
+    end
 
-      s = next_code.bytes << 12 | next_code.bytes << 8 | next_code.bytes << 4 | next_code.bytes
-      String.new(Slice.new(s.to_unsafe, 4))[0]
+    s = next_code.bytes << 12 | next_code.bytes << 8 | next_code.bytes << 4 | next_code.bytes
+    String.new(Slice.new(s.to_unsafe, 4))[0]
   end
 
   private def if_unicode_get_string : String
-    return @source.size > @current_index + 5 &&
+    @source.size > @current_index + 5 &&
       only_hex_in_string(@source[(@current_index + 2), 4]) ? @source[@current_index, 6] : null
   end
 
@@ -223,7 +211,7 @@ class GraphQL::Language::LexerContext
 
   private def next_code
     @current_index += 1
-    return is_not_at_the_end_of_query() ? @source[@current_index] : Char::ZERO
+    is_not_at_the_end_of_query() ? @source[@current_index] : Char::ZERO
   end
 
   private def process_character(value_ptr, chunk_start_ptr)
@@ -231,13 +219,13 @@ class GraphQL::Language::LexerContext
     @current_index += 1
 
     if code == '\\'
-      value_ptr.value = append_to_value_by_code(append_characters_from_last_chunk(value_ptr.value, chunk_start_ptr.value), get_code)
+      value_ptr.value = append_to_value_by_code!(append_characters_from_last_chunk(value_ptr.value, chunk_start_ptr.value), get_code)
 
       @current_index += 1
       chunk_start_ptr.value = @current_index
     end
 
-    return get_code
+    get_code
   end
 
   private def process_string_chunks
@@ -264,9 +252,10 @@ class GraphQL::Language::LexerContext
       raise Exception.new("Invalid number, expected digit but got: #{resolve_char_name(code)}")
     end
 
-    while true
+    condition = false
+    while !condition
       code = (position += 1) < body.size ? body[position] : Char::ZERO
-      break unless code.number?
+      condition = true unless code.number?
     end
 
     position
@@ -281,10 +270,11 @@ class GraphQL::Language::LexerContext
     start = @current_index
     code = Char::ZERO
 
-    while true
+    condition = false
+    while !condition
       @current_index += 1
       code = get_code
-      break unless is_not_at_the_end_of_query && is_valid_name_character(code)
+      condition = true unless is_not_at_the_end_of_query && is_valid_name_character(code)
     end
 
     create_name_token(start)
@@ -294,7 +284,7 @@ class GraphQL::Language::LexerContext
     return "<EOF>" if (code == '\0')
 
     return "\"#{unicode_string}\"" if unicode_string && !unicode_string.blank?
-    return "\"#{code}\""
+    "\"#{code}\""
   end
 
   private def validate_character_code(code)
@@ -308,10 +298,10 @@ class GraphQL::Language::LexerContext
     while (position += 1) < body.size && (code = body[position]) != 0 && (code.ord > 0x001F || code.ord == 0x0009) && code.ord != 0x000A && code.ord != 0x000D
     end
 
-    return position
+    position
   end
 
   private def get_code
-    return is_not_at_the_end_of_query ? @source[@current_index] : Char::ZERO
+    is_not_at_the_end_of_query ? @source[@current_index] : Char::ZERO
   end
 end
