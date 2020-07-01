@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../../";
+</script>
+
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="../../js/doc.js"></script>
   <title>GraphQL::Language::Parser - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
-<div id="types-list">
-  <div id="search-box">
-    <input type="search" id="search-input" placeholder="Search...">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../../index.html">README</a>
+    </div>
   </div>
 
-  <ul>
-    <li><a href="../../index.html">README</a></li>
-  </ul>
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
 
-  <ul>
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
   
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
       <a href="../../CLTK.html">CLTK</a>
@@ -102,6 +123,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
       <a href="../../GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
+      <a href="../../GraphQL/Language/ASTNode.html">ASTNode</a>
       
     </li>
   
@@ -190,6 +216,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/LexerContext" data-name="graphql::language::lexercontext">
+      <a href="../../GraphQL/Language/LexerContext.html">LexerContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
       <a href="../../GraphQL/Language/ListType.html">ListType</a>
       
@@ -225,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ParserContext" data-name="graphql::language::parsercontext">
+      <a href="../../GraphQL/Language/ParserContext.html">ParserContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
       <a href="../../GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
       
@@ -237,6 +273,21 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
       <a href="../../GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
+      <a href="../../GraphQL/Language/Token.html">Token</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
+      <a href="../../GraphQL/Language/Token/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -355,6 +406,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/JSONType" data-name="graphql::schema::schema::jsontype">
+      <a href="../../GraphQL/Schema/Schema/JSONType.html">JSONType</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -392,9 +448,11 @@
   
 </ul>
 
+  </div>
 </div>
 
-<div id="main-content">
+
+<div class="main-content">
 <h1 class="type-name">
 
   <span class="kind">class</span> GraphQL::Language::Parser
@@ -402,14 +460,10 @@
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Language/Parser.html">GraphQL::Language::Parser</a></li><li class="superclass">CLTK::Parser</li><li class="superclass">Reference</li><li class="superclass"><a href="../../Object.html">Object</a></li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Language/Parser.html">GraphQL::Language::Parser</a></li><li class="superclass">Reference</li><li class="superclass"><a href="../../Object.html">Object</a></li></ul>
 
 
 
-
-  <h2>Overview</h2>
-
-  <p>A CLTK Parser for the GraphQL Language</p>
 
 
 
@@ -427,64 +481,14 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">graphql-crystal/language/parser.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/parser.cr#L3" target="_blank">
+        graphql-crystal/language/parser.cr
+      </a>
     
     <br/>
   
 
 
-
-  
-    <h2>Constant Summary</h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="CLAUSES">
-        <strong>CLAUSES</strong> = <code>[{lhs: <span class="n">:document</span>, expression: <span class="s">&quot;definition+&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">0</span>}, {lhs: <span class="n">:definition</span>, expression: <span class="s">&quot;operation_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">1</span>}, {lhs: <span class="n">:definition</span>, expression: <span class="s">&quot;fragment_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">2</span>}, {lhs: <span class="n">:definition</span>, expression: <span class="s">&quot;type_system_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">3</span>}, {lhs: <span class="n">:operation_definition</span>, expression: <span class="s">&quot;operation_type name? variable_definitions? directive* selection_set&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">4</span>}, {lhs: <span class="n">:operation_definition</span>, expression: <span class="s">&quot;selection_set&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">5</span>}, {lhs: <span class="n">:operation_type</span>, expression: <span class="s">&quot;QUERY&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">6</span>}, {lhs: <span class="n">:operation_type</span>, expression: <span class="s">&quot;MUTATION&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">7</span>}, {lhs: <span class="n">:operation_type</span>, expression: <span class="s">&quot;SUBSCRIPTION&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">8</span>}, {lhs: <span class="n">:variable_definitions</span>, expression: <span class="s">&quot;LPAREN .variable_definition+ RPAREN&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">9</span>}, {lhs: <span class="n">:variable_definition</span>, expression: <span class="s">&quot;VAR_SIGN .name COLON .type&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">10</span>}, {lhs: <span class="n">:variable_definition</span>, expression: <span class="s">&quot;VAR_SIGN .name COLON .type .default_value&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">11</span>}, {lhs: <span class="n">:type</span>, expression: <span class="s">&quot;name&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">12</span>}, {lhs: <span class="n">:type</span>, expression: <span class="s">&quot;.type BANG&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">13</span>}, {lhs: <span class="n">:type</span>, expression: <span class="s">&quot;LBRACKET .type RBRACKET&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">14</span>}, {lhs: <span class="n">:default_value</span>, expression: <span class="s">&quot;EQUALS .input_value&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">15</span>}, {lhs: <span class="n">:selection_set</span>, expression: <span class="s">&quot;LCURLY .selection* RCURLY&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">16</span>}, {lhs: <span class="n">:selection</span>, expression: <span class="s">&quot;field&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">17</span>}, {lhs: <span class="n">:selection</span>, expression: <span class="s">&quot;fragment_spread&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">18</span>}, {lhs: <span class="n">:selection</span>, expression: <span class="s">&quot;inline_fragment&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">19</span>}, {lhs: <span class="n">:field</span>, expression: <span class="s">&quot;name_without_on arguments? directive* selection_set?&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">20</span>}, {lhs: <span class="n">:field</span>, expression: <span class="s">&quot;.name_without_on COLON .name .arguments? .directive*? .selection_set?&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">21</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;SCHEMA&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">22</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;SCALAR&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">23</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;TYPE&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">24</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;IMPLEMENTS&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">25</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;INTERFACE&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">26</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;UNION&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">27</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;ENUM&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">28</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;INPUT&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">29</span>}, {lhs: <span class="n">:schema_keyword</span>, expression: <span class="s">&quot;DIRECTIVE&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">30</span>}, {lhs: <span class="n">:name</span>, expression: <span class="s">&quot;name_without_on&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">31</span>}, {lhs: <span class="n">:name</span>, expression: <span class="s">&quot;ON&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">32</span>}, {lhs: <span class="n">:name_without_on</span>, expression: <span class="s">&quot;IDENTIFIER&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">33</span>}, {lhs: <span class="n">:name_without_on</span>, expression: <span class="s">&quot;FRAGMENT&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">34</span>}, {lhs: <span class="n">:name_without_on</span>, expression: <span class="s">&quot;TRUE&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">35</span>}, {lhs: <span class="n">:name_without_on</span>, expression: <span class="s">&quot;FALSE&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">36</span>}, {lhs: <span class="n">:name_without_on</span>, expression: <span class="s">&quot;operation_type&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">37</span>}, {lhs: <span class="n">:name_without_on</span>, expression: <span class="s">&quot;schema_keyword&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">38</span>}, {lhs: <span class="n">:enum_name</span>, expression: <span class="s">&quot;IDENTIFIER&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">39</span>}, {lhs: <span class="n">:enum_name</span>, expression: <span class="s">&quot;FRAGMENT&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">40</span>}, {lhs: <span class="n">:enum_name</span>, expression: <span class="s">&quot;ON&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">41</span>}, {lhs: <span class="n">:enum_name</span>, expression: <span class="s">&quot;operation_type&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">42</span>}, {lhs: <span class="n">:enum_name</span>, expression: <span class="s">&quot;schema_keyword&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">43</span>}, {lhs: <span class="n">:enum_value_definition</span>, expression: <span class="s">&quot;comments? enum_name directive*&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">44</span>}, {lhs: <span class="n">:arguments</span>, expression: <span class="s">&quot;LPAREN .argument* RPAREN&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">45</span>}, {lhs: <span class="n">:argument</span>, expression: <span class="s">&quot;.name COLON .input_value&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">46</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;FLOAT&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">47</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;INT&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">48</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;STRING&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">49</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;TRUE&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">50</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;FALSE&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">51</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;null_value&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">52</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;variable&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">53</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;list_value&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">54</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;object_value&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">55</span>}, {lhs: <span class="n">:input_value</span>, expression: <span class="s">&quot;enum_value&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">56</span>}, {lhs: <span class="n">:null_value</span>, expression: <span class="s">&quot;NULL&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">57</span>}, {lhs: <span class="n">:variable</span>, expression: <span class="s">&quot;VAR_SIGN .name&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">58</span>}, {lhs: <span class="n">:list_value</span>, expression: <span class="s">&quot;LBRACKET .input_value* RBRACKET&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">59</span>}, {lhs: <span class="n">:object_value</span>, expression: <span class="s">&quot;LCURLY .object_value_field* RCURLY&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">60</span>}, {lhs: <span class="n">:object_value_field</span>, expression: <span class="s">&quot;.name COLON .input_value&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">61</span>}, {lhs: <span class="n">:enum_value</span>, expression: <span class="s">&quot;enum_name&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">62</span>}, {lhs: <span class="n">:directive</span>, expression: <span class="s">&quot;DIR_SIGN .name .arguments?&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">63</span>}, {lhs: <span class="n">:fragment_spread</span>, expression: <span class="s">&quot;ELLIPSIS .name_without_on .directive*&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">64</span>}, {lhs: <span class="n">:inline_fragment</span>, expression: <span class="s">&quot;ELLIPSIS ON .type .directive* .selection_set&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">65</span>}, {lhs: <span class="n">:inline_fragment</span>, expression: <span class="s">&quot;ELLIPSIS .directive* .selection_set&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">66</span>}, {lhs: <span class="n">:fragment_definition</span>, expression: <span class="s">&quot;FRAGMENT .name_without_on? ON .type .directive* .selection_set&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">67</span>}, {lhs: <span class="n">:type_system_definition</span>, expression: <span class="s">&quot;schema_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">68</span>}, {lhs: <span class="n">:type_system_definition</span>, expression: <span class="s">&quot;type_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">69</span>}, {lhs: <span class="n">:type_system_definition</span>, expression: <span class="s">&quot;directive_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">70</span>}, {lhs: <span class="n">:type_system_definition</span>, expression: <span class="s">&quot;comments type_system_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">71</span>}, {lhs: <span class="n">:schema_definition</span>, expression: <span class="s">&quot;SCHEMA LCURLY .operation_type_definition_list RCURLY&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">72</span>}, {empty: <span class="n">false</span>, lhs: <span class="n">:operation_type_definition_list</span>, elements: <span class="s">&quot;operation_type_definition&quot;</span>, separator: <span class="s">&quot;&quot;</span>}, {lhs: <span class="n">:operation_type_definition</span>, expression: <span class="s">&quot;.operation_type COLON .name&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">73</span>}, {lhs: <span class="n">:type_definition</span>, expression: <span class="s">&quot;scalar_type_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">74</span>}, {lhs: <span class="n">:type_definition</span>, expression: <span class="s">&quot;object_type_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">75</span>}, {lhs: <span class="n">:type_definition</span>, expression: <span class="s">&quot;interface_type_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">76</span>}, {lhs: <span class="n">:type_definition</span>, expression: <span class="s">&quot;union_type_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">77</span>}, {lhs: <span class="n">:type_definition</span>, expression: <span class="s">&quot;enum_type_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">78</span>}, {lhs: <span class="n">:type_definition</span>, expression: <span class="s">&quot;input_object_type_definition&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">79</span>}, {lhs: <span class="n">:scalar_type_definition</span>, expression: <span class="s">&quot;SCALAR .name .directive*&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">80</span>}, {lhs: <span class="n">:object_type_definition</span>, expression: <span class="s">&quot;TYPE .name .implements? .directive* LCURLY .field_definition* RCURLY&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">81</span>}, {lhs: <span class="n">:implements</span>, expression: <span class="s">&quot;IMPLEMENTS .name+&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">82</span>}, {lhs: <span class="n">:input_value_definition</span>, expression: <span class="s">&quot;.comments? .name COLON .type .default_value? .directive*&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">83</span>}, {lhs: <span class="n">:arguments_definitions</span>, expression: <span class="s">&quot;LPAREN .input_value_definition+ RPAREN&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">84</span>}, {lhs: <span class="n">:field_definition</span>, expression: <span class="s">&quot;.comments? .name .arguments_definitions? COLON .type .directive*&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">85</span>}, {lhs: <span class="n">:interface_type_definition</span>, expression: <span class="s">&quot;INTERFACE .name .directive* LCURLY .field_definition* RCURLY&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">86</span>}, {empty: <span class="n">false</span>, lhs: <span class="n">:union_members</span>, elements: <span class="s">&quot;name&quot;</span>, separator: <span class="s">&quot;PIPE&quot;</span>}, {lhs: <span class="n">:union_type_definition</span>, expression: <span class="s">&quot;UNION .name .directive* EQUALS .union_members&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">87</span>}, {lhs: <span class="n">:enum_type_definition</span>, expression: <span class="s">&quot;ENUM .name .directive* LCURLY .enum_value_definition+ RCURLY&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">88</span>}, {lhs: <span class="n">:input_object_type_definition</span>, expression: <span class="s">&quot;INPUT .name .directive* LCURLY .input_value_definition+ RCURLY&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">89</span>}, {lhs: <span class="n">:directive_definition</span>, expression: <span class="s">&quot;DIRECTIVE DIR_SIGN .name .arguments_definitions? ON .directive_locations&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">90</span>}, {lhs: <span class="n">:comments</span>, expression: <span class="s">&quot;COMMENT&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">91</span>}, {lhs: <span class="n">:comments</span>, expression: <span class="s">&quot;comments COMMENT&quot;</span>, precedence: <span class="n">nil</span>, arg_type: <span class="n">:splat</span>, cb: <span class="n">92</span>}, {empty: <span class="n">false</span>, lhs: <span class="n">:directive_locations</span>, elements: <span class="s">&quot;name&quot;</span>, separator: <span class="s">&quot;PIPE&quot;</span>}] <span class="k">of</span> <span class="t">CLAUSE</span> <span class="o">|</span> <span class="t">LIST_PROD</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>A CLTK Parser for the GraphQL Language</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="DEFAULT_ARG_TYPE">
-        <strong>DEFAULT_ARG_TYPE</strong> = <code>[<span class="n">:splat</span>]</code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>A CLTK Parser for the GraphQL Language</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="PREC_COUNT">
-        <strong>PREC_COUNT</strong> = <code>{<span class="n">:left</span> => <span class="n">0</span>, <span class="n">:right</span> => <span class="n">0</span>, <span class="n">:non</span> => <span class="n">0</span>}</code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>A CLTK Parser for the GraphQL Language</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="PROCS">
-        <strong>PROCS</strong> = <code><span class="o">[]</span> <span class="k">of</span> <span class="t">ProdProc</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>A CLTK Parser for the GraphQL Language</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="TOKEN_PRECS">
-        <strong>TOKEN_PRECS</strong> = <code>{} <span class="k">of</span> <span class="t">String</span> => <span class="t">Tuple</span>(<span class="t">String</span>, <span class="t">Int32</span>)</code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>A CLTK Parser for the GraphQL Language</p>
-      </dd>
-      
-    
-  </dl>
 
 
 
@@ -492,9 +496,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
-        
-          <div class="summary"><p>Instantiates a new parser and creates an environment to be used for subsequent calls.</p></div>
+        <a href="#new(lexer:Language::Lexer)-class-method" class="signature"><strong>.new</strong>(lexer : Language::Lexer)</a>
         
       </li>
     
@@ -502,163 +504,33 @@
 
 
 
-  <h2>Class Method Summary</h2>
+
+
+  <h2>Instance Method Summary</h2>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#build_list_production_%28symbol%2Clist_elements%2Cseparator%2Cempty%29-class-method" class="signature"><strong>.build_list_production_</strong>(symbol, list_elements, separator, empty)</a>
-        
-          <div class="summary"><p>Adds productions and actions for parsing (non)?empty lists.</p></div>
+        <a href="#max_nesting:Int32-instance-method" class="signature"><strong>#max_nesting</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#build_up_productions-class-method" class="signature"><strong>.build_up_productions</strong></a>
-        
-          <div class="summary"><p>A CLTK Parser for the GraphQL Language </p></div>
+        <a href="#max_nesting=(max_nesting)-instance-method" class="signature"><strong>#max_nesting=</strong>(max_nesting)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#finalize%28explain%3Dfalse%2Clookahead%3Dtrue%2Cprecedence%3Dtrue%2Cuse%3Dnil%29-class-method" class="signature"><strong>.finalize</strong>(explain = <span class="n">false</span>, lookahead = <span class="n">true</span>, precedence = <span class="n">true</span>, use = <span class="n">nil</span>)</a>
-        
-          <div class="summary"><p>This method will finalize the parser causing the construction of states and their actions, and the resolution of conflicts using lookahead and precedence information.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#finalize_from_serialized_parser%28path%29-class-method" class="signature"><strong>.finalize_from_serialized_parser</strong>(path)</a>
-        
-          <div class="summary"><p>A CLTK Parser for the GraphQL Language </p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#prune%28do_lookahead%2Cdo_precedence%29-class-method" class="signature"><strong>.prune</strong>(do_lookahead, do_precedence)</a>
-        
-          <div class="summary"><p>This method uses lookahead sets and precedence information to resolve conflicts and remove unnecessary reduce actions.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#serialize_to_file%28path%29-class-method" class="signature"><strong>.serialize_to_file</strong>(path)</a>
-        
-          <div class="summary"><p>A CLTK Parser for the GraphQL Language </p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_parser-class-method" class="signature"><strong>.to_parser</strong></a>
-        
-          <div class="summary"><p>A CLTK Parser for the GraphQL Language </p></div>
+        <a href="#parse(source:String):Language::Document-instance-method" class="signature"><strong>#parse</strong>(source : String) : Language::Document</a>
         
       </li>
     
   </ul>
 
 
-
-
-
-  <h2>Macro Summary</h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#build_list_production%28symbol%2Clist_elements%2Cseparator%3D%22%22%29-macro" class="signature"><strong>build_list_production</strong>(symbol, list_elements, separator = "")</a>
-        
-          <div class="summary"><p>Adds productions and actions for parsing empty lists.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#build_nonempty_list_production%28symbol%2Clist_elements%2Cseparator%3D%22%22%29-macro" class="signature"><strong>build_nonempty_list_production</strong>(symbol, list_elements, separator = "")</a>
-        
-          <div class="summary"><p>Adds productions and actions for parsing nonempty lists.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#clause%28expression%2Cprecedence%3Dnil%2Carg_type%3Dnil%29-macro" class="signature"><strong>clause</strong>(expression, precedence = nil, arg_type = nil)</a>
-        
-          <div class="summary"><p>Declares a new clause inside of a production.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#default_arg_type%28type%29-macro" class="signature"><strong>default_arg_type</strong>(type)</a>
-        
-          <div class="summary"><p>Set the default argument type for the actions associated with clauses.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#left%28%2Asymbols%29-macro" class="signature"><strong>left</strong>(*symbols)</a>
-        
-          <div class="summary"><p>This method is used to specify that the symbols in <em>symbols</em> are left-associative.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#list%28symbol%2Clist_elements%2Cseparator%3D%22%22%29-macro" class="signature"><strong>list</strong>(symbol, list_elements, separator = "")</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#nonassoc%28%2Asymbols%29-macro" class="signature"><strong>nonassoc</strong>(*symbols)</a>
-        
-          <div class="summary"><p>This method is used to specify that the symbols in <em>symbols</em> are non-associative.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#nonempty_list%28symbol%2Clist_elements%2Cseparator%3D%22%22%29-macro" class="signature"><strong>nonempty_list</strong>(symbol, list_elements, separator = "")</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#prec%28direction%2C%2Asymbols%29-macro" class="signature"><strong>prec</strong>(direction, *symbols)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#production%28lhs%2Cexpression%3Dnil%2Cprecedence%3Dnil%2Carg_type%3Dnil%29-macro" class="signature"><strong>production</strong>(lhs, expression = nil, precedence = nil, arg_type = nil)</a>
-        
-          <div class="summary"><p>Adds a new production to the parser with a left-hand value of <em>symbol</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#right%28%2Asymbols%29-macro" class="signature"><strong>right</strong>(*symbols)</a>
-        
-          <div class="summary"><p>This method is used to specify that the symbols in <em>symbols</em> are right associative.</p></div>
-        
-      </li>
-    
-  </ul>
 
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
   
     
 
@@ -694,174 +566,18 @@
 
   <h2>Constructor Detail</h2>
   
-    <div class="entry-detail" id="new-class-method">
+    <div class="entry-detail" id="new(lexer:Language::Lexer)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>
+        def self.<strong>new</strong>(lexer : <a href="../../GraphQL/Language/Lexer.html">Language::Lexer</a>)
 
-        <a class="method-permalink" href="#new-class-method">#</a>
+        <a class="method-permalink" href="#new(lexer:Language::Lexer)-class-method">#</a>
       </div>
-      
-        <div class="doc"><p>Instantiates a new parser and creates an environment to be
-used for subsequent calls.</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-
-
-
-  <h2>Class Method Detail</h2>
-  
-    <div class="entry-detail" id="build_list_production_(symbol,list_elements,separator,empty)-class-method">
-      <div class="signature">
-        
-        def self.<strong>build_list_production_</strong>(symbol, list_elements, separator, empty)
-
-        <a class="method-permalink" href="#build_list_production_%28symbol%2Clist_elements%2Cseparator%2Cempty%29-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>Adds productions and actions for parsing (non)?empty lists.</p>
-
-<p>@see CFG#(non)?empty_list_production</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="build_up_productions-class-method">
-      <div class="signature">
-        
-        def self.<strong>build_up_productions</strong>
-
-        <a class="method-permalink" href="#build_up_productions-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>A CLTK Parser for the GraphQL Language</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="finalize(explain=false,lookahead=true,precedence=true,use=nil)-class-method">
-      <div class="signature">
-        
-        def self.<strong>finalize</strong>(explain = <span class="n">false</span>, lookahead = <span class="n">true</span>, precedence = <span class="n">true</span>, use = <span class="n">nil</span>)
-
-        <a class="method-permalink" href="#finalize%28explain%3Dfalse%2Clookahead%3Dtrue%2Cprecedence%3Dtrue%2Cuse%3Dnil%29-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>This method will finalize the parser causing the construction
-of states and their actions, and the resolution of conflicts
-using lookahead and precedence information.</p>
-
-<p>No calls to {Parser.production} may appear after the call to
-Parser.finalize.</p>
-
-<p>@param [Hash] opts Options describing how to finalize the parser.</p>
-
-<p>@option opts [Boolean,String,IO]  :explain     To explain the parser or not.
-@option opts [Boolean]            :lookahead   To use lookahead info for conflict resolution.
-@option opts [Boolean]            :precedence  To use precedence info for conflict resolution.
-@option opts [String,IO]          :use         A file name or object that is used to load/save the parser.</p>
-
-<p>@return [void]</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="finalize_from_serialized_parser(path)-class-method">
-      <div class="signature">
-        
-        def self.<strong>finalize_from_serialized_parser</strong>(path)
-
-        <a class="method-permalink" href="#finalize_from_serialized_parser%28path%29-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>A CLTK Parser for the GraphQL Language</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="prune(do_lookahead,do_precedence)-class-method">
-      <div class="signature">
-        
-        def self.<strong>prune</strong>(do_lookahead, do_precedence)
-
-        <a class="method-permalink" href="#prune%28do_lookahead%2Cdo_precedence%29-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>This method uses lookahead sets and precedence information to
-resolve conflicts and remove unnecessary reduce actions.</p>
-
-<p>@param [Boolean]  do_lookahead   Prune based on lookahead sets or not.
-@param [Boolean]  do_precedence  Prune based on precedence or not.</p>
-
-<p>@return [void]</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="serialize_to_file(path)-class-method">
-      <div class="signature">
-        
-        def self.<strong>serialize_to_file</strong>(path)
-
-        <a class="method-permalink" href="#serialize_to_file%28path%29-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>A CLTK Parser for the GraphQL Language</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_parser-class-method">
-      <div class="signature">
-        
-        def self.<strong>to_parser</strong>
-
-        <a class="method-permalink" href="#to_parser-class-method">#</a>
-      </div>
-      
-        <div class="doc"><p>A CLTK Parser for the GraphQL Language</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/parser.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -871,252 +587,58 @@ resolve conflicts and remove unnecessary reduce actions.</p>
 
 
 
-  <h2>Macro Detail</h2>
+  <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="build_list_production(symbol,list_elements,separator=&quot;&quot;)-macro">
+    <div class="entry-detail" id="max_nesting:Int32-instance-method">
       <div class="signature">
         
-        macro <strong>build_list_production</strong>(symbol, list_elements, separator = "")
+        def <strong>max_nesting</strong> : Int32
 
-        <a class="method-permalink" href="#build_list_production%28symbol%2Clist_elements%2Cseparator%3D%22%22%29-macro">#</a>
-      </div>
-      
-        <div class="doc"><p>Adds productions and actions for parsing empty lists.</p>
-
-<p>@see CFG#empty_list_production</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="build_nonempty_list_production(symbol,list_elements,separator=&quot;&quot;)-macro">
-      <div class="signature">
-        
-        macro <strong>build_nonempty_list_production</strong>(symbol, list_elements, separator = "")
-
-        <a class="method-permalink" href="#build_nonempty_list_production%28symbol%2Clist_elements%2Cseparator%3D%22%22%29-macro">#</a>
-      </div>
-      
-        <div class="doc"><p>Adds productions and actions for parsing nonempty lists.</p>
-
-<p>@see CFG#nonempty_list_production</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="clause(expression,precedence=nil,arg_type=nil)-macro">
-      <div class="signature">
-        
-        macro <strong>clause</strong>(expression, precedence = nil, arg_type = nil)
-
-        <a class="method-permalink" href="#clause%28expression%2Cprecedence%3Dnil%2Carg_type%3Dnil%29-macro">#</a>
-      </div>
-      
-        <div class="doc"><p>Declares a new clause inside of a production.  The right-hand
-side is specified by <em>expression</em> and the precedence of this
-production can be changed by setting the <em>precedence</em> argument
-to some terminal symbol.</p>
-
-<p>@param [String, Symbol]  expression  Right-hand side of a production.
-@param [Symbol]          precedence  Symbol representing the precedence of this production.
-@param [:array, :splat]  arg_type    Method to use when passing arguments to the action.
-@param [Proc]            action      Action to be taken when the production is reduced.</p>
-
-<p>@return [void]</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L371" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="default_arg_type(type)-macro">
-      <div class="signature">
-        
-        macro <strong>default_arg_type</strong>(type)
-
-        <a class="method-permalink" href="#default_arg_type%28type%29-macro">#</a>
-      </div>
-      
-        <div class="doc"><p>Set the default argument type for the actions associated with
-clauses.  All actions defined after this call will be passed
-arguments in the way specified here, unless overridden in the
-call to {Parser.clause}.</p>
-
-<p>@param [:array, :splat] type The default argument type.</p>
-
-<p>@return [void]</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="left(*symbols)-macro">
-      <div class="signature">
-        
-        macro <strong>left</strong>(*symbols)
-
-        <a class="method-permalink" href="#left%28%2Asymbols%29-macro">#</a>
-      </div>
-      
-        <div class="doc"><p>This method is used to specify that the symbols in <em>symbols</em>
-are left-associative.  Subsequent calls to this method will
-give their arguments higher precedence.</p>
-
-<p>@param [Array&lt;Symbol>]  symbols  Symbols that are left associative.</p>
-
-<p>@return [void]</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="list(symbol,list_elements,separator=&quot;&quot;)-macro">
-      <div class="signature">
-        
-        macro <strong>list</strong>(symbol, list_elements, separator = "")
-
-        <a class="method-permalink" href="#list%28symbol%2Clist_elements%2Cseparator%3D%22%22%29-macro">#</a>
+        <a class="method-permalink" href="#max_nesting:Int32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/parser.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="nonassoc(*symbols)-macro">
+    <div class="entry-detail" id="max_nesting=(max_nesting)-instance-method">
       <div class="signature">
         
-        macro <strong>nonassoc</strong>(*symbols)
+        def <strong>max_nesting=</strong>(max_nesting)
 
-        <a class="method-permalink" href="#nonassoc%28%2Asymbols%29-macro">#</a>
-      </div>
-      
-        <div class="doc"><p>This method is used to specify that the symbols in <em>symbols</em>
-are non-associative.</p>
-
-<p>@param [Array&lt;Symbol>]  symbols  Symbols that are non-associative.</p>
-
-<p>@return [void]</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="nonempty_list(symbol,list_elements,separator=&quot;&quot;)-macro">
-      <div class="signature">
-        
-        macro <strong>nonempty_list</strong>(symbol, list_elements, separator = "")
-
-        <a class="method-permalink" href="#nonempty_list%28symbol%2Clist_elements%2Cseparator%3D%22%22%29-macro">#</a>
+        <a class="method-permalink" href="#max_nesting=(max_nesting)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/parser.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="prec(direction,*symbols)-macro">
+    <div class="entry-detail" id="parse(source:String):Language::Document-instance-method">
       <div class="signature">
         
-        macro <strong>prec</strong>(direction, *symbols)
+        def <strong>parse</strong>(source : String) : <a href="../../GraphQL/Language/Document.html">Language::Document</a>
 
-        <a class="method-permalink" href="#prec%28direction%2C%2Asymbols%29-macro">#</a>
+        <a class="method-permalink" href="#parse(source:String):Language::Document-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/parser.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="production(lhs,expression=nil,precedence=nil,arg_type=nil)-macro">
-      <div class="signature">
-        
-        macro <strong>production</strong>(lhs, expression = nil, precedence = nil, arg_type = nil)
 
-        <a class="method-permalink" href="#production%28lhs%2Cexpression%3Dnil%2Cprecedence%3Dnil%2Carg_type%3Dnil%29-macro">#</a>
-      </div>
-      
-        <div class="doc"><p>Adds a new production to the parser with a left-hand value of
-<em>symbol</em>.  If <em>expression</em> is specified it is taken as the
-right-hand side of the production and <em>action</em> is associated
-with the production.  If <em>expression</em> is nil then <em>action</em> is
-evaluated and expected to make one or more calls to
-Parser.clause.  A precedence can be associate with this
-production by setting <em>precedence</em> to a terminal symbol.</p>
 
-<p>@param [Symbol]			symbol		Left-hand side of the production.
-@param [String, Symbol, nil]	expression	Right-hand side of the production.
-@param [Symbol, nil]		precedence	Symbol representing the precedence of this produciton.
-@param [:array, :splat]		arg_type		Method to use when passing arguments to the action.
-@param [Proc]			action		Action associated with this production.</p>
-
-<p>@return [void]</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="right(*symbols)-macro">
-      <div class="signature">
-        
-        macro <strong>right</strong>(*symbols)
-
-        <a class="method-permalink" href="#right%28%2Asymbols%29-macro">#</a>
-      </div>
-      
-        <div class="doc"><p>This method is used to specify that the symbols in <em>symbols</em>
-are right associative.  Subsequent calls to this method will
-give their arguments higher precedence.</p>
-
-<p>@param [Array&lt;Symbol>] symbols Symbols that are right-associative.</p>
-
-<p>@return [void]</p></div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/language/parser.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 </div>

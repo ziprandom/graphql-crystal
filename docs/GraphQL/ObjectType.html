@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../";
+</script>
+
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <link href="../css/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="../js/doc.js"></script>
   <title>GraphQL::ObjectType - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
-<div id="types-list">
-  <div id="search-box">
-    <input type="search" id="search-input" placeholder="Search...">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
   </div>
 
-  <ul>
-    <li><a href="../index.html">README</a></li>
-  </ul>
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
 
-  <ul>
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/toplevel" data-name="top level namespace">
+      <a href="../toplevel.html">Top Level Namespace</a>
+      
+    </li>
   
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
       <a href="../CLTK.html">CLTK</a>
@@ -102,6 +123,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
       <a href="../GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
+      <a href="../GraphQL/Language/ASTNode.html">ASTNode</a>
       
     </li>
   
@@ -190,6 +216,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/LexerContext" data-name="graphql::language::lexercontext">
+      <a href="../GraphQL/Language/LexerContext.html">LexerContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
       <a href="../GraphQL/Language/ListType.html">ListType</a>
       
@@ -225,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ParserContext" data-name="graphql::language::parsercontext">
+      <a href="../GraphQL/Language/ParserContext.html">ParserContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
       <a href="../GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
       
@@ -237,6 +273,21 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
       <a href="../GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
+      <a href="../GraphQL/Language/Token.html">Token</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
+      <a href="../GraphQL/Language/Token/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -355,6 +406,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/JSONType" data-name="graphql::schema::schema::jsontype">
+      <a href="../GraphQL/Schema/Schema/JSONType.html">JSONType</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -392,9 +448,11 @@
   
 </ul>
 
+  </div>
 </div>
 
-<div id="main-content">
+
+<div class="main-content">
 <h1 class="type-name">
 
   <span class="kind">module</span> GraphQL::ObjectType
@@ -411,7 +469,7 @@
 to make them act as GraphQL Objects. Provides the
 <code>field</code> Macro for defining GraphQL Type Fields.</p>
 
-<pre><code class='language-crystal'><span class="k">class</span> <span class="t">MyType</span>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">MyType</span>
   getter <span class="n">:name</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @email : <span class="t">String</span>); <span class="k">end</span>
 
@@ -427,7 +485,7 @@ to make them act as GraphQL Objects. Provides the
   <span class="c"># a block will be called with an arguments hash</span>
   <span class="c"># and the context of the graphql request</span>
   field <span class="n">:signature</span> <span class="k">do</span> <span class="o">|</span>args, context<span class="o">|</span>
-    <span class="s">&quot;</span><span class="i">#{</span></span>@name<span class="s"><span class="i">}</span> - </span><span class="i">#{</span></span>args[</code></pre>
+    <span class="s">&quot;</span><span class="i">#{</span>@name<span class="i">}</span><span class="s"> - </span><span class="i">#{</span>args[</code></pre>
 
 
 
@@ -456,7 +514,9 @@ to make them act as GraphQL Objects. Provides the
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/types/object_type.cr#L128" target="_blank">graphql-crystal/types/object_type.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/types/object_type.cr#L128" target="_blank">
+        graphql-crystal/types/object_type.cr
+      </a>
     
     <br/>
   
@@ -480,7 +540,7 @@ to make them act as GraphQL Objects. Provides the
       </li>
     
       <li class="entry-summary">
-        <a href="#resolve_field%28name%2Carguments%2Ccontext%29-instance-method" class="signature"><strong>#resolve_field</strong>(name, arguments, context)</a>
+        <a href="#resolve_field(name,arguments,context)-instance-method" class="signature"><strong>#resolve_field</strong>(name, arguments, context)</a>
         
           <div class="summary"><p>This method gets called when a field is resolved on this object.</p></div>
         
@@ -494,14 +554,14 @@ to make them act as GraphQL Objects. Provides the
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#graphql_type%28name%29-macro" class="signature"><strong>graphql_type</strong>(name)</a>
+        <a href="#graphql_type(name)-macro" class="signature"><strong>graphql_type</strong>(name)</a>
         
           <div class="summary"><p>setter can be used to set GraphQL name of the Object.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#graphql_type-macro" class="signature"><strong>graphql_type</strong></a>
+        <a href="#graphql_type(&block)-macro" class="signature"><strong>graphql_type</strong>(&block)</a>
         
           <div class="summary"><p>setter that takes a block.</p></div>
         
@@ -530,13 +590,16 @@ to make them act as GraphQL Objects. Provides the
         <a class="method-permalink" href="#graphql_type-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>get the GraphQL name of this object.
-defaults to the class name</p></div>
+        <div class="doc">
+          
+          <p>get the GraphQL name of this object.
+defaults to the class name</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/types/object_type.cr#L133" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/types/object_type.cr#L133" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -546,17 +609,20 @@ defaults to the class name</p></div>
         
         def <strong>resolve_field</strong>(name, arguments, context)
 
-        <a class="method-permalink" href="#resolve_field%28name%2Carguments%2Ccontext%29-instance-method">#</a>
+        <a class="method-permalink" href="#resolve_field(name,arguments,context)-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>This method gets called when a field is resolved
+        <div class="doc">
+          
+          <p>This method gets called when a field is resolved
 on this object. The method gets automatically created
-for every ObjectType</p></div>
+for every ObjectType</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/types/object_type.cr#L168" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/types/object_type.cr#L168" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -571,39 +637,45 @@ for every ObjectType</p></div>
         
         macro <strong>graphql_type</strong>(name)
 
-        <a class="method-permalink" href="#graphql_type%28name%29-macro">#</a>
+        <a class="method-permalink" href="#graphql_type(name)-macro">#</a>
       </div>
       
-        <div class="doc"><p>setter
+        <div class="doc">
+          
+          <p>setter
 can be used to set GraphQL name of the
 Object. Defaults to the class name. Is
-used in introspection queries</p></div>
+used in introspection queries</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/types/object_type.cr#L143" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/types/object_type.cr#L143" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="graphql_type-macro">
+    <div class="entry-detail" id="graphql_type(&amp;block)-macro">
       <div class="signature">
         
-        macro <strong>graphql_type</strong>
+        macro <strong>graphql_type</strong>(&block)
 
-        <a class="method-permalink" href="#graphql_type-macro">#</a>
+        <a class="method-permalink" href="#graphql_type(&block)-macro">#</a>
       </div>
       
-        <div class="doc"><p>setter that takes a block.
+        <div class="doc">
+          
+          <p>setter that takes a block.
 can be used to set GraphQL name of the
 Object. Defaults to the class name. Is
-used in introspection queries.</p></div>
+used in introspection queries.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/types/object_type.cr#L155" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/types/object_type.cr#L155" target="_blank">View source</a>]
         
       </div>
     </div>

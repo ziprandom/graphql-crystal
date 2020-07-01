@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "";
+</script>
+
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="js/doc.js"></script>
   <title>README - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
-<div id="types-list">
-  <div id="search-box">
-    <input type="search" id="search-input" placeholder="Search...">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="index.html">README</a>
+    </div>
   </div>
 
-  <ul>
-    <li class="current"><a href="index.html">README</a></li>
-  </ul>
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
 
-  <ul>
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/toplevel" data-name="top level namespace">
+      <a href="toplevel.html">Top Level Namespace</a>
+      
+    </li>
   
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
       <a href="CLTK.html">CLTK</a>
@@ -102,6 +123,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
       <a href="GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
+      <a href="GraphQL/Language/ASTNode.html">ASTNode</a>
       
     </li>
   
@@ -190,6 +216,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/LexerContext" data-name="graphql::language::lexercontext">
+      <a href="GraphQL/Language/LexerContext.html">LexerContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
       <a href="GraphQL/Language/ListType.html">ListType</a>
       
@@ -225,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ParserContext" data-name="graphql::language::parsercontext">
+      <a href="GraphQL/Language/ParserContext.html">ParserContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
       <a href="GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
       
@@ -237,6 +273,21 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
       <a href="GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
+      <a href="GraphQL/Language/Token.html">Token</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
+      <a href="GraphQL/Language/Token/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -355,6 +406,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/JSONType" data-name="graphql::schema::schema::jsontype">
+      <a href="GraphQL/Schema/Schema/JSONType.html">JSONType</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -392,12 +448,14 @@
   
 </ul>
 
+  </div>
 </div>
 
-<div id="main-content">
+
+<div class="main-content">
 <h1>graphql-crystal <a href="https://travis-ci.org/ziprandom/graphql-crystal" target="_blank"><img src="https://api.travis-ci.org/ziprandom/graphql-crystal.svg" alt="Build Status"/></a></h1>
 
-<p>An implementation of <a href="http://graphql.org/learn/" target="_blank">GraphQL</a> for the crystal programming language inspired by <a href="https://github.com/rmosolgo/graphql-ruby" target="_blank">graphql-ruby</a> & <a href="https://github.com/playlyfe/go-graphql" target="_blank">go-graphql</a>.</p>
+<p>An implementation of <a href="http://graphql.org/learn/" target="_blank">GraphQL</a> for the crystal programming language inspired by <a href="https://github.com/rmosolgo/graphql-ruby" target="_blank">graphql-ruby</a> & <a href="https://github.com/playlyfe/go-graphql" target="_blank">go-graphql</a> & <a href="https://github.com/graphql-dotnet/parser" target="_blank">graphql-parser</a>.</p>
 
 <p>The library is in beta state atm. Should already be usable but expect to find bugs (and open issues about them). pull-requests, suggestions & criticism are very welcome!</p>
 
@@ -407,7 +465,7 @@
 
 <p>Add this to your application's <code>shard.yml</code>:</p>
 
-<pre><code class='language-yaml'>dependencies:
+<pre><code class="language-yaml">dependencies:
   graphql-crystal:
     github: ziprandom/graphql-crystal</code></pre>
 
@@ -417,7 +475,7 @@
 
 <p>Given this simple domain model of users and posts</p>
 
-<pre><code class='language-cr'>class User
+<pre><code class="language-cr">class User
   property name
   def initialize(@name : String); end
 end
@@ -432,7 +490,7 @@ USERS = [User.new("Alice"), User.new("Bob")]</code></pre>
 
 <p>We can instantiate a GraphQL schema directly from a graphql schema definition string</p>
 
-<pre><code class='language-cr'>schema = GraphQL::Schema.from_schema(
+<pre><code class="language-cr">schema = GraphQL::Schema.from_schema(
   %{
     schema {
       query: QueryType,
@@ -442,7 +500,7 @@ USERS = [User.new("Alice"), User.new("Bob")]</code></pre>
     type QueryType {
       posts: [PostType]
       users: [UserType]
-      user(name: String!): User
+      user(name: String!): UserType
     }
 
     type MutationType {
@@ -470,7 +528,7 @@ USERS = [User.new("Alice"), User.new("Bob")]</code></pre>
 
 <p>Then we create the backing types by including the <code></code><code><a href="GraphQL/ObjectType.html">GraphQL::ObjectType</a></code><code></code> and defining the fields using the <code></code><code>field</code><code></code> macro</p>
 
-<pre><code class='language-cr'># reopening User and Post class
+<pre><code class="language-cr"># reopening User and Post class
 class User
   include GraphQL::ObjectType
 
@@ -492,7 +550,7 @@ end</code></pre>
 
 <p>Now we define the top level queries</p>
 
-<pre><code class='language-cr'># extend self when using a module or a class (not an instance)
+<pre><code class="language-cr"># extend self when using a module or a class (not an instance)
 # as the actual Object
 
 module QueryType
@@ -535,12 +593,12 @@ end</code></pre>
 
 <p>Finally set the top level Object Types on the schema</p>
 
-<pre><code class='language-cr'>schema.query_resolver = QueryType
+<pre><code class="language-cr">schema.query_resolver = QueryType
 schema.mutation_resolver = MutationType</code></pre>
 
 <p>And we are ready to run some tests</p>
 
-<pre><code class='language-cr'>describe "my graphql schema" do
+<pre><code class="language-cr">describe "my graphql schema" do
   it "does queries" do
     schema.execute("{ users { name posts } }")
       .should eq ({
@@ -606,7 +664,7 @@ end</code></pre>
 
 <p>To ease working with input parameters custom structs can be registered to be instantiated from the json params of query and mutation requests. Given the schema from above one can define a PostInput struct as follows</p>
 
-<pre><code class='language-cr'>struct PostInput &lt; GraphQL::Schema::InputType
+<pre><code class="language-cr">struct PostInput &lt; GraphQL::Schema::InputType
   JSON.mapping(
     author: String,
     title: String,
@@ -616,11 +674,11 @@ end</code></pre>
 
 <p>and register it in the schema like:</p>
 
-<pre><code class='language-cr'>schema.add_input_type("PostInput", PostInput)</code></pre>
+<pre><code class="language-cr">schema.add_input_type("PostInput", PostInput)</code></pre>
 
 <p>Now the argument <code>post</code> which is expected to be a GraphQL InputType <code>PostInput</code> will be automatically parsed into a crystal <code>PostInput</code>-struct. Thus the code in the <code>post</code> mutation callback becomes more simple:</p>
 
-<pre><code class='language-cr'>module MutationType
+<pre><code class="language-cr">module MutationType
   include GraphQL::ObjectType
   extend self
 
@@ -639,15 +697,15 @@ end</code></pre>
 
 <p>Custom context types can be used to pass additional information to the object type's field resolves. An example can be found <a href="spec/support/custom_context_schema.cr" target="_blank">here</a>.</p>
 
-<p>A custom context type should inherit from <code><a href="GraphQL/Schema.html">GraphQL::Schema</a>::Context</code> and therefore be initialized with the served schema and a max_depth.</p>
+<p>A custom context type should inherit from <code><a href="GraphQL/Schema/Context.html">GraphQL::Schema::Context</a></code> and therefore be initialized with the served schema and a max_depth.</p>
 
-<pre><code class='language-cr'>GraphQL::Schema::Schema#execute(query_string, query_arguments = nil, context = GraphQL::Schema::Context.new(self, max_depth))</code></pre>
+<pre><code class="language-cr">GraphQL::Schema::Schema#execute(query_string, query_arguments = nil, context = GraphQL::Schema::Context.new(self, max_depth))</code></pre>
 
 <p>accepts a context type as its third argument.</p>
 
 <p>Field resolver callbacks on object types (including top level query & mutation types) get called with the context as their second argument:</p>
 
-<pre><code class='language-cr'>field :users do |args, context|
+<pre><code class="language-cr">field :users do |args, context|
   # casting to your custom type
   # is necessary here
   context = context.as(CustomContext)
@@ -660,21 +718,6 @@ end</code></pre>
 <h3>Serving over HTTP</h3>
 
 <p>For an example of how to serve a schema over a webserver(<a href="https://github.com/kemalcr/kemal" target="_blank">kemal</a>) see <a href="https://github.com/ziprandom/kemal-graphql-example" target="_blank">kemal-graphql-example</a>.</p>
-
-<h2>Parser Performance</h2>
-
-<p>The parser has been implemented using my <a href="https://github.com/ziprandom/cltk" target="_blank">crystal language toolkit</a> and is significantly slower than the c implementation for larger schema strings while performing ok on smaller query strings. See <a href="benchmark/compare_benchmarks.cr" target="_blank">benchmark/compare_benchmarks.cr</a> for the strings used in the test.</p>
-
-<p>To compare the performance of the Parser with <a href="https://github.com/graphql/libgraphqlparser" target="_blank">facebooks GraphQL parser</a> you need to have the library installed on your machine. Then run</p>
-
-<pre><code class='language-sh'>crystal build --release benchmark/compare_benchmarks.cr</code></pre>
-
-<h3>Recent Results:</h3>
-
-<pre><code class='language-sh'>SCHEMA String: c implementation from facebook:   64.87k ( 15.41µs) (± 1.89%)       fastest
-     SCHEMA String: cltk based implementation:     1.4k (713.07µs) (± 8.29%) 46.26× slower
-QUERY String: c implementation from facebook:   16.63k ( 60.13µs) (± 2.00%)       fastest
-     QUERY String: cltk based implementation:    5.62k ( 178.0µs) (± 4.34%)  2.96× slower</code></pre>
 
 <h2>Development</h2>
 

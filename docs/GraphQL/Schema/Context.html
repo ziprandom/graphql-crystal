@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../../";
+</script>
+
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="../../js/doc.js"></script>
   <title>GraphQL::Schema::Context - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
-<div id="types-list">
-  <div id="search-box">
-    <input type="search" id="search-input" placeholder="Search...">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../../index.html">README</a>
+    </div>
   </div>
 
-  <ul>
-    <li><a href="../../index.html">README</a></li>
-  </ul>
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
 
-  <ul>
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
   
   <li class="parent " data-id="github.com/ziprandom/graphql-crystal/CLTK" data-name="cltk">
       <a href="../../CLTK.html">CLTK</a>
@@ -102,6 +123,11 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ArgumentValue" data-name="graphql::language::argumentvalue">
       <a href="../../GraphQL/Language/ArgumentValue.html">ArgumentValue</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ASTNode" data-name="graphql::language::astnode">
+      <a href="../../GraphQL/Language/ASTNode.html">ASTNode</a>
       
     </li>
   
@@ -190,6 +216,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/LexerContext" data-name="graphql::language::lexercontext">
+      <a href="../../GraphQL/Language/LexerContext.html">LexerContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ListType" data-name="graphql::language::listtype">
       <a href="../../GraphQL/Language/ListType.html">ListType</a>
       
@@ -225,6 +256,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ParserContext" data-name="graphql::language::parsercontext">
+      <a href="../../GraphQL/Language/ParserContext.html">ParserContext</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/ScalarTypeDefinition" data-name="graphql::language::scalartypedefinition">
       <a href="../../GraphQL/Language/ScalarTypeDefinition.html">ScalarTypeDefinition</a>
       
@@ -237,6 +273,21 @@
   
   <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Selection" data-name="graphql::language::selection">
       <a href="../../GraphQL/Language/Selection.html">Selection</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
+      <a href="../../GraphQL/Language/Token.html">Token</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
+      <a href="../../GraphQL/Language/Token/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -355,6 +406,11 @@
       
     </li>
   
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Schema/JSONType" data-name="graphql::schema::schema::jsontype">
+      <a href="../../GraphQL/Schema/Schema/JSONType.html">JSONType</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -392,9 +448,11 @@
   
 </ul>
 
+  </div>
 </div>
 
-<div id="main-content">
+
+<div class="main-content">
 <h1 class="type-name">
 
   <span class="kind">class</span> GraphQL::Schema::Context
@@ -429,7 +487,9 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L10" target="_blank">graphql-crystal/schema/schema.cr</a>
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L10" target="_blank">
+        graphql-crystal/schema/schema.cr
+      </a>
     
     <br/>
   
@@ -442,7 +502,7 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28schema%3AGraphQL%3A%3ASchema%3A%3ASchema%2Cmax_depth%3Dnil%29-class-method" class="signature"><strong>.new</strong>(schema : GraphQL::Schema::Schema, max_depth = <span class="n">nil</span>)</a>
+        <a href="#new(schema:GraphQL::Schema::Schema,max_depth=nil)-class-method" class="signature"><strong>.new</strong>(schema : GraphQL::Schema::Schema, max_depth = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -456,42 +516,42 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#depth%3AInt32-instance-method" class="signature"><strong>#depth</strong> : Int32</a>
+        <a href="#depth:Int32-instance-method" class="signature"><strong>#depth</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#depth%3D%28depth%29-instance-method" class="signature"><strong>#depth=</strong>(depth)</a>
+        <a href="#depth=(depth)-instance-method" class="signature"><strong>#depth=</strong>(depth)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#fragments%3AArray%28GraphQL%3A%3ALanguage%3A%3AFragmentDefinition%29-instance-method" class="signature"><strong>#fragments</strong> : Array(GraphQL::Language::FragmentDefinition)</a>
+        <a href="#fragments:Array(GraphQL::Language::FragmentDefinition)-instance-method" class="signature"><strong>#fragments</strong> : Array(GraphQL::Language::FragmentDefinition)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#fragments%3D%28fragments%29-instance-method" class="signature"><strong>#fragments=</strong>(fragments)</a>
+        <a href="#fragments=(fragments)-instance-method" class="signature"><strong>#fragments=</strong>(fragments)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#max_depth%3AInt32%3F-instance-method" class="signature"><strong>#max_depth</strong> : Int32?</a>
+        <a href="#max_depth:Int32?-instance-method" class="signature"><strong>#max_depth</strong> : Int32?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#max_depth%3D%28max_depth%29-instance-method" class="signature"><strong>#max_depth=</strong>(max_depth)</a>
+        <a href="#max_depth=(max_depth)-instance-method" class="signature"><strong>#max_depth=</strong>(max_depth)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#schema%3AGraphQL%3A%3ASchema%3A%3ASchema-instance-method" class="signature"><strong>#schema</strong> : GraphQL::Schema::Schema</a>
+        <a href="#schema:GraphQL::Schema::Schema-instance-method" class="signature"><strong>#schema</strong> : GraphQL::Schema::Schema</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#with_self%28args%2C%26block%29-instance-method" class="signature"><strong>#with_self</strong>(args, &block)</a>
+        <a href="#with_self(args,&block)-instance-method" class="signature"><strong>#with_self</strong>(args, &block)</a>
         
       </li>
     
@@ -542,13 +602,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def self.<strong>new</strong>(schema : <a href="../../GraphQL/Schema/Schema.html">GraphQL::Schema::Schema</a>, max_depth = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28schema%3AGraphQL%3A%3ASchema%3A%3ASchema%2Cmax_depth%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new(schema:GraphQL::Schema::Schema,max_depth=nil)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -565,13 +625,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def <strong>depth</strong> : Int32
 
-        <a class="method-permalink" href="#depth%3AInt32-instance-method">#</a>
+        <a class="method-permalink" href="#depth:Int32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -581,13 +641,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def <strong>depth=</strong>(depth)
 
-        <a class="method-permalink" href="#depth%3D%28depth%29-instance-method">#</a>
+        <a class="method-permalink" href="#depth=(depth)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -597,13 +657,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def <strong>fragments</strong> : Array(<a href="../../GraphQL/Language/FragmentDefinition.html">GraphQL::Language::FragmentDefinition</a>)
 
-        <a class="method-permalink" href="#fragments%3AArray%28GraphQL%3A%3ALanguage%3A%3AFragmentDefinition%29-instance-method">#</a>
+        <a class="method-permalink" href="#fragments:Array(GraphQL::Language::FragmentDefinition)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -613,13 +673,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def <strong>fragments=</strong>(fragments)
 
-        <a class="method-permalink" href="#fragments%3D%28fragments%29-instance-method">#</a>
+        <a class="method-permalink" href="#fragments=(fragments)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -629,13 +689,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def <strong>max_depth</strong> : Int32?
 
-        <a class="method-permalink" href="#max_depth%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#max_depth:Int32?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -645,13 +705,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def <strong>max_depth=</strong>(max_depth)
 
-        <a class="method-permalink" href="#max_depth%3D%28max_depth%29-instance-method">#</a>
+        <a class="method-permalink" href="#max_depth=(max_depth)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -661,13 +721,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def <strong>schema</strong> : <a href="../../GraphQL/Schema/Schema.html">GraphQL::Schema::Schema</a>
 
-        <a class="method-permalink" href="#schema%3AGraphQL%3A%3ASchema%3A%3ASchema-instance-method">#</a>
+        <a class="method-permalink" href="#schema:GraphQL::Schema::Schema-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -677,13 +737,13 @@ Object Types. Can be subclassed and passed manually to <code><a href="../../Grap
         
         def <strong>with_self</strong>(args, &block)
 
-        <a class="method-permalink" href="#with_self%28args%2C%26block%29-instance-method">#</a>
+        <a class="method-permalink" href="#with_self(args,&block)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/b81be85d4635e6f9d307ea277f3548eb32ee6ecd/src/graphql-crystal/schema/schema.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>

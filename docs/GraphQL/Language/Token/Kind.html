@@ -14,7 +14,7 @@
 </script>
 
   <meta id="repository-name" content="github.com/ziprandom/graphql-crystal">
-  <title>GraphQL::Schema::Introspection::IntrospectionObject - github.com/ziprandom/graphql-crystal</title>
+  <title>GraphQL::Language::Token::Kind - github.com/ziprandom/graphql-crystal</title>
 </head>
 <body>
 
@@ -101,7 +101,7 @@
       
     </li>
   
-  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language" data-name="graphql::language">
+  <li class="parent open current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language" data-name="graphql::language">
       <a href="../../../GraphQL/Language.html">Language</a>
       
         <ul>
@@ -276,12 +276,12 @@
       
     </li>
   
-  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
+  <li class="parent open current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token" data-name="graphql::language::token">
       <a href="../../../GraphQL/Language/Token.html">Token</a>
       
         <ul>
   
-  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
+  <li class=" current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Language/Token/Kind" data-name="graphql::language::token::kind">
       <a href="../../../GraphQL/Language/Token/Kind.html">Kind</a>
       
     </li>
@@ -336,7 +336,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema" data-name="graphql::schema">
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema" data-name="graphql::schema">
       <a href="../../../GraphQL/Schema.html">Schema</a>
       
         <ul>
@@ -361,12 +361,12 @@
       
     </li>
   
-  <li class="parent open current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Introspection" data-name="graphql::schema::introspection">
+  <li class="parent " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Introspection" data-name="graphql::schema::introspection">
       <a href="../../../GraphQL/Schema/Introspection.html">Introspection</a>
       
         <ul>
   
-  <li class=" current" data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Introspection/IntrospectionObject" data-name="graphql::schema::introspection::introspectionobject">
+  <li class=" " data-id="github.com/ziprandom/graphql-crystal/GraphQL/Schema/Introspection/IntrospectionObject" data-name="graphql::schema::introspection::introspectionobject">
       <a href="../../../GraphQL/Schema/Introspection/IntrospectionObject.html">IntrospectionObject</a>
       
     </li>
@@ -455,32 +455,17 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> GraphQL::Schema::Introspection::IntrospectionObject
+  <span class="kind">enum</span> GraphQL::Language::Token::Kind
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../GraphQL/Schema/Introspection/IntrospectionObject.html">GraphQL::Schema::Introspection::IntrospectionObject</a></li><li class="superclass">Reference</li><li class="superclass"><a href="../../../Object.html">Object</a></li></ul>
-
-
-
-
-  <h2>Overview</h2>
-
-  <p>Wrap an ObjectType intercepting field
-resolution for <code>__schema</code> and <code>__type</code>
-keys</p>
 
 
 
 
 
-  <h2>Included Modules</h2>
-  <ul class="other-types-list">
-  
-    <li class="other-type"><a href="../../../GraphQL/ObjectType.html">GraphQL::ObjectType</a></li>
-  
-  </ul>
+
 
 
 
@@ -494,8 +479,8 @@ keys</p>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L9" target="_blank">
-        graphql-crystal/schema/schema_introspection.cr
+      <a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L2" target="_blank">
+        graphql-crystal/language/token.cr
       </a>
     
     <br/>
@@ -504,28 +489,118 @@ keys</p>
 
 
   
-    <h2>Constant Summary</h2>
+    <h2>Enum Members</h2>
   
   <dl>
     
-      <dt class="entry-const" id="GRAPHQL_FIELDS">
-        <strong>GRAPHQL_FIELDS</strong> = <code>[{<span class="n">:__typename</span>, <span class="s">&quot;&quot;</span>, args, <span class="s">&quot;&quot;</span>}] <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">Symbol</span>, <span class="t">String</span>, <span class="t">Hash</span>(<span class="t">String</span>, <span class="t">String</span>) <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>, <span class="t">String</span>)</code>
+      <dt class="entry-const" id="BANG">
+        <strong>BANG</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="DOLLAR">
+        <strong>DOLLAR</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="PAREN_L">
+        <strong>PAREN_L</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="PAREN_R">
+        <strong>PAREN_R</strong> = <code><span class="n">3</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="SPREAD">
+        <strong>SPREAD</strong> = <code><span class="n">4</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="COLON">
+        <strong>COLON</strong> = <code><span class="n">5</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="EQUALS">
+        <strong>EQUALS</strong> = <code><span class="n">6</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="AT">
+        <strong>AT</strong> = <code><span class="n">7</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="BRACKET_L">
+        <strong>BRACKET_L</strong> = <code><span class="n">8</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="BRACKET_R">
+        <strong>BRACKET_R</strong> = <code><span class="n">9</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="BRACE_L">
+        <strong>BRACE_L</strong> = <code><span class="n">10</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="PIPE">
+        <strong>PIPE</strong> = <code><span class="n">11</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="BRACE_R">
+        <strong>BRACE_R</strong> = <code><span class="n">12</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="NAME">
+        <strong>NAME</strong> = <code><span class="n">13</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="INT">
+        <strong>INT</strong> = <code><span class="n">14</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="FLOAT">
+        <strong>FLOAT</strong> = <code><span class="n">15</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="STRING">
+        <strong>STRING</strong> = <code><span class="n">16</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="BLOCK_STRING">
+        <strong>BLOCK_STRING</strong> = <code><span class="n">17</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="COMMENT">
+        <strong>COMMENT</strong> = <code><span class="n">18</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="AMP">
+        <strong>AMP</strong> = <code><span class="n">19</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="EOF">
+        <strong>EOF</strong> = <code><span class="n">20</span></code>
       </dt>
       
     
   </dl>
 
 
-
-  <h2>Constructors</h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new(schema:GraphQL::Schema::Schema,query_resolver)-class-method" class="signature"><strong>.new</strong>(schema : GraphQL::Schema::Schema, query_resolver)</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -535,79 +610,113 @@ keys</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#graphql_type-instance-method" class="signature"><strong>#graphql_type</strong></a>
-        
-          <div class="summary"><p>get the GraphQL name of this object.</p></div>
+        <a href="#amp?-instance-method" class="signature"><strong>#amp?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mutation_resolver-instance-method" class="signature"><strong>#mutation_resolver</strong></a>
+        <a href="#at?-instance-method" class="signature"><strong>#at?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mutation_resolver=(mutation_resolver)-instance-method" class="signature"><strong>#mutation_resolver=</strong>(mutation_resolver)</a>
+        <a href="#bang?-instance-method" class="signature"><strong>#bang?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#query_resolver:GraphQL::ObjectType-instance-method" class="signature"><strong>#query_resolver</strong> : GraphQL::ObjectType</a>
+        <a href="#block_string?-instance-method" class="signature"><strong>#block_string?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#query_resolver=(query_resolver)-instance-method" class="signature"><strong>#query_resolver=</strong>(query_resolver)</a>
+        <a href="#brace_l?-instance-method" class="signature"><strong>#brace_l?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#resolve_field(name:String,arguments,context:GraphQL::Schema::Context)-instance-method" class="signature"><strong>#resolve_field</strong>(name : String, arguments, context : GraphQL::Schema::Context)</a>
-        
-          <div class="summary"><p>resolve a named field on this object with query arguments and context </p></div>
+        <a href="#brace_r?-instance-method" class="signature"><strong>#brace_r?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#resolve_field(name,args,context)-instance-method" class="signature"><strong>#resolve_field</strong>(name, args, context)</a>
-        
-          <div class="summary"><p>This method gets called when a field is resolved on this object.</p></div>
+        <a href="#bracket_l?-instance-method" class="signature"><strong>#bracket_l?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#schema=(schema)-instance-method" class="signature"><strong>#schema=</strong>(schema)</a>
+        <a href="#bracket_r?-instance-method" class="signature"><strong>#bracket_r?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#colon?-instance-method" class="signature"><strong>#colon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#comment?-instance-method" class="signature"><strong>#comment?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dollar?-instance-method" class="signature"><strong>#dollar?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#eof?-instance-method" class="signature"><strong>#eof?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#equals?-instance-method" class="signature"><strong>#equals?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#float?-instance-method" class="signature"><strong>#float?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#int?-instance-method" class="signature"><strong>#int?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name?-instance-method" class="signature"><strong>#name?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#paren_l?-instance-method" class="signature"><strong>#paren_l?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#paren_r?-instance-method" class="signature"><strong>#paren_r?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pipe?-instance-method" class="signature"><strong>#pipe?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#spread?-instance-method" class="signature"><strong>#spread?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#string?-instance-method" class="signature"><strong>#string?</strong></a>
         
       </li>
     
   </ul>
 
 
-
-  <h2>Macro Summary</h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#field(name,&block)-macro" class="signature"><strong>field</strong>(name, &block)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#field(name,description,args,typename,&block)-macro" class="signature"><strong>field</strong>(name, description, args, typename, &block)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#inject-macro" class="signature"><strong>inject</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#injection-macro" class="signature"><strong>injection</strong></a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -615,19 +724,15 @@ keys</p>
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../../../GraphQL/ObjectType.html">GraphQL::ObjectType</a></code></h3>
-  
-  
-    <a href="../../../GraphQL/ObjectType.html#graphql_type-instance-method" class="tooltip">
-      <span>graphql_type</span>
-    graphql_type</a>, 
+
     
-  
-    <a href="../../../GraphQL/ObjectType.html#resolve_field(name,arguments,context)-instance-method" class="tooltip">
-      <span>resolve_field(name, arguments, context)</span>
-    resolve_field</a>
+
+
     
+
+
   
+    
 
 
     
@@ -669,244 +774,350 @@ keys</p>
 </div>
 
 
-  <h2>Constructor Detail</h2>
-  
-    <div class="entry-detail" id="new(schema:GraphQL::Schema::Schema,query_resolver)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(schema : <a href="../../../GraphQL/Schema/Schema.html">GraphQL::Schema::Schema</a>, query_resolver)
-
-        <a class="method-permalink" href="#new(schema:GraphQL::Schema::Schema,query_resolver)-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L14" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-
 
 
 
 
   <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="graphql_type-instance-method">
+    <div class="entry-detail" id="amp?-instance-method">
       <div class="signature">
         
-        def <strong>graphql_type</strong>
+        def <strong>amp?</strong>
 
-        <a class="method-permalink" href="#graphql_type-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from module <a href="../../../GraphQL/ObjectType.html">GraphQL::ObjectType</a>
-            </div>
-          
-          <p>get the GraphQL name of this object.
-defaults to the class name</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L18" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="mutation_resolver-instance-method">
-      <div class="signature">
-        
-        def <strong>mutation_resolver</strong>
-
-        <a class="method-permalink" href="#mutation_resolver-instance-method">#</a>
+        <a class="method-permalink" href="#amp?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="mutation_resolver=(mutation_resolver)-instance-method">
+    <div class="entry-detail" id="at?-instance-method">
       <div class="signature">
         
-        def <strong>mutation_resolver=</strong>(mutation_resolver)
+        def <strong>at?</strong>
 
-        <a class="method-permalink" href="#mutation_resolver=(mutation_resolver)-instance-method">#</a>
+        <a class="method-permalink" href="#at?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="query_resolver:GraphQL::ObjectType-instance-method">
+    <div class="entry-detail" id="bang?-instance-method">
       <div class="signature">
         
-        def <strong>query_resolver</strong> : <a href="../../../GraphQL/ObjectType.html">GraphQL::ObjectType</a>
+        def <strong>bang?</strong>
 
-        <a class="method-permalink" href="#query_resolver:GraphQL::ObjectType-instance-method">#</a>
+        <a class="method-permalink" href="#bang?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="query_resolver=(query_resolver)-instance-method">
+    <div class="entry-detail" id="block_string?-instance-method">
       <div class="signature">
         
-        def <strong>query_resolver=</strong>(query_resolver)
+        def <strong>block_string?</strong>
 
-        <a class="method-permalink" href="#query_resolver=(query_resolver)-instance-method">#</a>
+        <a class="method-permalink" href="#block_string?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="resolve_field(name:String,arguments,context:GraphQL::Schema::Context)-instance-method">
+    <div class="entry-detail" id="brace_l?-instance-method">
       <div class="signature">
         
-        def <strong>resolve_field</strong>(name : String, arguments, context : <a href="../../../GraphQL/Schema/Context.html">GraphQL::Schema::Context</a>)
+        def <strong>brace_l?</strong>
 
-        <a class="method-permalink" href="#resolve_field(name:String,arguments,context:GraphQL::Schema::Context)-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>resolve a named field on this object with query arguments and context</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="resolve_field(name,args,context)-instance-method">
-      <div class="signature">
-        
-        def <strong>resolve_field</strong>(name, args, context)
-
-        <a class="method-permalink" href="#resolve_field(name,args,context)-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from module <a href="../../../GraphQL/ObjectType.html">GraphQL::ObjectType</a>
-            </div>
-          
-          <p>This method gets called when a field is resolved
-on this object. The method gets automatically created
-for every ObjectType</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L22" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="schema=(schema)-instance-method">
-      <div class="signature">
-        
-        def <strong>schema=</strong>(schema)
-
-        <a class="method-permalink" href="#schema=(schema)-instance-method">#</a>
+        <a class="method-permalink" href="#brace_l?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/schema/schema_introspection.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
   
-
-
-
-  <h2>Macro Detail</h2>
-  
-    <div class="entry-detail" id="field(name,&amp;block)-macro">
+    <div class="entry-detail" id="brace_r?-instance-method">
       <div class="signature">
         
-        macro <strong>field</strong>(name, &block)
+        def <strong>brace_r?</strong>
 
-        <a class="method-permalink" href="#field(name,&block)-macro">#</a>
+        <a class="method-permalink" href="#brace_r?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L15" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-    <div class="entry-detail" id="field(name,description,args,typename,&amp;block)-macro">
+    <div class="entry-detail" id="bracket_l?-instance-method">
       <div class="signature">
         
-        macro <strong>field</strong>(name, description, args, typename, &block)
+        def <strong>bracket_l?</strong>
 
-        <a class="method-permalink" href="#field(name,description,args,typename,&block)-macro">#</a>
+        <a class="method-permalink" href="#bracket_l?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L11" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-    <div class="entry-detail" id="inject-macro">
+    <div class="entry-detail" id="bracket_r?-instance-method">
       <div class="signature">
         
-        macro <strong>inject</strong>
+        def <strong>bracket_r?</strong>
 
-        <a class="method-permalink" href="#inject-macro">#</a>
+        <a class="method-permalink" href="#bracket_r?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L12" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-    <div class="entry-detail" id="injection-macro">
+    <div class="entry-detail" id="colon?-instance-method">
       <div class="signature">
         
-        macro <strong>injection</strong>
+        def <strong>colon?</strong>
 
-        <a class="method-permalink" href="#injection-macro">#</a>
+        <a class="method-permalink" href="#colon?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L8" target="_blank">View source</a>]
+        
       </div>
     </div>
   
+    <div class="entry-detail" id="comment?-instance-method">
+      <div class="signature">
+        
+        def <strong>comment?</strong>
+
+        <a class="method-permalink" href="#comment?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dollar?-instance-method">
+      <div class="signature">
+        
+        def <strong>dollar?</strong>
+
+        <a class="method-permalink" href="#dollar?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="eof?-instance-method">
+      <div class="signature">
+        
+        def <strong>eof?</strong>
+
+        <a class="method-permalink" href="#eof?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="equals?-instance-method">
+      <div class="signature">
+        
+        def <strong>equals?</strong>
+
+        <a class="method-permalink" href="#equals?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="float?-instance-method">
+      <div class="signature">
+        
+        def <strong>float?</strong>
+
+        <a class="method-permalink" href="#float?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="int?-instance-method">
+      <div class="signature">
+        
+        def <strong>int?</strong>
+
+        <a class="method-permalink" href="#int?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name?-instance-method">
+      <div class="signature">
+        
+        def <strong>name?</strong>
+
+        <a class="method-permalink" href="#name?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="paren_l?-instance-method">
+      <div class="signature">
+        
+        def <strong>paren_l?</strong>
+
+        <a class="method-permalink" href="#paren_l?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="paren_r?-instance-method">
+      <div class="signature">
+        
+        def <strong>paren_r?</strong>
+
+        <a class="method-permalink" href="#paren_r?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pipe?-instance-method">
+      <div class="signature">
+        
+        def <strong>pipe?</strong>
+
+        <a class="method-permalink" href="#pipe?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="spread?-instance-method">
+      <div class="signature">
+        
+        def <strong>spread?</strong>
+
+        <a class="method-permalink" href="#spread?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="string?-instance-method">
+      <div class="signature">
+        
+        def <strong>string?</strong>
+
+        <a class="method-permalink" href="#string?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/ziprandom/graphql-crystal/blob/e22d73c882900ac888acf90063d4a729cc7791b7/src/graphql-crystal/language/token.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
 
 
 </div>
